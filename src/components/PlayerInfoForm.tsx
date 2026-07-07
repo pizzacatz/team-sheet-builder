@@ -81,7 +81,7 @@ export function PlayerInfoForm({ player, onChange }: PlayerInfoFormProps) {
   };
 
   return (
-    <section className="section-panel ghost-form-fields" aria-labelledby="player-info-heading">
+    <section className="section-panel player-info-panel in-field-form" aria-labelledby="player-info-heading">
       <div className="section-heading">
         <h2 id="player-info-heading">Player Info</h2>
         <div className="heading-actions">
@@ -106,7 +106,6 @@ export function PlayerInfoForm({ player, onChange }: PlayerInfoFormProps) {
             <input
               id="player-name"
               value={player.name}
-              placeholder="Player Name"
               onChange={(event) => onChange({ name: event.target.value })}
             />
           </div>
@@ -115,7 +114,6 @@ export function PlayerInfoForm({ player, onChange }: PlayerInfoFormProps) {
             <input
               id="trainer-name"
               value={player.trainerName ?? ""}
-              placeholder="Trainer Name in Game"
               onChange={(event) => onChange({ trainerName: event.target.value })}
             />
           </div>
@@ -124,7 +122,6 @@ export function PlayerInfoForm({ player, onChange }: PlayerInfoFormProps) {
             <input
               id="team-name"
               value={player.teamName ?? ""}
-              placeholder="Battle Team Number / Name"
               onChange={(event) => onChange({ teamName: event.target.value })}
             />
           </div>
@@ -133,7 +130,6 @@ export function PlayerInfoForm({ player, onChange }: PlayerInfoFormProps) {
             <input
               id="switch-profile"
               value={player.switchProfileName ?? ""}
-              placeholder="Switch Profile Name"
               onChange={(event) => onChange({ switchProfileName: event.target.value })}
             />
           </div>
@@ -161,7 +157,6 @@ export function PlayerInfoForm({ player, onChange }: PlayerInfoFormProps) {
             <input
               id="player-id"
               value={player.playerId ?? ""}
-              placeholder="Player ID"
               onChange={(event) => onChange({ playerId: event.target.value })}
             />
           </div>
@@ -171,7 +166,6 @@ export function PlayerInfoForm({ player, onChange }: PlayerInfoFormProps) {
               <input
                 id="date-of-birth"
                 value={player.dateOfBirth ?? ""}
-                placeholder="Date of Birth"
                 inputMode="numeric"
                 onChange={(event) => onChange({ dateOfBirth: formatDateDigits(event.target.value) })}
               />
@@ -193,7 +187,6 @@ export function PlayerInfoForm({ player, onChange }: PlayerInfoFormProps) {
             <input
               id="support-id"
               value={player.supportId ?? ""}
-              placeholder="Support ID"
               onChange={(event) => onChange({ supportId: event.target.value })}
             />
           </div>

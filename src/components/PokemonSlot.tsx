@@ -46,6 +46,15 @@ const formatStatAlignmentEffect = (raises?: string | null, lowers?: string | nul
   return `${statAbbreviations[raises] ?? raises}↑ ${statAbbreviations[lowers] ?? lowers}↓`;
 };
 
+const statFieldLabels: Record<StatKey, string> = {
+  hp: "HP",
+  atk: "Atk",
+  def: "Def",
+  spa: "SpA",
+  spd: "SpD",
+  spe: "Spe"
+};
+
 export function PokemonSlot({ index, entry, onChange }: PokemonSlotProps) {
   const speciesOptions = useMemo(() => makeOptions(species, (record) => record.types.join(" / ")), []);
   const allAbilityOptions = useMemo(() => makeOptions(abilities), []);
@@ -123,7 +132,7 @@ export function PokemonSlot({ index, entry, onChange }: PokemonSlotProps) {
   const statDescription = entry.statAlignment.requiresReview ? "Review imported neutral alignment." : undefined;
 
   return (
-    <section className="pokemon-slot ghost-form-fields" aria-labelledby={`pokemon-${index}-heading`}>
+    <section className="pokemon-slot in-field-form" aria-labelledby={`pokemon-${index}-heading`}>
       <div className="slot-heading">
         <h3 id={`pokemon-${index}-heading`}>Pokémon {index + 1}</h3>
       </div>
@@ -135,7 +144,6 @@ export function PokemonSlot({ index, entry, onChange }: PokemonSlotProps) {
           options={speciesOptions}
           onChange={handleSpeciesChange}
           required
-          placeholder="Pokémon"
         />
         <AutocompleteField
           id={`pokemon-${index}-stat-alignment`}
@@ -154,7 +162,6 @@ export function PokemonSlot({ index, entry, onChange }: PokemonSlotProps) {
             })
           }
           required
-          placeholder="Stat Alignment"
           helperText={statDescription}
         />
       </div>
@@ -167,7 +174,6 @@ export function PokemonSlot({ index, entry, onChange }: PokemonSlotProps) {
             options={abilityOptions}
             onChange={(abilityId) => onChange({ abilityId })}
             required
-            placeholder="Ability"
           />
           <AutocompleteField
             id={`pokemon-${index}-item`}
@@ -177,7 +183,6 @@ export function PokemonSlot({ index, entry, onChange }: PokemonSlotProps) {
             filterOptions={filterItemOptions}
             onChange={(itemId) => onChange({ itemId })}
             required
-            placeholder="Held Item"
           />
           {entry.moves.map((moveId, moveIndex) => (
             <AutocompleteField
@@ -188,19 +193,17 @@ export function PokemonSlot({ index, entry, onChange }: PokemonSlotProps) {
               options={includeSelected(moveOptions, allMoveOptions, moveId)}
               onChange={(nextMoveId) => updateMove(moveIndex, nextMoveId)}
               required
-              placeholder={`Move ${moveIndex + 1}`}
             />
           ))}
         </div>
         <div className="slot-stats-column" aria-label={`Pokémon ${index + 1} stats`}>
           {statRows.map((stat) => (
             <div className="stat-field" key={stat.key}>
-              <label htmlFor={`pokemon-${index}-${stat.key}`}>{stat.label}</label>
+              <label htmlFor={`pokemon-${index}-${stat.key}`}>{statFieldLabels[stat.key]}</label>
               <input
                 id={`pokemon-${index}-${stat.key}`}
                 inputMode="numeric"
                 pattern="[0-9]*"
-                placeholder={stat.label}
                 value={entryStats[stat.key]}
                 onChange={(event) => updateStat(stat.key, event.target.value)}
               />
