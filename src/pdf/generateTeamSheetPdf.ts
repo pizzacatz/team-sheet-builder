@@ -6,6 +6,7 @@ import { opponentSlots, pageSize, playerCoordinates, staffSlots, type SlotCoordi
 
 const TEMPLATE_PATH = `${import.meta.env.BASE_URL}templates/pokemon-vg-team-list.pdf`;
 export type TeamSheetPdfType = "both" | "open" | "staff";
+const PDF_FONT_SIZE_BUMP = 1;
 
 const loadTemplate = async (): Promise<PDFDocument> => {
   try {
@@ -43,7 +44,7 @@ const drawFittedText = (
   const safeText = cleanText(text);
   if (!safeText) return;
 
-  let fontSize = size;
+  let fontSize = size + PDF_FONT_SIZE_BUMP;
   while (fontSize > 7 && font.widthOfTextAtSize(safeText, fontSize) > maxWidth) {
     fontSize -= 0.5;
   }
@@ -70,7 +71,7 @@ const drawCenteredFittedText = (
   const safeText = cleanText(text);
   if (!safeText) return;
 
-  let fontSize = size;
+  let fontSize = size + PDF_FONT_SIZE_BUMP;
   while (fontSize > 7 && font.widthOfTextAtSize(safeText, fontSize) > maxWidth) {
     fontSize -= 0.5;
   }

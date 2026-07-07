@@ -91,8 +91,8 @@ export const playerCoordinates = {
   },
   supportId: { x: 436, y: 638, maxWidth: 139 },
   division: {
-    Junior: { centerX: 477.25, y: 706 },
-    Senior: { centerX: 533, y: 706 },
+    Junior: { centerX: 477.25, y: 705.5 },
+    Senior: { centerX: 533, y: 705.5 },
     Master: { centerX: 582.75, y: 706 }
   }
 } as const;
