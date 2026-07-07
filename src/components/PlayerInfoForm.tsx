@@ -102,7 +102,7 @@ export function PlayerInfoForm({ player, onChange }: PlayerInfoFormProps) {
       <div className="player-info-grid">
         <div className="player-info-column">
           <div className="field">
-            <label htmlFor="player-name">Player Name *</label>
+            <label htmlFor="player-name">Player Name *:</label>
             <input
               id="player-name"
               value={player.name}
@@ -110,7 +110,7 @@ export function PlayerInfoForm({ player, onChange }: PlayerInfoFormProps) {
             />
           </div>
           <div className="field">
-            <label htmlFor="trainer-name">Trainer Name in Game</label>
+            <label htmlFor="trainer-name">Trainer Name in Game:</label>
             <input
               id="trainer-name"
               value={player.trainerName ?? ""}
@@ -118,7 +118,7 @@ export function PlayerInfoForm({ player, onChange }: PlayerInfoFormProps) {
             />
           </div>
           <div className="field">
-            <label htmlFor="team-name">Battle Team Number / Name</label>
+            <label htmlFor="team-name">Battle Team Number / Name:</label>
             <input
               id="team-name"
               value={player.teamName ?? ""}
@@ -126,7 +126,7 @@ export function PlayerInfoForm({ player, onChange }: PlayerInfoFormProps) {
             />
           </div>
           <div className="field">
-            <label htmlFor="switch-profile">Switch Profile Name</label>
+            <label htmlFor="switch-profile">Switch Profile Name:</label>
             <input
               id="switch-profile"
               value={player.switchProfileName ?? ""}
@@ -136,7 +136,7 @@ export function PlayerInfoForm({ player, onChange }: PlayerInfoFormProps) {
         </div>
         <div className="player-info-column">
           <fieldset className="division-field">
-            <legend>Age Division</legend>
+            <legend>Age Division:</legend>
             <div className="division-options">
               {ageDivisions.map((division) => (
                 <label key={division} className="radio-option">
@@ -153,7 +153,7 @@ export function PlayerInfoForm({ player, onChange }: PlayerInfoFormProps) {
             </div>
           </fieldset>
           <div className="field">
-            <label htmlFor="player-id">Player ID</label>
+            <label htmlFor="player-id">Player ID:</label>
             <input
               id="player-id"
               value={player.playerId ?? ""}
@@ -161,7 +161,7 @@ export function PlayerInfoForm({ player, onChange }: PlayerInfoFormProps) {
             />
           </div>
           <div className="field">
-            <label htmlFor="date-of-birth">Date of Birth</label>
+            <label htmlFor="date-of-birth">Date of Birth:</label>
             <div className="date-field-control">
               <input
                 id="date-of-birth"
@@ -183,7 +183,7 @@ export function PlayerInfoForm({ player, onChange }: PlayerInfoFormProps) {
             </div>
           </div>
           <div className="field">
-            <label htmlFor="support-id">Support ID</label>
+            <label htmlFor="support-id">Support ID:</label>
             <input
               id="support-id"
               value={player.supportId ?? ""}

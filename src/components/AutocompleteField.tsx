@@ -34,26 +34,32 @@ export function AutocompleteField({
   const selected = options.find((option) => option.id === value);
   const [inputValue, setInputValue] = useState(selected?.label ?? "");
   const [isOpen, setIsOpen] = useState(false);
+  const [showAllOptions, setShowAllOptions] = useState(false);
   const closeTimer = useRef<number | null>(null);
 
   useEffect(() => {
     setInputValue(selected?.label ?? "");
   }, [selected?.label, value]);
 
+  const filterQuery = showAllOptions ? "" : inputValue;
+
   const filteredOptions = useMemo(
-    () => (filterOptions ? filterOptions(options, inputValue, value) : options),
-    [filterOptions, inputValue, options, value]
+    () => (filterOptions ? filterOptions(options, filterQuery, value) : options),
+    [filterOptions, filterQuery, options, value]
   );
 
   const suggestions = useMemo(
-    () => searchOptions(filteredOptions, inputValue, maxSuggestions),
-    [filteredOptions, inputValue, maxSuggestions]
+    () => searchOptions(filteredOptions, filterQuery, showAllOptions ? filteredOptions.length : maxSuggestions),
+    [filterQuery, filteredOptions, maxSuggestions, showAllOptions]
   );
 
-  const exactMatch = (rawValue: string): AutocompleteOption | undefined => {
+  const exactMatch = (
+    rawValue: string,
+    candidates: AutocompleteOption[] = filterOptions ? filterOptions(options, rawValue, value) : options
+  ): AutocompleteOption | undefined => {
     const normalized = normalizeName(rawValue);
     if (!normalized) return undefined;
-    return filteredOptions.find((option) => {
+    return candidates.find((option) => {
       const aliases = [option.label, option.id, ...(option.aliases ?? [])];
       return aliases.some((alias) => normalizeName(alias) === normalized);
     });
@@ -63,13 +69,21 @@ export function AutocompleteField({
     setInputValue(rawValue);
     const match = exactMatch(rawValue);
     onChange(match?.id ?? null);
+    setShowAllOptions(false);
     setIsOpen(true);
   };
 
   const selectOption = (option: AutocompleteOption) => {
     setInputValue(option.label);
     onChange(option.id);
+    setShowAllOptions(false);
     setIsOpen(false);
+  };
+
+  const openSuggestions = () => {
+    if (closeTimer.current) window.clearTimeout(closeTimer.current);
+    setShowAllOptions(Boolean(exactMatch(inputValue)));
+    setIsOpen(true);
   };
 
   return (
@@ -87,9 +101,12 @@ export function AutocompleteField({
         autoComplete="off"
         aria-autocomplete="list"
         aria-expanded={isOpen}
-        onFocus={() => setIsOpen(true)}
+        onFocus={openSuggestions}
         onBlur={() => {
-          closeTimer.current = window.setTimeout(() => setIsOpen(false), 120);
+          closeTimer.current = window.setTimeout(() => {
+            setShowAllOptions(false);
+            setIsOpen(false);
+          }, 120);
         }}
         onChange={(event) => handleInput(event.target.value)}
       />

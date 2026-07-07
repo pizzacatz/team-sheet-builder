@@ -316,6 +316,7 @@ h3 {
   background: #ffffff;
   color: #18181b;
   padding: 9px 10px;
+  line-height: 1.2;
 }
 
 .field textarea {
@@ -337,11 +338,11 @@ h3 {
 }
 
 .player-info-panel {
-  --in-field-label-width: 162px;
+  --in-field-label-width: 178px;
 }
 
 .pokemon-slot {
-  --in-field-label-width: 108px;
+  --in-field-label-width: 116px;
 }
 
 .in-field-form .field {
@@ -406,8 +407,8 @@ h3 {
   border-radius: 6px;
   background: #ffffff;
   color: #18181b;
-  padding: 14px 8px 5px;
-  font-weight: 650;
+  padding: 9px 8px;
+  line-height: 1.2;
   text-align: center;
 }
 
@@ -645,8 +646,16 @@ h3 {
 }
 
 @media (max-width: 420px) {
+  .pokemon-slot {
+    --in-field-label-width: 82px;
+  }
+
+  .pokemon-slot .field > label {
+    font-size: 0.62rem;
+  }
+
   .slot-pdf-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(104px, 112px);
+    grid-template-columns: minmax(0, 1fr) minmax(96px, 104px);
     gap: 10px;
   }
 
