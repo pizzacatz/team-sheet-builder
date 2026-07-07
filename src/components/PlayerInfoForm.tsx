@@ -118,7 +118,7 @@ export function PlayerInfoForm({ player, onChange }: PlayerInfoFormProps) {
               onChange={(event) => onChange({ trainerName: event.target.value })}
             />
           </div>
-          <div className="field">
+          <div className="field compact-label">
             <label htmlFor="team-name">Battle Team Number / Name:</label>
             <input
               id="team-name"

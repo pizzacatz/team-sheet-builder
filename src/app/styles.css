@@ -213,7 +213,7 @@ h3 {
 .division-field legend {
   padding: 0;
   color: #3f3f46;
-  font-size: 0.78rem;
+  font-size: 1rem;
   font-weight: 700;
 }
 
@@ -230,7 +230,7 @@ h3 {
   align-items: center;
   gap: 6px;
   color: #18181b;
-  font-size: 0.88rem;
+  font-size: 1rem;
   font-weight: 650;
 }
 
@@ -338,11 +338,11 @@ h3 {
 }
 
 .player-info-panel {
-  --in-field-label-width: 170px;
+  --in-field-label-width: 190px;
 }
 
 .pokemon-slot {
-  --in-field-label-width: 118px;
+  --in-field-label-width: 140px;
 }
 
 .in-field-form .field {
@@ -360,11 +360,15 @@ h3 {
   align-items: center;
   justify-content: flex-end;
   color: #27272a;
-  font-size: 0.76rem;
+  font-size: 1rem;
   font-weight: 800;
   line-height: 1.05;
   pointer-events: none;
   text-align: right;
+}
+
+.in-field-form .field.compact-label > label {
+  font-size: 0.76rem;
 }
 
 .in-field-form .field > input,
@@ -650,8 +654,8 @@ h3 {
     --in-field-label-width: 88px;
   }
 
-  .pokemon-slot .field > label {
-    font-size: 0.66rem;
+  .pokemon-slot .slot-top-grid .field {
+    --in-field-label-width: 140px;
   }
 
   .slot-pdf-grid {
