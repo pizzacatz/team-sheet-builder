@@ -1,5 +1,5 @@
 import { Moon, Sun } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ImportPanel } from "../components/ImportPanel";
 import { PdfActions } from "../components/PdfActions";
 import { PlayerInfoForm } from "../components/PlayerInfoForm";
@@ -21,6 +21,7 @@ const getInitialTheme = (): ThemeMode => {
 
 export function App() {
   const { teamSheet, validation, updatePlayer, updatePokemon, replacePokemon, reset } = useTeamSheetState();
+  const sideColumnRef = useRef<HTMLElement | null>(null);
   const [theme, setTheme] = useState<ThemeMode>(getInitialTheme);
   const isDarkMode = theme === "dark";
 
@@ -28,6 +29,32 @@ export function App() {
     document.documentElement.dataset.theme = theme;
     window.localStorage.setItem(THEME_STORAGE_KEY, theme);
   }, [theme]);
+
+  useEffect(() => {
+    const element = sideColumnRef.current;
+    if (!element) return;
+
+    const updateFloatingTrayClearance = () => {
+      const bottom = Number.parseFloat(window.getComputedStyle(element).bottom) || 0;
+      const height = element.getBoundingClientRect().height;
+      document.documentElement.style.setProperty(
+        "--mobile-floating-tray-clearance",
+        `${Math.ceil(height + bottom)}px`
+      );
+    };
+
+    updateFloatingTrayClearance();
+    const resizeObserver =
+      typeof ResizeObserver === "undefined" ? null : new ResizeObserver(updateFloatingTrayClearance);
+    resizeObserver?.observe(element);
+    window.addEventListener("resize", updateFloatingTrayClearance);
+
+    return () => {
+      resizeObserver?.disconnect();
+      window.removeEventListener("resize", updateFloatingTrayClearance);
+      document.documentElement.style.removeProperty("--mobile-floating-tray-clearance");
+    };
+  }, []);
 
   return (
     <main className="app-shell">
@@ -58,7 +85,7 @@ export function App() {
           <PlayerInfoForm player={teamSheet.player} onChange={updatePlayer} />
           <TeamForm pokemon={teamSheet.pokemon} onChange={updatePokemon} />
         </div>
-        <aside className="side-column">
+        <aside className="side-column" ref={sideColumnRef}>
           <ValidationPanel validation={validation} />
           <PdfActions teamSheet={teamSheet} validation={validation} onClear={reset} />
         </aside>

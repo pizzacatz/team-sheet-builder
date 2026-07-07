@@ -1,4 +1,5 @@
-import { AlertTriangle, CheckCircle2 } from "lucide-react";
+import { AlertTriangle } from "lucide-react";
+import { useEffect, useState } from "react";
 import type { ValidationIssue } from "../domain/validationTypes";
 import type { ValidationResult } from "../domain/validationTypes";
 
@@ -71,20 +72,62 @@ const IssueRow = ({ issue, index }: { issue: ValidationIssue; index: number }) =
 export function ValidationPanel({ validation }: ValidationPanelProps) {
   const errors = validation.issues.filter((issue) => issue.severity === "error");
   const warnings = validation.issues.filter((issue) => issue.severity === "warning");
+  const hasErrors = errors.length > 0;
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
+  const [isMobileExpanded, setIsMobileExpanded] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 760px)");
+    const updateViewport = () => setIsMobileViewport(mediaQuery.matches);
+    updateViewport();
+    mediaQuery.addEventListener("change", updateViewport);
+    return () => mediaQuery.removeEventListener("change", updateViewport);
+  }, []);
+
+  useEffect(() => {
+    if (!hasErrors || !isMobileViewport) {
+      setIsMobileExpanded(false);
+    }
+  }, [hasErrors, isMobileViewport]);
+
+  const canToggleMobileIssues = hasErrors && isMobileViewport;
+  const summaryClassName = `section-heading validation-summary${canToggleMobileIssues ? " validation-summary-button" : ""}`;
+  const summaryContent = (
+    <>
+      <h2 id="validation-heading">Validation</h2>
+      {hasErrors ? (
+        <span className="status-pill invalid">
+          <AlertTriangle size={16} />
+          {`${errors.length} errors`}
+        </span>
+      ) : (
+        <span className="status-pill valid">Ready</span>
+      )}
+    </>
+  );
 
   return (
-    <section className="section-panel validation-panel" aria-labelledby="validation-heading">
-      <div className="section-heading">
-        <h2 id="validation-heading">Validation</h2>
-        <span className={`status-pill ${validation.isValid ? "valid" : "invalid"}`}>
-          {validation.isValid ? <CheckCircle2 size={16} /> : <AlertTriangle size={16} />}
-          {validation.isValid ? "Ready" : `${errors.length} errors`}
-        </span>
-      </div>
+    <section
+      className={`section-panel validation-panel${hasErrors ? " has-errors" : ""}${isMobileExpanded ? " is-mobile-expanded" : ""}`}
+      aria-labelledby="validation-heading"
+    >
+      {canToggleMobileIssues ? (
+        <button
+          type="button"
+          className={summaryClassName}
+          onClick={() => setIsMobileExpanded((current) => !current)}
+          aria-expanded={isMobileExpanded}
+          aria-controls="validation-issue-list"
+        >
+          {summaryContent}
+        </button>
+      ) : (
+        <div className={summaryClassName}>{summaryContent}</div>
+      )}
       {validation.issues.length === 0 ? (
         <p className="empty-state">Complete team data will be checked here.</p>
       ) : (
-        <div className="issue-list">
+        <div className="issue-list" id="validation-issue-list">
           {errors.map((issue, index) => (
             <IssueRow key={`${issue.path}-${issue.code}-${index}`} issue={issue} index={index} />
           ))}
