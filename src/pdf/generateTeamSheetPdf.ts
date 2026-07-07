@@ -7,6 +7,7 @@ import { opponentSlots, pageSize, playerCoordinates, staffSlots, type SlotCoordi
 const TEMPLATE_PATH = `${import.meta.env.BASE_URL}templates/pokemon-vg-team-list.pdf`;
 export type TeamSheetPdfType = "both" | "open" | "staff";
 const PDF_FONT_SIZE_BUMP = 1;
+const WATERMARK_TEXT = "teamsheet.georgiaplayevents.com";
 
 const loadTemplate = async (): Promise<PDFDocument> => {
   try {
@@ -98,6 +99,19 @@ const displayMove = (moveId: string | null): string => movesById.get(moveId ?? "
 const displayStatAlignment = (entry: PokemonEntry): string =>
   statAlignmentsById.get(entry.statAlignment.value ?? "")?.displayName ?? "";
 
+const drawFooterWatermark = (page: PDFPage, font: PDFFont) => {
+  const fontSize = 18;
+  const width = font.widthOfTextAtSize(WATERMARK_TEXT, fontSize);
+  page.drawText(WATERMARK_TEXT, {
+    x: (pageSize.width - width) / 2,
+    y: 10,
+    size: fontSize,
+    font,
+    color: rgb(0.22, 0.22, 0.22),
+    opacity: 0.26
+  });
+};
+
 const drawPlayerInfo = (page: PDFPage, font: PDFFont, teamSheet: TeamSheet, includePrivateFields: boolean) => {
   const player = teamSheet.player;
   drawFittedText(page, font, player.name, playerCoordinates.playerName.x, playerCoordinates.playerName.y, playerCoordinates.playerName.maxWidth, 11);
@@ -187,6 +201,7 @@ const drawSlot = (page: PDFPage, font: PDFFont, entry: PokemonEntry, coordinates
 export async function generateTeamSheetPdf(teamSheet: TeamSheet, sheetType: TeamSheetPdfType = "both"): Promise<Blob> {
   const pdfDoc = await loadTemplate();
   const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+  const watermarkFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
 
   while (pdfDoc.getPageCount() < 2) {
     pdfDoc.addPage([pageSize.width, pageSize.height]);
@@ -198,6 +213,7 @@ export async function generateTeamSheetPdf(teamSheet: TeamSheet, sheetType: Team
     teamSheet.pokemon.forEach((entry, index) => {
       drawSlot(staffPage, font, entry, staffSlots[index]);
     });
+    drawFooterWatermark(staffPage, watermarkFont);
   }
 
   if (sheetType === "open" || sheetType === "both") {
@@ -206,6 +222,7 @@ export async function generateTeamSheetPdf(teamSheet: TeamSheet, sheetType: Team
     teamSheet.pokemon.forEach((entry, index) => {
       drawSlot(opponentPage, font, entry, opponentSlots[index]);
     });
+    drawFooterWatermark(opponentPage, watermarkFont);
   }
 
   if (sheetType === "staff") {
