@@ -58,6 +58,34 @@ const drawFittedText = (
   });
 };
 
+const drawCenteredFittedText = (
+  page: PDFPage,
+  font: PDFFont,
+  text: string | null | undefined,
+  centerX: number,
+  y: number,
+  maxWidth: number,
+  size = 10
+) => {
+  const safeText = cleanText(text);
+  if (!safeText) return;
+
+  let fontSize = size;
+  while (fontSize > 7 && font.widthOfTextAtSize(safeText, fontSize) > maxWidth) {
+    fontSize -= 0.5;
+  }
+
+  const width = font.widthOfTextAtSize(safeText, fontSize);
+  page.drawText(safeText, {
+    x: centerX - width / 2,
+    y,
+    size: fontSize,
+    font,
+    color: rgb(0, 0, 0),
+    maxWidth
+  });
+};
+
 const displaySpecies = (entry: PokemonEntry): string => {
   const species = speciesById.get(entry.speciesId ?? "");
   return species?.pdfName ?? entry.displayName;
@@ -116,7 +144,7 @@ const drawSlot = (page: PDFPage, font: PDFFont, entry: PokemonEntry, coordinates
     coordinates.valueX,
     coordinates.y.statAlignment,
     coordinates.maxMainWidth,
-    10
+    11
   );
   drawFittedText(page, font, displayAbility(entry), coordinates.valueX, coordinates.y.ability, coordinates.maxMainWidth, 11);
   drawFittedText(page, font, displayItem(entry), coordinates.valueX, coordinates.y.item, coordinates.maxMainWidth, 11);
@@ -134,7 +162,7 @@ const drawSlot = (page: PDFPage, font: PDFFont, entry: PokemonEntry, coordinates
       coordinates.y.moves[3]
     ];
     statRows.forEach((stat, index) => {
-      drawFittedText(page, font, stats[stat.key], statX + 30, statY[index], 28, 10);
+      drawCenteredFittedText(page, font, stats[stat.key], statX + 38, statY[index], 28, 10);
     });
   }
 };

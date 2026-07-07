@@ -21,24 +21,24 @@ export const pageSize = {
 const page1Y = [
   {
     species: 610,
-    statAlignment: 585,
+    statAlignment: 582,
     ability: 560,
     item: 537,
     moves: [513, 490, 467, 444] as [number, number, number, number]
   },
   {
     species: 409,
-    statAlignment: 384,
+    statAlignment: 381,
     ability: 359,
     item: 336,
     moves: [312, 289, 266, 243] as [number, number, number, number]
   },
   {
     species: 208,
-    statAlignment: 183,
+    statAlignment: 180,
     ability: 158,
     item: 135,
-    moves: [111, 88, 70, 50] as [number, number, number, number]
+    moves: [111, 88, 64, 44] as [number, number, number, number]
   }
 ];
 
