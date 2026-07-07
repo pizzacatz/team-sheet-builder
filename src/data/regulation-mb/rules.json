@@ -1,0 +1,15 @@
+{
+  "regulation": "M-B",
+  "dataVersion": "M-B+2026-06-22",
+  "enabledGimmicks": [
+    "mega"
+  ],
+  "statPoints": {
+    "totalMax": 66,
+    "perStatMax": 32
+  },
+  "speciesClause": "nationalDexNumber",
+  "itemClause": true,
+  "teraEnabled": false,
+  "source": "Champions Logic MCP / SQLite export"
+}

@@ -1,0 +1,686 @@
+[
+  {
+    "id": "abomasnowmega",
+    "baseSpeciesId": "abomasnow",
+    "displayName": "Abomasnow-Mega",
+    "megaStoneId": "abomasite",
+    "abilityId": "snow-warning",
+    "abilityName": "Snow Warning",
+    "pdfName": "Abomasnow-Mega"
+  },
+  {
+    "id": "absolmega",
+    "baseSpeciesId": "absol",
+    "displayName": "Absol-Mega",
+    "megaStoneId": "absolite",
+    "abilityId": "magic-bounce",
+    "abilityName": "Magic Bounce",
+    "pdfName": "Absol-Mega"
+  },
+  {
+    "id": "aerodactylmega",
+    "baseSpeciesId": "aerodactyl",
+    "displayName": "Aerodactyl-Mega",
+    "megaStoneId": "aerodactylite",
+    "abilityId": "tough-claws",
+    "abilityName": "Tough Claws",
+    "pdfName": "Aerodactyl-Mega"
+  },
+  {
+    "id": "aggronmega",
+    "baseSpeciesId": "aggron",
+    "displayName": "Aggron-Mega",
+    "megaStoneId": "aggronite",
+    "abilityId": "filter",
+    "abilityName": "Filter",
+    "pdfName": "Aggron-Mega"
+  },
+  {
+    "id": "alakazammega",
+    "baseSpeciesId": "alakazam",
+    "displayName": "Alakazam-Mega",
+    "megaStoneId": "alakazite",
+    "abilityId": "trace",
+    "abilityName": "Trace",
+    "pdfName": "Alakazam-Mega"
+  },
+  {
+    "id": "altariamega",
+    "baseSpeciesId": "altaria",
+    "displayName": "Altaria-Mega",
+    "megaStoneId": "altarianite",
+    "abilityId": "pixilate",
+    "abilityName": "Pixilate",
+    "pdfName": "Altaria-Mega"
+  },
+  {
+    "id": "ampharosmega",
+    "baseSpeciesId": "ampharos",
+    "displayName": "Ampharos-Mega",
+    "megaStoneId": "ampharosite",
+    "abilityId": "mold-breaker",
+    "abilityName": "Mold Breaker",
+    "pdfName": "Ampharos-Mega"
+  },
+  {
+    "id": "audinomega",
+    "baseSpeciesId": "audino",
+    "displayName": "Audino-Mega",
+    "megaStoneId": "audinite",
+    "abilityId": "healer",
+    "abilityName": "Healer",
+    "pdfName": "Audino-Mega"
+  },
+  {
+    "id": "banettemega",
+    "baseSpeciesId": "banette",
+    "displayName": "Banette-Mega",
+    "megaStoneId": "banettite",
+    "abilityId": "prankster",
+    "abilityName": "Prankster",
+    "pdfName": "Banette-Mega"
+  },
+  {
+    "id": "barbaraclemega",
+    "baseSpeciesId": "barbaracle",
+    "displayName": "Barbaracle-Mega",
+    "megaStoneId": "barbaracite",
+    "abilityId": "tough-claws",
+    "abilityName": "Tough Claws",
+    "pdfName": "Barbaracle-Mega"
+  },
+  {
+    "id": "beedrillmega",
+    "baseSpeciesId": "beedrill",
+    "displayName": "Beedrill-Mega",
+    "megaStoneId": "beedrillite",
+    "abilityId": "adaptability",
+    "abilityName": "Adaptability",
+    "pdfName": "Beedrill-Mega"
+  },
+  {
+    "id": "blastoisemega",
+    "baseSpeciesId": "blastoise",
+    "displayName": "Blastoise-Mega",
+    "megaStoneId": "blastoisinite",
+    "abilityId": "mega-launcher",
+    "abilityName": "Mega Launcher",
+    "pdfName": "Blastoise-Mega"
+  },
+  {
+    "id": "blazikenmega",
+    "baseSpeciesId": "blaziken",
+    "displayName": "Blaziken-Mega",
+    "megaStoneId": "blazikenite",
+    "abilityId": "speed-boost",
+    "abilityName": "Speed Boost",
+    "pdfName": "Blaziken-Mega"
+  },
+  {
+    "id": "cameruptmega",
+    "baseSpeciesId": "camerupt",
+    "displayName": "Camerupt-Mega",
+    "megaStoneId": "cameruptite",
+    "abilityId": "sheer-force",
+    "abilityName": "Sheer Force",
+    "pdfName": "Camerupt-Mega"
+  },
+  {
+    "id": "chandeluremega",
+    "baseSpeciesId": "chandelure",
+    "displayName": "Chandelure-Mega",
+    "megaStoneId": "chandelurite",
+    "abilityId": "infiltrator",
+    "abilityName": "Infiltrator",
+    "pdfName": "Chandelure-Mega"
+  },
+  {
+    "id": "charizardmegax",
+    "baseSpeciesId": "charizard",
+    "displayName": "Charizard-Mega-X",
+    "megaStoneId": "charizardite-x",
+    "abilityId": "tough-claws",
+    "abilityName": "Tough Claws",
+    "pdfName": "Charizard-Mega-X"
+  },
+  {
+    "id": "charizardmegay",
+    "baseSpeciesId": "charizard",
+    "displayName": "Charizard-Mega-Y",
+    "megaStoneId": "charizardite-y",
+    "abilityId": "drought",
+    "abilityName": "Drought",
+    "pdfName": "Charizard-Mega-Y"
+  },
+  {
+    "id": "chesnaughtmega",
+    "baseSpeciesId": "chesnaught",
+    "displayName": "Chesnaught-Mega",
+    "megaStoneId": "chesnaughtite",
+    "abilityId": "bulletproof",
+    "abilityName": "Bulletproof",
+    "pdfName": "Chesnaught-Mega"
+  },
+  {
+    "id": "chimechomega",
+    "baseSpeciesId": "chimecho",
+    "displayName": "Chimecho-Mega",
+    "megaStoneId": "chimechite",
+    "abilityId": "levitate",
+    "abilityName": "Levitate",
+    "pdfName": "Chimecho-Mega"
+  },
+  {
+    "id": "clefablemega",
+    "baseSpeciesId": "clefable",
+    "displayName": "Clefable-Mega",
+    "megaStoneId": "clefablite",
+    "abilityId": "magic-bounce",
+    "abilityName": "Magic Bounce",
+    "pdfName": "Clefable-Mega"
+  },
+  {
+    "id": "crabominablemega",
+    "baseSpeciesId": "crabominable",
+    "displayName": "Crabominable-Mega",
+    "megaStoneId": "crabominite",
+    "abilityId": "iron-fist",
+    "abilityName": "Iron Fist",
+    "pdfName": "Crabominable-Mega"
+  },
+  {
+    "id": "delphoxmega",
+    "baseSpeciesId": "delphox",
+    "displayName": "Delphox-Mega",
+    "megaStoneId": "delphoxite",
+    "abilityId": "levitate",
+    "abilityName": "Levitate",
+    "pdfName": "Delphox-Mega"
+  },
+  {
+    "id": "dragalgemega",
+    "baseSpeciesId": "dragalge",
+    "displayName": "Dragalge-Mega",
+    "megaStoneId": "dragalgite",
+    "abilityId": "regenerator",
+    "abilityName": "Regenerator",
+    "pdfName": "Dragalge-Mega"
+  },
+  {
+    "id": "dragonitemega",
+    "baseSpeciesId": "dragonite",
+    "displayName": "Dragonite-Mega",
+    "megaStoneId": "dragoninite",
+    "abilityId": "multiscale",
+    "abilityName": "Multiscale",
+    "pdfName": "Dragonite-Mega"
+  },
+  {
+    "id": "drampamega",
+    "baseSpeciesId": "drampa",
+    "displayName": "Drampa-Mega",
+    "megaStoneId": "drampanite",
+    "abilityId": "berserk",
+    "abilityName": "Berserk",
+    "pdfName": "Drampa-Mega"
+  },
+  {
+    "id": "eelektrossmega",
+    "baseSpeciesId": "eelektross",
+    "displayName": "Eelektross-Mega",
+    "megaStoneId": "eelektrossite",
+    "abilityId": "eelevate",
+    "abilityName": "Eelevate",
+    "pdfName": "Eelektross-Mega"
+  },
+  {
+    "id": "emboarmega",
+    "baseSpeciesId": "emboar",
+    "displayName": "Emboar-Mega",
+    "megaStoneId": "emboarite",
+    "abilityId": "mold-breaker",
+    "abilityName": "Mold Breaker",
+    "pdfName": "Emboar-Mega"
+  },
+  {
+    "id": "excadrillmega",
+    "baseSpeciesId": "excadrill",
+    "displayName": "Excadrill-Mega",
+    "megaStoneId": "excadrite",
+    "abilityId": "piercing-drill",
+    "abilityName": "Piercing Drill",
+    "pdfName": "Excadrill-Mega"
+  },
+  {
+    "id": "falinksmega",
+    "baseSpeciesId": "falinks",
+    "displayName": "Falinks-Mega",
+    "megaStoneId": "falinksite",
+    "abilityId": "defiant",
+    "abilityName": "Defiant",
+    "pdfName": "Falinks-Mega"
+  },
+  {
+    "id": "feraligatrmega",
+    "baseSpeciesId": "feraligatr",
+    "displayName": "Feraligatr-Mega",
+    "megaStoneId": "feraligite",
+    "abilityId": "dragonize",
+    "abilityName": "Dragonize",
+    "pdfName": "Feraligatr-Mega"
+  },
+  {
+    "id": "floettemega",
+    "baseSpeciesId": "floetteeternal",
+    "displayName": "Floette-Mega",
+    "megaStoneId": "floettite",
+    "abilityId": "fairy-aura",
+    "abilityName": "Fairy Aura",
+    "pdfName": "Floette-Mega"
+  },
+  {
+    "id": "froslassmega",
+    "baseSpeciesId": "froslass",
+    "displayName": "Froslass-Mega",
+    "megaStoneId": "froslassite",
+    "abilityId": "snow-warning",
+    "abilityName": "Snow Warning",
+    "pdfName": "Froslass-Mega"
+  },
+  {
+    "id": "gallademega",
+    "baseSpeciesId": "gallade",
+    "displayName": "Gallade-Mega",
+    "megaStoneId": "galladite",
+    "abilityId": "inner-focus",
+    "abilityName": "Inner Focus",
+    "pdfName": "Gallade-Mega"
+  },
+  {
+    "id": "garchompmega",
+    "baseSpeciesId": "garchomp",
+    "displayName": "Garchomp-Mega",
+    "megaStoneId": "garchompite",
+    "abilityId": "sand-force",
+    "abilityName": "Sand Force",
+    "pdfName": "Garchomp-Mega"
+  },
+  {
+    "id": "gardevoirmega",
+    "baseSpeciesId": "gardevoir",
+    "displayName": "Gardevoir-Mega",
+    "megaStoneId": "gardevoirite",
+    "abilityId": "pixilate",
+    "abilityName": "Pixilate",
+    "pdfName": "Gardevoir-Mega"
+  },
+  {
+    "id": "gengarmega",
+    "baseSpeciesId": "gengar",
+    "displayName": "Gengar-Mega",
+    "megaStoneId": "gengarite",
+    "abilityId": "shadow-tag",
+    "abilityName": "Shadow Tag",
+    "pdfName": "Gengar-Mega"
+  },
+  {
+    "id": "glaliemega",
+    "baseSpeciesId": "glalie",
+    "displayName": "Glalie-Mega",
+    "megaStoneId": "glalitite",
+    "abilityId": "refrigerate",
+    "abilityName": "Refrigerate",
+    "pdfName": "Glalie-Mega"
+  },
+  {
+    "id": "glimmoramega",
+    "baseSpeciesId": "glimmora",
+    "displayName": "Glimmora-Mega",
+    "megaStoneId": "glimmoranite",
+    "abilityId": "adaptability",
+    "abilityName": "Adaptability",
+    "pdfName": "Glimmora-Mega"
+  },
+  {
+    "id": "golurkmega",
+    "baseSpeciesId": "golurk",
+    "displayName": "Golurk-Mega",
+    "megaStoneId": "golurkite",
+    "abilityId": "unseen-fist",
+    "abilityName": "Unseen Fist",
+    "pdfName": "Golurk-Mega"
+  },
+  {
+    "id": "greninjamega",
+    "baseSpeciesId": "greninja",
+    "displayName": "Greninja-Mega",
+    "megaStoneId": "greninjite",
+    "abilityId": "protean",
+    "abilityName": "Protean",
+    "pdfName": "Greninja-Mega"
+  },
+  {
+    "id": "gyaradosmega",
+    "baseSpeciesId": "gyarados",
+    "displayName": "Gyarados-Mega",
+    "megaStoneId": "gyaradosite",
+    "abilityId": "mold-breaker",
+    "abilityName": "Mold Breaker",
+    "pdfName": "Gyarados-Mega"
+  },
+  {
+    "id": "hawluchamega",
+    "baseSpeciesId": "hawlucha",
+    "displayName": "Hawlucha-Mega",
+    "megaStoneId": "hawluchanite",
+    "abilityId": "no-guard",
+    "abilityName": "No Guard",
+    "pdfName": "Hawlucha-Mega"
+  },
+  {
+    "id": "heracrossmega",
+    "baseSpeciesId": "heracross",
+    "displayName": "Heracross-Mega",
+    "megaStoneId": "heracronite",
+    "abilityId": "skill-link",
+    "abilityName": "Skill Link",
+    "pdfName": "Heracross-Mega"
+  },
+  {
+    "id": "houndoommega",
+    "baseSpeciesId": "houndoom",
+    "displayName": "Houndoom-Mega",
+    "megaStoneId": "houndoominite",
+    "abilityId": "solar-power",
+    "abilityName": "Solar Power",
+    "pdfName": "Houndoom-Mega"
+  },
+  {
+    "id": "kangaskhanmega",
+    "baseSpeciesId": "kangaskhan",
+    "displayName": "Kangaskhan-Mega",
+    "megaStoneId": "kangaskhanite",
+    "abilityId": "parental-bond",
+    "abilityName": "Parental Bond",
+    "pdfName": "Kangaskhan-Mega"
+  },
+  {
+    "id": "lopunnymega",
+    "baseSpeciesId": "lopunny",
+    "displayName": "Lopunny-Mega",
+    "megaStoneId": "lopunnite",
+    "abilityId": "scrappy",
+    "abilityName": "Scrappy",
+    "pdfName": "Lopunny-Mega"
+  },
+  {
+    "id": "lucariomega",
+    "baseSpeciesId": "lucario",
+    "displayName": "Lucario-Mega",
+    "megaStoneId": "lucarionite",
+    "abilityId": "adaptability",
+    "abilityName": "Adaptability",
+    "pdfName": "Lucario-Mega"
+  },
+  {
+    "id": "malamarmega",
+    "baseSpeciesId": "malamar",
+    "displayName": "Malamar-Mega",
+    "megaStoneId": "malamarite",
+    "abilityId": "contrary",
+    "abilityName": "Contrary",
+    "pdfName": "Malamar-Mega"
+  },
+  {
+    "id": "manectricmega",
+    "baseSpeciesId": "manectric",
+    "displayName": "Manectric-Mega",
+    "megaStoneId": "manectite",
+    "abilityId": "intimidate",
+    "abilityName": "Intimidate",
+    "pdfName": "Manectric-Mega"
+  },
+  {
+    "id": "mawilemega",
+    "baseSpeciesId": "mawile",
+    "displayName": "Mawile-Mega",
+    "megaStoneId": "mawilite",
+    "abilityId": "huge-power",
+    "abilityName": "Huge Power",
+    "pdfName": "Mawile-Mega"
+  },
+  {
+    "id": "medichammega",
+    "baseSpeciesId": "medicham",
+    "displayName": "Medicham-Mega",
+    "megaStoneId": "medichamite",
+    "abilityId": "pure-power",
+    "abilityName": "Pure Power",
+    "pdfName": "Medicham-Mega"
+  },
+  {
+    "id": "meganiummega",
+    "baseSpeciesId": "meganium",
+    "displayName": "Meganium-Mega",
+    "megaStoneId": "meganiumite",
+    "abilityId": "mega-sol",
+    "abilityName": "Mega Sol",
+    "pdfName": "Meganium-Mega"
+  },
+  {
+    "id": "meowsticfmega",
+    "baseSpeciesId": "meowsticf",
+    "displayName": "Meowstic-F-Mega",
+    "megaStoneId": "meowsticite",
+    "abilityId": "trace",
+    "abilityName": "Trace",
+    "pdfName": "Meowstic-F-Mega"
+  },
+  {
+    "id": "meowsticmmega",
+    "baseSpeciesId": "meowstic",
+    "displayName": "Meowstic-M-Mega",
+    "megaStoneId": "meowsticite",
+    "abilityId": "trace",
+    "abilityName": "Trace",
+    "pdfName": "Meowstic-M-Mega"
+  },
+  {
+    "id": "metagrossmega",
+    "baseSpeciesId": "metagross",
+    "displayName": "Metagross-Mega",
+    "megaStoneId": "metagrossite",
+    "abilityId": "tough-claws",
+    "abilityName": "Tough Claws",
+    "pdfName": "Metagross-Mega"
+  },
+  {
+    "id": "pidgeotmega",
+    "baseSpeciesId": "pidgeot",
+    "displayName": "Pidgeot-Mega",
+    "megaStoneId": "pidgeotite",
+    "abilityId": "no-guard",
+    "abilityName": "No Guard",
+    "pdfName": "Pidgeot-Mega"
+  },
+  {
+    "id": "pinsirmega",
+    "baseSpeciesId": "pinsir",
+    "displayName": "Pinsir-Mega",
+    "megaStoneId": "pinsirite",
+    "abilityId": "aerilate",
+    "abilityName": "Aerilate",
+    "pdfName": "Pinsir-Mega"
+  },
+  {
+    "id": "pyroarmega",
+    "baseSpeciesId": "pyroar",
+    "displayName": "Pyroar-Mega",
+    "megaStoneId": "pyroarite",
+    "abilityId": "fire-mane",
+    "abilityName": "Fire Mane",
+    "pdfName": "Pyroar-Mega"
+  },
+  {
+    "id": "raichumegax",
+    "baseSpeciesId": "raichu",
+    "displayName": "Raichu-Mega-X",
+    "megaStoneId": "raichunite-x",
+    "abilityId": "electric-surge",
+    "abilityName": "Electric Surge",
+    "pdfName": "Raichu-Mega-X"
+  },
+  {
+    "id": "raichumegay",
+    "baseSpeciesId": "raichu",
+    "displayName": "Raichu-Mega-Y",
+    "megaStoneId": "raichunite-y",
+    "abilityId": "no-guard",
+    "abilityName": "No Guard",
+    "pdfName": "Raichu-Mega-Y"
+  },
+  {
+    "id": "sableyemega",
+    "baseSpeciesId": "sableye",
+    "displayName": "Sableye-Mega",
+    "megaStoneId": "sablenite",
+    "abilityId": "magic-bounce",
+    "abilityName": "Magic Bounce",
+    "pdfName": "Sableye-Mega"
+  },
+  {
+    "id": "sceptilemega",
+    "baseSpeciesId": "sceptile",
+    "displayName": "Sceptile-Mega",
+    "megaStoneId": "sceptilite",
+    "abilityId": "lightning-rod",
+    "abilityName": "Lightning Rod",
+    "pdfName": "Sceptile-Mega"
+  },
+  {
+    "id": "scizormega",
+    "baseSpeciesId": "scizor",
+    "displayName": "Scizor-Mega",
+    "megaStoneId": "scizorite",
+    "abilityId": "technician",
+    "abilityName": "Technician",
+    "pdfName": "Scizor-Mega"
+  },
+  {
+    "id": "scolipedemega",
+    "baseSpeciesId": "scolipede",
+    "displayName": "Scolipede-Mega",
+    "megaStoneId": "scolipite",
+    "abilityId": "shell-armor",
+    "abilityName": "Shell Armor",
+    "pdfName": "Scolipede-Mega"
+  },
+  {
+    "id": "scovillainmega",
+    "baseSpeciesId": "scovillain",
+    "displayName": "Scovillain-Mega",
+    "megaStoneId": "scovillainite",
+    "abilityId": "spicy-spray",
+    "abilityName": "Spicy Spray",
+    "pdfName": "Scovillain-Mega"
+  },
+  {
+    "id": "scraftymega",
+    "baseSpeciesId": "scrafty",
+    "displayName": "Scrafty-Mega",
+    "megaStoneId": "scraftinite",
+    "abilityId": "intimidate",
+    "abilityName": "Intimidate",
+    "pdfName": "Scrafty-Mega"
+  },
+  {
+    "id": "sharpedomega",
+    "baseSpeciesId": "sharpedo",
+    "displayName": "Sharpedo-Mega",
+    "megaStoneId": "sharpedonite",
+    "abilityId": "strong-jaw",
+    "abilityName": "Strong Jaw",
+    "pdfName": "Sharpedo-Mega"
+  },
+  {
+    "id": "skarmorymega",
+    "baseSpeciesId": "skarmory",
+    "displayName": "Skarmory-Mega",
+    "megaStoneId": "skarmorite",
+    "abilityId": "stalwart",
+    "abilityName": "Stalwart",
+    "pdfName": "Skarmory-Mega"
+  },
+  {
+    "id": "slowbromega",
+    "baseSpeciesId": "slowbro",
+    "displayName": "Slowbro-Mega",
+    "megaStoneId": "slowbronite",
+    "abilityId": "shell-armor",
+    "abilityName": "Shell Armor",
+    "pdfName": "Slowbro-Mega"
+  },
+  {
+    "id": "staraptormega",
+    "baseSpeciesId": "staraptor",
+    "displayName": "Staraptor-Mega",
+    "megaStoneId": "staraptite",
+    "abilityId": "contrary",
+    "abilityName": "Contrary",
+    "pdfName": "Staraptor-Mega"
+  },
+  {
+    "id": "starmiemega",
+    "baseSpeciesId": "starmie",
+    "displayName": "Starmie-Mega",
+    "megaStoneId": "starminite",
+    "abilityId": "huge-power",
+    "abilityName": "Huge Power",
+    "pdfName": "Starmie-Mega"
+  },
+  {
+    "id": "steelixmega",
+    "baseSpeciesId": "steelix",
+    "displayName": "Steelix-Mega",
+    "megaStoneId": "steelixite",
+    "abilityId": "sand-force",
+    "abilityName": "Sand Force",
+    "pdfName": "Steelix-Mega"
+  },
+  {
+    "id": "swampertmega",
+    "baseSpeciesId": "swampert",
+    "displayName": "Swampert-Mega",
+    "megaStoneId": "swampertite",
+    "abilityId": "swift-swim",
+    "abilityName": "Swift Swim",
+    "pdfName": "Swampert-Mega"
+  },
+  {
+    "id": "tyranitarmega",
+    "baseSpeciesId": "tyranitar",
+    "displayName": "Tyranitar-Mega",
+    "megaStoneId": "tyranitarite",
+    "abilityId": "sand-stream",
+    "abilityName": "Sand Stream",
+    "pdfName": "Tyranitar-Mega"
+  },
+  {
+    "id": "venusaurmega",
+    "baseSpeciesId": "venusaur",
+    "displayName": "Venusaur-Mega",
+    "megaStoneId": "venusaurite",
+    "abilityId": "thick-fat",
+    "abilityName": "Thick Fat",
+    "pdfName": "Venusaur-Mega"
+  },
+  {
+    "id": "victreebelmega",
+    "baseSpeciesId": "victreebel",
+    "displayName": "Victreebel-Mega",
+    "megaStoneId": "victreebelite",
+    "abilityId": "innards-out",
+    "abilityName": "Innards Out",
+    "pdfName": "Victreebel-Mega"
+  }
+]
