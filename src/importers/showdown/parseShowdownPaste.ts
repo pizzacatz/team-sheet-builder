@@ -1,5 +1,6 @@
-import { resolveAbility, resolveItem, resolveMove, resolveSpecies, resolveStatAlignment } from "../../domain/normalization";
-import { statsFromSpecies } from "../../domain/stats";
+import { normalizeName, resolveAbility, resolveItem, resolveMove, resolveSpecies, resolveStatAlignment } from "../../domain/normalization";
+import { emptyPokemonStatPoints, statsFromSpeciesWithPoints, type PokemonStatPoints } from "../../domain/stats";
+import type { StatAlignmentRecord } from "../../domain/dataTypes";
 import { createEmptyTeamSheet, emptyPokemonEntry, type PokemonEntry } from "../../domain/teamTypes";
 import { extractSpeciesTextFromHeader } from "./showdownNormalization";
 import type { ImportIssue, ImportResult } from "./showdownTypes";
@@ -19,6 +20,22 @@ const isSilentlyIgnoredField = (lowerLine: string): boolean =>
 
 const oldNeutralNatureNames = new Set(["bashful", "docile", "hardy", "quirky"]);
 
+const statPointLabelMap: Record<string, keyof PokemonStatPoints> = {
+  hp: "hp",
+  atk: "atk",
+  attack: "atk",
+  def: "def",
+  defense: "def",
+  spa: "spa",
+  spatk: "spa",
+  specialattack: "spa",
+  spd: "spd",
+  spdef: "spd",
+  specialdefense: "spd",
+  spe: "spe",
+  speed: "spe"
+};
+
 const addIssue = (
   issues: ImportIssue[],
   severity: "error" | "warning",
@@ -28,6 +45,23 @@ const addIssue = (
   field?: string
 ) => {
   issues.push({ severity, code, message, pokemonIndex, field });
+};
+
+const parseStatPoints = (line: string): PokemonStatPoints => {
+  const points = emptyPokemonStatPoints();
+  const rawPointText = line.includes(":") ? line.slice(line.indexOf(":") + 1) : "";
+  rawPointText
+    .split("/")
+    .map((part) => part.trim())
+    .filter(Boolean)
+    .forEach((part) => {
+      const match = part.match(/^(\d+)\s+(.+)$/);
+      if (!match) return;
+      const statKey = statPointLabelMap[normalizeName(match[2])];
+      if (!statKey) return;
+      points[statKey] = Number(match[1]);
+    });
+  return points;
 };
 
 const parseBlock = (block: string, pokemonIndex: number, issues: ImportIssue[]): PokemonEntry => {
@@ -41,10 +75,10 @@ const parseBlock = (block: string, pokemonIndex: number, issues: ImportIssue[]):
 
   const { speciesText, itemText } = extractSpeciesTextFromHeader(lines[0]);
   const speciesResolution = resolveSpecies(speciesText);
+  const selectedSpecies = speciesResolution?.record;
   if (speciesResolution) {
     entry.speciesId = speciesResolution.record.id;
     entry.displayName = speciesResolution.record.displayName;
-    entry.stats = statsFromSpecies(speciesResolution.record);
     entry.canMegaEvolve = Boolean(speciesResolution.record.allowedMegaForms?.length);
     if (speciesResolution.ambiguous) {
       addIssue(
@@ -73,6 +107,8 @@ const parseBlock = (block: string, pokemonIndex: number, issues: ImportIssue[]):
   let moveCursor = 0;
   let sawNature = false;
   let sawEvs = false;
+  let statPoints = emptyPokemonStatPoints();
+  let alignmentRecord: StatAlignmentRecord | null = null;
 
   for (const line of lines.slice(1)) {
     const lower = line.toLowerCase();
@@ -95,8 +131,9 @@ const parseBlock = (block: string, pokemonIndex: number, issues: ImportIssue[]):
       continue;
     }
 
-    if (lower.startsWith("evs:")) {
+    if (lower.startsWith("evs:") || lower.startsWith("sp:") || lower.startsWith("stat points:")) {
       sawEvs = true;
+      statPoints = parseStatPoints(line);
       continue;
     }
 
@@ -107,6 +144,7 @@ const parseBlock = (block: string, pokemonIndex: number, issues: ImportIssue[]):
       const alignmentResolution = resolveStatAlignment(alignmentText);
       if (alignmentResolution) {
         const normalizedOldNeutral = oldNeutralNatureNames.has(alignmentText.toLowerCase());
+        alignmentRecord = alignmentResolution.record;
         entry.statAlignment = {
           value: alignmentResolution.record.id,
           source: "parsed_from_showdown_nature",
@@ -178,6 +216,7 @@ const parseBlock = (block: string, pokemonIndex: number, issues: ImportIssue[]):
     );
   }
 
+  entry.stats = statsFromSpeciesWithPoints(selectedSpecies, statPoints, alignmentRecord);
   return entry;
 };
 

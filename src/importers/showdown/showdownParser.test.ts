@@ -20,7 +20,35 @@ Jolly Nature
     expect(entry?.itemId).toBe("life-orb");
     expect(entry?.abilityId).toBe("rough-skin");
     expect(entry?.statAlignment.value).toBe("Jolly");
+    expect(entry?.stats).toEqual({
+      hp: "189",
+      atk: "178",
+      def: "115",
+      spa: "90",
+      spd: "105",
+      spe: "169"
+    });
     expect(entry?.moves).toEqual(["stomping-tantrum", "dragon-claw", "rock-slide", "protect"]);
+  });
+
+  it("treats EVs as Champions Stat Points and applies Stat Alignment last", () => {
+    const result = parseShowdownPaste(`
+Venusaur @ Sitrus Berry
+Ability: Chlorophyll
+EVs: 32 HP / 1 Def / 10 SpD / 23 Spe
+Calm Nature
+- Protect
+`);
+
+    expect(result.issues.some((issue) => issue.severity === "error")).toBe(false);
+    expect(result.teamSheet.pokemon?.[0]?.stats).toEqual({
+      hp: "187",
+      atk: "91",
+      def: "104",
+      spa: "120",
+      spd: "143",
+      spe: "123"
+    });
   });
 
   it("uses the species inside nicknamed parentheses", () => {
