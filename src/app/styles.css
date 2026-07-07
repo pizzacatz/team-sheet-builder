@@ -315,7 +315,7 @@ h3 {
   border-radius: 6px;
   background: #ffffff;
   color: #18181b;
-  padding: 9px 10px;
+  padding: 8px 8px;
   line-height: 1.2;
 }
 
@@ -338,11 +338,11 @@ h3 {
 }
 
 .player-info-panel {
-  --in-field-label-width: 178px;
+  --in-field-label-width: 170px;
 }
 
 .pokemon-slot {
-  --in-field-label-width: 116px;
+  --in-field-label-width: 118px;
 }
 
 .in-field-form .field {
@@ -353,14 +353,14 @@ h3 {
   position: absolute;
   z-index: 1;
   top: 1px;
-  left: 8px;
+  left: 4px;
   display: flex;
   width: var(--in-field-label-width);
   height: 37px;
   align-items: center;
   justify-content: flex-end;
   color: #27272a;
-  font-size: 0.72rem;
+  font-size: 0.76rem;
   font-weight: 800;
   line-height: 1.05;
   pointer-events: none;
@@ -371,7 +371,7 @@ h3 {
 .in-field-form .field > select,
 .in-field-form .field > textarea,
 .in-field-form .date-field-control > input:not(.native-date-input) {
-  padding-left: calc(var(--in-field-label-width) + 18px);
+  padding-left: calc(var(--in-field-label-width) + 10px);
 }
 
 .in-field-form .field > input,
@@ -407,7 +407,7 @@ h3 {
   border-radius: 6px;
   background: #ffffff;
   color: #18181b;
-  padding: 9px 8px;
+  padding: 8px 7px;
   line-height: 1.2;
   text-align: center;
 }
@@ -647,11 +647,11 @@ h3 {
 
 @media (max-width: 420px) {
   .pokemon-slot {
-    --in-field-label-width: 82px;
+    --in-field-label-width: 88px;
   }
 
   .pokemon-slot .field > label {
-    font-size: 0.62rem;
+    font-size: 0.66rem;
   }
 
   .slot-pdf-grid {

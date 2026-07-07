@@ -109,7 +109,9 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
     entry.moves.forEach((moveId, moveIndex) => {
       const movePath = `${path}.moves.${moveIndex}`;
       if (!moveId) {
-        issue(issues, "error", movePath, "MISSING_MOVE", `${slot} needs move ${moveIndex + 1}.`);
+        if (moveIndex === 0) {
+          issue(issues, "error", movePath, "MISSING_MOVE", `${slot} needs move 1.`);
+        }
         return;
       }
       if (!getMoveRecord(moveId)) {

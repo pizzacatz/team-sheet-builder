@@ -102,10 +102,11 @@ export function PlayerInfoForm({ player, onChange }: PlayerInfoFormProps) {
       <div className="player-info-grid">
         <div className="player-info-column">
           <div className="field">
-            <label htmlFor="player-name">Player Name *:</label>
+            <label htmlFor="player-name">Player Name:</label>
             <input
               id="player-name"
               value={player.name}
+              aria-required="true"
               onChange={(event) => onChange({ name: event.target.value })}
             />
           </div>

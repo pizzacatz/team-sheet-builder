@@ -37,6 +37,24 @@ describe("generateTeamSheetPdf", () => {
     expect(blob.size).toBeGreaterThan(200_000);
   });
 
+  it("can export separate open and staff team sheets", async () => {
+    const template = await readFile(resolve(process.cwd(), "public/templates/pokemon-vg-team-list.pdf"));
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => new Response(template, { status: 200, headers: { "content-type": "application/pdf" } }))
+    );
+
+    const openBlob = await generateTeamSheetPdf(makeValidTeamSheet(), "open");
+    const staffBlob = await generateTeamSheetPdf(makeValidTeamSheet(), "staff");
+    const openPdf = await PDFDocument.load(await blobToArrayBuffer(openBlob));
+    const staffPdf = await PDFDocument.load(await blobToArrayBuffer(staffBlob));
+
+    expect(openPdf.getPageCount()).toBe(1);
+    expect(staffPdf.getPageCount()).toBe(1);
+    expect(openBlob.size).toBeGreaterThan(100_000);
+    expect(staffBlob.size).toBeGreaterThan(100_000);
+  });
+
   it("does not throw for long common names", async () => {
     const team = makeValidTeamSheet();
     team.player.name = "A Very Long Player Name That Still Needs To Fit";

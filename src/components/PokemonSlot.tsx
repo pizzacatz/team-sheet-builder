@@ -192,7 +192,7 @@ export function PokemonSlot({ index, entry, onChange }: PokemonSlotProps) {
               value={moveId}
               options={includeSelected(moveOptions, allMoveOptions, moveId)}
               onChange={(nextMoveId) => updateMove(moveIndex, nextMoveId)}
-              required
+              required={moveIndex === 0}
             />
           ))}
         </div>

@@ -2,7 +2,7 @@ import { Download, Trash2 } from "lucide-react";
 import { useState } from "react";
 import type { TeamSheet } from "../domain/teamTypes";
 import type { ValidationResult } from "../domain/validationTypes";
-import { generateTeamSheetPdf } from "../pdf/generateTeamSheetPdf";
+import { generateTeamSheetPdf, type TeamSheetPdfType } from "../pdf/generateTeamSheetPdf";
 
 type PdfActionsProps = {
   teamSheet: TeamSheet;
@@ -10,24 +10,26 @@ type PdfActionsProps = {
   onClear: () => void;
 };
 
-const filenameFor = (teamSheet: TeamSheet) => {
+type DownloadType = Exclude<TeamSheetPdfType, "both">;
+
+const filenameFor = (teamSheet: TeamSheet, sheetType: DownloadType) => {
   const player = teamSheet.player.name.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-  return `${player || "team"}-vg-team-list.pdf`;
+  return `${player || "team"}-${sheetType}-team-sheet.pdf`;
 };
 
 export function PdfActions({ teamSheet, validation, onClear }: PdfActionsProps) {
-  const [isGenerating, setIsGenerating] = useState(false);
+  const [generatingType, setGeneratingType] = useState<DownloadType | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const handleGenerate = async () => {
+  const handleGenerate = async (sheetType: DownloadType) => {
     setError(null);
-    setIsGenerating(true);
+    setGeneratingType(sheetType);
     try {
-      const blob = await generateTeamSheetPdf(teamSheet);
+      const blob = await generateTeamSheetPdf(teamSheet, sheetType);
       const url = URL.createObjectURL(blob);
       const anchor = document.createElement("a");
       anchor.href = url;
-      anchor.download = filenameFor(teamSheet);
+      anchor.download = filenameFor(teamSheet, sheetType);
       document.body.appendChild(anchor);
       anchor.click();
       anchor.remove();
@@ -35,15 +37,19 @@ export function PdfActions({ teamSheet, validation, onClear }: PdfActionsProps) 
     } catch (pdfError) {
       setError(pdfError instanceof Error ? pdfError.message : "PDF generation failed.");
     } finally {
-      setIsGenerating(false);
+      setGeneratingType(null);
     }
   };
 
   return (
     <section className="actions-panel" aria-label="PDF actions">
-      <button type="button" className="primary-action" disabled={!validation.isValid || isGenerating} onClick={handleGenerate}>
+      <button type="button" className="primary-action" disabled={!validation.isValid || Boolean(generatingType)} onClick={() => handleGenerate("open")}>
         <Download size={18} />
-        {isGenerating ? "Generating..." : "Download PDF"}
+        {generatingType === "open" ? "Generating..." : "Open Team Sheet"}
+      </button>
+      <button type="button" className="primary-action" disabled={!validation.isValid || Boolean(generatingType)} onClick={() => handleGenerate("staff")}>
+        <Download size={18} />
+        {generatingType === "staff" ? "Generating..." : "Staff Team Sheet"}
       </button>
       <button type="button" className="secondary-action" onClick={onClear}>
         <Trash2 size={18} />

@@ -21,6 +21,17 @@ describe("validateTeamSheet", () => {
     expect(codes(team)).toEqual(expect.arrayContaining(["MISSING_PLAYER_NAME", "MISSING_ABILITY", "MISSING_MOVE", "MISSING_STAT_ALIGNMENT"]));
   });
 
+  it("allows Pokémon to have only one move", () => {
+    const team = makeValidTeamSheet();
+    team.pokemon[0].moves[1] = null;
+    team.pokemon[0].moves[2] = null;
+    team.pokemon[0].moves[3] = null;
+
+    const result = validateTeamSheet(team);
+    expect(result.issues.filter((issue) => issue.code === "MISSING_MOVE")).toHaveLength(0);
+    expect(result.isValid).toBe(true);
+  });
+
   it("catches duplicate species by national dex number", () => {
     const team = makeValidTeamSheet();
     team.pokemon[1].speciesId = team.pokemon[0].speciesId;

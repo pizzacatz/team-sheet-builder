@@ -88,10 +88,7 @@ export function AutocompleteField({
 
   return (
     <div className={`field autocomplete-field${isOpen ? " is-open" : ""}`}>
-      <label htmlFor={inputId}>
-        {label}
-        {required ? <span aria-hidden="true"> *</span> : null}
-      </label>
+      <label htmlFor={inputId}>{label}</label>
       <input
         id={inputId}
         type="text"
@@ -101,6 +98,7 @@ export function AutocompleteField({
         autoComplete="off"
         aria-autocomplete="list"
         aria-expanded={isOpen}
+        aria-required={required || undefined}
         onFocus={openSuggestions}
         onBlur={() => {
           closeTimer.current = window.setTimeout(() => {

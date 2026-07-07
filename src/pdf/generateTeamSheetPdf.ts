@@ -5,6 +5,7 @@ import type { PokemonEntry, TeamSheet } from "../domain/teamTypes";
 import { opponentSlots, pageSize, playerCoordinates, staffSlots, type SlotCoordinates } from "./pdfCoordinates";
 
 const TEMPLATE_PATH = `${import.meta.env.BASE_URL}templates/pokemon-vg-team-list.pdf`;
+export type TeamSheetPdfType = "both" | "open" | "staff";
 
 const loadTemplate = async (): Promise<PDFDocument> => {
   try {
@@ -136,7 +137,7 @@ const drawSlot = (page: PDFPage, font: PDFFont, entry: PokemonEntry, coordinates
   }
 };
 
-export async function generateTeamSheetPdf(teamSheet: TeamSheet): Promise<Blob> {
+export async function generateTeamSheetPdf(teamSheet: TeamSheet, sheetType: TeamSheetPdfType = "both"): Promise<Blob> {
   const pdfDoc = await loadTemplate();
   const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
 
@@ -144,16 +145,32 @@ export async function generateTeamSheetPdf(teamSheet: TeamSheet): Promise<Blob> 
     pdfDoc.addPage([pageSize.width, pageSize.height]);
   }
 
-  const staffPage = pdfDoc.getPage(0);
-  const opponentPage = pdfDoc.getPage(1);
+  if (sheetType === "staff" || sheetType === "both") {
+    const staffPage = pdfDoc.getPage(0);
+    drawPlayerInfo(staffPage, font, teamSheet, true);
+    teamSheet.pokemon.forEach((entry, index) => {
+      drawSlot(staffPage, font, entry, staffSlots[index]);
+    });
+  }
 
-  drawPlayerInfo(staffPage, font, teamSheet, true);
-  drawPlayerInfo(opponentPage, font, teamSheet, false);
+  if (sheetType === "open" || sheetType === "both") {
+    const opponentPage = pdfDoc.getPage(1);
+    drawPlayerInfo(opponentPage, font, teamSheet, false);
+    teamSheet.pokemon.forEach((entry, index) => {
+      drawSlot(opponentPage, font, entry, opponentSlots[index]);
+    });
+  }
 
-  teamSheet.pokemon.forEach((entry, index) => {
-    drawSlot(staffPage, font, entry, staffSlots[index]);
-    drawSlot(opponentPage, font, entry, opponentSlots[index]);
-  });
+  if (sheetType === "staff") {
+    for (let pageIndex = pdfDoc.getPageCount() - 1; pageIndex > 0; pageIndex -= 1) {
+      pdfDoc.removePage(pageIndex);
+    }
+  } else if (sheetType === "open") {
+    pdfDoc.removePage(0);
+    for (let pageIndex = pdfDoc.getPageCount() - 1; pageIndex > 0; pageIndex -= 1) {
+      pdfDoc.removePage(pageIndex);
+    }
+  }
 
   const bytes = await pdfDoc.save();
   const arrayBuffer = new ArrayBuffer(bytes.byteLength);
