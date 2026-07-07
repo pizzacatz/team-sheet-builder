@@ -723,7 +723,7 @@ h3 {
 
 @media (max-width: 760px) {
   .app-shell {
-    padding: 12px 12px max(380px, 48vh);
+    padding: 12px 12px calc(340px + env(safe-area-inset-bottom));
   }
 
   .app-header {
@@ -748,7 +748,7 @@ h3 {
   .field textarea,
   .stat-field input,
   .division-field {
-    scroll-margin-block-end: max(390px, 50vh);
+    scroll-margin-block-end: calc(350px + env(safe-area-inset-bottom));
   }
 
   .side-column {
@@ -756,7 +756,7 @@ h3 {
     z-index: 1200;
     top: auto;
     right: 12px;
-    bottom: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom));
     left: 12px;
     display: grid;
     grid-template-columns: minmax(0, 1fr);

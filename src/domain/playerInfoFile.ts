@@ -23,6 +23,7 @@ const playerInfoKeys = [
 ] as const;
 
 const divisions: Array<PlayerInfo["division"]> = ["Junior", "Senior", "Master", ""];
+const digitsOnly = (value: string): string => value.replace(/\D/g, "");
 
 const asRecord = (value: unknown): Record<string, unknown> | null =>
   value && typeof value === "object" && !Array.isArray(value) ? (value as Record<string, unknown>) : null;
@@ -42,6 +43,7 @@ export const normalizePlayerInfo = (value: unknown): PlayerInfo => {
   if (!divisions.includes(player.division)) {
     player.division = "";
   }
+  player.playerId = digitsOnly(player.playerId ?? "");
 
   return player;
 };

@@ -10,6 +10,7 @@ type PlayerInfoFormProps = {
 
 const ageDivisions: Array<Exclude<PlayerInfo["division"], "" | undefined>> = ["Junior", "Senior", "Master"];
 const maxPlayerInfoFileBytes = 64 * 1024;
+const digitsOnly = (value: string): string => value.replace(/\D/g, "");
 
 const formatDateDigits = (value: string): string => {
   const digits = value.replace(/\D/g, "");
@@ -162,10 +163,12 @@ export function PlayerInfoForm({ player, onChange }: PlayerInfoFormProps) {
             <label htmlFor="player-id">Player ID:</label>
             <input
               id="player-id"
-              value={player.playerId ?? ""}
+              value={digitsOnly(player.playerId ?? "")}
+              inputMode="numeric"
+              pattern="[0-9]*"
               aria-required="true"
               required
-              onChange={(event) => onChange({ playerId: event.target.value })}
+              onChange={(event) => onChange({ playerId: digitsOnly(event.target.value) })}
             />
           </div>
           <div className="field">

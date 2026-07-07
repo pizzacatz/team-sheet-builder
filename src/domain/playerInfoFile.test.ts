@@ -26,11 +26,13 @@ describe("player info file helpers", () => {
     const normalized = normalizePlayerInfo({
       ...player,
       division: "Professor",
+      playerId: "AB12-34x56",
       supportId: 123,
       extra: "ignored"
     });
 
     expect(normalized.division).toBe("");
+    expect(normalized.playerId).toBe("123456");
     expect(normalized.supportId).toBe("");
     expect("extra" in normalized).toBe(false);
   });

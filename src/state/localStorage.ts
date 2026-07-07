@@ -1,4 +1,5 @@
 import { createEmptyTeamSheet, emptyPokemonStats, type TeamSheet } from "../domain/teamTypes";
+import { normalizePlayerInfo } from "../domain/playerInfoFile";
 
 const STORAGE_KEY = "team-sheet-builder:current";
 
@@ -10,7 +11,7 @@ export const loadTeamSheet = (): TeamSheet => {
     return {
       ...createEmptyTeamSheet(),
       ...parsed,
-      player: { ...createEmptyTeamSheet().player, ...parsed.player },
+      player: normalizePlayerInfo(parsed.player),
       pokemon: createEmptyTeamSheet().pokemon.map((emptyEntry, index) => ({
         ...emptyEntry,
         ...(parsed.pokemon?.[index] ?? {}),
