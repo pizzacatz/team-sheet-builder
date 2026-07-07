@@ -46,19 +46,19 @@ export function PdfActions({ teamSheet, validation, onClear }: PdfActionsProps) 
     <section className="actions-panel" aria-label="PDF actions">
       <button type="button" className="primary-action" disabled={!validation.isValid || Boolean(generatingType)} onClick={() => handleGenerate("open")}>
         <Download size={18} />
-        {generatingType === "open" ? "Generating..." : "Open Team Sheet"}
+        <span className="action-label">{generatingType === "open" ? "Generating..." : "Open Team Sheet"}</span>
       </button>
       <button type="button" className="primary-action" disabled={!validation.isValid || Boolean(generatingType)} onClick={() => handleGenerate("staff")}>
         <Download size={18} />
-        {generatingType === "staff" ? "Generating..." : "Staff Team Sheet"}
+        <span className="action-label">{generatingType === "staff" ? "Generating..." : "Staff Team Sheet"}</span>
       </button>
       <button type="button" className="primary-action" disabled={!validation.isValid || Boolean(generatingType)} onClick={() => handleGenerate("both")}>
         <Download size={18} />
-        {generatingType === "both" ? "Generating..." : "Both Team Sheets"}
+        <span className="action-label">{generatingType === "both" ? "Generating..." : "Both Team Sheets"}</span>
       </button>
       <button type="button" className="secondary-action" onClick={onClear}>
         <Trash2 size={18} />
-        Clear Team
+        <span className="action-label">Clear Team</span>
       </button>
       {error ? <p className="error-text">{error}</p> : null}
     </section>

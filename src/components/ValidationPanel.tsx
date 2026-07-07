@@ -8,6 +8,9 @@ type ValidationPanelProps = {
 
 const fieldIdForPath = (path: string): string | null => {
   if (path === "player.name") return "player-name";
+  if (path === "player.trainerName") return "trainer-name";
+  if (path === "player.division") return "age-division-field";
+  if (path === "player.playerId") return "player-id";
 
   const pokemonMatch = path.match(/^pokemon\.(\d+)\.([^.]+)(?:\.(\d+))?/);
   if (!pokemonMatch) return null;

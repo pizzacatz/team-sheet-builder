@@ -27,6 +27,21 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
   if (!teamSheet.player.name.trim()) {
     issue(issues, "error", "player.name", "MISSING_PLAYER_NAME", "Player name is required.");
   }
+  if (!teamSheet.player.trainerName?.trim()) {
+    issue(
+      issues,
+      "error",
+      "player.trainerName",
+      "MISSING_TRAINER_NAME",
+      "Trainer Name in Game is required."
+    );
+  }
+  if (!teamSheet.player.division) {
+    issue(issues, "error", "player.division", "MISSING_AGE_DIVISION", "Age Division is required.");
+  }
+  if (!teamSheet.player.playerId?.trim()) {
+    issue(issues, "error", "player.playerId", "MISSING_PLAYER_ID", "Player ID is required.");
+  }
 
   const speciesDexBySlot = new Map<number, number>();
   const itemBySlot = new Map<string, number>();

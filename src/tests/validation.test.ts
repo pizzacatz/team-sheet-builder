@@ -15,10 +15,23 @@ describe("validateTeamSheet", () => {
   it("requires player name and required slot fields", () => {
     const team = makeValidTeamSheet();
     team.player.name = "";
+    team.player.trainerName = "";
+    team.player.division = "";
+    team.player.playerId = "";
     team.pokemon[0].abilityId = null;
     team.pokemon[0].moves[0] = null;
     team.pokemon[0].statAlignment.value = null;
-    expect(codes(team)).toEqual(expect.arrayContaining(["MISSING_PLAYER_NAME", "MISSING_ABILITY", "MISSING_MOVE", "MISSING_STAT_ALIGNMENT"]));
+    expect(codes(team)).toEqual(
+      expect.arrayContaining([
+        "MISSING_PLAYER_NAME",
+        "MISSING_TRAINER_NAME",
+        "MISSING_AGE_DIVISION",
+        "MISSING_PLAYER_ID",
+        "MISSING_ABILITY",
+        "MISSING_MOVE",
+        "MISSING_STAT_ALIGNMENT"
+      ])
+    );
   });
 
   it("allows Pokémon to have only one move", () => {

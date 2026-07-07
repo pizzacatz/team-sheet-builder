@@ -723,7 +723,7 @@ h3 {
 
 @media (max-width: 760px) {
   .app-shell {
-    padding: 12px;
+    padding: 12px 12px max(380px, 48vh);
   }
 
   .app-header {
@@ -741,6 +741,82 @@ h3 {
   .slot-heading,
   .action-row {
     align-items: start;
+  }
+
+  .field input,
+  .field select,
+  .field textarea,
+  .stat-field input,
+  .division-field {
+    scroll-margin-block-end: max(390px, 50vh);
+  }
+
+  .side-column {
+    position: fixed;
+    z-index: 1200;
+    top: auto;
+    right: 12px;
+    bottom: 12px;
+    left: 12px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+    max-height: min(48vh, 380px);
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+
+  .side-column .section-panel,
+  .side-column .actions-panel {
+    box-shadow: 0 14px 32px var(--menu-shadow);
+  }
+
+  .validation-panel {
+    padding: 10px;
+  }
+
+  .validation-panel .section-heading {
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .validation-panel .issue-list {
+    max-height: 132px;
+  }
+
+  .validation-panel .empty-state {
+    font-size: 0.86rem;
+  }
+
+  .actions-panel {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    padding: 10px;
+  }
+
+  .actions-panel .primary-action,
+  .actions-panel .secondary-action {
+    min-width: 0;
+    min-height: 42px;
+    padding: 8px 9px;
+    font-size: 0.88rem;
+    line-height: 1.1;
+    text-align: center;
+    white-space: normal;
+  }
+
+  .actions-panel .primary-action svg,
+  .actions-panel .secondary-action svg {
+    flex: 0 0 auto;
+  }
+
+  .actions-panel .action-label {
+    min-width: 0;
+  }
+
+  .actions-panel .error-text {
+    grid-column: 1 / -1;
+    margin-bottom: 0;
   }
 }
 

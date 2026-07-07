@@ -107,6 +107,7 @@ export function PlayerInfoForm({ player, onChange }: PlayerInfoFormProps) {
               id="player-name"
               value={player.name}
               aria-required="true"
+              required
               onChange={(event) => onChange({ name: event.target.value })}
             />
           </div>
@@ -115,6 +116,8 @@ export function PlayerInfoForm({ player, onChange }: PlayerInfoFormProps) {
             <input
               id="trainer-name"
               value={player.trainerName ?? ""}
+              aria-required="true"
+              required
               onChange={(event) => onChange({ trainerName: event.target.value })}
             />
           </div>
@@ -136,16 +139,18 @@ export function PlayerInfoForm({ player, onChange }: PlayerInfoFormProps) {
           </div>
         </div>
         <div className="player-info-column">
-          <fieldset className="division-field">
+          <fieldset className="division-field" id="age-division-field" tabIndex={-1} aria-required="true">
             <legend>Age Division:</legend>
             <div className="division-options">
               {ageDivisions.map((division) => (
                 <label key={division} className="radio-option">
                   <input
+                    id={`age-division-${division.toLowerCase()}`}
                     type="radio"
                     name="age-division"
                     value={division}
                     checked={player.division === division}
+                    required
                     onChange={() => onChange({ division })}
                   />
                   <span>{division}</span>
@@ -158,6 +163,8 @@ export function PlayerInfoForm({ player, onChange }: PlayerInfoFormProps) {
             <input
               id="player-id"
               value={player.playerId ?? ""}
+              aria-required="true"
+              required
               onChange={(event) => onChange({ playerId: event.target.value })}
             />
           </div>
