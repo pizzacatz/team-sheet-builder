@@ -128,8 +128,24 @@ const drawPlayerInfo = (page: PDFPage, font: PDFFont, teamSheet: TeamSheet, incl
   if (!includePrivateFields) return;
   drawFittedText(page, font, player.playerId, playerCoordinates.playerId.x, playerCoordinates.playerId.y, playerCoordinates.playerId.maxWidth, 11);
   const [month, day, year] = dateParts(player.dateOfBirth);
-  drawFittedText(page, font, month, playerCoordinates.dateOfBirth.month.x, playerCoordinates.dateOfBirth.month.y, playerCoordinates.dateOfBirth.month.maxWidth, 11);
-  drawFittedText(page, font, day, playerCoordinates.dateOfBirth.day.x, playerCoordinates.dateOfBirth.day.y, playerCoordinates.dateOfBirth.day.maxWidth, 11);
+  drawCenteredFittedText(
+    page,
+    font,
+    month,
+    playerCoordinates.dateOfBirth.month.centerX,
+    playerCoordinates.dateOfBirth.month.y,
+    playerCoordinates.dateOfBirth.month.maxWidth,
+    11
+  );
+  drawCenteredFittedText(
+    page,
+    font,
+    day,
+    playerCoordinates.dateOfBirth.day.centerX,
+    playerCoordinates.dateOfBirth.day.y,
+    playerCoordinates.dateOfBirth.day.maxWidth,
+    11
+  );
   drawFittedText(page, font, year, playerCoordinates.dateOfBirth.year.x, playerCoordinates.dateOfBirth.year.y, playerCoordinates.dateOfBirth.year.maxWidth, 11);
   drawFittedText(page, font, player.supportId, playerCoordinates.supportId.x, playerCoordinates.supportId.y, playerCoordinates.supportId.maxWidth, 11);
 };
@@ -162,7 +178,7 @@ const drawSlot = (page: PDFPage, font: PDFFont, entry: PokemonEntry, coordinates
       coordinates.y.moves[3]
     ];
     statRows.forEach((stat, index) => {
-      drawCenteredFittedText(page, font, stats[stat.key], statX + 38, statY[index], 28, 10);
+      drawCenteredFittedText(page, font, stats[stat.key], statX + 26, statY[index], 28, 10);
     });
   }
 };

@@ -79,17 +79,17 @@ export const opponentSlots: SlotCoordinates[] = page1Y.flatMap((row) => [
 ]);
 
 export const playerCoordinates = {
-  playerName: { x: 140, y: 707, maxWidth: 170 },
-  trainerName: { x: 140, y: 684, maxWidth: 170 },
-  teamName: { x: 140, y: 661, maxWidth: 170 },
-  switchProfileName: { x: 140, y: 638, maxWidth: 170 },
-  playerId: { x: 430, y: 684, maxWidth: 145 },
+  playerName: { x: 146, y: 707, maxWidth: 164 },
+  trainerName: { x: 146, y: 684, maxWidth: 164 },
+  teamName: { x: 146, y: 661, maxWidth: 164 },
+  switchProfileName: { x: 146, y: 638, maxWidth: 164 },
+  playerId: { x: 436, y: 684, maxWidth: 139 },
   dateOfBirth: {
-    month: { x: 430, y: 661, maxWidth: 28 },
-    day: { x: 492, y: 661, maxWidth: 28 },
+    month: { centerX: 454, y: 661, maxWidth: 28 },
+    day: { centerX: 507, y: 661, maxWidth: 28 },
     year: { x: 552, y: 661, maxWidth: 44 }
   },
-  supportId: { x: 430, y: 638, maxWidth: 145 },
+  supportId: { x: 436, y: 638, maxWidth: 139 },
   division: {
     Junior: { x: 474, y: 703 },
     Senior: { x: 529, y: 703 },
