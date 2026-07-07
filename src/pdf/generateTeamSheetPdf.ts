@@ -122,7 +122,7 @@ const drawPlayerInfo = (page: PDFPage, font: PDFFont, teamSheet: TeamSheet, incl
 
   if (player.division) {
     const point = playerCoordinates.division[player.division];
-    page.drawText("X", { x: point.x, y: point.y, size: 11, font, color: rgb(0, 0, 0) });
+    drawCenteredFittedText(page, font, "X", point.centerX, point.y, 12, 11);
   }
 
   if (!includePrivateFields) return;
