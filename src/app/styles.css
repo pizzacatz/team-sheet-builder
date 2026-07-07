@@ -283,7 +283,7 @@ h3 {
 
 .slot-pdf-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(118px, 136px);
+  grid-template-columns: minmax(0, 1fr) minmax(88px, 102px);
   gap: 12px;
   align-items: start;
 }
@@ -659,7 +659,7 @@ h3 {
   }
 
   .slot-pdf-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(96px, 104px);
+    grid-template-columns: minmax(0, 1fr) minmax(84px, 92px);
     gap: 10px;
   }
 

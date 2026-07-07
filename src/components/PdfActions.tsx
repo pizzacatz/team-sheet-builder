@@ -10,11 +10,12 @@ type PdfActionsProps = {
   onClear: () => void;
 };
 
-type DownloadType = Exclude<TeamSheetPdfType, "both">;
+type DownloadType = TeamSheetPdfType;
 
 const filenameFor = (teamSheet: TeamSheet, sheetType: DownloadType) => {
   const player = teamSheet.player.name.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-  return `${player || "team"}-${sheetType}-team-sheet.pdf`;
+  const suffix = sheetType === "both" ? "both-team-sheets" : `${sheetType}-team-sheet`;
+  return `${player || "team"}-${suffix}.pdf`;
 };
 
 export function PdfActions({ teamSheet, validation, onClear }: PdfActionsProps) {
@@ -50,6 +51,10 @@ export function PdfActions({ teamSheet, validation, onClear }: PdfActionsProps) 
       <button type="button" className="primary-action" disabled={!validation.isValid || Boolean(generatingType)} onClick={() => handleGenerate("staff")}>
         <Download size={18} />
         {generatingType === "staff" ? "Generating..." : "Staff Team Sheet"}
+      </button>
+      <button type="button" className="primary-action" disabled={!validation.isValid || Boolean(generatingType)} onClick={() => handleGenerate("both")}>
+        <Download size={18} />
+        {generatingType === "both" ? "Generating..." : "Both Team Sheets"}
       </button>
       <button type="button" className="secondary-action" onClick={onClear}>
         <Trash2 size={18} />
