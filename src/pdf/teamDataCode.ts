@@ -61,6 +61,14 @@ export const encodeTeamDataPayload = (teamSheet: TeamSheet): string =>
     })
     .join(MON_SEP);
 
+/**
+ * Single-line encoding for the QR carrier. It is a one-segment version of the
+ * same wire format, so `decodeTeamDataFromText` decodes a scanned QR string with
+ * no special-casing.
+ */
+export const encodeTeamDataQrText = (teamSheet: TeamSheet): string =>
+  `${TEAM_DATA_SENTINEL}~0~1~${encodeTeamDataPayload(teamSheet)}`;
+
 /** Split the payload into sentinel-prefixed lines for drawing/extraction. */
 export const encodeTeamDataLines = (teamSheet: TeamSheet): string[] => {
   const payload = encodeTeamDataPayload(teamSheet);

@@ -5,6 +5,7 @@ import {
   decodeTeamDataFromText,
   encodeTeamDataLines,
   encodeTeamDataPayload,
+  encodeTeamDataQrText,
   TEAM_DATA_SENTINEL
 } from "./teamDataCode";
 
@@ -50,6 +51,12 @@ describe("teamDataCode", () => {
     const lines = encodeTeamDataLines(makeValidTeamSheet());
     expect(lines.length).toBeGreaterThan(0);
     lines.forEach((line) => expect(line.startsWith(`${TEAM_DATA_SENTINEL}~`)).toBe(true));
+  });
+
+  it("decodes the single-line QR text with the shared decoder", () => {
+    const teamSheet = makeValidTeamSheet();
+    const qrText = encodeTeamDataQrText(teamSheet);
+    expect(decodeTeamDataFromText(qrText)).toEqual(decodeTeamDataFromText(encodeTeamDataLines(teamSheet).join("\n")));
   });
 
   it("returns no pokemon for text without the sentinel", () => {
