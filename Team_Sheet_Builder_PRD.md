@@ -9,6 +9,12 @@
 
 ---
 
+## Current Implementation Note
+
+This document is the original product requirements document. The app has since been implemented and iterated beyond the initial MVP. For the current feature list, local development workflow, data export notes, and GitHub Pages deployment details, see [README.md](./README.md).
+
+---
+
 ## 1. Summary
 
 Team Sheet Builder is a static, mobile-responsive single-page webapp for quickly creating Pokémon VGC team sheets for Regulation M-B.
@@ -913,7 +919,7 @@ Use these only as implementation guidance; official tournament use should be che
 Use this prompt with Codex CLI after placing this PRD in the repository:
 
 ```txt
-You are implementing the MVP described in docs/PRD.md for Team Sheet Builder.
+You are implementing the MVP described in `Team_Sheet_Builder_PRD.md` for Team Sheet Builder.
 
 Build a Vite + React + TypeScript static SPA that can run on GitHub Pages. Follow the architecture in the PRD. Do not add a backend, auth, database, external API dependency, or cloud storage.
 
