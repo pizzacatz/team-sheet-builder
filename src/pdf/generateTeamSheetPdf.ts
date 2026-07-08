@@ -3,6 +3,7 @@ import { abilitiesById, itemsById, movesById, speciesById, statAlignmentsById } 
 import { normalizePokemonStats, statRows } from "../domain/stats";
 import type { PokemonEntry, TeamSheet } from "../domain/teamTypes";
 import { opponentSlots, pageSize, playerCoordinates, staffSlots, type SlotCoordinates } from "./pdfCoordinates";
+import { encodeTeamDataLines } from "./teamDataCode";
 
 const TEMPLATE_PATH = `${import.meta.env.BASE_URL}templates/pokemon-vg-team-list.pdf`;
 export type TeamSheetPdfType = "both" | "open" | "staff";
@@ -112,6 +113,27 @@ const drawFooterWatermark = (page: PDFPage, font: PDFFont) => {
   });
 };
 
+// PII-free, machine-readable team payload drawn as fully transparent text so it
+// stays extractable (pdftotext / pdf.js ignore opacity) without altering the
+// visible sheet. Lines are stacked high on the page and sized to fit the page
+// width so extraction never clips them.
+const drawTeamDataCode = (page: PDFPage, font: PDFFont, teamSheet: TeamSheet) => {
+  const lines = encodeTeamDataLines(teamSheet);
+  const fontSize = 6;
+  const lineHeight = 8;
+  const startY = pageSize.height - 12;
+  lines.forEach((line, index) => {
+    page.drawText(line, {
+      x: 24,
+      y: startY - index * lineHeight,
+      size: fontSize,
+      font,
+      color: rgb(0, 0, 0),
+      opacity: 0
+    });
+  });
+};
+
 const drawPlayerInfo = (page: PDFPage, font: PDFFont, teamSheet: TeamSheet, includePrivateFields: boolean) => {
   const player = teamSheet.player;
   drawFittedText(page, font, player.name, playerCoordinates.playerName.x, playerCoordinates.playerName.y, playerCoordinates.playerName.maxWidth, 11);
@@ -214,6 +236,7 @@ export async function generateTeamSheetPdf(teamSheet: TeamSheet, sheetType: Team
       drawSlot(staffPage, font, entry, staffSlots[index]);
     });
     drawFooterWatermark(staffPage, watermarkFont);
+    drawTeamDataCode(staffPage, font, teamSheet);
   }
 
   if (sheetType === "open" || sheetType === "both") {

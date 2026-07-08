@@ -91,6 +91,18 @@ Available PDF actions:
 
 PDF actions remain disabled while validation contains errors. Mobile omits preview because Chrome mobile does not reliably display the generated object-URL PDF.
 
+### Embedded Team Data
+
+The Staff Team Sheet carries a machine-readable, PII-free copy of the team drawn as fully transparent text (invisible on screen and in print, but extractable by `pdftotext`/pdf.js). It excludes all Player Info and encodes every Pokémon's species/form, ability, held item, moves, Stat Alignment, and final stats using stable internal IDs.
+
+The format is a versioned sentinel (`TSBv1`) split across page-width-safe segments, and is intended to double as a future QR payload. Decode a sheet with:
+
+```bash
+node scripts/decode_team_data.mjs path/to/staff-team-sheet.pdf   # requires poppler's pdftotext
+```
+
+The serializer/decoder lives in `src/pdf/teamDataCode.ts`.
+
 ## Local Development
 
 Prerequisites:
