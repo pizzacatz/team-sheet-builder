@@ -7,7 +7,7 @@ Live app: <https://pizzacatz.github.io/team-sheet-builder/>
 ## What It Does
 
 - Builds Regulation M-B team sheets from manual entry or a Pokémon Showdown paste.
-- Validates required player/team fields, species clause, item clause, legal species/items/abilities/moves, ability availability, move learnsets, and Mega Stone mismatches.
+- Validates required player/team fields, species clause, item clause, legal species/items/abilities/moves, ability availability, and move learnsets; non-functional Mega Stone pairings produce a warning.
 - Uses local Regulation M-B dictionaries exported from Champions Logic data.
 - Generates Play! Pokémon team-list PDFs entirely in the browser.
 - Supports Open Team Sheet, Staff Team Sheet, Both Team Sheets, and PDF preview before download.
@@ -19,11 +19,31 @@ Live app: <https://pizzacatz.github.io/team-sheet-builder/>
 
 - Desktop layout follows the official team-sheet shape: player info in two columns and Pokémon in a 2x3 grid.
 - Mobile layout uses a single-column Pokémon flow with validation/download controls floating at the bottom.
-- Mobile validation is collapsed by default and expands only when tapped.
+- Validation details are collapsed by default on desktop and mobile. Selecting the summary expands the list; selecting an issue scrolls to and focuses the associated field.
 - The mobile floating tray hides while a field is being edited so it does not compete with the keyboard.
+- The compact mobile tray exposes `Both Team Sheets`; its expansion exposes the separate Open and Staff downloads. PDF preview and whole-team clearing remain desktop-only.
 - Each Pokémon card has a trash button for clearing that slot.
+- Persistent, right-aligned in-field labels keep completed fields identifiable without relying on placeholders.
 - Light and dark themes are available from the header toggle.
 - PDF output includes the footer watermark `teamsheet.georgiaplayevents.com`.
+
+## Autocomplete Behavior
+
+Autocomplete uses deterministic normalized prefix matching, not fuzzy or relevance-based search.
+
+- Clicking a blank Pokémon, Held Item, or Stat Alignment field opens its complete scrollable list.
+- After a Pokémon is selected, blank Ability and Move fields open complete alphabetical lists containing only legal options for that species.
+- Without a selected Pokémon, blank Ability and Move fields remain quiet; typing searches the complete global dictionary.
+- Matching ignores capitalization, accents, punctuation, and spacing differences.
+- A query can match the beginning of the complete name or any individual word. For example, `berry` finds all Berry items.
+- Results use stable match tiers:
+  1. displayed name begins with the query.
+  2. a later displayed-name word begins with the query.
+  3. an alias begins with the query.
+  4. a later alias word begins with the query.
+- Results are alphabetical within each tier. For example, `wave` places `Wave Crash` before `Heat Wave`.
+- Arrow keys navigate results, Enter selects, and Escape closes the menu.
+- Clicking a completed field again opens its complete relevant list.
 
 ## Showdown Import Notes
 
@@ -47,7 +67,16 @@ Required fields:
 - Age Division
 - Player ID
 
-Player ID accepts digits only and preserves leading zeros. Date of Birth autoformats six digits as `MM-DD-YY`; the field also has a calendar picker button.
+Player ID accepts digits only and preserves leading zeros.
+
+Date of Birth:
+
+- Uses `02-27-1996` as its format example.
+- Autoformats six digits as `MM-DD-YY` and eight digits as `MM-DD-YYYY`.
+- Does not infer a century for two-digit years.
+- Provides a calendar picker on desktop; the picker is hidden on mobile because of inconsistent Chrome mobile behavior.
+
+Player Info can be downloaded as JSON and uploaded later. Team form state is also saved automatically in browser localStorage.
 
 ## PDF Output
 
@@ -58,7 +87,9 @@ Available PDF actions:
 - `Open Team Sheet`: opponent-facing sheet without private stats.
 - `Staff Team Sheet`: staff-facing sheet with stats.
 - `Both Team Sheets`: combined PDF.
-- `Preview PDF`: opens a preview modal for the combined PDF before downloading.
+- `Preview PDF`: opens a desktop preview modal for the combined PDF before downloading.
+
+PDF actions remain disabled while validation contains errors. Mobile omits preview because Chrome mobile does not reliably display the generated object-URL PDF.
 
 ## Local Development
 

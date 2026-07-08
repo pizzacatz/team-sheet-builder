@@ -4,14 +4,27 @@
 **Target regulation:** Pokémon VGC / Pokémon Champions Regulation M-B  
 **Document type:** PRD for spec-driven development  
 **Primary implementation agent:** Codex CLI  
-**Date:** 2026-07-06  
+**Original date:** 2026-07-06<br>
+**Last updated:** 2026-07-08<br>
 **Owner:** User  
 
 ---
 
 ## Current Implementation Note
 
-This document is the original product requirements document. The app has since been implemented and iterated beyond the initial MVP. For the current feature list, local development workflow, data export notes, and GitHub Pages deployment details, see [README.md](./README.md).
+This document began as the MVP product requirements document. The app has since been implemented and iterated beyond the initial scope. Requirements below now describe the implemented product where behavior has been finalized; the original implementation order and historical scope remain for context.
+
+Current implementation highlights:
+
+- Official-template desktop layout with a 2x3 Pokémon grid and a one-slot-wide mobile flow.
+- Open, Staff, combined, and desktop-preview PDF paths with a footer watermark.
+- Local Regulation M-B data exported from Champions Logic.
+- Deterministic normalized prefix autocomplete instead of fuzzy relevance search.
+- Collapsible validation on desktop and mobile with issue-to-field navigation.
+- localStorage recovery plus Player Info JSON download/upload.
+- Mobile-specific compact PDF actions and Chrome-compatible date/PDF behavior.
+
+For current operation, development, data export, and deployment details, see [README.md](./README.md).
 
 ---
 
@@ -139,7 +152,6 @@ Vite
 React
 TypeScript
 pdf-lib
-Fuse.js or equivalent lightweight fuzzy search
 Local JSON data files
 GitHub Pages
 Vitest
@@ -151,7 +163,7 @@ Vitest
 - **React:** Useful for repeated Pokémon slot form components and controlled state.
 - **TypeScript:** Reduces errors in data modeling, parser output, validation paths, and PDF rendering.
 - **pdf-lib:** Enables client-side PDF generation without a backend.
-- **Fuse.js:** Enables local fuzzy search/autocomplete.
+- **Deterministic prefix search:** Keeps autocomplete local, predictable, alphabetized, and dependency-free.
 - **Vitest:** Lightweight unit testing for parser and validation logic.
 - **GitHub Pages:** Free static hosting that matches the project constraints.
 
@@ -288,6 +300,10 @@ export type PlayerInfo = {
   date?: string;
   division?: "Junior" | "Senior" | "Master" | "";
   teamName?: string;
+  trainerName?: string;
+  switchProfileName?: string;
+  supportId?: string;
+  dateOfBirth?: string;
 };
 
 export type PokemonEntry = {
@@ -297,6 +313,14 @@ export type PokemonEntry = {
   abilityId: string | null;
   itemId: string | null;
   moves: [string | null, string | null, string | null, string | null];
+  stats: {
+    hp: string;
+    atk: string;
+    def: string;
+    spa: string;
+    spd: string;
+    spe: string;
+  };
   statAlignment: StatAlignmentField;
   canMegaEvolve?: boolean;
   notes?: string[];
@@ -416,10 +440,11 @@ The parser must:
    - ability
    - moves
    - nature, when present
-   - EVs, when present, for optional low-confidence suggestions
+   - `EVs:`, interpreted as Champions Stat Points
 3. Normalize names against dictionary IDs and aliases.
-4. Return partial canonical team data.
-5. Return import warnings for missing, unknown, or ambiguous values.
+4. Calculate displayed Level 50 stats from species data, imported Stat Points, and Stat Alignment.
+5. Return partial canonical team data.
+6. Return import warnings for missing, unknown, or ambiguous values.
 
 The parser must not perform final team legality validation.
 
@@ -447,7 +472,7 @@ The parser must support standard blocks such as:
 ```txt
 Incineroar @ Safety Goggles
 Ability: Intimidate
-EVs: 252 HP / 4 Atk / 252 SpD
+EVs: 32 HP / 1 Def / 10 SpD / 23 Spe
 Careful Nature
 - Fake Out
 - Parting Shot
@@ -470,6 +495,8 @@ The parser should ignore fields not needed for the team sheet, including:
 - Happiness
 - Dynamax Level
 - IVs, unless later needed
+
+`Level 50` lines are ignored silently. Stat Points are added to presented Level 50 stats before applying the `1.1x` raised-stat and `0.9x` lowered-stat Stat Alignment modifiers.
 
 ### 13.5 More or Fewer Than Six Pokémon
 
@@ -549,6 +576,9 @@ Required MVP error codes:
 
 ```txt
 MISSING_PLAYER_NAME
+MISSING_TRAINER_NAME
+MISSING_AGE_DIVISION
+MISSING_PLAYER_ID
 MISSING_SPECIES
 MISSING_ABILITY
 MISSING_MOVE
@@ -562,7 +592,6 @@ ILLEGAL_ITEM
 ILLEGAL_MOVE
 MOVE_NOT_LEARNABLE
 ABILITY_NOT_AVAILABLE
-MEGA_ITEM_MISMATCH
 ```
 
 ### 15.3 Warnings
@@ -579,15 +608,16 @@ UNKNOWN_SHOWDOWN_FIELD_IGNORED
 LESS_THAN_SIX_POKEMON
 MORE_THAN_SIX_POKEMON_TRUNCATED
 AMBIGUOUS_ALIAS_RESOLVED
+MEGA_ITEM_MISMATCH
 ```
 
 ### 15.4 Rules to Validate
 
-- Player name is present.
+- Player Name, Trainer Name in Game, Age Division, and numeric Player ID are present.
 - Each Pokémon has species/form.
 - Each Pokémon has ability.
-- Each Pokémon has held item if required by the selected PDF/team-sheet format.
-- Each Pokémon has at least one move; ideally four moves if required by format.
+- Each Pokémon has a held item.
+- Each Pokémon has Move 1; Moves 2-4 may be blank.
 - Each Pokémon has Stat Alignment.
 - No duplicate held items, unless the item is explicitly exempt in rules data.
 - No duplicate species by National Dex number.
@@ -595,7 +625,9 @@ AMBIGUOUS_ALIAS_RESOLVED
 - Ability is legal and available to selected species/form.
 - Held item is legal in Regulation M-B.
 - Moves are legal and learnable by selected species/form.
-- Mega Evolution item and species pairing is valid when relevant.
+- A mismatched Mega Stone produces a warning because a Pokémon may legally hold a non-functional stone.
+
+Validation details remain collapsed until opened. Selecting an actionable issue scrolls to and focuses its field.
 
 ---
 
@@ -617,7 +649,12 @@ Preferred strategy:
 React should call one function:
 
 ```ts
-export async function generateTeamSheetPdf(teamSheet: TeamSheet): Promise<Blob>;
+export type TeamSheetPdfType = "both" | "open" | "staff";
+
+export async function generateTeamSheetPdf(
+  teamSheet: TeamSheet,
+  sheetType: TeamSheetPdfType
+): Promise<Blob>;
 ```
 
 The PDF module must not read directly from React state or localStorage.
@@ -634,6 +671,10 @@ The generated PDF must include:
 - Held items.
 - All moves.
 - Stat Alignment.
+- Final displayed stats on the Staff Team Sheet.
+- Footer watermark `teamsheet.georgiaplayevents.com`.
+
+The app exposes separate Open and Staff downloads, a combined Both Team Sheets download, and a desktop combined-PDF preview. Preview is intentionally hidden on mobile because Chrome mobile does not reliably render generated object-URL PDFs.
 
 ### 16.4 PDF Acceptance Criteria
 
@@ -650,60 +691,69 @@ The generated PDF must include:
 
 ### 17.1 Layout
 
-Mobile-first layout:
-
-```txt
-Header
-Import Showdown Paste panel
-Player Info section
-Pokémon Slot 1
-Pokémon Slot 2
-Pokémon Slot 3
-Pokémon Slot 4
-Pokémon Slot 5
-Pokémon Slot 6
-Validation Panel
-Generate PDF button
-Clear Team button
-```
-
-Desktop may use a wider layout, but mobile usability is more important.
+- Desktop mirrors the official PDF: two-column Player Info followed by a 2x3 Pokémon grid.
+- Mobile keeps the same field structure but presents one Pokémon slot per row.
+- Pokémon and Stat Alignment sit above a two-column slot body: Ability/Item/Moves and six final stats.
+- Persistent right-aligned labels remain visible after fields are completed.
+- Every Pokémon slot has an individual trash button.
+- Validation and PDF actions float at the bottom on mobile with content clearance based on the tray height.
+- Mobile PDF actions default to a compact Both Team Sheets row; expansion reveals separate Open and Staff downloads.
+- Whole-team clearing and PDF preview remain desktop-only.
+- Light and dark themes use complementary peach-led palettes.
 
 ### 17.2 Form Behavior
 
-- Each Pokémon slot should be collapsible after MVP if easy, but not required.
 - Autocomplete fields should support keyboard and touch input.
 - Manual text that does not resolve to a known ID should be marked invalid.
 - Imported values should be editable.
 - Import warnings should remain visible until the user edits or dismisses them.
 - Validation should update after every meaningful edit.
+- Player Info labels end with colons and follow the official PDF order.
+- Player Name, Trainer Name in Game, Age Division, and Player ID are required.
+- Player ID accepts digits only.
+- Date of Birth accepts six- or eight-digit input, autoformats with dashes, and shows `02-27-1996` as its format example.
+- The date picker is desktop-only because Chrome mobile date selection proved disruptive.
+- Player Info supports local JSON download and upload.
 
 ### 17.3 Autocomplete Behavior
 
 Species autocomplete:
 
-- Search legal Regulation M-B species/forms.
-- Match aliases and Showdown names.
+- Blank focus shows every legal Regulation M-B species/form in a scrollable list.
+- Match normalized display names, aliases, and Showdown names.
 
 Ability autocomplete:
 
-- If species is selected, prefer abilities available to that species/form.
-- If species is not selected, allow global search but warn that ability cannot yet be validated.
+- If a species is selected, blank focus shows every ability available to that species/form.
+- If no species is selected, blank focus stays closed and typing searches the global legal dictionary.
 
 Move autocomplete:
 
-- If species is selected, prefer moves learnable by that species/form.
-- If species is not selected, allow global search but warn that move cannot yet be validated.
+- If a species is selected, blank focus shows every move learnable by that species/form.
+- If no species is selected, blank focus stays closed and typing searches the global legal dictionary.
 
 Item autocomplete:
 
-- Search legal Regulation M-B items.
+- Blank focus shows legal Regulation M-B items.
+- Always include the selected species' relevant Mega Stone.
+- Hide non-relevant Mega Stones until at least five matching characters are entered.
 - Warn on duplicate item.
 
 Stat Alignment autocomplete/dropdown:
 
-- Prefer dropdown/select because the option set is small.
-- Allow autocomplete only if it improves mobile speed.
+- Blank focus shows all 21 alignments.
+- Only Serious is exposed as a neutral alignment.
+- Each option includes its abbreviated stat effect, such as `Atk↑ Def↓`.
+
+All autocomplete fields use deterministic normalized prefix matching:
+
+1. Ignore capitalization, accents, punctuation, and spacing differences.
+2. Match the beginning of a full displayed name or any displayed-name word.
+3. Fall back to equivalent alias prefix matches.
+4. Rank displayed-name first-word matches, displayed-name later-word matches, alias first-word matches, then alias later-word matches.
+5. Sort alphabetically within each tier.
+
+Autocomplete does not use fuzzy relevance or interior-fragment matching. Arrow keys navigate, Enter selects, Escape closes, and clicking a completed field shows its complete relevant list.
 
 ---
 
@@ -713,19 +763,20 @@ Stat Alignment autocomplete/dropdown:
 - Error/warning text must be readable without relying only on color.
 - Buttons must have clear text labels.
 - The app must be usable on mobile browsers.
-- Autocomplete should remain usable with keyboard navigation where practical.
+- Autocomplete uses combobox/listbox semantics and supports keyboard navigation.
+- Validation summaries expose expanded state; actionable issues move focus to the associated field.
+- Icon-only controls include accessible names and tooltips.
 - Text contrast must be sufficient in default theme.
 
 ---
 
 ## 19. Local Persistence
 
-MVP may save current form state to `localStorage` to prevent accidental loss, but this is optional.
-
-If implemented:
+The app saves current team state to `localStorage` to prevent accidental loss.
 
 - Save only the current team state.
-- Provide a clear/reset button.
+- Provide individual Pokémon clear controls and a desktop whole-team clear control.
+- Allow Player Info to be downloaded/uploaded as a local JSON file.
 - Do not require accounts.
 - Do not sync externally.
 
@@ -777,6 +828,19 @@ Manual validation required:
 
 - Open generated PDF and visually compare it against the expected team-sheet format.
 
+### 20.4 Autocomplete and Responsive UI Tests
+
+Create automated coverage for:
+
+- Complete, non-truncated option lists.
+- Alphabetical sorting and normalized prefix matching.
+- First-word, later-word, and alias match tiers.
+- Keyboard selection and reopening completed fields.
+- Quiet blank Ability/Move focus without species context.
+- Mobile floating-tray clearance calculations.
+
+Manually verify representative autocomplete searches and desktop/mobile dropdown layering in a real browser.
+
 ---
 
 ## 21. Implementation Order
@@ -821,7 +885,7 @@ Do not spend significant time perfecting the data dictionary before this works.
 ### 22.1 MVP Acceptance Criteria
 
 - User can open app locally.
-- User can enter player info.
+- User can enter, download, and restore Player Info.
 - User can manually fill six Pokémon.
 - User can paste a Showdown team.
 - Showdown paste fills the editable form where possible.
@@ -831,7 +895,9 @@ Do not spend significant time perfecting the data dictionary before this works.
 - Validation catches missing required fields.
 - Validation catches duplicate species and duplicate held items.
 - Validation catches obviously illegal Regulation M-B data when represented in dictionary/rules files.
-- User can generate and download a PDF.
+- Autocomplete exposes complete relevant choices and deterministic prefix search without fuzzy ranking.
+- User can generate and download Open, Staff, or combined team-sheet PDFs.
+- Desktop and mobile layouts preserve the official field grouping without covering editable content.
 - App can be deployed to GitHub Pages.
 
 ### 22.2 Non-Acceptance Conditions
