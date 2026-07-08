@@ -23,4 +23,22 @@ describe("autocomplete options", () => {
   it("does not truncate matching search results", () => {
     expect(searchOptions(makeOptions(records), "Option")).toHaveLength(24);
   });
+
+  it("matches normalized name and alias prefixes in alphabetical order", () => {
+    const options = [
+      { id: "soundproof", label: "Soundproof" },
+      { id: "big-pecks", label: "Big Pecks" },
+      { id: "snow-warning", label: "Snow Warning" },
+      { id: "charizardite-x", label: "Charizardite X", aliases: ["Zardite X"] }
+    ];
+
+    expect(searchOptions(options, "S").map((option) => option.label)).toEqual([
+      "Snow Warning",
+      "Soundproof"
+    ]);
+    expect(searchOptions(options, "pecks")).toEqual([]);
+    expect(searchOptions(options, "zard").map((option) => option.label)).toEqual([
+      "Charizardite X"
+    ]);
+  });
 });

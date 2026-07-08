@@ -1,4 +1,4 @@
-import Fuse from "fuse.js";
+import { normalizeName } from "./normalization";
 
 export type AutocompleteOption = {
   id: string;
@@ -24,11 +24,14 @@ export const makeOptions = <T extends { id: string; displayName: string; aliases
   );
 
 export const searchOptions = (options: AutocompleteOption[], query: string): AutocompleteOption[] => {
-  if (!query.trim()) return options;
-  const fuse = new Fuse(options, {
-    keys: ["label", "aliases"],
-    threshold: 0.28,
-    ignoreLocation: true
-  });
-  return fuse.search(query).map((result) => result.item);
+  const normalizedQuery = normalizeName(query);
+  if (!normalizedQuery) return sortOptions(options);
+
+  return sortOptions(
+    options.filter((option) =>
+      [option.label, ...(option.aliases ?? [])].some((candidate) =>
+        normalizeName(candidate).startsWith(normalizedQuery)
+      )
+    )
+  );
 };
