@@ -1,5 +1,6 @@
 import { Download, Eye, Trash2, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import type { TeamSheet } from "../domain/teamTypes";
 import type { ValidationResult } from "../domain/validationTypes";
 import type { TeamSheetPdfType } from "../pdf/generateTeamSheetPdf";
@@ -83,6 +84,28 @@ export function PdfActions({ teamSheet, validation, onClear }: PdfActionsProps) 
   };
 
   const closePreview = () => setPreview(null);
+  const previewModal = preview ? (
+    <div className="pdf-preview-backdrop" role="presentation">
+      <section className="pdf-preview-modal" role="dialog" aria-modal="true" aria-labelledby="pdf-preview-heading">
+        <div className="pdf-preview-header">
+          <h2 id="pdf-preview-heading">PDF Preview</h2>
+          <button type="button" className="icon-button" title="Close preview" aria-label="Close preview" onClick={closePreview}>
+            <X size={18} />
+          </button>
+        </div>
+        <iframe className="pdf-preview-frame" src={preview.url} title="Both team sheets PDF preview" />
+        <div className="pdf-preview-actions">
+          <a className="primary-action" href={preview.url} download={filenameFor(teamSheet, preview.sheetType)}>
+            <Download size={18} />
+            <span className="action-label">Download Previewed PDF</span>
+          </a>
+          <button type="button" className="secondary-action" onClick={closePreview}>
+            Close
+          </button>
+        </div>
+      </section>
+    </div>
+  ) : null;
 
   return (
     <>
@@ -109,28 +132,7 @@ export function PdfActions({ teamSheet, validation, onClear }: PdfActionsProps) 
         </button>
         {error ? <p className="error-text">{error}</p> : null}
       </section>
-      {preview ? (
-        <div className="pdf-preview-backdrop" role="presentation">
-          <section className="pdf-preview-modal" role="dialog" aria-modal="true" aria-labelledby="pdf-preview-heading">
-            <div className="pdf-preview-header">
-              <h2 id="pdf-preview-heading">PDF Preview</h2>
-              <button type="button" className="icon-button" title="Close preview" aria-label="Close preview" onClick={closePreview}>
-                <X size={18} />
-              </button>
-            </div>
-            <iframe className="pdf-preview-frame" src={preview.url} title="Both team sheets PDF preview" />
-            <div className="pdf-preview-actions">
-              <a className="primary-action" href={preview.url} download={filenameFor(teamSheet, preview.sheetType)}>
-                <Download size={18} />
-                <span className="action-label">Download Previewed PDF</span>
-              </a>
-              <button type="button" className="secondary-action" onClick={closePreview}>
-                Close
-              </button>
-            </div>
-          </section>
-        </div>
-      ) : null}
+      {previewModal ? createPortal(previewModal, document.body) : null}
     </>
   );
 }
