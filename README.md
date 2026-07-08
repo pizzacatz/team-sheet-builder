@@ -12,7 +12,6 @@ Live app: <https://teamsheet.georgiaplayevents.com/>
 - Generates Play! Pokémon team-list PDFs entirely in the browser.
 - Supports Open Team Sheet, Staff Team Sheet, Both Team Sheets, and PDF preview before download.
 - Saves the active form in localStorage to reduce accidental data loss.
-- Lets Player Info be downloaded/uploaded as a local JSON file.
 - Runs as a static GitHub Pages app with no backend, accounts, database, or external runtime API.
 
 ## Current UI Features
@@ -76,7 +75,7 @@ Date of Birth:
 - Does not infer a century for two-digit years.
 - Provides a calendar picker on desktop; the picker is hidden on mobile because of inconsistent Chrome mobile behavior.
 
-Player Info can be downloaded as JSON and uploaded later. Team form state is also saved automatically in browser localStorage.
+The complete team form, including Player Info, is saved automatically in browser localStorage.
 
 ## PDF Output
 

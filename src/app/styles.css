@@ -728,23 +728,6 @@ h3 {
   flex-wrap: wrap;
 }
 
-.file-input {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-  clip-path: inset(50%);
-}
-
-.file-error {
-  margin: -4px 0 12px;
-  color: var(--danger-text);
-  font-size: 0.82rem;
-  font-weight: 650;
-}
-
 .issue-list {
   display: grid;
   gap: 8px;

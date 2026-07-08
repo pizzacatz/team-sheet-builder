@@ -21,7 +21,7 @@ Current implementation highlights:
 - Local Regulation M-B data exported from Champions Logic.
 - Deterministic normalized prefix autocomplete instead of fuzzy relevance search.
 - Collapsible validation on desktop and mobile with issue-to-field navigation.
-- localStorage recovery plus Player Info JSON download/upload.
+- Automatic localStorage recovery for the complete team form.
 - Mobile-specific compact PDF actions and Chrome-compatible date/PDF behavior.
 
 For current operation, development, data export, and deployment details, see [README.md](./README.md).
@@ -713,7 +713,7 @@ The app exposes separate Open and Staff downloads, a combined Both Team Sheets d
 - Player ID accepts digits only.
 - Date of Birth accepts six- or eight-digit input, autoformats with dashes, and shows `02-27-1996` as its format example.
 - The date picker is desktop-only because Chrome mobile date selection proved disruptive.
-- Player Info supports local JSON download and upload.
+- Player Info is recovered with the rest of the team form from browser localStorage.
 
 ### 17.3 Autocomplete Behavior
 
@@ -776,7 +776,6 @@ The app saves current team state to `localStorage` to prevent accidental loss.
 
 - Save only the current team state.
 - Provide individual Pokémon clear controls and a desktop whole-team clear control.
-- Allow Player Info to be downloaded/uploaded as a local JSON file.
 - Do not require accounts.
 - Do not sync externally.
 
@@ -885,7 +884,7 @@ Do not spend significant time perfecting the data dictionary before this works.
 ### 22.1 MVP Acceptance Criteria
 
 - User can open app locally.
-- User can enter, download, and restore Player Info.
+- User can enter Player Info and recover it from browser localStorage.
 - User can manually fill six Pokémon.
 - User can paste a Showdown team.
 - Showdown paste fills the editable form where possible.
