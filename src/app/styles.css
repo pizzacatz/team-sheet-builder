@@ -961,8 +961,8 @@ h3 {
     --in-field-label-width: 88px;
   }
 
-  .pokemon-slot .slot-top-grid .field {
-    --in-field-label-width: 140px;
+  .pokemon-slot label[for$="-stat-alignment"] {
+    font-size: 0.7rem;
   }
 
   .slot-pdf-grid {
