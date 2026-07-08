@@ -842,6 +842,50 @@ h3 {
     scroll-margin-block-end: calc(var(--mobile-floating-tray-clearance, calc(220px + env(safe-area-inset-bottom))) + 8px);
   }
 
+  .player-info-panel {
+    --in-field-label-width: 140px;
+  }
+
+  .player-info-panel .field > label {
+    line-height: 1;
+    white-space: normal;
+  }
+
+  .player-info-panel .field > label[for="trainer-name"],
+  .player-info-panel .field > label[for="team-name"] {
+    font-size: 0.76rem;
+  }
+
+  .player-info-panel .field > label[for="switch-profile"] {
+    font-size: 0.86rem;
+  }
+
+  .player-info-panel .division-field {
+    position: relative;
+    display: block;
+    min-height: 39px;
+    padding-left: calc(var(--in-field-label-width) + 10px);
+  }
+
+  .player-info-panel .division-field legend {
+    position: absolute;
+    top: 1px;
+    left: 4px;
+    display: flex;
+    width: var(--in-field-label-width);
+    height: 37px;
+    align-items: center;
+    justify-content: flex-end;
+    color: var(--label);
+    font-weight: 800;
+    line-height: 1;
+    text-align: right;
+  }
+
+  .player-info-panel .division-options {
+    min-width: 0;
+  }
+
   .side-column {
     position: fixed;
     z-index: 1200;
@@ -957,8 +1001,30 @@ h3 {
 }
 
 @media (max-width: 420px) {
+  .player-info-panel,
   .pokemon-slot {
     --in-field-label-width: 88px;
+  }
+
+  .player-info-panel .field > label {
+    font-size: 0.84rem;
+  }
+
+  .player-info-panel .field > label[for="trainer-name"] {
+    font-size: 0.68rem;
+  }
+
+  .player-info-panel .field > label[for="team-name"] {
+    font-size: 0.62rem;
+  }
+
+  .player-info-panel .field > label[for="switch-profile"],
+  .player-info-panel .field > label[for="date-of-birth"] {
+    font-size: 0.72rem;
+  }
+
+  .player-info-panel .division-field legend {
+    font-size: 0.72rem;
   }
 
   .pokemon-slot label[for$="-stat-alignment"] {
