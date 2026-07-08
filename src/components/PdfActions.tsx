@@ -1,4 +1,4 @@
-import { Download, Eye, Trash2, X } from "lucide-react";
+import { ChevronDown, ChevronUp, Download, Eye, Trash2, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import type { TeamSheet } from "../domain/teamTypes";
@@ -28,6 +28,7 @@ export function PdfActions({ teamSheet, validation, onClear }: PdfActionsProps) 
   const [generatingType, setGeneratingType] = useState<GeneratingType | null>(null);
   const [preview, setPreview] = useState<PdfPreview | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(
     () => () => {
@@ -109,27 +110,42 @@ export function PdfActions({ teamSheet, validation, onClear }: PdfActionsProps) 
 
   return (
     <>
-      <section className="actions-panel" aria-label="PDF actions">
-        <button type="button" className="primary-action" disabled={!validation.isValid || Boolean(generatingType)} onClick={() => handleDownload("open")}>
-          <Download size={18} />
-          <span className="action-label">{generatingType === "open" ? "Generating..." : "Open Team Sheet"}</span>
-        </button>
-        <button type="button" className="primary-action" disabled={!validation.isValid || Boolean(generatingType)} onClick={() => handleDownload("staff")}>
-          <Download size={18} />
-          <span className="action-label">{generatingType === "staff" ? "Generating..." : "Staff Team Sheet"}</span>
-        </button>
-        <button type="button" className="primary-action" disabled={!validation.isValid || Boolean(generatingType)} onClick={() => handleDownload("both")}>
-          <Download size={18} />
-          <span className="action-label">{generatingType === "both" ? "Generating..." : "Both Team Sheets"}</span>
-        </button>
-        <button type="button" className="secondary-action" disabled={!validation.isValid || Boolean(generatingType)} onClick={handlePreview}>
-          <Eye size={18} />
-          <span className="action-label">{generatingType === "preview" ? "Generating..." : "Preview PDF"}</span>
-        </button>
-        <button type="button" className="secondary-action clear-team-action" onClick={onClear}>
-          <Trash2 size={18} />
-          <span className="action-label">Clear Team</span>
-        </button>
+      <section className={`actions-panel${isExpanded ? " is-expanded" : ""}`} aria-label="PDF actions">
+        <div className="actions-compact-row">
+          <button type="button" className="primary-action" disabled={!validation.isValid || Boolean(generatingType)} onClick={() => handleDownload("both")}>
+            <Download size={18} />
+            <span className="action-label">{generatingType === "both" ? "Generating..." : "Both Team Sheets"}</span>
+          </button>
+          <button type="button" className="secondary-action" disabled={!validation.isValid || Boolean(generatingType)} onClick={handlePreview}>
+            <Eye size={18} />
+            <span className="action-label">{generatingType === "preview" ? "Generating..." : "Preview PDF"}</span>
+          </button>
+          <button
+            type="button"
+            className="icon-button actions-expand-toggle"
+            aria-controls="pdf-actions-expanded"
+            aria-expanded={isExpanded}
+            aria-label={isExpanded ? "Collapse PDF actions" : "Expand PDF actions"}
+            title={isExpanded ? "Collapse actions" : "More actions"}
+            onClick={() => setIsExpanded((current) => !current)}
+          >
+            {isExpanded ? <ChevronDown size={19} /> : <ChevronUp size={19} />}
+          </button>
+        </div>
+        <div className="actions-expanded-row" id="pdf-actions-expanded">
+          <button type="button" className="primary-action" disabled={!validation.isValid || Boolean(generatingType)} onClick={() => handleDownload("open")}>
+            <Download size={18} />
+            <span className="action-label">{generatingType === "open" ? "Generating..." : "Open Team Sheet"}</span>
+          </button>
+          <button type="button" className="primary-action" disabled={!validation.isValid || Boolean(generatingType)} onClick={() => handleDownload("staff")}>
+            <Download size={18} />
+            <span className="action-label">{generatingType === "staff" ? "Generating..." : "Staff Team Sheet"}</span>
+          </button>
+          <button type="button" className="secondary-action clear-team-action" onClick={onClear}>
+            <Trash2 size={18} />
+            <span className="action-label">Clear Team</span>
+          </button>
+        </div>
         {error ? <p className="error-text">{error}</p> : null}
       </section>
       {previewModal ? createPortal(previewModal, document.body) : null}
