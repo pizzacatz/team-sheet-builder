@@ -72,26 +72,17 @@ const IssueRow = ({ issue, index }: { issue: ValidationIssue; index: number }) =
 export function ValidationPanel({ validation }: ValidationPanelProps) {
   const errors = validation.issues.filter((issue) => issue.severity === "error");
   const warnings = validation.issues.filter((issue) => issue.severity === "warning");
+  const hasIssues = validation.issues.length > 0;
   const hasErrors = errors.length > 0;
-  const [isMobileViewport, setIsMobileViewport] = useState(false);
-  const [isMobileExpanded, setIsMobileExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 760px)");
-    const updateViewport = () => setIsMobileViewport(mediaQuery.matches);
-    updateViewport();
-    mediaQuery.addEventListener("change", updateViewport);
-    return () => mediaQuery.removeEventListener("change", updateViewport);
-  }, []);
-
-  useEffect(() => {
-    if (!hasErrors || !isMobileViewport) {
-      setIsMobileExpanded(false);
+    if (!hasIssues) {
+      setIsExpanded(false);
     }
-  }, [hasErrors, isMobileViewport]);
+  }, [hasIssues]);
 
-  const canToggleMobileIssues = hasErrors && isMobileViewport;
-  const summaryClassName = `section-heading validation-summary${canToggleMobileIssues ? " validation-summary-button" : ""}`;
+  const summaryClassName = `section-heading validation-summary${hasIssues ? " validation-summary-button" : ""}`;
   const summaryContent = (
     <>
       <h2 id="validation-heading">Validation</h2>
@@ -100,6 +91,8 @@ export function ValidationPanel({ validation }: ValidationPanelProps) {
           <AlertTriangle size={16} />
           {`${errors.length} errors`}
         </span>
+      ) : warnings.length ? (
+        <span className="status-pill warning">{`${warnings.length} warnings`}</span>
       ) : (
         <span className="status-pill valid">Ready</span>
       )}
@@ -108,15 +101,15 @@ export function ValidationPanel({ validation }: ValidationPanelProps) {
 
   return (
     <section
-      className={`section-panel validation-panel${hasErrors ? " has-errors" : ""}${isMobileExpanded ? " is-mobile-expanded" : ""}`}
+      className={`section-panel validation-panel${hasIssues ? " has-issues" : ""}${hasErrors ? " has-errors" : ""}${isExpanded ? " is-expanded" : ""}`}
       aria-labelledby="validation-heading"
     >
-      {canToggleMobileIssues ? (
+      {hasIssues ? (
         <button
           type="button"
           className={summaryClassName}
-          onClick={() => setIsMobileExpanded((current) => !current)}
-          aria-expanded={isMobileExpanded}
+          onClick={() => setIsExpanded((current) => !current)}
+          aria-expanded={isExpanded}
           aria-controls="validation-issue-list"
         >
           {summaryContent}
