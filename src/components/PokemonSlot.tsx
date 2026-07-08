@@ -1,11 +1,11 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Trash2 } from "lucide-react";
 import type { AutocompleteOption } from "../domain/autocomplete";
 import { makeOptions, sortOptions } from "../domain/autocomplete";
 import { normalizeName } from "../domain/normalization";
 import { abilities, abilitiesById, items, itemsById, moves, movesById, species, speciesById, statAlignments } from "../domain/regulationData";
-import { normalizePokemonStats, statRows, statsFromSpecies } from "../domain/stats";
-import type { PokemonEntry, StatKey } from "../domain/teamTypes";
+import { normalizePokemonStats, statRows } from "../domain/stats";
+import { emptyPokemonEntry, type PokemonEntry, type StatKey } from "../domain/teamTypes";
 import { AutocompleteField } from "./AutocompleteField";
 
 type PokemonSlotProps = {
@@ -58,6 +58,7 @@ const statFieldLabels: Record<StatKey, string> = {
 };
 
 export function PokemonSlot({ index, entry, onChange, onClear }: PokemonSlotProps) {
+  const lastSelectedSpeciesId = useRef(entry.speciesId);
   const speciesOptions = useMemo(() => makeOptions(species, (record) => record.types.join(" / ")), []);
   const allAbilityOptions = useMemo(() => makeOptions(abilities), []);
   const allMoveOptions = useMemo(() => makeOptions(moves, (record) => record.type), []);
@@ -75,6 +76,10 @@ export function PokemonSlot({ index, entry, onChange, onClear }: PokemonSlotProp
 
   const selectedSpecies = speciesById.get(entry.speciesId ?? "");
   const entryStats = normalizePokemonStats(entry.stats);
+
+  useEffect(() => {
+    if (entry.speciesId) lastSelectedSpeciesId.current = entry.speciesId;
+  }, [entry.speciesId]);
 
   const abilityOptions = useMemo(() => {
     if (!selectedSpecies) return allAbilityOptions;
@@ -108,11 +113,31 @@ export function PokemonSlot({ index, entry, onChange, onClear }: PokemonSlotProp
 
   const handleSpeciesChange = (speciesId: string | null) => {
     const record = speciesById.get(speciesId ?? "");
+
+    if (!record) {
+      onChange({
+        speciesId: null,
+        displayName: "",
+        canMegaEvolve: false
+      });
+      return;
+    }
+
+    if (lastSelectedSpeciesId.current === speciesId) {
+      onChange({
+        speciesId,
+        displayName: record.displayName,
+        canMegaEvolve: Boolean(record.allowedMegaForms?.length)
+      });
+      return;
+    }
+
+    lastSelectedSpeciesId.current = speciesId;
     onChange({
+      ...emptyPokemonEntry(),
       speciesId,
-      displayName: record?.displayName ?? "",
-      stats: statsFromSpecies(record),
-      canMegaEvolve: Boolean(record?.allowedMegaForms?.length)
+      displayName: record.displayName,
+      canMegaEvolve: Boolean(record.allowedMegaForms?.length)
     });
   };
 
