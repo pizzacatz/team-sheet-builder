@@ -69,4 +69,24 @@ describe("AutocompleteField", () => {
     act(() => input.click());
     expect(container.querySelectorAll('[role="option"]')).toHaveLength(24);
   });
+
+  it("waits for text before opening when empty-focus suggestions are disabled", () => {
+    act(() => {
+      root.render(
+        <AutocompleteField label="Test" value={null} options={options} openOnEmptyFocus={false} onChange={vi.fn()} />
+      );
+    });
+
+    const input = container.querySelector("input")!;
+    act(() => input.focus());
+    expect(container.querySelector('[role="listbox"]')).toBeNull();
+
+    act(() => {
+      const setValue = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value")?.set;
+      setValue?.call(input, "O");
+      input.dispatchEvent(new Event("input", { bubbles: true }));
+    });
+
+    expect(container.querySelectorAll('[role="option"]')).toHaveLength(24);
+  });
 });

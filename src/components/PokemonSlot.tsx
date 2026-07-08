@@ -177,7 +177,7 @@ export function PokemonSlot({ index, entry, onChange, onClear }: PokemonSlotProp
             value={entry.abilityId}
             options={abilityOptions}
             onChange={(abilityId) => onChange({ abilityId })}
-            disabled={!selectedSpecies}
+            openOnEmptyFocus={Boolean(selectedSpecies)}
             required
           />
           <AutocompleteField
@@ -197,7 +197,7 @@ export function PokemonSlot({ index, entry, onChange, onClear }: PokemonSlotProp
               value={moveId}
               options={includeSelected(moveOptions, allMoveOptions, moveId)}
               onChange={(nextMoveId) => updateMove(moveIndex, nextMoveId)}
-              disabled={!selectedSpecies}
+              openOnEmptyFocus={Boolean(selectedSpecies)}
               required={moveIndex === 0}
             />
           ))}

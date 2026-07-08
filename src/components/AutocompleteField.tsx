@@ -9,6 +9,7 @@ type AutocompleteFieldProps = {
   options: AutocompleteOption[];
   onChange: (value: string | null) => void;
   filterOptions?: (options: AutocompleteOption[], query: string, selectedValue: string | null) => AutocompleteOption[];
+  openOnEmptyFocus?: boolean;
   placeholder?: string;
   helperText?: string;
   required?: boolean;
@@ -22,6 +23,7 @@ export function AutocompleteField({
   options,
   onChange,
   filterOptions,
+  openOnEmptyFocus = true,
   placeholder,
   helperText,
   required,
@@ -93,6 +95,10 @@ export function AutocompleteField({
 
   const openSuggestions = () => {
     if (closeTimer.current) window.clearTimeout(closeTimer.current);
+    if (!openOnEmptyFocus && !inputValue.trim()) {
+      closeSuggestions();
+      return;
+    }
     setShowAllOptions(Boolean(exactMatch(inputValue)));
     setActiveIndex(-1);
     setIsOpen(true);
@@ -114,6 +120,7 @@ export function AutocompleteField({
     if (event.key === "ArrowDown" || event.key === "ArrowUp") {
       event.preventDefault();
       if (!isOpen) {
+        if (!openOnEmptyFocus && !inputValue.trim()) return;
         openSuggestions();
         setActiveIndex(event.key === "ArrowDown" ? 0 : suggestions.length - 1);
         return;
