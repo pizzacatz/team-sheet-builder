@@ -2,7 +2,7 @@
 
 A static, client-side team sheet builder for Pokémon Champions Regulation M-B.
 
-Live app: <https://pizzacatz.github.io/team-sheet-builder/>
+Live app: <https://teamsheet.georgiaplayevents.com/>
 
 ## What It Does
 

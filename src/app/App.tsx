@@ -30,6 +30,7 @@ export function App() {
   const [theme, setTheme] = useState<ThemeMode>(getInitialTheme);
   const [isMobileFieldEditing, setIsMobileFieldEditing] = useState(false);
   const isDarkMode = theme === "dark";
+  const faviconUrl = `${import.meta.env.BASE_URL}favicon.ico`;
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
@@ -92,12 +93,16 @@ export function App() {
   return (
     <main className={`app-shell${isMobileFieldEditing ? " is-mobile-field-editing" : ""}`}>
       <header className="app-header">
-        <div>
-          <p className="eyebrow">{rules.regulation} · {rules.dataVersion}</p>
-          <h1>Team Sheet Builder</h1>
+        <div className="app-brand">
+          <img className="app-brand-icon" src={faviconUrl} alt="" aria-hidden="true" />
+          <div className="app-brand-copy">
+            <p className="eyebrow">{rules.regulation} · {rules.dataVersion}</p>
+            <h1 className="app-title">
+              <span>TeamSheet.</span><wbr /><a className="app-title-link" href="https://georgiaplayevents.com/">GeorgiaPlayEvents.com</a>
+            </h1>
+          </div>
         </div>
         <div className="header-actions">
-          <p className="header-note">Client-side Showdown import, Regulation M-B validation, and Play! Pokémon PDF output.</p>
           <button
             type="button"
             className="theme-toggle"
