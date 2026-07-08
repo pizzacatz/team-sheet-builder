@@ -9,7 +9,6 @@ type AutocompleteFieldProps = {
   options: AutocompleteOption[];
   onChange: (value: string | null) => void;
   filterOptions?: (options: AutocompleteOption[], query: string, selectedValue: string | null) => AutocompleteOption[];
-  maxSuggestions?: number;
   placeholder?: string;
   helperText?: string;
   required?: boolean;
@@ -23,7 +22,6 @@ export function AutocompleteField({
   options,
   onChange,
   filterOptions,
-  maxSuggestions = 10,
   placeholder,
   helperText,
   required,
@@ -31,11 +29,14 @@ export function AutocompleteField({
 }: AutocompleteFieldProps) {
   const generatedInputId = useId();
   const inputId = id ?? generatedInputId;
+  const listboxId = `${inputId}-suggestions`;
   const selected = options.find((option) => option.id === value);
   const [inputValue, setInputValue] = useState(selected?.label ?? "");
   const [isOpen, setIsOpen] = useState(false);
   const [showAllOptions, setShowAllOptions] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(-1);
   const closeTimer = useRef<number | null>(null);
+  const activeOptionRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
     setInputValue(selected?.label ?? "");
@@ -49,9 +50,17 @@ export function AutocompleteField({
   );
 
   const suggestions = useMemo(
-    () => searchOptions(filteredOptions, filterQuery, showAllOptions ? filteredOptions.length : maxSuggestions),
-    [filterQuery, filteredOptions, maxSuggestions, showAllOptions]
+    () => searchOptions(filteredOptions, filterQuery),
+    [filterQuery, filteredOptions]
   );
+
+  useEffect(() => {
+    if (activeIndex >= suggestions.length) setActiveIndex(suggestions.length - 1);
+  }, [activeIndex, suggestions.length]);
+
+  useEffect(() => {
+    activeOptionRef.current?.scrollIntoView?.({ block: "nearest" });
+  }, [activeIndex]);
 
   const exactMatch = (
     rawValue: string,
@@ -70,6 +79,7 @@ export function AutocompleteField({
     const match = exactMatch(rawValue);
     onChange(match?.id ?? null);
     setShowAllOptions(false);
+    setActiveIndex(-1);
     setIsOpen(true);
   };
 
@@ -77,45 +87,92 @@ export function AutocompleteField({
     setInputValue(option.label);
     onChange(option.id);
     setShowAllOptions(false);
+    setActiveIndex(-1);
     setIsOpen(false);
   };
 
   const openSuggestions = () => {
     if (closeTimer.current) window.clearTimeout(closeTimer.current);
     setShowAllOptions(Boolean(exactMatch(inputValue)));
+    setActiveIndex(-1);
     setIsOpen(true);
   };
 
+  const closeSuggestions = () => {
+    setShowAllOptions(false);
+    setActiveIndex(-1);
+    setIsOpen(false);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Escape" && isOpen) {
+      event.preventDefault();
+      closeSuggestions();
+      return;
+    }
+
+    if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+      event.preventDefault();
+      if (!isOpen) {
+        openSuggestions();
+        setActiveIndex(event.key === "ArrowDown" ? 0 : suggestions.length - 1);
+        return;
+      }
+      setActiveIndex((current) => {
+        if (event.key === "ArrowDown") return Math.min(current + 1, suggestions.length - 1);
+        return current < 0 ? suggestions.length - 1 : Math.max(current - 1, 0);
+      });
+      return;
+    }
+
+    if (event.key === "Enter" && isOpen && activeIndex >= 0) {
+      event.preventDefault();
+      const option = suggestions[activeIndex];
+      if (option) selectOption(option);
+    }
+  };
+
   return (
-    <div className={`field autocomplete-field${isOpen ? " is-open" : ""}`}>
+    <div className={`field autocomplete-field${isOpen ? " is-open" : ""}${disabled ? " is-disabled" : ""}`}>
       <label htmlFor={inputId}>{label}</label>
       <input
         id={inputId}
         type="text"
+        role="combobox"
         value={inputValue}
         placeholder={placeholder}
         disabled={disabled}
         autoComplete="off"
         aria-autocomplete="list"
+        aria-controls={isOpen && suggestions.length > 0 ? listboxId : undefined}
+        aria-activedescendant={activeIndex >= 0 ? `${inputId}-option-${activeIndex}` : undefined}
         aria-expanded={isOpen}
         aria-required={required || undefined}
         onFocus={openSuggestions}
+        onClick={() => {
+          if (!isOpen) openSuggestions();
+        }}
         onBlur={() => {
           closeTimer.current = window.setTimeout(() => {
-            setShowAllOptions(false);
-            setIsOpen(false);
+            closeSuggestions();
           }, 120);
         }}
+        onKeyDown={handleKeyDown}
         onChange={(event) => handleInput(event.target.value)}
       />
       {helperText ? <p className="field-help">{helperText}</p> : null}
       {isOpen && suggestions.length > 0 ? (
-        <div className="suggestions" role="listbox">
-          {suggestions.map((option) => (
+        <div id={listboxId} className="suggestions" role="listbox">
+          {suggestions.map((option, optionIndex) => (
             <button
               type="button"
               key={option.id}
+              id={`${inputId}-option-${optionIndex}`}
+              ref={optionIndex === activeIndex ? activeOptionRef : undefined}
               className="suggestion"
+              role="option"
+              aria-selected={optionIndex === activeIndex}
+              onMouseEnter={() => setActiveIndex(optionIndex)}
               onMouseDown={(event) => {
                 event.preventDefault();
                 if (closeTimer.current) window.clearTimeout(closeTimer.current);

@@ -534,6 +534,14 @@ h3 {
   z-index: 100;
 }
 
+.autocomplete-field.is-disabled {
+  opacity: 0.58;
+}
+
+.autocomplete-field.is-disabled input {
+  cursor: not-allowed;
+}
+
 .suggestions {
   position: absolute;
   z-index: 1000;

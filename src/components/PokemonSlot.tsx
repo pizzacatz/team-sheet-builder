@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { Trash2 } from "lucide-react";
 import type { AutocompleteOption } from "../domain/autocomplete";
-import { makeOptions } from "../domain/autocomplete";
+import { makeOptions, sortOptions } from "../domain/autocomplete";
 import { normalizeName } from "../domain/normalization";
 import { abilities, abilitiesById, items, itemsById, moves, movesById, species, speciesById, statAlignments } from "../domain/regulationData";
 import { normalizePokemonStats, statRows, statsFromSpecies } from "../domain/stats";
@@ -18,7 +18,7 @@ type PokemonSlotProps = {
 const includeSelected = (preferred: AutocompleteOption[], all: AutocompleteOption[], selectedId: string | null | undefined) => {
   if (!selectedId || preferred.some((option) => option.id === selectedId)) return preferred;
   const selected = all.find((option) => option.id === selectedId);
-  return selected ? [selected, ...preferred] : preferred;
+  return selected ? sortOptions([selected, ...preferred]) : preferred;
 };
 
 const isMegaStoneOption = (option: AutocompleteOption) => option.detail?.startsWith("Mega Stone for ");
@@ -82,7 +82,7 @@ export function PokemonSlot({ index, entry, onChange, onClear }: PokemonSlotProp
       .map((abilityId) => abilitiesById.get(abilityId))
       .filter(Boolean)
       .map((record) => ({ id: record!.id, label: record!.displayName, aliases: record!.aliases }));
-    return includeSelected(preferred, allAbilityOptions, entry.abilityId);
+    return includeSelected(sortOptions(preferred), allAbilityOptions, entry.abilityId);
   }, [allAbilityOptions, entry.abilityId, selectedSpecies]);
 
   const moveOptions = useMemo(() => {
@@ -91,7 +91,7 @@ export function PokemonSlot({ index, entry, onChange, onClear }: PokemonSlotProp
       .map((moveId) => movesById.get(moveId))
       .filter(Boolean)
       .map((record) => ({ id: record!.id, label: record!.displayName, aliases: record!.aliases, detail: record!.type }));
-    return preferred;
+    return sortOptions(preferred);
   }, [allMoveOptions, selectedSpecies]);
 
   const filterItemOptions = useMemo(
@@ -155,7 +155,6 @@ export function PokemonSlot({ index, entry, onChange, onClear }: PokemonSlotProp
           label="Stat Alignment"
           value={entry.statAlignment.value}
           options={statAlignmentOptions}
-          maxSuggestions={statAlignmentOptions.length}
           onChange={(value) =>
             onChange({
               statAlignment: {
@@ -178,6 +177,7 @@ export function PokemonSlot({ index, entry, onChange, onClear }: PokemonSlotProp
             value={entry.abilityId}
             options={abilityOptions}
             onChange={(abilityId) => onChange({ abilityId })}
+            disabled={!selectedSpecies}
             required
           />
           <AutocompleteField
@@ -197,6 +197,7 @@ export function PokemonSlot({ index, entry, onChange, onClear }: PokemonSlotProp
               value={moveId}
               options={includeSelected(moveOptions, allMoveOptions, moveId)}
               onChange={(nextMoveId) => updateMove(moveIndex, nextMoveId)}
+              disabled={!selectedSpecies}
               required={moveIndex === 0}
             />
           ))}
