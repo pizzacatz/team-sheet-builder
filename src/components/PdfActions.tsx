@@ -1,4 +1,4 @@
-import { ChevronDown, ChevronUp, Download, Eye, Trash2, X } from "lucide-react";
+import { ChevronDown, ChevronUp, Download, Eye, Share2, Trash2, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import type { TeamSheet } from "../domain/teamTypes";
@@ -12,7 +12,7 @@ type PdfActionsProps = {
 };
 
 type DownloadType = TeamSheetPdfType;
-type GeneratingType = DownloadType | "preview";
+type GeneratingType = DownloadType | "preview" | "share";
 type PdfPreview = {
   url: string;
   sheetType: DownloadType;
@@ -24,11 +24,22 @@ const filenameFor = (teamSheet: TeamSheet, sheetType: DownloadType) => {
   return `${player || "team"}-${suffix}.pdf`;
 };
 
+const shareDetailsFor = (teamSheet: TeamSheet) => {
+  const playerName = teamSheet.player.name.trim() || "Player";
+  const playerSlug = playerName.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  const description = `${playerName} VGC Team List`;
+  return {
+    description,
+    filename: `${playerSlug || "player"}-vgc-team-list.pdf`
+  };
+};
+
 export function PdfActions({ teamSheet, validation, onClear }: PdfActionsProps) {
   const [generatingType, setGeneratingType] = useState<GeneratingType | null>(null);
   const [preview, setPreview] = useState<PdfPreview | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [canShareFiles, setCanShareFiles] = useState(false);
 
   useEffect(
     () => () => {
@@ -38,6 +49,19 @@ export function PdfActions({ teamSheet, validation, onClear }: PdfActionsProps) 
     },
     [preview]
   );
+
+  useEffect(() => {
+    try {
+      if (typeof navigator.share !== "function" || typeof navigator.canShare !== "function") {
+        setCanShareFiles(false);
+        return;
+      }
+      const probe = new File([""], "team-sheet.pdf", { type: "application/pdf" });
+      setCanShareFiles(navigator.canShare({ files: [probe] }));
+    } catch {
+      setCanShareFiles(false);
+    }
+  }, []);
 
   const generatePdfBlob = async (sheetType: DownloadType) => {
     const { generateTeamSheetPdf } = await import("../pdf/generateTeamSheetPdf");
@@ -79,6 +103,30 @@ export function PdfActions({ teamSheet, validation, onClear }: PdfActionsProps) 
       });
     } catch (pdfError) {
       setError(pdfError instanceof Error ? pdfError.message : "PDF preview failed.");
+    } finally {
+      setGeneratingType(null);
+    }
+  };
+
+  const handleShare = async () => {
+    setError(null);
+    setGeneratingType("share");
+    try {
+      const blob = await generatePdfBlob("both");
+      const { description, filename } = shareDetailsFor(teamSheet);
+      const file = new File([blob], filename, { type: "application/pdf" });
+      if (!navigator.canShare?.({ files: [file] })) {
+        throw new Error("PDF file sharing is not available in this browser.");
+      }
+      await navigator.share({
+        files: [file],
+        title: description,
+        text: description
+      });
+    } catch (shareError) {
+      if (!(shareError instanceof DOMException && shareError.name === "AbortError")) {
+        setError(shareError instanceof Error ? shareError.message : "PDF sharing failed.");
+      }
     } finally {
       setGeneratingType(null);
     }
@@ -133,6 +181,12 @@ export function PdfActions({ teamSheet, validation, onClear }: PdfActionsProps) 
           </button>
         </div>
         <div className="actions-expanded-row" id="pdf-actions-expanded">
+          {canShareFiles ? (
+            <button type="button" className="secondary-action" disabled={!validation.isValid || Boolean(generatingType)} onClick={handleShare}>
+              <Share2 size={18} />
+              <span className="action-label">{generatingType === "share" ? "Generating..." : "Share Team Sheets"}</span>
+            </button>
+          ) : null}
           <button type="button" className="primary-action" disabled={!validation.isValid || Boolean(generatingType)} onClick={() => handleDownload("open")}>
             <Download size={18} />
             <span className="action-label">{generatingType === "open" ? "Generating..." : "Open Team Sheet"}</span>

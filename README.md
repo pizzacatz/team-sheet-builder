@@ -20,7 +20,7 @@ Live app: <https://teamsheet.georgiaplayevents.com/>
 - Mobile layout uses a single-column Pokémon flow with validation/download controls floating at the bottom.
 - Validation details are collapsed by default on desktop and mobile. Selecting the summary expands the list; selecting an issue scrolls to and focuses the associated field.
 - The mobile floating tray hides while a field is being edited so it does not compete with the keyboard.
-- The compact mobile tray exposes `Both Team Sheets`; its expansion exposes the separate Open and Staff downloads. PDF preview and whole-team clearing remain desktop-only.
+- The compact mobile tray exposes `Both Team Sheets`; its expansion exposes file sharing when supported and the separate Open and Staff downloads. PDF preview and whole-team clearing remain desktop-only.
 - Each Pokémon card has a trash button for clearing that slot.
 - Persistent, right-aligned in-field labels keep completed fields identifiable without relying on placeholders.
 - Light and dark themes are available from the header toggle.
@@ -86,6 +86,7 @@ Available PDF actions:
 - `Open Team Sheet`: opponent-facing sheet without private stats.
 - `Staff Team Sheet`: staff-facing sheet with stats.
 - `Both Team Sheets`: combined PDF.
+- `Share Team Sheets`: shares the combined PDF through the device share sheet when PDF file sharing is supported.
 - `Preview PDF`: opens a desktop preview modal for the combined PDF before downloading.
 
 PDF actions remain disabled while validation contains errors. Mobile omits preview because Chrome mobile does not reliably display the generated object-URL PDF.

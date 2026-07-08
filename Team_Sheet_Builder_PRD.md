@@ -18,6 +18,7 @@ Current implementation highlights:
 
 - Official-template desktop layout with a 2x3 Pokémon grid and a one-slot-wide mobile flow.
 - Open, Staff, combined, and desktop-preview PDF paths with a footer watermark.
+- Browser-native combined-PDF sharing on devices that support sharing PDF files.
 - Local Regulation M-B data exported from Champions Logic.
 - Deterministic normalized prefix autocomplete instead of fuzzy relevance search.
 - Collapsible validation on desktop and mobile with issue-to-field navigation.
