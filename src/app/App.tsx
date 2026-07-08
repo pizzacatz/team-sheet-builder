@@ -11,6 +11,7 @@ import "./styles.css";
 
 type ThemeMode = "light" | "dark";
 const THEME_STORAGE_KEY = "team-sheet-builder-theme";
+const MOBILE_FLOATING_TRAY_CONTENT_GAP_PX = 14;
 
 const getInitialTheme = (): ThemeMode => {
   if (typeof window === "undefined") return "light";
@@ -39,7 +40,7 @@ export function App() {
       const height = element.getBoundingClientRect().height;
       document.documentElement.style.setProperty(
         "--mobile-floating-tray-clearance",
-        `${Math.ceil(height + bottom)}px`
+        `${Math.ceil(height + bottom + MOBILE_FLOATING_TRAY_CONTENT_GAP_PX)}px`
       );
     };
 
