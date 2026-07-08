@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { Trash2 } from "lucide-react";
 import type { AutocompleteOption } from "../domain/autocomplete";
 import { makeOptions } from "../domain/autocomplete";
 import { normalizeName } from "../domain/normalization";
@@ -11,6 +12,7 @@ type PokemonSlotProps = {
   index: number;
   entry: PokemonEntry;
   onChange: (patch: Partial<PokemonEntry>) => void;
+  onClear: () => void;
 };
 
 const includeSelected = (preferred: AutocompleteOption[], all: AutocompleteOption[], selectedId: string | null | undefined) => {
@@ -55,7 +57,7 @@ const statFieldLabels: Record<StatKey, string> = {
   spe: "Spe"
 };
 
-export function PokemonSlot({ index, entry, onChange }: PokemonSlotProps) {
+export function PokemonSlot({ index, entry, onChange, onClear }: PokemonSlotProps) {
   const speciesOptions = useMemo(() => makeOptions(species, (record) => record.types.join(" / ")), []);
   const allAbilityOptions = useMemo(() => makeOptions(abilities), []);
   const allMoveOptions = useMemo(() => makeOptions(moves, (record) => record.type), []);
@@ -135,6 +137,9 @@ export function PokemonSlot({ index, entry, onChange }: PokemonSlotProps) {
     <section className="pokemon-slot in-field-form" aria-labelledby={`pokemon-${index}-heading`}>
       <div className="slot-heading">
         <h3 id={`pokemon-${index}-heading`}>Pokémon {index + 1}</h3>
+        <button type="button" className="icon-button slot-clear-button" title={`Clear Pokémon ${index + 1}`} aria-label={`Clear Pokémon ${index + 1}`} onClick={onClear}>
+          <Trash2 size={17} />
+        </button>
       </div>
       <div className="slot-top-grid">
         <AutocompleteField

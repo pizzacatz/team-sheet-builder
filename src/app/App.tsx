@@ -6,12 +6,16 @@ import { PlayerInfoForm } from "../components/PlayerInfoForm";
 import { TeamForm } from "../components/TeamForm";
 import { ValidationPanel } from "../components/ValidationPanel";
 import { rules } from "../domain/regulationData";
+import { emptyPokemonEntry } from "../domain/teamTypes";
 import { useTeamSheetState } from "../state/useTeamSheetState";
+import { mobileFloatingTrayClearancePx } from "./mobileTray";
 import "./styles.css";
 
 type ThemeMode = "light" | "dark";
 const THEME_STORAGE_KEY = "team-sheet-builder-theme";
-const MOBILE_FLOATING_TRAY_CONTENT_GAP_PX = 14;
+
+const isEditableElement = (element: EventTarget | Element | null): boolean =>
+  element instanceof HTMLElement && Boolean(element.closest("input, textarea, select, [contenteditable='true']"));
 
 const getInitialTheme = (): ThemeMode => {
   if (typeof window === "undefined") return "light";
@@ -24,6 +28,7 @@ export function App() {
   const { teamSheet, validation, updatePlayer, updatePokemon, replacePokemon, reset } = useTeamSheetState();
   const sideColumnRef = useRef<HTMLElement | null>(null);
   const [theme, setTheme] = useState<ThemeMode>(getInitialTheme);
+  const [isMobileFieldEditing, setIsMobileFieldEditing] = useState(false);
   const isDarkMode = theme === "dark";
 
   useEffect(() => {
@@ -40,7 +45,7 @@ export function App() {
       const height = element.getBoundingClientRect().height;
       document.documentElement.style.setProperty(
         "--mobile-floating-tray-clearance",
-        `${Math.ceil(height + bottom + MOBILE_FLOATING_TRAY_CONTENT_GAP_PX)}px`
+        `${mobileFloatingTrayClearancePx(height, bottom)}px`
       );
     };
 
@@ -57,8 +62,35 @@ export function App() {
     };
   }, []);
 
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 760px)");
+
+    const updateFromActiveElement = () => {
+      setIsMobileFieldEditing(mediaQuery.matches && isEditableElement(document.activeElement));
+    };
+
+    const handleFocusIn = (event: FocusEvent) => {
+      setIsMobileFieldEditing(mediaQuery.matches && isEditableElement(event.target));
+    };
+
+    const handleFocusOut = () => {
+      window.requestAnimationFrame(updateFromActiveElement);
+    };
+
+    document.addEventListener("focusin", handleFocusIn);
+    document.addEventListener("focusout", handleFocusOut);
+    mediaQuery.addEventListener("change", updateFromActiveElement);
+    updateFromActiveElement();
+
+    return () => {
+      document.removeEventListener("focusin", handleFocusIn);
+      document.removeEventListener("focusout", handleFocusOut);
+      mediaQuery.removeEventListener("change", updateFromActiveElement);
+    };
+  }, []);
+
   return (
-    <main className="app-shell">
+    <main className={`app-shell${isMobileFieldEditing ? " is-mobile-field-editing" : ""}`}>
       <header className="app-header">
         <div>
           <p className="eyebrow">{rules.regulation} · {rules.dataVersion}</p>
@@ -84,7 +116,7 @@ export function App() {
         <div className="main-column">
           <ImportPanel onImport={replacePokemon} />
           <PlayerInfoForm player={teamSheet.player} onChange={updatePlayer} />
-          <TeamForm pokemon={teamSheet.pokemon} onChange={updatePokemon} />
+          <TeamForm pokemon={teamSheet.pokemon} onChange={updatePokemon} onClear={(index) => updatePokemon(index, emptyPokemonEntry())} />
         </div>
         <aside className="side-column" ref={sideColumnRef}>
           <ValidationPanel validation={validation} />

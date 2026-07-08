@@ -599,6 +599,7 @@ h3 {
   gap: 8px;
   border-radius: 6px;
   font-weight: 700;
+  text-decoration: none;
 }
 
 .primary-action {
@@ -628,6 +629,59 @@ h3 {
   border: 1px solid var(--panel-border);
   background: var(--panel-bg);
   color: var(--label-muted);
+}
+
+.slot-clear-button {
+  flex: 0 0 auto;
+}
+
+.pdf-preview-backdrop {
+  position: fixed;
+  z-index: 2400;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgb(24 17 13 / 0.58);
+  padding: 18px;
+}
+
+.pdf-preview-modal {
+  display: grid;
+  width: min(960px, 100%);
+  height: min(860px, 100%);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 14px;
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  background: var(--panel-bg);
+  box-shadow: 0 18px 44px var(--menu-shadow);
+  padding: 14px;
+}
+
+.pdf-preview-header,
+.pdf-preview-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.pdf-preview-header h2 {
+  margin-bottom: 0;
+}
+
+.pdf-preview-frame {
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  border: 1px solid var(--field-border);
+  border-radius: 6px;
+  background: var(--field-bg);
+}
+
+.pdf-preview-actions {
+  justify-content: flex-end;
+  flex-wrap: wrap;
 }
 
 .file-input {
@@ -764,6 +818,20 @@ h3 {
     max-height: min(48vh, 380px);
     overflow: auto;
     overscroll-behavior: contain;
+    transform: translateY(0);
+    transition:
+      opacity 160ms ease,
+      transform 160ms ease;
+  }
+
+  .app-shell.is-mobile-field-editing {
+    padding-bottom: 12px;
+  }
+
+  .app-shell.is-mobile-field-editing .side-column {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(calc(100% + 28px + env(safe-area-inset-bottom)));
   }
 
   .side-column .section-panel,
@@ -844,9 +912,25 @@ h3 {
     min-width: 0;
   }
 
+  .actions-panel .clear-team-action {
+    grid-column: 1 / -1;
+  }
+
   .actions-panel .error-text {
     grid-column: 1 / -1;
     margin-bottom: 0;
+  }
+
+  .pdf-preview-backdrop {
+    padding: 12px;
+  }
+
+  .pdf-preview-modal {
+    height: calc(100dvh - 24px);
+  }
+
+  .pdf-preview-frame {
+    min-height: 0;
   }
 }
 
