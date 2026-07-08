@@ -31,13 +31,23 @@ const normalizeSearchPhrase = (value: string): string =>
     .replace(/[^a-z0-9]+/g, " ")
     .trim();
 
-const matchesWordPrefix = (candidate: string, query: string, compactQuery: string): boolean => {
+const wordPrefixPosition = (candidate: string, query: string, compactQuery: string): number | null => {
   const normalizedCandidate = normalizeSearchPhrase(candidate);
-  return (
-    normalizedCandidate.startsWith(query) ||
-    normalizedCandidate.includes(` ${query}`) ||
-    normalizeName(candidate).startsWith(compactQuery)
-  );
+  if (normalizedCandidate.startsWith(query) || normalizeName(candidate).startsWith(compactQuery)) {
+    return 0;
+  }
+  return normalizedCandidate.includes(` ${query}`) ? 1 : null;
+};
+
+const optionMatchTier = (option: AutocompleteOption, query: string, compactQuery: string): number | null => {
+  const labelPosition = wordPrefixPosition(option.label, query, compactQuery);
+  if (labelPosition !== null) return labelPosition;
+
+  const aliasPositions = (option.aliases ?? [])
+    .map((alias) => wordPrefixPosition(alias, query, compactQuery))
+    .filter((position): position is number => position !== null);
+  if (!aliasPositions.length) return null;
+  return 2 + Math.min(...aliasPositions);
 };
 
 export const searchOptions = (options: AutocompleteOption[], query: string): AutocompleteOption[] => {
@@ -45,11 +55,17 @@ export const searchOptions = (options: AutocompleteOption[], query: string): Aut
   const compactQuery = normalizeName(query);
   if (!normalizedQuery || !compactQuery) return sortOptions(options);
 
-  return sortOptions(
-    options.filter((option) =>
-      [option.label, ...(option.aliases ?? [])].some((candidate) =>
-        matchesWordPrefix(candidate, normalizedQuery, compactQuery)
-      )
+  return options
+    .map((option) => ({
+      option,
+      tier: optionMatchTier(option, normalizedQuery, compactQuery)
+    }))
+    .filter((match): match is { option: AutocompleteOption; tier: number } => match.tier !== null)
+    .sort(
+      (left, right) =>
+        left.tier - right.tier ||
+        left.option.label.localeCompare(right.option.label) ||
+        left.option.id.localeCompare(right.option.id)
     )
-  );
+    .map((match) => match.option);
 };

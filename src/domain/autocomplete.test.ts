@@ -32,7 +32,11 @@ describe("autocomplete options", () => {
       { id: "charizardite-x", label: "Charizardite X", aliases: ["Zardite X"] },
       { id: "aguav-berry", label: "Aguav Berry" },
       { id: "berry-juice", label: "Berry Juice" },
-      { id: "sitrus-berry", label: "Sitrus Berry" }
+      { id: "sitrus-berry", label: "Sitrus Berry" },
+      { id: "wave-crash", label: "Wave Crash" },
+      { id: "wave-incense", label: "Wave Incense" },
+      { id: "heat-wave", label: "Heat Wave" },
+      { id: "alias-wave", label: "Alpha", aliases: ["Wave Alias"] }
     ];
 
     expect(searchOptions(options, "S").map((option) => option.label)).toEqual([
@@ -41,8 +45,8 @@ describe("autocomplete options", () => {
       "Soundproof"
     ]);
     expect(searchOptions(options, "berry").map((option) => option.label)).toEqual([
-      "Aguav Berry",
       "Berry Juice",
+      "Aguav Berry",
       "Sitrus Berry"
     ]);
     expect(searchOptions(options, "pecks").map((option) => option.label)).toEqual([
@@ -54,6 +58,12 @@ describe("autocomplete options", () => {
     ]);
     expect(searchOptions(options, "charizarditex").map((option) => option.label)).toEqual([
       "Charizardite X"
+    ]);
+    expect(searchOptions(options, "wave").map((option) => option.label)).toEqual([
+      "Wave Crash",
+      "Wave Incense",
+      "Heat Wave",
+      "Alpha"
     ]);
   });
 });
