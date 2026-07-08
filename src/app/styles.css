@@ -1037,22 +1037,11 @@ h3 {
     gap: 14px;
   }
 
-  .actions-compact-row.has-share {
-    grid-template-columns: minmax(0, 1fr) 42px 42px;
+  .actions-compact-row.has-send {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 42px;
   }
 
   .actions-panel .preview-action {
-    display: none;
-  }
-
-  .actions-panel .share-action {
-    width: 42px;
-    min-width: 42px;
-    min-height: 42px;
-    padding: 8px;
-  }
-
-  .actions-panel .share-action .action-label {
     display: none;
   }
 

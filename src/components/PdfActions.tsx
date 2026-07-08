@@ -159,10 +159,10 @@ export function PdfActions({ teamSheet, validation, onClear }: PdfActionsProps) 
   return (
     <>
       <section className={`actions-panel${isExpanded ? " is-expanded" : ""}`} aria-label="PDF actions">
-        <div className={`actions-compact-row${canShareFiles ? " has-share" : ""}`}>
-          <button type="button" className="primary-action" disabled={!validation.isValid || Boolean(generatingType)} onClick={() => handleDownload("both")}>
+        <div className={`actions-compact-row${canShareFiles ? " has-send" : ""}`}>
+          <button type="button" className="secondary-action" disabled={!validation.isValid || Boolean(generatingType)} onClick={() => handleDownload("both")}>
             <Download size={18} />
-            <span className="action-label">{generatingType === "both" ? "Generating..." : "Both Team Sheets"}</span>
+            <span className="action-label">{generatingType === "both" ? "Generating..." : "Team Sheets"}</span>
           </button>
           <button type="button" className="secondary-action preview-action" disabled={!validation.isValid || Boolean(generatingType)} onClick={handlePreview}>
             <Eye size={18} />
@@ -171,7 +171,7 @@ export function PdfActions({ teamSheet, validation, onClear }: PdfActionsProps) 
           {canShareFiles ? (
             <button
               type="button"
-              className="secondary-action share-action"
+              className="primary-action send-action"
               disabled={!validation.isValid || Boolean(generatingType)}
               aria-label="Share Team Sheets"
               title="Share Team Sheets"
