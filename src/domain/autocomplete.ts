@@ -23,14 +23,32 @@ export const makeOptions = <T extends { id: string; displayName: string; aliases
     }))
   );
 
+const normalizeSearchPhrase = (value: string): string =>
+  value
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+
+const matchesWordPrefix = (candidate: string, query: string, compactQuery: string): boolean => {
+  const normalizedCandidate = normalizeSearchPhrase(candidate);
+  return (
+    normalizedCandidate.startsWith(query) ||
+    normalizedCandidate.includes(` ${query}`) ||
+    normalizeName(candidate).startsWith(compactQuery)
+  );
+};
+
 export const searchOptions = (options: AutocompleteOption[], query: string): AutocompleteOption[] => {
-  const normalizedQuery = normalizeName(query);
-  if (!normalizedQuery) return sortOptions(options);
+  const normalizedQuery = normalizeSearchPhrase(query);
+  const compactQuery = normalizeName(query);
+  if (!normalizedQuery || !compactQuery) return sortOptions(options);
 
   return sortOptions(
     options.filter((option) =>
       [option.label, ...(option.aliases ?? [])].some((candidate) =>
-        normalizeName(candidate).startsWith(normalizedQuery)
+        matchesWordPrefix(candidate, normalizedQuery, compactQuery)
       )
     )
   );

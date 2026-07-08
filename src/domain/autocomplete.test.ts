@@ -24,20 +24,35 @@ describe("autocomplete options", () => {
     expect(searchOptions(makeOptions(records), "Option")).toHaveLength(24);
   });
 
-  it("matches normalized name and alias prefixes in alphabetical order", () => {
+  it("matches normalized name, word, and alias prefixes in alphabetical order", () => {
     const options = [
       { id: "soundproof", label: "Soundproof" },
       { id: "big-pecks", label: "Big Pecks" },
       { id: "snow-warning", label: "Snow Warning" },
-      { id: "charizardite-x", label: "Charizardite X", aliases: ["Zardite X"] }
+      { id: "charizardite-x", label: "Charizardite X", aliases: ["Zardite X"] },
+      { id: "aguav-berry", label: "Aguav Berry" },
+      { id: "berry-juice", label: "Berry Juice" },
+      { id: "sitrus-berry", label: "Sitrus Berry" }
     ];
 
     expect(searchOptions(options, "S").map((option) => option.label)).toEqual([
+      "Sitrus Berry",
       "Snow Warning",
       "Soundproof"
     ]);
-    expect(searchOptions(options, "pecks")).toEqual([]);
+    expect(searchOptions(options, "berry").map((option) => option.label)).toEqual([
+      "Aguav Berry",
+      "Berry Juice",
+      "Sitrus Berry"
+    ]);
+    expect(searchOptions(options, "pecks").map((option) => option.label)).toEqual([
+      "Big Pecks"
+    ]);
+    expect(searchOptions(options, "ecks")).toEqual([]);
     expect(searchOptions(options, "zard").map((option) => option.label)).toEqual([
+      "Charizardite X"
+    ]);
+    expect(searchOptions(options, "charizarditex").map((option) => option.label)).toEqual([
       "Charizardite X"
     ]);
   });
