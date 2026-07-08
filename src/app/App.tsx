@@ -30,7 +30,6 @@ export function App() {
   const [theme, setTheme] = useState<ThemeMode>(getInitialTheme);
   const [isMobileFieldEditing, setIsMobileFieldEditing] = useState(false);
   const isDarkMode = theme === "dark";
-  const faviconUrl = `${import.meta.env.BASE_URL}favicon.ico`;
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
@@ -94,13 +93,13 @@ export function App() {
     <main className={`app-shell${isMobileFieldEditing ? " is-mobile-field-editing" : ""}`}>
       <header className="app-header">
         <div className="app-brand">
-          <img className="app-brand-icon" src={faviconUrl} alt="" aria-hidden="true" />
-          <div className="app-brand-copy">
-            <p className="eyebrow">{rules.regulation} · {rules.dataVersion}</p>
-            <h1 className="app-title">
-              <span>TeamSheet.</span><wbr /><a className="app-title-link" href="https://georgiaplayevents.com/">GeorgiaPlayEvents.com</a>
-            </h1>
-          </div>
+          <p className="eyebrow">{rules.regulation} · {rules.dataVersion}</p>
+          <h1 className="app-title">Video Game Team List</h1>
+          <p className="header-subtitle">
+            Part of the <a href="https://georgiaplayevents.com/">Georgia Play Events Calendar</a>
+            <span className="subtitle-join"> and </span>
+            <a href="https://map.georgiaplayevents.com/">Georgia Play Events Map</a>
+          </p>
         </div>
         <div className="header-actions">
           <button
