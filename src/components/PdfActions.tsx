@@ -116,7 +116,7 @@ export function PdfActions({ teamSheet, validation, onClear }: PdfActionsProps) 
             <Download size={18} />
             <span className="action-label">{generatingType === "both" ? "Generating..." : "Both Team Sheets"}</span>
           </button>
-          <button type="button" className="secondary-action" disabled={!validation.isValid || Boolean(generatingType)} onClick={handlePreview}>
+          <button type="button" className="secondary-action preview-action" disabled={!validation.isValid || Boolean(generatingType)} onClick={handlePreview}>
             <Eye size={18} />
             <span className="action-label">{generatingType === "preview" ? "Generating..." : "Preview PDF"}</span>
           </button>

@@ -969,8 +969,12 @@ h3 {
   }
 
   .actions-compact-row {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 42px;
+    grid-template-columns: minmax(0, 1fr) 42px;
     gap: 14px;
+  }
+
+  .actions-panel .preview-action {
+    display: none;
   }
 
   .actions-expanded-row {
@@ -1017,6 +1021,16 @@ h3 {
   .actions-panel .error-text {
     grid-column: 1 / -1;
     margin-bottom: 0;
+  }
+
+  .date-field-control {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .date-picker-button,
+  .native-date-input {
+    display: none;
   }
 
   .pdf-preview-backdrop {
