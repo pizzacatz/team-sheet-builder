@@ -1,4 +1,4 @@
-import { AlertTriangle } from "lucide-react";
+import { AlertTriangle, CheckCircle2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { ValidationIssue } from "../domain/validationTypes";
 import type { ValidationResult } from "../domain/validationTypes";
@@ -86,16 +86,22 @@ export function ValidationPanel({ validation }: ValidationPanelProps) {
   const summaryContent = (
     <>
       <h2 id="validation-heading">Validation</h2>
-      {hasErrors ? (
-        <span className="status-pill invalid">
-          <AlertTriangle size={16} />
-          {`${errors.length} errors`}
-        </span>
-      ) : warnings.length ? (
-        <span className="status-pill warning">{`${warnings.length} warnings`}</span>
-      ) : (
-        <span className="status-pill valid">Ready</span>
-      )}
+      <span className="status-pill-group">
+        {hasErrors ? (
+          <span className="status-pill invalid">
+            <AlertTriangle size={16} />
+            {`${errors.length} ${errors.length === 1 ? "error" : "errors"}`}
+          </span>
+        ) : (
+          <span className="status-pill valid">
+            <CheckCircle2 size={16} />
+            {warnings.length ? "No errors" : "Ready"}
+          </span>
+        )}
+        {!hasErrors && warnings.length ? (
+          <span className="status-pill warning">{`${warnings.length} ${warnings.length === 1 ? "warning" : "warnings"}`}</span>
+        ) : null}
+      </span>
     </>
   );
 

@@ -602,6 +602,12 @@ h3 {
 }
 
 .tag,
+.status-pill-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .status-pill {
   display: inline-flex;
   min-height: 26px;
@@ -1007,10 +1013,6 @@ h3 {
     padding: 0 14px;
   }
 
-  .validation-panel:not(.has-issues) .status-pill {
-    display: none;
-  }
-
   .validation-panel .issue-list {
     max-height: 132px;
     margin: 0 14px 14px;
@@ -1035,7 +1037,22 @@ h3 {
     gap: 14px;
   }
 
+  .actions-compact-row.has-share {
+    grid-template-columns: minmax(0, 1fr) 42px 42px;
+  }
+
   .actions-panel .preview-action {
+    display: none;
+  }
+
+  .actions-panel .share-action {
+    width: 42px;
+    min-width: 42px;
+    min-height: 42px;
+    padding: 8px;
+  }
+
+  .actions-panel .share-action .action-label {
     display: none;
   }
 

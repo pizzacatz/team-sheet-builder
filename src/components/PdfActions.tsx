@@ -159,7 +159,7 @@ export function PdfActions({ teamSheet, validation, onClear }: PdfActionsProps) 
   return (
     <>
       <section className={`actions-panel${isExpanded ? " is-expanded" : ""}`} aria-label="PDF actions">
-        <div className="actions-compact-row">
+        <div className={`actions-compact-row${canShareFiles ? " has-share" : ""}`}>
           <button type="button" className="primary-action" disabled={!validation.isValid || Boolean(generatingType)} onClick={() => handleDownload("both")}>
             <Download size={18} />
             <span className="action-label">{generatingType === "both" ? "Generating..." : "Both Team Sheets"}</span>
@@ -168,6 +168,19 @@ export function PdfActions({ teamSheet, validation, onClear }: PdfActionsProps) 
             <Eye size={18} />
             <span className="action-label">{generatingType === "preview" ? "Generating..." : "Preview PDF"}</span>
           </button>
+          {canShareFiles ? (
+            <button
+              type="button"
+              className="secondary-action share-action"
+              disabled={!validation.isValid || Boolean(generatingType)}
+              aria-label="Share Team Sheets"
+              title="Share Team Sheets"
+              onClick={handleShare}
+            >
+              <Share2 size={18} />
+              <span className="action-label">{generatingType === "share" ? "Generating..." : "Share Team Sheets"}</span>
+            </button>
+          ) : null}
           <button
             type="button"
             className="icon-button actions-expand-toggle"
@@ -181,12 +194,6 @@ export function PdfActions({ teamSheet, validation, onClear }: PdfActionsProps) 
           </button>
         </div>
         <div className="actions-expanded-row" id="pdf-actions-expanded">
-          {canShareFiles ? (
-            <button type="button" className="secondary-action" disabled={!validation.isValid || Boolean(generatingType)} onClick={handleShare}>
-              <Share2 size={18} />
-              <span className="action-label">{generatingType === "share" ? "Generating..." : "Share Team Sheets"}</span>
-            </button>
-          ) : null}
           <button type="button" className="primary-action" disabled={!validation.isValid || Boolean(generatingType)} onClick={() => handleDownload("open")}>
             <Download size={18} />
             <span className="action-label">{generatingType === "open" ? "Generating..." : "Open Team Sheet"}</span>
