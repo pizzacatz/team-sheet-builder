@@ -177,6 +177,7 @@ export function PlayerInfoForm({ player, onChange }: PlayerInfoFormProps) {
               <input
                 id="date-of-birth"
                 value={player.dateOfBirth ?? ""}
+                placeholder="02-27-1996"
                 inputMode="numeric"
                 onChange={(event) => onChange({ dateOfBirth: formatDateDigits(event.target.value) })}
               />
