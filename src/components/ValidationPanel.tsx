@@ -13,16 +13,16 @@ const fieldIdForPath = (path: string): string | null => {
   if (path === "player.division") return "age-division-field";
   if (path === "player.playerId") return "player-id";
 
-  const pokemonMatch = path.match(/^pokemon\.(\d+)\.([^.]+)(?:\.(\d+))?/);
+  const pokemonMatch = path.match(/^pokemon\.(\d+)\.([^.]+)(?:\.([^.]+))?/);
   if (!pokemonMatch) return null;
 
-  const [, pokemonIndex, field, childIndex] = pokemonMatch;
+  const [, pokemonIndex, field, childKey] = pokemonMatch;
   if (field === "speciesId") return `pokemon-${pokemonIndex}-species`;
   if (field === "abilityId") return `pokemon-${pokemonIndex}-ability`;
   if (field === "itemId") return `pokemon-${pokemonIndex}-item`;
   if (field === "statAlignment") return `pokemon-${pokemonIndex}-stat-alignment`;
-  if (field === "moves" && childIndex !== undefined) return `pokemon-${pokemonIndex}-move-${childIndex}`;
-  if (field === "stats" && childIndex !== undefined) return `pokemon-${pokemonIndex}-${childIndex}`;
+  if (field === "moves" && childKey !== undefined) return `pokemon-${pokemonIndex}-move-${childKey}`;
+  if (field === "stats" && childKey !== undefined) return `pokemon-${pokemonIndex}-${childKey}`;
 
   return null;
 };

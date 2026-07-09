@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { items, moves, species } from "../domain/regulationData";
+import { statBounds } from "../domain/stats";
 import { validateTeamSheet } from "../domain/validation";
 import { makeValidTeamSheet } from "./fixtures";
 
@@ -67,6 +68,37 @@ describe("validateTeamSheet", () => {
 
     team.pokemon[0].moves[0] = "not-a-real-move";
     expect(codes(team)).toContain("ILLEGAL_MOVE");
+  });
+
+  it("flags a move listed twice on the same Pokémon but allows it across Pokémon", () => {
+    const sameSlot = makeValidTeamSheet();
+    sameSlot.pokemon[0].moves[1] = sameSlot.pokemon[0].moves[0];
+    expect(codes(sameSlot)).toContain("DUPLICATE_MOVE");
+
+    const crossTeam = makeValidTeamSheet();
+    crossTeam.pokemon[1].moves[0] = crossTeam.pokemon[0].moves[0];
+    expect(codes(crossTeam)).not.toContain("DUPLICATE_MOVE");
+  });
+
+  it("flags stats outside the legal range and ignores blanks", () => {
+    const team = makeValidTeamSheet();
+    const first = species.find((record) => record.id === team.pokemon[0].speciesId)!;
+    const spa = statBounds(first, "spa");
+
+    team.pokemon[0].stats.spa = String(spa.max + 1); // over max
+    team.pokemon[1].stats.hp = "32"; // a Stat-Point value, far below HP's minimum
+    const result = validateTeamSheet(team);
+    expect(result.issues.filter((issue) => issue.code === "STAT_OUT_OF_RANGE")).toHaveLength(2);
+    expect(result.isValid).toBe(false);
+  });
+
+  it("accepts final stats at the range boundaries and skips empty stat fields", () => {
+    const team = makeValidTeamSheet();
+    const first = species.find((record) => record.id === team.pokemon[0].speciesId)!;
+    team.pokemon[0].stats.spa = String(statBounds(first, "spa").max);
+    team.pokemon[0].stats.spe = String(statBounds(first, "spe").min);
+    team.pokemon[0].stats.hp = "";
+    expect(codes(team)).not.toContain("STAT_OUT_OF_RANGE");
   });
 
   it("catches unavailable abilities and warns on Mega Stone mismatch", () => {

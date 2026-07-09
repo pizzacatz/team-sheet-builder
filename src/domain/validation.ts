@@ -8,6 +8,7 @@ import {
   isMegaItemMatched,
   isMoveLearnable
 } from "./legality";
+import { statBounds, statRows } from "./stats";
 import type { TeamSheet } from "./teamTypes";
 import type { ValidationIssue, ValidationResult } from "./validationTypes";
 
@@ -121,6 +122,7 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
       );
     }
 
+    const moveSlotById = new Map<string, number>();
     entry.moves.forEach((moveId, moveIndex) => {
       const movePath = `${path}.moves.${moveIndex}`;
       if (!moveId) {
@@ -128,6 +130,18 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
           issue(issues, "error", movePath, "MISSING_MOVE", `${slot} needs move 1.`);
         }
         return;
+      }
+      const firstSlot = moveSlotById.get(moveId);
+      if (firstSlot !== undefined) {
+        issue(
+          issues,
+          "error",
+          movePath,
+          "DUPLICATE_MOVE",
+          `${slot} lists ${getMoveRecord(moveId)?.displayName ?? moveId} more than once (move ${firstSlot + 1} and move ${moveIndex + 1}).`
+        );
+      } else {
+        moveSlotById.set(moveId, moveIndex);
       }
       if (!getMoveRecord(moveId)) {
         issue(issues, "error", movePath, "ILLEGAL_MOVE", `${slot} move ${moveIndex + 1} is not legal in M-B.`);
@@ -140,6 +154,23 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
           movePath,
           "MOVE_NOT_LEARNABLE",
           `${slot} cannot learn ${getMoveRecord(moveId)?.displayName ?? moveId}.`
+        );
+      }
+    });
+
+    statRows.forEach((stat) => {
+      const raw = entry.stats[stat.key]?.trim();
+      if (!raw) return;
+      const value = Number.parseInt(raw, 10);
+      if (!Number.isFinite(value)) return;
+      const { min, max } = statBounds(species, stat.key);
+      if (value < min || value > max) {
+        issue(
+          issues,
+          "error",
+          `${path}.stats.${stat.key}`,
+          "STAT_OUT_OF_RANGE",
+          `${slot} ${stat.label} of ${value} is outside the legal range ${min}–${max}. Enter the final in-game stat, not the Stat Point spread.`
         );
       }
     });

@@ -53,6 +53,25 @@ export const statsFromSpecies = (species: SpeciesRecord | null | undefined): Pok
   };
 };
 
+export const STAT_POINT_MAX = 32;
+
+export type StatBound = { min: number; max: number };
+
+// Legal range for a final displayed stat, matching the engine: a stat is the
+// presented value (base+20, or base+75 for HP) plus 0..32 Stat Points, then
+// floored after the raised (x1.1) / lowered (x0.9) alignment. HP takes no
+// alignment. Used to catch Stat-Point spreads typed into a stat field.
+export const statBounds = (species: SpeciesRecord, stat: StatKey): StatBound => {
+  const presented = statValue(species, stat);
+  if (stat === "hp") {
+    return { min: presented, max: presented + STAT_POINT_MAX };
+  }
+  return {
+    min: Math.floor(presented * 0.9),
+    max: Math.floor((presented + STAT_POINT_MAX) * 1.1)
+  };
+};
+
 export const statsFromSpeciesWithPoints = (
   species: SpeciesRecord | null | undefined,
   points: Partial<PokemonStatPoints> | undefined,

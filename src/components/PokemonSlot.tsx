@@ -11,6 +11,8 @@ import { AutocompleteField } from "./AutocompleteField";
 type PokemonSlotProps = {
   index: number;
   entry: PokemonEntry;
+  usedSpeciesDex?: Set<number>;
+  usedItemIds?: Set<string>;
   onChange: (patch: Partial<PokemonEntry>) => void;
   onClear: () => void;
 };
@@ -57,9 +59,9 @@ const statFieldLabels: Record<StatKey, string> = {
   spe: "Spe"
 };
 
-export function PokemonSlot({ index, entry, onChange, onClear }: PokemonSlotProps) {
+export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, onChange, onClear }: PokemonSlotProps) {
   const lastSelectedSpeciesId = useRef(entry.speciesId);
-  const speciesOptions = useMemo(() => makeOptions(species, (record) => record.types.join(" / ")), []);
+  const allSpeciesOptions = useMemo(() => makeOptions(species, (record) => record.types.join(" / ")), []);
   const allAbilityOptions = useMemo(() => makeOptions(abilities), []);
   const allMoveOptions = useMemo(() => makeOptions(moves, (record) => record.type), []);
   const statAlignmentOptions = useMemo(
@@ -76,6 +78,15 @@ export function PokemonSlot({ index, entry, onChange, onClear }: PokemonSlotProp
 
   const selectedSpecies = speciesById.get(entry.speciesId ?? "");
   const entryStats = normalizePokemonStats(entry.stats);
+
+  const speciesOptions = useMemo(() => {
+    if (!usedSpeciesDex?.size) return allSpeciesOptions;
+    const filtered = allSpeciesOptions.filter((option) => {
+      const dex = speciesById.get(option.id)?.nationalDexNumber;
+      return dex === undefined || !usedSpeciesDex.has(dex);
+    });
+    return includeSelected(filtered, allSpeciesOptions, entry.speciesId);
+  }, [allSpeciesOptions, usedSpeciesDex, entry.speciesId]);
 
   useEffect(() => {
     if (entry.speciesId) lastSelectedSpeciesId.current = entry.speciesId;
@@ -103,12 +114,13 @@ export function PokemonSlot({ index, entry, onChange, onClear }: PokemonSlotProp
     () => (options: AutocompleteOption[], query: string, selectedValue: string | null) => {
       const selectedSpeciesId = selectedSpecies?.id;
       return options.filter((option) => {
+        if (usedItemIds?.has(option.id) && option.id !== selectedValue) return false;
         if (!isMegaStoneOption(option)) return true;
         if (isRelevantMegaStoneOption(option, selectedSpeciesId)) return true;
         return shouldShowTypedMegaStone(option, query, selectedValue);
       });
     },
-    [selectedSpecies?.id]
+    [selectedSpecies?.id, usedItemIds]
   );
 
   const handleSpeciesChange = (speciesId: string | null) => {
@@ -214,18 +226,28 @@ export function PokemonSlot({ index, entry, onChange, onClear }: PokemonSlotProp
             onChange={(itemId) => onChange({ itemId })}
             required
           />
-          {entry.moves.map((moveId, moveIndex) => (
-            <AutocompleteField
-              key={moveIndex}
-              id={`pokemon-${index}-move-${moveIndex}`}
-              label={`Move ${moveIndex + 1}`}
-              value={moveId}
-              options={includeSelected(moveOptions, allMoveOptions, moveId)}
-              onChange={(nextMoveId) => updateMove(moveIndex, nextMoveId)}
-              openOnEmptyFocus={Boolean(selectedSpecies)}
-              required={moveIndex === 0}
-            />
-          ))}
+          {entry.moves.map((moveId, moveIndex) => {
+            // A Pokémon can't have the same move twice: hide moves already picked
+            // in this Pokémon's other slots.
+            const usedInOtherSlots = new Set(entry.moves.filter((id, slot) => slot !== moveIndex && id));
+            const availableMoveOptions = includeSelected(
+              moveOptions.filter((option) => !usedInOtherSlots.has(option.id)),
+              allMoveOptions,
+              moveId
+            );
+            return (
+              <AutocompleteField
+                key={moveIndex}
+                id={`pokemon-${index}-move-${moveIndex}`}
+                label={`Move ${moveIndex + 1}`}
+                value={moveId}
+                options={availableMoveOptions}
+                onChange={(nextMoveId) => updateMove(moveIndex, nextMoveId)}
+                openOnEmptyFocus={Boolean(selectedSpecies)}
+                required={moveIndex === 0}
+              />
+            );
+          })}
         </div>
         <div className="slot-stats-column" aria-label={`Pokémon ${index + 1} stats`}>
           {statRows.map((stat) => (
