@@ -800,9 +800,15 @@ select.is-invalid {
 
 .issue-peek-more {
   margin: 0;
+  border: 0;
+  background: transparent;
+  padding: 2px 0 0;
   font-size: 0.78rem;
   font-weight: 600;
   color: var(--danger-text);
+  text-align: left;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 /* Blocked download/share buttons stay tappable but read as not-ready. */
