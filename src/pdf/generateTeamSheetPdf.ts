@@ -3,7 +3,7 @@ import { abilitiesById, itemsById, movesById, speciesById, statAlignmentsById } 
 import { normalizePokemonStats, statRows } from "../domain/stats";
 import type { PokemonEntry, TeamSheet } from "../domain/teamTypes";
 import { opponentSlots, pageSize, playerCoordinates, staffSlots, type SlotCoordinates } from "./pdfCoordinates";
-import { encodeTeamDataLines, encodeTeamDataQrPayload } from "./teamDataCode";
+import { encodeTeamDataIndexPayload, encodeTeamDataLines } from "./teamDataCode";
 
 const TEMPLATE_PATH = `${import.meta.env.BASE_URL}templates/pokemon-vg-team-list.pdf`;
 export type TeamSheetPdfType = "both" | "open" | "staff";
@@ -137,8 +137,8 @@ const drawTeamDataCode = (page: PDFPage, font: PDFFont, teamSheet: TeamSheet) =>
 // Crammed QR carrier for the PII-free team payload, drawn into the top-right
 // corner of the staff sheet — the only whitespace on the template big enough to
 // hold it. It sits above the instruction line so it covers no text. The payload
-// is deflate-compressed and ECC level L is used, both to minimise modules so the
-// code stays as large per-module as this tiny corner allows.
+// uses compact code-index numbers (see teamDataCode) so the QR is only ~41
+// modules and stays large-per-module enough to scan at this tiny corner size.
 const STAFF_QR = {
   size: 54,
   right: 12,
@@ -146,7 +146,7 @@ const STAFF_QR = {
 };
 const drawStaffQr = async (pdfDoc: PDFDocument, page: PDFPage, teamSheet: TeamSheet) => {
   const QRCode = (await import("qrcode")).default;
-  const dataUrl = await QRCode.toDataURL(await encodeTeamDataQrPayload(teamSheet), {
+  const dataUrl = await QRCode.toDataURL(encodeTeamDataIndexPayload(teamSheet), {
     errorCorrectionLevel: "L",
     margin: 2,
     scale: 8

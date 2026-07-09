@@ -1,3 +1,4 @@
+import { CODE_INDEX_VERSION, idFor, numberFor } from "./codeIndex";
 import { normalizePokemonStats, statRows } from "../domain/stats";
 import type { StatKey, TeamSheet } from "../domain/teamTypes";
 
@@ -21,13 +22,23 @@ import type { StatKey, TeamSheet } from "../domain/teamTypes";
 // sheet).
 
 export const TEAM_DATA_SENTINEL = "TSBv1";
-// Compressed carrier (used by the crammed corner QR): deflate-raw + base64 of the
-// same payload, so the QR needs far fewer modules and stays larger per-module in
-// the little corner space available.
-export const TEAM_DATA_COMPRESSED_SENTINEL = "TSBz1";
+// Index carrier (used by the crammed corner QR): a fixed-width, separator-free
+// payload of base36 code-index numbers plus a data-version stamp. Far fewer
+// characters than the slug form, and all-uppercase so the QR uses the denser
+// alphanumeric mode — both shrink the module count so the code fits and scans in
+// the tiny corner. See scripts/build_code_index.mjs for the numbering contract.
+export const TEAM_DATA_INDEX_SENTINEL = "TSBI1";
 const FIELD_SEP = ",";
 const MON_SEP = "|";
 const SEGMENT_CHARS = 90;
+
+// Fixed field widths (base36 chars) for the index payload. 2 chars = up to 1295,
+// comfortably above current category sizes; 1 char for the 21 stat alignments.
+const IDX_ID = 2;
+const IDX_ALIGN = 1;
+const IDX_STAT = 2;
+const IDX_RECORD = IDX_ID * 4 + IDX_ID * 4 + IDX_ALIGN + IDX_STAT * 6; // species/form/ability/item + 4 moves + align + 6 stats
+const VERSION_WIDTH = 4;
 
 export const STAT_KEY_ORDER: StatKey[] = statRows.map((stat) => stat.key);
 
@@ -65,14 +76,6 @@ export const encodeTeamDataPayload = (teamSheet: TeamSheet): string =>
     })
     .join(MON_SEP);
 
-/**
- * Single-line encoding for the QR carrier. It is a one-segment version of the
- * same wire format, so `decodeTeamDataFromText` decodes a scanned QR string with
- * no special-casing.
- */
-export const encodeTeamDataQrText = (teamSheet: TeamSheet): string =>
-  `${TEAM_DATA_SENTINEL}~0~1~${encodeTeamDataPayload(teamSheet)}`;
-
 /** Split the payload into sentinel-prefixed lines for drawing/extraction. */
 export const encodeTeamDataLines = (teamSheet: TeamSheet): string[] => {
   const payload = encodeTeamDataPayload(teamSheet);
@@ -85,39 +88,67 @@ export const encodeTeamDataLines = (teamSheet: TeamSheet): string[] => {
   return lines;
 };
 
-const bytesToBase64 = (bytes: Uint8Array): string => {
-  let binary = "";
-  for (const byte of bytes) binary += String.fromCharCode(byte);
-  return btoa(binary);
+const b36 = (value: number, width: number): string => value.toString(36).toUpperCase().padStart(width, "0");
+const fromB36 = (chunk: string): number => parseInt(chunk, 36) || 0;
+const statNumber = (value: string): number => Number.parseInt(value, 10) || 0;
+
+/**
+ * Fixed-width, separator-free index encoding for the corner QR:
+ *   TSBI1 <version:4> <record x6>
+ *   record = species form ability item move1..4 (2 each) statAlign (1) hp..spe (2 each)
+ * ids are code-index numbers (0 = empty); stats are the displayed values.
+ */
+export const encodeTeamDataIndexPayload = (teamSheet: TeamSheet): string => {
+  const records = teamSheet.pokemon
+    .map((entry) => {
+      const stats = normalizePokemonStats(entry.stats);
+      return [
+        b36(numberFor("species", entry.speciesId), IDX_ID),
+        b36(numberFor("forms", entry.formId), IDX_ID),
+        b36(numberFor("abilities", entry.abilityId), IDX_ID),
+        b36(numberFor("items", entry.itemId), IDX_ID),
+        ...entry.moves.map((moveId) => b36(numberFor("moves", moveId), IDX_ID)),
+        b36(numberFor("statAlignments", entry.statAlignment.value), IDX_ALIGN),
+        ...STAT_KEY_ORDER.map((key) => b36(statNumber(stats[key]), IDX_STAT))
+      ].join("");
+    })
+    .join("");
+  return `${TEAM_DATA_INDEX_SENTINEL}${CODE_INDEX_VERSION}${records}`;
 };
 
-const base64ToBytes = (base64: string): Uint8Array => {
-  const binary = atob(base64);
-  const bytes = new Uint8Array(binary.length);
-  for (let index = 0; index < binary.length; index += 1) bytes[index] = binary.charCodeAt(index);
-  return bytes;
+const decodeIndexRecord = (record: string): DecodedPokemon => {
+  let cursor = 0;
+  const take = (width: number): number => {
+    const value = fromB36(record.slice(cursor, cursor + width));
+    cursor += width;
+    return value;
+  };
+  const speciesId = idFor("species", take(IDX_ID));
+  const formId = idFor("forms", take(IDX_ID));
+  const abilityId = idFor("abilities", take(IDX_ID));
+  const itemId = idFor("items", take(IDX_ID));
+  const moves: [string, string, string, string] = [
+    idFor("moves", take(IDX_ID)),
+    idFor("moves", take(IDX_ID)),
+    idFor("moves", take(IDX_ID)),
+    idFor("moves", take(IDX_ID))
+  ];
+  const statAlignmentId = idFor("statAlignments", take(IDX_ALIGN));
+  const stats = STAT_KEY_ORDER.reduce((acc, key) => {
+    const value = take(IDX_STAT);
+    acc[key] = value ? String(value) : "";
+    return acc;
+  }, {} as Record<StatKey, string>);
+  return { speciesId, formId, abilityId, itemId, moves, statAlignmentId, stats };
 };
 
-const deflateRaw = async (text: string): Promise<Uint8Array> => {
-  const stream = new CompressionStream("deflate-raw");
-  const writer = stream.writable.getWriter();
-  void writer.write(new TextEncoder().encode(text));
-  void writer.close();
-  return new Uint8Array(await new Response(stream.readable).arrayBuffer());
-};
-
-const inflateRaw = async (bytes: Uint8Array): Promise<string> => {
-  const stream = new DecompressionStream("deflate-raw");
-  const writer = stream.writable.getWriter();
-  void writer.write(bytes as BufferSource);
-  void writer.close();
-  return new TextDecoder().decode(await new Response(stream.readable).arrayBuffer());
-};
-
-/** Compressed single-string encoding for the corner QR carrier. */
-export const encodeTeamDataQrPayload = async (teamSheet: TeamSheet): Promise<string> => {
-  const compressed = await deflateRaw(encodeTeamDataPayload(teamSheet));
-  return `${TEAM_DATA_COMPRESSED_SENTINEL}~${bytesToBase64(compressed)}`;
+const decodeIndexPayload = (payload: string): DecodedPokemon[] => {
+  const body = payload.slice(TEAM_DATA_INDEX_SENTINEL.length + VERSION_WIDTH);
+  const records: DecodedPokemon[] = [];
+  for (let start = 0; start + IDX_RECORD <= body.length; start += IDX_RECORD) {
+    records.push(decodeIndexRecord(body.slice(start, start + IDX_RECORD)));
+  }
+  return records;
 };
 
 const decodeMon = (raw: string): DecodedPokemon => {
@@ -159,17 +190,20 @@ export const decodeTeamDataFromText = (text: string): DecodedPokemon[] => {
   return payload.split(MON_SEP).map(decodeMon);
 };
 
-const decodePayloadString = (payload: string): DecodedPokemon[] => payload.split(MON_SEP).map(decodeMon);
+/** The data-version stamp carried by an index (`TSBI1`) payload, or null. */
+export const indexPayloadVersion = (text: string): string | null => {
+  const match = new RegExp(`${TEAM_DATA_INDEX_SENTINEL}([0-9A-Z]{${VERSION_WIDTH}})`).exec(text);
+  return match ? match[1] : null;
+};
 
 /**
- * Recover team data from any carrier: the compressed corner QR (`TSBz1~`), or
- * the plain segmented transparent text (`TSBv1~`). Async because the compressed
- * form must be inflated.
+ * Recover team data from any carrier: the index corner QR (`TSBI1`) or the plain
+ * segmented transparent text (`TSBv1`).
  */
-export const decodeTeamDataFromScan = async (text: string): Promise<DecodedPokemon[]> => {
-  const compressed = new RegExp(`${TEAM_DATA_COMPRESSED_SENTINEL}~([A-Za-z0-9+/=]+)`).exec(text);
-  if (compressed) {
-    return decodePayloadString(await inflateRaw(base64ToBytes(compressed[1])));
+export const decodeTeamDataFromScan = (text: string): DecodedPokemon[] => {
+  const index = new RegExp(`${TEAM_DATA_INDEX_SENTINEL}[0-9A-Z]+`).exec(text);
+  if (index) {
+    return decodeIndexPayload(index[0]);
   }
   return decodeTeamDataFromText(text);
 };

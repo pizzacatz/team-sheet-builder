@@ -95,18 +95,22 @@ PDF actions remain disabled while validation contains errors. Mobile omits previ
 
 The Staff Team Sheet carries a machine-readable, PII-free copy of the team through two carriers, both excluding all Player Info and encoding every Pokémon's species/form, ability, held item, moves, Stat Alignment, and final stats using stable internal IDs:
 
-- **Digital** (`TSBv1`): fully transparent text drawn on the staff page (invisible on screen and in print, but extractable by `pdftotext`/pdf.js), segmented to fit page width.
-- **Paper** (`TSBz1`): a QR code crammed into the top-right corner of the staff sheet, above the instruction line so it covers no content. The template has very little free space, so the payload is deflate-compressed and the QR uses error-correction level L to keep the module count (and therefore the physical size) as small as possible. The Open sheet never carries it, and no extra page is added.
+- **Digital** (`TSBv1`): fully transparent text drawn on the staff page (invisible on screen and in print, but extractable by `pdftotext`/pdf.js), segmented to fit page width. Self-describing slug ids — no external mapping needed to decode.
+- **Paper** (`TSBI1`): a QR code in the top-right corner of the staff sheet, above the instruction line so it covers no content. The Open sheet never carries it, and no extra page is added. To fit and scan in the tiny corner, the payload is a fixed-width, separator-free string of **code-index numbers** (see below) plus a data-version stamp — roughly 41 QR modules in alphanumeric mode.
 
-Both carriers decode through `decodeTeamDataFromScan`, which handles the plain and compressed forms. Decode a sheet with:
+Both carriers decode through `decodeTeamDataFromScan`. Decode a sheet with:
 
 ```bash
 node scripts/decode_team_data.mjs path/to/staff-team-sheet.pdf   # digital text, via poppler's pdftotext
 # or scan the corner QR with any reader and pipe the string in:
-echo 'TSBz1~...' | node scripts/decode_team_data.mjs -
+echo 'TSBI1...' | node scripts/decode_team_data.mjs -
 ```
 
-The corner QR is small; the transparent digital text is the more reliable machine-read path, with the QR intended for scanning printed sheets. The serializer/decoder lives in `src/pdf/teamDataCode.ts`; QR rendering (via `qrcode`, lazy-loaded with the PDF module) lives in `src/pdf/generateTeamSheetPdf.ts`.
+The serializer/decoder lives in `src/pdf/teamDataCode.ts`; QR rendering (via `qrcode`, lazy-loaded with the PDF module) lives in `src/pdf/generateTeamSheetPdf.ts`.
+
+#### Code-index registry
+
+The QR references each id by a permanent number from `src/data/regulation-mb/code-index.json`, an **append-only registry**: every id is assigned a number the first time it is seen, and that number is never changed, reordered, or reused. New Pokémon/moves/abilities/items get fresh numbers appended at the end, so any QR printed under an older registry still decodes correctly. The registry is rebuilt (preserving all existing numbers) by `npm run data:index`, which `npm run data:export` runs automatically. Its `version` stamp is embedded in each QR so a decoder with older data warns instead of silently mis-decoding.
 
 ## Local Development
 
@@ -158,6 +162,8 @@ The export script currently expects the Champions Logic database at:
 ```txt
 /home/nuc1/Documents/Coding Projects/champions_logic/data/champions_logic.db
 ```
+
+`data:export` also runs `data:index`, which refreshes the append-only `code-index.json` registry (assigning numbers to any new ids while preserving all existing ones). Commit the updated `code-index.json` alongside the regenerated data. Never hand-edit or reorder that file — doing so would break QR codes already printed. See [Embedded Team Data](#embedded-team-data) for the numbering contract.
 
 After regenerating data, run tests and a production build before committing.
 

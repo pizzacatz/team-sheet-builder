@@ -1,14 +1,15 @@
 import { describe, expect, it } from "vitest";
 import { normalizePokemonStats } from "../domain/stats";
 import { makeValidTeamSheet } from "../tests/fixtures";
+import { CODE_INDEX_VERSION } from "./codeIndex";
 import {
   decodeTeamDataFromScan,
   decodeTeamDataFromText,
+  encodeTeamDataIndexPayload,
   encodeTeamDataLines,
   encodeTeamDataPayload,
-  encodeTeamDataQrPayload,
-  encodeTeamDataQrText,
-  TEAM_DATA_COMPRESSED_SENTINEL,
+  indexPayloadVersion,
+  TEAM_DATA_INDEX_SENTINEL,
   TEAM_DATA_SENTINEL
 } from "./teamDataCode";
 
@@ -56,25 +57,25 @@ describe("teamDataCode", () => {
     lines.forEach((line) => expect(line.startsWith(`${TEAM_DATA_SENTINEL}~`)).toBe(true));
   });
 
-  it("decodes the single-line QR text with the shared decoder", () => {
+  it("round-trips the indexed corner-QR payload and stays smaller than the slug text", () => {
     const teamSheet = makeValidTeamSheet();
-    const qrText = encodeTeamDataQrText(teamSheet);
-    expect(decodeTeamDataFromText(qrText)).toEqual(decodeTeamDataFromText(encodeTeamDataLines(teamSheet).join("\n")));
-  });
+    const qrPayload = encodeTeamDataIndexPayload(teamSheet);
+    expect(qrPayload.startsWith(`${TEAM_DATA_INDEX_SENTINEL}${CODE_INDEX_VERSION}`)).toBe(true);
+    expect(qrPayload.length).toBeLessThan(encodeTeamDataPayload(teamSheet).length);
+    expect(indexPayloadVersion(qrPayload)).toBe(CODE_INDEX_VERSION);
 
-  it("round-trips the compressed corner-QR payload and stays smaller than plain", async () => {
-    const teamSheet = makeValidTeamSheet();
-    const qrPayload = await encodeTeamDataQrPayload(teamSheet);
-    expect(qrPayload.startsWith(`${TEAM_DATA_COMPRESSED_SENTINEL}~`)).toBe(true);
-    expect(qrPayload.length).toBeLessThan(encodeTeamDataQrText(teamSheet).length);
-
-    const decoded = await decodeTeamDataFromScan(qrPayload);
+    const decoded = decodeTeamDataFromScan(qrPayload);
     expect(decoded).toEqual(decodeTeamDataFromText(encodeTeamDataLines(teamSheet).join("\n")));
   });
 
-  it("decodeTeamDataFromScan still handles the plain transparent-text carrier", async () => {
+  it("uses only alphanumeric-mode QR characters in the indexed payload", () => {
+    const qrPayload = encodeTeamDataIndexPayload(makeValidTeamSheet());
+    expect(qrPayload).toMatch(/^[0-9A-Z]+$/);
+  });
+
+  it("decodeTeamDataFromScan still handles the plain transparent-text carrier", () => {
     const teamSheet = makeValidTeamSheet();
-    const fromScan = await decodeTeamDataFromScan(encodeTeamDataLines(teamSheet).join("\n"));
+    const fromScan = decodeTeamDataFromScan(encodeTeamDataLines(teamSheet).join("\n"));
     expect(fromScan).toEqual(decodeTeamDataFromText(encodeTeamDataLines(teamSheet).join("\n")));
   });
 

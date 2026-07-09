@@ -5,7 +5,7 @@
 //   node scripts/decode_team_data.mjs <staff-sheet.pdf>   # needs `pdftotext` (poppler)
 //   node scripts/decode_team_data.mjs <dump.txt>          # pdftotext output / any text
 //   pdftotext staff.pdf - | node scripts/decode_team_data.mjs -   # read text from stdin
-//   echo 'TSBz1~<base64>' | node scripts/decode_team_data.mjs -   # scanned corner QR string
+//   echo 'TSBI1...' | node scripts/decode_team_data.mjs -        # scanned corner QR string
 //
 // Prints human-readable team data (IDs expanded via src/data/regulation-mb).
 // Player Info is never embedded, so it is never recovered.
@@ -14,10 +14,14 @@ import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { inflateRawSync } from "node:zlib";
 
 const SENTINEL = "TSBv1";
-const COMPRESSED_SENTINEL = "TSBz1";
+const INDEX_SENTINEL = "TSBI1";
+const VERSION_WIDTH = 4;
+const IDX_ID = 2;
+const IDX_ALIGN = 1;
+const IDX_STAT = 2;
+const IDX_RECORD = IDX_ID * 8 + IDX_ALIGN + IDX_STAT * 6;
 const FIELD_SEP = ",";
 const MON_SEP = "|";
 const STAT_KEYS = ["hp", "atk", "def", "spa", "spd", "spe"];
@@ -36,6 +40,23 @@ const abilities = loadById("abilities.json");
 const items = loadById("items.json");
 const moves = loadById("moves.json");
 const statAlignments = loadById("stat-alignments.json");
+
+// Append-only code-index registry, for decoding the corner QR's numeric payload.
+const registry = JSON.parse(readFileSync(resolve(dataDir, "code-index.json"), "utf8"));
+const reverseIndex = (category) => {
+  const map = new Map();
+  for (const [id, number] of Object.entries(registry[category])) map.set(number, id);
+  return map;
+};
+const numberToId = {
+  species: reverseIndex("species"),
+  forms: reverseIndex("forms"),
+  abilities: reverseIndex("abilities"),
+  items: reverseIndex("items"),
+  moves: reverseIndex("moves"),
+  statAlignments: reverseIndex("statAlignments")
+};
+const idFor = (category, number) => (number ? numberToId[category].get(number) ?? "" : "");
 
 const name = (map, id) => (id ? (map.get(id)?.displayName ?? `${id} (unknown)`) : "—");
 
@@ -56,13 +77,42 @@ const readInput = (arg) => {
   return readFileSync(arg, "utf8");
 };
 
-const decode = (text) => {
-  // Compressed corner-QR carrier: TSBz1~<base64 deflate-raw>
-  const compressed = new RegExp(`${COMPRESSED_SENTINEL}~([A-Za-z0-9+/=]+)`).exec(text);
-  if (compressed) {
-    const payload = inflateRawSync(Buffer.from(compressed[1], "base64")).toString("utf8");
-    return payload.split(MON_SEP).map((raw) => raw.split(FIELD_SEP));
+const decodeIndex = (payload) => {
+  const stamp = payload.slice(INDEX_SENTINEL.length, INDEX_SENTINEL.length + VERSION_WIDTH);
+  if (stamp !== registry.version) {
+    console.error(
+      `Warning: sheet data-version ${stamp} != local ${registry.version}; entries may be unknown if your data is older.`
+    );
   }
+  const body = payload.slice(INDEX_SENTINEL.length + VERSION_WIDTH);
+  const rows = [];
+  for (let start = 0; start + IDX_RECORD <= body.length; start += IDX_RECORD) {
+    const record = body.slice(start, start + IDX_RECORD);
+    let cursor = 0;
+    const take = (width) => {
+      const value = parseInt(record.slice(cursor, cursor + width), 36) || 0;
+      cursor += width;
+      return value;
+    };
+    const speciesId = idFor("species", take(IDX_ID));
+    const formId = idFor("forms", take(IDX_ID));
+    const abilityId = idFor("abilities", take(IDX_ID));
+    const itemId = idFor("items", take(IDX_ID));
+    const moveIds = [idFor("moves", take(IDX_ID)), idFor("moves", take(IDX_ID)), idFor("moves", take(IDX_ID)), idFor("moves", take(IDX_ID))];
+    const alignId = idFor("statAlignments", take(IDX_ALIGN));
+    const stats = STAT_KEYS.map(() => {
+      const value = take(IDX_STAT);
+      return value ? String(value) : "";
+    });
+    rows.push([speciesId, formId, abilityId, itemId, ...moveIds, alignId, ...stats]);
+  }
+  return rows;
+};
+
+const decode = (text) => {
+  // Index corner-QR carrier: TSBI1<version><fixed-width records>
+  const index = new RegExp(`${INDEX_SENTINEL}[0-9A-Z]+`).exec(text);
+  if (index) return decodeIndex(index[0]);
   // Plain transparent-text carrier: TSBv1~<i>~<n>~<chunk>
   const pattern = new RegExp(`${SENTINEL}~(\\d+)~(\\d+)~(\\S*)`, "g");
   const segments = new Map();
@@ -80,7 +130,7 @@ const decode = (text) => {
 
 const mons = decode(readInput(process.argv[2]));
 if (mons.length === 0) {
-  console.error(`No ${SENTINEL} payload found in input.`);
+  console.error(`No ${SENTINEL} or ${INDEX_SENTINEL} payload found in input.`);
   process.exit(1);
 }
 
