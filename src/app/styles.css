@@ -1003,11 +1003,13 @@ select.is-invalid {
     right: 12px;
     bottom: calc(12px + env(safe-area-inset-bottom));
     left: 12px;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
+    display: flex;
+    flex-direction: column;
     gap: 14px;
     max-height: min(48vh, 380px);
-    overflow: auto;
+    /* The tray itself never scrolls; only the issue list inside does, so the
+       download/share buttons stay pinned. */
+    overflow: hidden;
     overscroll-behavior: contain;
     transform: translateY(0);
     transition:
@@ -1031,8 +1033,18 @@ select.is-invalid {
   }
 
   .validation-panel {
+    display: flex;
+    flex-direction: column;
+    flex: 0 1 auto;
+    min-height: 0;
     overflow: hidden;
     padding: 0;
+  }
+
+  /* Action buttons keep their height; the error list absorbs the shrink and
+     scrolls within the tray instead of scrolling the whole tray. */
+  .side-column .actions-panel {
+    flex: 0 0 auto;
   }
 
   .validation-panel .section-heading {
@@ -1047,7 +1059,10 @@ select.is-invalid {
 
   .validation-panel .issue-list {
     /* Scrollable area fits up to 4 error rows (3 when only 3 remain, 4 when
-       there are 4+), then scrolls. */
+       there are 4+), then scrolls — but shrinks first if the tray is short, so
+       only this list scrolls, never the tray. */
+    flex: 1 1 auto;
+    min-height: 0;
     max-height: 264px;
     margin: 0 14px 14px;
   }
