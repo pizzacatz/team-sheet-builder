@@ -115,13 +115,16 @@ describe("validateTeamSheet", () => {
     expect(result.isValid).toBe(false);
   });
 
-  it("accepts final stats at the range boundaries and skips empty stat fields", () => {
+  it("accepts final stats at the range boundaries and requires every stat", () => {
     const team = makeValidTeamSheet();
     const first = species.find((record) => record.id === team.pokemon[0].speciesId)!;
     team.pokemon[0].stats.spa = String(statBounds(first, "spa").max);
     team.pokemon[0].stats.spe = String(statBounds(first, "spe").min);
-    team.pokemon[0].stats.hp = "";
     expect(codes(team)).not.toContain("STAT_OUT_OF_RANGE");
+    expect(codes(team)).not.toContain("MISSING_STAT");
+
+    team.pokemon[0].stats.hp = "";
+    expect(codes(team)).toContain("MISSING_STAT");
   });
 
   it("catches unavailable abilities and warns on Mega Stone mismatch", () => {

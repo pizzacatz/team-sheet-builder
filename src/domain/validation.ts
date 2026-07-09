@@ -181,8 +181,12 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
     });
 
     statRows.forEach((stat) => {
+      const statPath = `${path}.stats.${stat.key}`;
       const raw = entry.stats[stat.key]?.trim();
-      if (!raw) return;
+      if (!raw) {
+        issue(issues, "error", statPath, "MISSING_STAT", `${slot} needs a ${stat.label} value.`);
+        return;
+      }
       const value = Number.parseInt(raw, 10);
       if (!Number.isFinite(value)) return;
       const { min, max } = statBounds(species, stat.key);
@@ -190,7 +194,7 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
         issue(
           issues,
           "error",
-          `${path}.stats.${stat.key}`,
+          statPath,
           "STAT_OUT_OF_RANGE",
           `${slot} ${stat.label} of ${value} is outside the expected range. Enter the final in-game stat, not the Stat Point spread.`
         );

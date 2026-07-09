@@ -51,6 +51,7 @@ export const MISSING_ERROR_CODES = new Set<string>([
   "MISSING_ABILITY",
   "MISSING_ITEM",
   "MISSING_MOVE",
+  "MISSING_STAT",
   "MISSING_STAT_ALIGNMENT"
 ]);
 
