@@ -79,14 +79,20 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, onChang
   const selectedSpecies = speciesById.get(entry.speciesId ?? "");
   const entryStats = normalizePokemonStats(entry.stats);
 
-  const speciesOptions = useMemo(() => {
-    if (!usedSpeciesDex?.size) return allSpeciesOptions;
-    const filtered = allSpeciesOptions.filter((option) => {
-      const dex = speciesById.get(option.id)?.nationalDexNumber;
-      return dex === undefined || !usedSpeciesDex.has(dex);
-    });
-    return includeSelected(filtered, allSpeciesOptions, entry.speciesId);
-  }, [allSpeciesOptions, usedSpeciesDex, entry.speciesId]);
+  // Species Clause: hide species already used by other slots from the dropdown
+  // (by Pokédex number). This only filters suggestions — a manually typed exact
+  // name still commits, and validation flags the duplicate.
+  const filterSpeciesOptions = useMemo(
+    () => (speciesOptionList: AutocompleteOption[], _query: string, selectedValue: string | null) => {
+      if (!usedSpeciesDex?.size) return speciesOptionList;
+      return speciesOptionList.filter((option) => {
+        if (option.id === selectedValue) return true;
+        const dex = speciesById.get(option.id)?.nationalDexNumber;
+        return dex === undefined || !usedSpeciesDex.has(dex);
+      });
+    },
+    [usedSpeciesDex]
+  );
 
   useEffect(() => {
     if (entry.speciesId) lastSelectedSpeciesId.current = entry.speciesId;
@@ -183,7 +189,8 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, onChang
           id={`pokemon-${index}-species`}
           label="Pokémon"
           value={entry.speciesId}
-          options={speciesOptions}
+          options={allSpeciesOptions}
+          filterOptions={filterSpeciesOptions}
           onChange={handleSpeciesChange}
           required
         />
@@ -228,20 +235,21 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, onChang
           />
           {entry.moves.map((moveId, moveIndex) => {
             // A Pokémon can't have the same move twice: hide moves already picked
-            // in this Pokémon's other slots.
-            const usedInOtherSlots = new Set(entry.moves.filter((id, slot) => slot !== moveIndex && id));
-            const availableMoveOptions = includeSelected(
-              moveOptions.filter((option) => !usedInOtherSlots.has(option.id)),
-              allMoveOptions,
-              moveId
-            );
+            // in this Pokémon's other slots from the dropdown. Only suggestions
+            // are filtered — a manually typed duplicate still commits and is
+            // flagged by validation.
+            const filterMoveOptions = (moveOptionList: AutocompleteOption[], _query: string, selectedValue: string | null) => {
+              const usedInOtherSlots = new Set(entry.moves.filter((id, slot) => slot !== moveIndex && id));
+              return moveOptionList.filter((option) => option.id === selectedValue || !usedInOtherSlots.has(option.id));
+            };
             return (
               <AutocompleteField
                 key={moveIndex}
                 id={`pokemon-${index}-move-${moveIndex}`}
                 label={`Move ${moveIndex + 1}`}
                 value={moveId}
-                options={availableMoveOptions}
+                options={includeSelected(moveOptions, allMoveOptions, moveId)}
+                filterOptions={filterMoveOptions}
                 onChange={(nextMoveId) => updateMove(moveIndex, nextMoveId)}
                 openOnEmptyFocus={Boolean(selectedSpecies)}
                 required={moveIndex === 0}

@@ -64,9 +64,13 @@ export function AutocompleteField({
     activeOptionRef.current?.scrollIntoView?.({ block: "nearest" });
   }, [activeIndex]);
 
+  // Resolve typed text against the FULL option list, not the dropdown-filtered
+  // one. filterOptions only hides suggestions (e.g. duplicates already used
+  // elsewhere); a user who types an exact name should still be able to commit it
+  // so validation can flag the duplicate.
   const exactMatch = (
     rawValue: string,
-    candidates: AutocompleteOption[] = filterOptions ? filterOptions(options, rawValue, value) : options
+    candidates: AutocompleteOption[] = options
   ): AutocompleteOption | undefined => {
     const normalized = normalizeName(rawValue);
     if (!normalized) return undefined;
