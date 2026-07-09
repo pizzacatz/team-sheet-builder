@@ -112,6 +112,8 @@ The serializer/decoder lives in `src/pdf/teamDataCode.ts`; QR rendering (via `qr
 
 The QR references each id by a permanent number from `src/data/regulation-mb/code-index.json`, an **append-only registry**: every id is assigned a number the first time it is seen, and that number is never changed, reordered, or reused. New Pokémon/moves/abilities/items get fresh numbers appended at the end, so any QR printed under an older registry still decodes correctly. The registry is rebuilt (preserving all existing numbers) by `npm run data:index`, which `npm run data:export` runs automatically. Its `version` stamp is embedded in each QR so a decoder with older data warns instead of silently mis-decoding.
 
+**Before editing or regenerating the registry, read [docs/CODE_INDEX.md](docs/CODE_INDEX.md)** — it is the full maintenance contract, with the append/rebuild workflow, guard rails, DON'T list, and capacity limits.
+
 ## Local Development
 
 Prerequisites:
