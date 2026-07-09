@@ -138,7 +138,7 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
           "error",
           movePath,
           "DUPLICATE_MOVE",
-          `${slot} lists ${getMoveRecord(moveId)?.displayName ?? moveId} more than once (move ${firstSlot + 1} and move ${moveIndex + 1}).`
+          `${slot} has a duplicate move — ${getMoveRecord(moveId)?.displayName ?? moveId} is already on move ${firstSlot + 1}.`
         );
       } else {
         moveSlotById.set(moveId, moveIndex);
