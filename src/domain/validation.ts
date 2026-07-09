@@ -104,7 +104,7 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
             "error",
             `${path}.itemId`,
             "DUPLICATE_ITEM",
-            `${slot} duplicates the held item used by Pokémon ${existingItemSlot + 1}.`
+            `${slot} has a duplicate held item — the same item is already on Pokémon ${existingItemSlot + 1}.`
           );
         } else if (item.itemClauseEligible) {
           itemBySlot.set(item.id, index);
