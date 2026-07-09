@@ -85,9 +85,9 @@ export const playerCoordinates = {
   switchProfileName: { x: 146, y: 638, maxWidth: 164 },
   playerId: { x: 436, y: 684, maxWidth: 139 },
   dateOfBirth: {
-    month: { centerX: 454, y: 661, maxWidth: 28 },
-    day: { centerX: 507, y: 661, maxWidth: 28 },
-    year: { x: 552, y: 661, maxWidth: 44 }
+    month: { centerX: 454, y: 665, maxWidth: 28 },
+    day: { centerX: 507, y: 665, maxWidth: 28 },
+    year: { x: 552, y: 665, maxWidth: 44 }
   },
   supportId: { x: 436, y: 638, maxWidth: 139 },
   division: {
