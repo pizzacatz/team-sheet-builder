@@ -2,10 +2,13 @@ import { describe, expect, it } from "vitest";
 import { normalizePokemonStats } from "../domain/stats";
 import { makeValidTeamSheet } from "../tests/fixtures";
 import {
+  decodeTeamDataFromScan,
   decodeTeamDataFromText,
   encodeTeamDataLines,
   encodeTeamDataPayload,
+  encodeTeamDataQrPayload,
   encodeTeamDataQrText,
+  TEAM_DATA_COMPRESSED_SENTINEL,
   TEAM_DATA_SENTINEL
 } from "./teamDataCode";
 
@@ -57,6 +60,22 @@ describe("teamDataCode", () => {
     const teamSheet = makeValidTeamSheet();
     const qrText = encodeTeamDataQrText(teamSheet);
     expect(decodeTeamDataFromText(qrText)).toEqual(decodeTeamDataFromText(encodeTeamDataLines(teamSheet).join("\n")));
+  });
+
+  it("round-trips the compressed corner-QR payload and stays smaller than plain", async () => {
+    const teamSheet = makeValidTeamSheet();
+    const qrPayload = await encodeTeamDataQrPayload(teamSheet);
+    expect(qrPayload.startsWith(`${TEAM_DATA_COMPRESSED_SENTINEL}~`)).toBe(true);
+    expect(qrPayload.length).toBeLessThan(encodeTeamDataQrText(teamSheet).length);
+
+    const decoded = await decodeTeamDataFromScan(qrPayload);
+    expect(decoded).toEqual(decodeTeamDataFromText(encodeTeamDataLines(teamSheet).join("\n")));
+  });
+
+  it("decodeTeamDataFromScan still handles the plain transparent-text carrier", async () => {
+    const teamSheet = makeValidTeamSheet();
+    const fromScan = await decodeTeamDataFromScan(encodeTeamDataLines(teamSheet).join("\n"));
+    expect(fromScan).toEqual(decodeTeamDataFromText(encodeTeamDataLines(teamSheet).join("\n")));
   });
 
   it("returns no pokemon for text without the sentinel", () => {

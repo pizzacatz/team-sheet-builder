@@ -95,18 +95,18 @@ PDF actions remain disabled while validation contains errors. Mobile omits previ
 
 The Staff Team Sheet carries a machine-readable, PII-free copy of the team through two carriers, both excluding all Player Info and encoding every Pokémon's species/form, ability, held item, moves, Stat Alignment, and final stats using stable internal IDs:
 
-- **Digital:** fully transparent text drawn on the staff page (invisible on screen and in print, but extractable by `pdftotext`/pdf.js), segmented to fit page width.
-- **Paper:** a QR code on a dedicated `Team Data (Staff Use)` page appended to the Staff and Both outputs. The team sheet itself is too dense to overlay a scannable QR, so the code gets its own page; the Open sheet never carries it.
+- **Digital** (`TSBv1`): fully transparent text drawn on the staff page (invisible on screen and in print, but extractable by `pdftotext`/pdf.js), segmented to fit page width.
+- **Paper** (`TSBz1`): a QR code crammed into the top-right corner of the staff sheet, above the instruction line so it covers no content. The template has very little free space, so the payload is deflate-compressed and the QR uses error-correction level L to keep the module count (and therefore the physical size) as small as possible. The Open sheet never carries it, and no extra page is added.
 
-Both carriers use the same versioned wire format (`TSBv1`), so one decoder handles either. Decode a sheet with:
+Both carriers decode through `decodeTeamDataFromScan`, which handles the plain and compressed forms. Decode a sheet with:
 
 ```bash
 node scripts/decode_team_data.mjs path/to/staff-team-sheet.pdf   # digital text, via poppler's pdftotext
-# or scan the QR with any reader and pipe the string in:
-echo 'TSBv1~0~1~...' | node scripts/decode_team_data.mjs -
+# or scan the corner QR with any reader and pipe the string in:
+echo 'TSBz1~...' | node scripts/decode_team_data.mjs -
 ```
 
-Because of the appended QR page, the Staff output is two pages and the Both output is three. The serializer/decoder lives in `src/pdf/teamDataCode.ts`; QR rendering (via `qrcode`, lazy-loaded with the PDF module) lives in `src/pdf/generateTeamSheetPdf.ts`.
+The corner QR is small; the transparent digital text is the more reliable machine-read path, with the QR intended for scanning printed sheets. The serializer/decoder lives in `src/pdf/teamDataCode.ts`; QR rendering (via `qrcode`, lazy-loaded with the PDF module) lives in `src/pdf/generateTeamSheetPdf.ts`.
 
 ## Local Development
 

@@ -33,8 +33,7 @@ describe("generateTeamSheetPdf", () => {
 
     const blob = await generateTeamSheetPdf(makeValidTeamSheet());
     const generated = await PDFDocument.load(await blobToArrayBuffer(blob));
-    // staff sheet + open sheet + appended QR data page
-    expect(generated.getPageCount()).toBe(3);
+    expect(generated.getPageCount()).toBe(2);
     expect(blob.size).toBeGreaterThan(200_000);
   });
 
@@ -50,9 +49,8 @@ describe("generateTeamSheetPdf", () => {
     const openPdf = await PDFDocument.load(await blobToArrayBuffer(openBlob));
     const staffPdf = await PDFDocument.load(await blobToArrayBuffer(staffBlob));
 
-    // open stays a single page; staff gains the appended QR data page
     expect(openPdf.getPageCount()).toBe(1);
-    expect(staffPdf.getPageCount()).toBe(2);
+    expect(staffPdf.getPageCount()).toBe(1);
     expect(openBlob.size).toBeGreaterThan(100_000);
     expect(staffBlob.size).toBeGreaterThan(100_000);
   });

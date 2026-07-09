@@ -3,7 +3,7 @@ import { abilitiesById, itemsById, movesById, speciesById, statAlignmentsById } 
 import { normalizePokemonStats, statRows } from "../domain/stats";
 import type { PokemonEntry, TeamSheet } from "../domain/teamTypes";
 import { opponentSlots, pageSize, playerCoordinates, staffSlots, type SlotCoordinates } from "./pdfCoordinates";
-import { encodeTeamDataLines, encodeTeamDataQrText } from "./teamDataCode";
+import { encodeTeamDataLines, encodeTeamDataQrPayload } from "./teamDataCode";
 
 const TEMPLATE_PATH = `${import.meta.env.BASE_URL}templates/pokemon-vg-team-list.pdf`;
 export type TeamSheetPdfType = "both" | "open" | "staff";
@@ -134,48 +134,30 @@ const drawTeamDataCode = (page: PDFPage, font: PDFFont, teamSheet: TeamSheet) =>
   });
 };
 
-// Append a dedicated, scannable QR page (staff/both only). The team sheet
-// itself is far too dense to overlay a ~600-byte QR without covering data, so
-// the code gets its own page. Payload is PII-free and identical to the
-// transparent text on the staff sheet.
-const appendQrPage = async (pdfDoc: PDFDocument, font: PDFFont, boldFont: PDFFont, teamSheet: TeamSheet) => {
+// Crammed QR carrier for the PII-free team payload, drawn into the top-right
+// corner of the staff sheet — the only whitespace on the template big enough to
+// hold it. It sits above the instruction line so it covers no text. The payload
+// is deflate-compressed and ECC level L is used, both to minimise modules so the
+// code stays as large per-module as this tiny corner allows.
+const STAFF_QR = {
+  size: 54,
+  right: 12,
+  top: 6
+};
+const drawStaffQr = async (pdfDoc: PDFDocument, page: PDFPage, teamSheet: TeamSheet) => {
   const QRCode = (await import("qrcode")).default;
-  const dataUrl = await QRCode.toDataURL(encodeTeamDataQrText(teamSheet), {
-    errorCorrectionLevel: "M",
-    margin: 4,
+  const dataUrl = await QRCode.toDataURL(await encodeTeamDataQrPayload(teamSheet), {
+    errorCorrectionLevel: "L",
+    margin: 2,
     scale: 8
   });
   const qrImage = await pdfDoc.embedPng(dataUrl);
-
-  const page = pdfDoc.addPage([pageSize.width, pageSize.height]);
-  const qrSize = 320;
-  const qrX = (pageSize.width - qrSize) / 2;
-  const qrY = (pageSize.height - qrSize) / 2 - 20;
-  page.drawImage(qrImage, { x: qrX, y: qrY, width: qrSize, height: qrSize });
-
-  const title = "Team Data (Staff Use)";
-  const titleSize = 16;
-  const titleWidth = boldFont.widthOfTextAtSize(title, titleSize);
-  page.drawText(title, {
-    x: (pageSize.width - titleWidth) / 2,
-    y: qrY + qrSize + 36,
-    size: titleSize,
-    font: boldFont,
-    color: rgb(0.1, 0.1, 0.1)
+  page.drawImage(qrImage, {
+    x: pageSize.width - STAFF_QR.size - STAFF_QR.right,
+    y: pageSize.height - STAFF_QR.size - STAFF_QR.top,
+    width: STAFF_QR.size,
+    height: STAFF_QR.size
   });
-
-  const caption = "Scan to import this team. Contains no player information.";
-  const captionSize = 11;
-  const captionWidth = font.widthOfTextAtSize(caption, captionSize);
-  page.drawText(caption, {
-    x: (pageSize.width - captionWidth) / 2,
-    y: qrY - 28,
-    size: captionSize,
-    font,
-    color: rgb(0.35, 0.35, 0.35)
-  });
-
-  drawFooterWatermark(page, boldFont);
 };
 
 const drawPlayerInfo = (page: PDFPage, font: PDFFont, teamSheet: TeamSheet, includePrivateFields: boolean) => {
@@ -281,6 +263,7 @@ export async function generateTeamSheetPdf(teamSheet: TeamSheet, sheetType: Team
     });
     drawFooterWatermark(staffPage, watermarkFont);
     drawTeamDataCode(staffPage, font, teamSheet);
+    await drawStaffQr(pdfDoc, staffPage, teamSheet);
   }
 
   if (sheetType === "open" || sheetType === "both") {
@@ -301,10 +284,6 @@ export async function generateTeamSheetPdf(teamSheet: TeamSheet, sheetType: Team
     for (let pageIndex = pdfDoc.getPageCount() - 1; pageIndex > 0; pageIndex -= 1) {
       pdfDoc.removePage(pageIndex);
     }
-  }
-
-  if (sheetType === "staff" || sheetType === "both") {
-    await appendQrPage(pdfDoc, font, watermarkFont, teamSheet);
   }
 
   const bytes = await pdfDoc.save();

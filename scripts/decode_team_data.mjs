@@ -5,6 +5,7 @@
 //   node scripts/decode_team_data.mjs <staff-sheet.pdf>   # needs `pdftotext` (poppler)
 //   node scripts/decode_team_data.mjs <dump.txt>          # pdftotext output / any text
 //   pdftotext staff.pdf - | node scripts/decode_team_data.mjs -   # read text from stdin
+//   echo 'TSBz1~<base64>' | node scripts/decode_team_data.mjs -   # scanned corner QR string
 //
 // Prints human-readable team data (IDs expanded via src/data/regulation-mb).
 // Player Info is never embedded, so it is never recovered.
@@ -13,8 +14,10 @@ import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { inflateRawSync } from "node:zlib";
 
 const SENTINEL = "TSBv1";
+const COMPRESSED_SENTINEL = "TSBz1";
 const FIELD_SEP = ",";
 const MON_SEP = "|";
 const STAT_KEYS = ["hp", "atk", "def", "spa", "spd", "spe"];
@@ -54,6 +57,13 @@ const readInput = (arg) => {
 };
 
 const decode = (text) => {
+  // Compressed corner-QR carrier: TSBz1~<base64 deflate-raw>
+  const compressed = new RegExp(`${COMPRESSED_SENTINEL}~([A-Za-z0-9+/=]+)`).exec(text);
+  if (compressed) {
+    const payload = inflateRawSync(Buffer.from(compressed[1], "base64")).toString("utf8");
+    return payload.split(MON_SEP).map((raw) => raw.split(FIELD_SEP));
+  }
+  // Plain transparent-text carrier: TSBv1~<i>~<n>~<chunk>
   const pattern = new RegExp(`${SENTINEL}~(\\d+)~(\\d+)~(\\S*)`, "g");
   const segments = new Map();
   let segmentCount = 0;

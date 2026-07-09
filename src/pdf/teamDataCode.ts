@@ -21,6 +21,10 @@ import type { StatKey, TeamSheet } from "../domain/teamTypes";
 // sheet).
 
 export const TEAM_DATA_SENTINEL = "TSBv1";
+// Compressed carrier (used by the crammed corner QR): deflate-raw + base64 of the
+// same payload, so the QR needs far fewer modules and stays larger per-module in
+// the little corner space available.
+export const TEAM_DATA_COMPRESSED_SENTINEL = "TSBz1";
 const FIELD_SEP = ",";
 const MON_SEP = "|";
 const SEGMENT_CHARS = 90;
@@ -81,6 +85,41 @@ export const encodeTeamDataLines = (teamSheet: TeamSheet): string[] => {
   return lines;
 };
 
+const bytesToBase64 = (bytes: Uint8Array): string => {
+  let binary = "";
+  for (const byte of bytes) binary += String.fromCharCode(byte);
+  return btoa(binary);
+};
+
+const base64ToBytes = (base64: string): Uint8Array => {
+  const binary = atob(base64);
+  const bytes = new Uint8Array(binary.length);
+  for (let index = 0; index < binary.length; index += 1) bytes[index] = binary.charCodeAt(index);
+  return bytes;
+};
+
+const deflateRaw = async (text: string): Promise<Uint8Array> => {
+  const stream = new CompressionStream("deflate-raw");
+  const writer = stream.writable.getWriter();
+  void writer.write(new TextEncoder().encode(text));
+  void writer.close();
+  return new Uint8Array(await new Response(stream.readable).arrayBuffer());
+};
+
+const inflateRaw = async (bytes: Uint8Array): Promise<string> => {
+  const stream = new DecompressionStream("deflate-raw");
+  const writer = stream.writable.getWriter();
+  void writer.write(bytes as BufferSource);
+  void writer.close();
+  return new TextDecoder().decode(await new Response(stream.readable).arrayBuffer());
+};
+
+/** Compressed single-string encoding for the corner QR carrier. */
+export const encodeTeamDataQrPayload = async (teamSheet: TeamSheet): Promise<string> => {
+  const compressed = await deflateRaw(encodeTeamDataPayload(teamSheet));
+  return `${TEAM_DATA_COMPRESSED_SENTINEL}~${bytesToBase64(compressed)}`;
+};
+
 const decodeMon = (raw: string): DecodedPokemon => {
   const fields = raw.split(FIELD_SEP);
   const at = (index: number): string => fields[index] ?? "";
@@ -118,4 +157,19 @@ export const decodeTeamDataFromText = (text: string): DecodedPokemon[] => {
     payload += segments.get(index) ?? "";
   }
   return payload.split(MON_SEP).map(decodeMon);
+};
+
+const decodePayloadString = (payload: string): DecodedPokemon[] => payload.split(MON_SEP).map(decodeMon);
+
+/**
+ * Recover team data from any carrier: the compressed corner QR (`TSBz1~`), or
+ * the plain segmented transparent text (`TSBv1~`). Async because the compressed
+ * form must be inflated.
+ */
+export const decodeTeamDataFromScan = async (text: string): Promise<DecodedPokemon[]> => {
+  const compressed = new RegExp(`${TEAM_DATA_COMPRESSED_SENTINEL}~([A-Za-z0-9+/=]+)`).exec(text);
+  if (compressed) {
+    return decodePayloadString(await inflateRaw(base64ToBytes(compressed[1])));
+  }
+  return decodeTeamDataFromText(text);
 };
