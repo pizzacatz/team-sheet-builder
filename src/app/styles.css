@@ -1046,7 +1046,9 @@ select.is-invalid {
   }
 
   .validation-panel .issue-list {
-    max-height: 132px;
+    /* Scrollable area fits up to 4 error rows (3 when only 3 remain, 4 when
+       there are 4+), then scrolls. */
+    max-height: 264px;
     margin: 0 14px 14px;
   }
 
