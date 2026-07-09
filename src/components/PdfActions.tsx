@@ -9,6 +9,7 @@ type PdfActionsProps = {
   teamSheet: TeamSheet;
   validation: ValidationResult;
   onClear: () => void;
+  onBlockedAttempt: () => void;
 };
 
 type DownloadType = TeamSheetPdfType;
@@ -34,7 +35,7 @@ const shareDetailsFor = (teamSheet: TeamSheet) => {
   };
 };
 
-export function PdfActions({ teamSheet, validation, onClear }: PdfActionsProps) {
+export function PdfActions({ teamSheet, validation, onClear, onBlockedAttempt }: PdfActionsProps) {
   const [generatingType, setGeneratingType] = useState<GeneratingType | null>(null);
   const [preview, setPreview] = useState<PdfPreview | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -69,6 +70,10 @@ export function PdfActions({ teamSheet, validation, onClear }: PdfActionsProps) 
   };
 
   const handleDownload = async (sheetType: DownloadType) => {
+    if (!validation.isValid) {
+      onBlockedAttempt();
+      return;
+    }
     setError(null);
     setGeneratingType(sheetType);
     try {
@@ -89,6 +94,10 @@ export function PdfActions({ teamSheet, validation, onClear }: PdfActionsProps) 
   };
 
   const handlePreview = async () => {
+    if (!validation.isValid) {
+      onBlockedAttempt();
+      return;
+    }
     const sheetType: DownloadType = "both";
     setError(null);
     setGeneratingType("preview");
@@ -109,6 +118,10 @@ export function PdfActions({ teamSheet, validation, onClear }: PdfActionsProps) 
   };
 
   const handleShare = async () => {
+    if (!validation.isValid) {
+      onBlockedAttempt();
+      return;
+    }
     setError(null);
     setGeneratingType("share");
     try {
@@ -156,23 +169,30 @@ export function PdfActions({ teamSheet, validation, onClear }: PdfActionsProps) 
     </div>
   ) : null;
 
+  // Buttons stay tappable while invalid (a tap reveals the errors); they are only
+  // truly disabled while a PDF is generating. `is-muted` styles the blocked state.
+  const generating = Boolean(generatingType);
+  const mutedClass = validation.isValid ? "" : " is-muted";
+  const blockedAria = validation.isValid ? undefined : true;
+
   return (
     <>
       <section className={`actions-panel${isExpanded ? " is-expanded" : ""}`} aria-label="PDF actions">
         <div className={`actions-compact-row${canShareFiles ? " has-send" : ""}`}>
-          <button type="button" className="secondary-action" disabled={!validation.isValid || Boolean(generatingType)} onClick={() => handleDownload("both")}>
+          <button type="button" className={`secondary-action${mutedClass}`} disabled={generating} aria-disabled={blockedAria} onClick={() => handleDownload("both")}>
             <Download size={18} />
             <span className="action-label">{generatingType === "both" ? "Generating..." : "Team Sheets"}</span>
           </button>
-          <button type="button" className="secondary-action preview-action" disabled={!validation.isValid || Boolean(generatingType)} onClick={handlePreview}>
+          <button type="button" className={`secondary-action preview-action${mutedClass}`} disabled={generating} aria-disabled={blockedAria} onClick={handlePreview}>
             <Eye size={18} />
             <span className="action-label">{generatingType === "preview" ? "Generating..." : "Preview PDF"}</span>
           </button>
           {canShareFiles ? (
             <button
               type="button"
-              className="primary-action send-action"
-              disabled={!validation.isValid || Boolean(generatingType)}
+              className={`primary-action send-action${mutedClass}`}
+              disabled={generating}
+              aria-disabled={blockedAria}
               aria-label="Share Team Sheets"
               title="Share Team Sheets"
               onClick={handleShare}
@@ -194,11 +214,11 @@ export function PdfActions({ teamSheet, validation, onClear }: PdfActionsProps) 
           </button>
         </div>
         <div className="actions-expanded-row" id="pdf-actions-expanded">
-          <button type="button" className="primary-action" disabled={!validation.isValid || Boolean(generatingType)} onClick={() => handleDownload("open")}>
+          <button type="button" className={`primary-action${mutedClass}`} disabled={generating} aria-disabled={blockedAria} onClick={() => handleDownload("open")}>
             <Download size={18} />
             <span className="action-label">{generatingType === "open" ? "Generating..." : "Open Team Sheet"}</span>
           </button>
-          <button type="button" className="primary-action" disabled={!validation.isValid || Boolean(generatingType)} onClick={() => handleDownload("staff")}>
+          <button type="button" className={`primary-action${mutedClass}`} disabled={generating} aria-disabled={blockedAria} onClick={() => handleDownload("staff")}>
             <Download size={18} />
             <span className="action-label">{generatingType === "staff" ? "Generating..." : "Staff Team Sheet"}</span>
           </button>

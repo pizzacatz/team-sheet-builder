@@ -457,6 +457,19 @@ h3 {
   outline: 3px solid var(--focus-ring);
 }
 
+.field.is-invalid input,
+input.is-invalid,
+select.is-invalid {
+  border-color: var(--error-border);
+  background: var(--error-bg);
+}
+
+.division-field.is-invalid {
+  outline: 2px solid var(--error-border);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
 .field-help {
   margin: 0;
   font-size: 0.75rem;
@@ -778,6 +791,25 @@ h3 {
   margin-top: 12px;
 }
 
+/* Compact error preview — shown only on mobile when the panel is collapsed. */
+.issue-peek {
+  display: none;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.issue-peek-more {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--danger-text);
+}
+
+/* Blocked download/share buttons stay tappable but read as not-ready. */
+.actions-panel .is-muted {
+  opacity: 0.5;
+}
+
 .issue {
   display: grid;
   gap: 2px;
@@ -1016,6 +1048,17 @@ h3 {
   .validation-panel .issue-list {
     max-height: 132px;
     margin: 0 14px 14px;
+  }
+
+  /* Mobile: instead of collapsing on error, show a 2-error peek. Expanding
+     swaps the peek for the full list. */
+  .validation-panel.has-errors:not(.is-expanded) .issue-peek {
+    display: grid;
+    margin: 0 14px 14px;
+  }
+
+  .validation-panel.is-expanded .issue-peek {
+    display: none;
   }
 
   .validation-panel.is-expanded .validation-summary {

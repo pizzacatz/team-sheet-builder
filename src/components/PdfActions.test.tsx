@@ -47,6 +47,7 @@ describe("PdfActions file sharing", () => {
           teamSheet={teamSheet}
           validation={{ isValid: true, issues: [] }}
           onClear={vi.fn()}
+          onBlockedAttempt={vi.fn()}
         />
       );
     });

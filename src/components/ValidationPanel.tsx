@@ -2,45 +2,15 @@ import { AlertTriangle, CheckCircle2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { ValidationIssue } from "../domain/validationTypes";
 import type { ValidationResult } from "../domain/validationTypes";
+import { fieldIdForPath, scrollToIssueField } from "./validationFields";
 
 type ValidationPanelProps = {
   validation: ValidationResult;
+  // Bumps whenever a blocked download/share attempt should force the list open.
+  expandSignal?: number;
 };
 
-const fieldIdForPath = (path: string): string | null => {
-  if (path === "player.name") return "player-name";
-  if (path === "player.trainerName") return "trainer-name";
-  if (path === "player.division") return "age-division-field";
-  if (path === "player.playerId") return "player-id";
-
-  const pokemonMatch = path.match(/^pokemon\.(\d+)\.([^.]+)(?:\.([^.]+))?/);
-  if (!pokemonMatch) return null;
-
-  const [, pokemonIndex, field, childKey] = pokemonMatch;
-  if (field === "speciesId") return `pokemon-${pokemonIndex}-species`;
-  if (field === "abilityId") return `pokemon-${pokemonIndex}-ability`;
-  if (field === "itemId") return `pokemon-${pokemonIndex}-item`;
-  if (field === "statAlignment") return `pokemon-${pokemonIndex}-stat-alignment`;
-  if (field === "moves" && childKey !== undefined) return `pokemon-${pokemonIndex}-move-${childKey}`;
-  if (field === "stats" && childKey !== undefined) return `pokemon-${pokemonIndex}-${childKey}`;
-
-  return null;
-};
-
-const scrollToIssueField = (path: string) => {
-  const fieldId = fieldIdForPath(path);
-  if (!fieldId) return;
-
-  const element = document.getElementById(fieldId);
-  if (!element) return;
-
-  element.scrollIntoView({ behavior: "smooth", block: "center" });
-  window.setTimeout(() => {
-    if (element instanceof HTMLElement) {
-      element.focus({ preventScroll: true });
-    }
-  }, 250);
-};
+const PEEK_COUNT = 2;
 
 const IssueRow = ({ issue, index }: { issue: ValidationIssue; index: number }) => {
   const targetId = fieldIdForPath(issue.path);
@@ -48,7 +18,7 @@ const IssueRow = ({ issue, index }: { issue: ValidationIssue; index: number }) =
 
   if (!targetId) {
     return (
-      <div key={`${issue.path}-${issue.code}-${index}`} className={className}>
+      <div className={className}>
         <strong>{issue.code}</strong>
         <span>{issue.message}</span>
       </div>
@@ -58,7 +28,6 @@ const IssueRow = ({ issue, index }: { issue: ValidationIssue; index: number }) =
   return (
     <button
       type="button"
-      key={`${issue.path}-${issue.code}-${index}`}
       className={className}
       onClick={() => scrollToIssueField(issue.path)}
       aria-label={`${issue.message} Go to field.`}
@@ -69,7 +38,7 @@ const IssueRow = ({ issue, index }: { issue: ValidationIssue; index: number }) =
   );
 };
 
-export function ValidationPanel({ validation }: ValidationPanelProps) {
+export function ValidationPanel({ validation, expandSignal }: ValidationPanelProps) {
   const errors = validation.issues.filter((issue) => issue.severity === "error");
   const warnings = validation.issues.filter((issue) => issue.severity === "warning");
   const hasIssues = validation.issues.length > 0;
@@ -81,6 +50,17 @@ export function ValidationPanel({ validation }: ValidationPanelProps) {
       setIsExpanded(false);
     }
   }, [hasIssues]);
+
+  useEffect(() => {
+    if (expandSignal) setIsExpanded(true);
+  }, [expandSignal]);
+
+  // Auto-expand the full list on desktop when errors appear. On mobile we leave
+  // it collapsed so the compact 2-error peek shows instead of a tall list.
+  useEffect(() => {
+    if (!hasErrors) return;
+    if (window.matchMedia("(min-width: 761px)").matches) setIsExpanded(true);
+  }, [hasErrors]);
 
   const summaryClassName = `section-heading validation-summary${hasIssues ? " validation-summary-button" : ""}`;
   const summaryContent = (
@@ -105,6 +85,9 @@ export function ValidationPanel({ validation }: ValidationPanelProps) {
     </>
   );
 
+  const peekErrors = errors.slice(0, PEEK_COUNT);
+  const hiddenErrorCount = errors.length - peekErrors.length;
+
   return (
     <section
       className={`section-panel validation-panel${hasIssues ? " has-issues" : ""}${hasErrors ? " has-errors" : ""}${isExpanded ? " is-expanded" : ""}`}
@@ -126,14 +109,26 @@ export function ValidationPanel({ validation }: ValidationPanelProps) {
       {validation.issues.length === 0 ? (
         <p className="empty-state">Complete team data will be checked here.</p>
       ) : (
-        <div className="issue-list" id="validation-issue-list">
-          {errors.map((issue, index) => (
-            <IssueRow key={`${issue.path}-${issue.code}-${index}`} issue={issue} index={index} />
-          ))}
-          {warnings.map((issue, index) => (
-            <IssueRow key={`${issue.path}-${issue.code}-${index}`} issue={issue} index={index} />
-          ))}
-        </div>
+        <>
+          {hasErrors ? (
+            <div className="issue-peek" aria-hidden="true">
+              {peekErrors.map((issue, index) => (
+                <IssueRow key={`peek-${issue.path}-${issue.code}-${index}`} issue={issue} index={index} />
+              ))}
+              {hiddenErrorCount > 0 ? (
+                <p className="issue-peek-more">{`+${hiddenErrorCount} more — tap to expand`}</p>
+              ) : null}
+            </div>
+          ) : null}
+          <div className="issue-list" id="validation-issue-list">
+            {errors.map((issue, index) => (
+              <IssueRow key={`${issue.path}-${issue.code}-${index}`} issue={issue} index={index} />
+            ))}
+            {warnings.map((issue, index) => (
+              <IssueRow key={`${issue.path}-${issue.code}-${index}`} issue={issue} index={index} />
+            ))}
+          </div>
+        </>
       )}
     </section>
   );

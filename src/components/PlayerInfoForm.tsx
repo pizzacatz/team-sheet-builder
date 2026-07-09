@@ -5,6 +5,7 @@ import type { PlayerInfo } from "../domain/teamTypes";
 type PlayerInfoFormProps = {
   player: PlayerInfo;
   onChange: (patch: Partial<PlayerInfo>) => void;
+  errorFieldIds?: Set<string>;
 };
 
 const ageDivisions: Array<Exclude<PlayerInfo["division"], "" | undefined>> = ["Junior", "Senior", "Master"];
@@ -27,8 +28,10 @@ const formatCalendarDate = (value: string): string => {
   return `${month}-${day}-${year.slice(-2)}`;
 };
 
-export function PlayerInfoForm({ player, onChange }: PlayerInfoFormProps) {
+export function PlayerInfoForm({ player, onChange, errorFieldIds }: PlayerInfoFormProps) {
   const dateInputRef = useRef<HTMLInputElement | null>(null);
+  const invalidClass = (fieldId: string) => (errorFieldIds?.has(fieldId) ? "is-invalid" : undefined);
+  const invalidFlag = (fieldId: string) => (errorFieldIds?.has(fieldId) ? true : undefined);
 
   const openCalendar = () => {
     const input = dateInputRef.current;
@@ -52,8 +55,10 @@ export function PlayerInfoForm({ player, onChange }: PlayerInfoFormProps) {
             <label htmlFor="player-name">Player Name:</label>
             <input
               id="player-name"
+              className={invalidClass("player-name")}
               value={player.name}
               aria-required="true"
+              aria-invalid={invalidFlag("player-name")}
               required
               onChange={(event) => onChange({ name: event.target.value })}
             />
@@ -62,8 +67,10 @@ export function PlayerInfoForm({ player, onChange }: PlayerInfoFormProps) {
             <label htmlFor="trainer-name">Trainer Name in Game:</label>
             <input
               id="trainer-name"
+              className={invalidClass("trainer-name")}
               value={player.trainerName ?? ""}
               aria-required="true"
+              aria-invalid={invalidFlag("trainer-name")}
               required
               onChange={(event) => onChange({ trainerName: event.target.value })}
             />
@@ -86,7 +93,13 @@ export function PlayerInfoForm({ player, onChange }: PlayerInfoFormProps) {
           </div>
         </div>
         <div className="player-info-column">
-          <fieldset className="division-field" id="age-division-field" tabIndex={-1} aria-required="true">
+          <fieldset
+            className={`division-field${invalidClass("age-division-field") ? " is-invalid" : ""}`}
+            id="age-division-field"
+            tabIndex={-1}
+            aria-required="true"
+            aria-invalid={invalidFlag("age-division-field")}
+          >
             <legend>Age Division:</legend>
             <div className="division-options">
               {ageDivisions.map((division) => (
@@ -109,10 +122,12 @@ export function PlayerInfoForm({ player, onChange }: PlayerInfoFormProps) {
             <label htmlFor="player-id">Player ID:</label>
             <input
               id="player-id"
+              className={invalidClass("player-id")}
               value={digitsOnly(player.playerId ?? "")}
               inputMode="numeric"
               pattern="[0-9]*"
               aria-required="true"
+              aria-invalid={invalidFlag("player-id")}
               required
               onChange={(event) => onChange({ playerId: digitsOnly(event.target.value) })}
             />
@@ -122,9 +137,12 @@ export function PlayerInfoForm({ player, onChange }: PlayerInfoFormProps) {
             <div className="date-field-control">
               <input
                 id="date-of-birth"
+                className={invalidClass("date-of-birth")}
                 value={player.dateOfBirth ?? ""}
                 placeholder="02-27-1996"
                 inputMode="numeric"
+                aria-required="true"
+                aria-invalid={invalidFlag("date-of-birth")}
                 onChange={(event) => onChange({ dateOfBirth: formatDateDigits(event.target.value) })}
               />
               <button type="button" className="date-picker-button" aria-label="Open date picker" onClick={openCalendar}>

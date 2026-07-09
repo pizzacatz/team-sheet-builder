@@ -65,6 +65,7 @@ Required fields:
 - Trainer Name in Game
 - Age Division
 - Player ID
+- Date of Birth
 
 Player ID accepts digits only and preserves leading zeros.
 
@@ -72,8 +73,14 @@ Date of Birth:
 
 - Uses `02-27-1996` as its format example.
 - Autoformats six digits as `MM-DD-YY` and eight digits as `MM-DD-YYYY`.
-- Does not infer a century for two-digit years.
+- Required, and validated as a complete date: it must be a six- or eight-digit `MM-DD-YY`/`MM-DD-YYYY` value with a real month and day. Two-digit years are accepted; no century is inferred.
 - Provides a calendar picker on desktop; the picker is hidden on mobile because of inconsistent Chrome mobile behavior.
+
+### Error visibility
+
+- The validation summary auto-expands the full list on desktop when there are errors; on mobile it shows a compact two-error peek that expands on tap.
+- Fields with a wrong value (illegal, duplicate, out-of-range, malformed date) are outlined in the error color immediately. Empty required fields are outlined only after the first download/share attempt, so a fresh form stays clean.
+- Download/share buttons stay tappable while errors remain: tapping one reveals the error list and jumps to the first problem instead of generating a PDF.
 
 The complete team form, including Player Info, is saved automatically in browser localStorage.
 

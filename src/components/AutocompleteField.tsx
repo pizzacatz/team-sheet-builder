@@ -14,6 +14,7 @@ type AutocompleteFieldProps = {
   helperText?: string;
   required?: boolean;
   disabled?: boolean;
+  invalid?: boolean;
 };
 
 export function AutocompleteField({
@@ -27,7 +28,8 @@ export function AutocompleteField({
   placeholder,
   helperText,
   required,
-  disabled
+  disabled,
+  invalid
 }: AutocompleteFieldProps) {
   const generatedInputId = useId();
   const inputId = id ?? generatedInputId;
@@ -144,7 +146,7 @@ export function AutocompleteField({
   };
 
   return (
-    <div className={`field autocomplete-field${isOpen ? " is-open" : ""}${disabled ? " is-disabled" : ""}`}>
+    <div className={`field autocomplete-field${isOpen ? " is-open" : ""}${disabled ? " is-disabled" : ""}${invalid ? " is-invalid" : ""}`}>
       <label htmlFor={inputId}>{label}</label>
       <input
         id={inputId}
@@ -153,6 +155,7 @@ export function AutocompleteField({
         value={inputValue}
         placeholder={placeholder}
         disabled={disabled}
+        aria-invalid={invalid || undefined}
         autoComplete="off"
         aria-autocomplete="list"
         aria-controls={isOpen && suggestions.length > 0 ? listboxId : undefined}

@@ -6,9 +6,10 @@ type TeamFormProps = {
   pokemon: PokemonEntry[];
   onChange: (index: number, patch: Partial<PokemonEntry>) => void;
   onClear: (index: number) => void;
+  errorFieldIds?: Set<string>;
 };
 
-export function TeamForm({ pokemon, onChange, onClear }: TeamFormProps) {
+export function TeamForm({ pokemon, onChange, onClear, errorFieldIds }: TeamFormProps) {
   return (
     <div className="team-form" aria-label="Pokémon team slots">
       {pokemon.map((entry, index) => {
@@ -31,6 +32,7 @@ export function TeamForm({ pokemon, onChange, onClear }: TeamFormProps) {
             entry={entry}
             usedSpeciesDex={usedSpeciesDex}
             usedItemIds={usedItemIds}
+            errorFieldIds={errorFieldIds}
             onChange={(patch) => onChange(index, patch)}
             onClear={() => onClear(index)}
           />

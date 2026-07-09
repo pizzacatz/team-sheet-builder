@@ -46,6 +46,29 @@ describe("validateTeamSheet", () => {
     expect(result.isValid).toBe(true);
   });
 
+  it("requires a valid Date of Birth, accepting 2- or 4-digit years", () => {
+    const team = makeValidTeamSheet();
+
+    team.player.dateOfBirth = "";
+    expect(codes(team)).toContain("MISSING_DATE_OF_BIRTH");
+
+    team.player.dateOfBirth = "02-27"; // incomplete
+    expect(codes(team)).toContain("INVALID_DATE_OF_BIRTH");
+
+    team.player.dateOfBirth = "13-40-1996"; // impossible month/day
+    expect(codes(team)).toContain("INVALID_DATE_OF_BIRTH");
+
+    team.player.dateOfBirth = "02-27-96"; // 2-digit year is fine
+    expect(codes(team)).not.toContain("INVALID_DATE_OF_BIRTH");
+    expect(codes(team)).not.toContain("MISSING_DATE_OF_BIRTH");
+  });
+
+  it("flags a missing held item", () => {
+    const team = makeValidTeamSheet();
+    team.pokemon[0].itemId = null;
+    expect(codes(team)).toContain("MISSING_ITEM");
+  });
+
   it("catches duplicate species by national dex number", () => {
     const team = makeValidTeamSheet();
     team.pokemon[1].speciesId = team.pokemon[0].speciesId;

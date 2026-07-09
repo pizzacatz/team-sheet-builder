@@ -1,10 +1,11 @@
 import { Moon, Sun } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ImportPanel } from "../components/ImportPanel";
 import { PdfActions } from "../components/PdfActions";
 import { PlayerInfoForm } from "../components/PlayerInfoForm";
 import { TeamForm } from "../components/TeamForm";
 import { ValidationPanel } from "../components/ValidationPanel";
+import { collectErrorFieldIds, fieldIdForPath, scrollToIssueField } from "../components/validationFields";
 import { rules } from "../domain/regulationData";
 import { emptyPokemonEntry } from "../domain/teamTypes";
 import { useTeamSheetState } from "../state/useTeamSheetState";
@@ -29,7 +30,23 @@ export function App() {
   const sideColumnRef = useRef<HTMLElement | null>(null);
   const [theme, setTheme] = useState<ThemeMode>(getInitialTheme);
   const [isMobileFieldEditing, setIsMobileFieldEditing] = useState(false);
+  const [attemptedDownload, setAttemptedDownload] = useState(false);
+  const [expandSignal, setExpandSignal] = useState(0);
   const isDarkMode = theme === "dark";
+
+  const errorFieldIds = useMemo(
+    () => collectErrorFieldIds(validation.issues, attemptedDownload),
+    [validation.issues, attemptedDownload]
+  );
+
+  // Tapping a download/share button while invalid: reveal every error (highlight
+  // missing fields too), open the list, and jump to the first problem.
+  const handleBlockedAttempt = () => {
+    setAttemptedDownload(true);
+    setExpandSignal((current) => current + 1);
+    const firstError = validation.issues.find((issue) => issue.severity === "error" && fieldIdForPath(issue.path));
+    if (firstError) scrollToIssueField(firstError.path);
+  };
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
@@ -119,12 +136,17 @@ export function App() {
       <div className="layout">
         <div className="main-column">
           <ImportPanel onImport={replacePokemon} />
-          <PlayerInfoForm player={teamSheet.player} onChange={updatePlayer} />
-          <TeamForm pokemon={teamSheet.pokemon} onChange={updatePokemon} onClear={(index) => updatePokemon(index, emptyPokemonEntry())} />
+          <PlayerInfoForm player={teamSheet.player} onChange={updatePlayer} errorFieldIds={errorFieldIds} />
+          <TeamForm
+            pokemon={teamSheet.pokemon}
+            onChange={updatePokemon}
+            onClear={(index) => updatePokemon(index, emptyPokemonEntry())}
+            errorFieldIds={errorFieldIds}
+          />
         </div>
         <aside className="side-column" ref={sideColumnRef}>
-          <ValidationPanel validation={validation} />
-          <PdfActions teamSheet={teamSheet} validation={validation} onClear={reset} />
+          <ValidationPanel validation={validation} expandSignal={expandSignal} />
+          <PdfActions teamSheet={teamSheet} validation={validation} onClear={reset} onBlockedAttempt={handleBlockedAttempt} />
         </aside>
       </div>
     </main>

@@ -13,6 +13,7 @@ type PokemonSlotProps = {
   entry: PokemonEntry;
   usedSpeciesDex?: Set<number>;
   usedItemIds?: Set<string>;
+  errorFieldIds?: Set<string>;
   onChange: (patch: Partial<PokemonEntry>) => void;
   onClear: () => void;
 };
@@ -59,7 +60,8 @@ const statFieldLabels: Record<StatKey, string> = {
   spe: "Spe"
 };
 
-export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, onChange, onClear }: PokemonSlotProps) {
+export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, errorFieldIds, onChange, onClear }: PokemonSlotProps) {
+  const hasError = (fieldId: string) => Boolean(errorFieldIds?.has(fieldId));
   const lastSelectedSpeciesId = useRef(entry.speciesId);
   const allSpeciesOptions = useMemo(() => makeOptions(species, (record) => record.types.join(" / ")), []);
   const allAbilityOptions = useMemo(() => makeOptions(abilities), []);
@@ -193,6 +195,7 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, onChang
           filterOptions={filterSpeciesOptions}
           onChange={handleSpeciesChange}
           required
+          invalid={hasError(`pokemon-${index}-species`)}
         />
         <AutocompleteField
           id={`pokemon-${index}-stat-alignment`}
@@ -211,6 +214,7 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, onChang
           }
           required
           helperText={statDescription}
+          invalid={hasError(`pokemon-${index}-stat-alignment`)}
         />
       </div>
       <div className="slot-pdf-grid">
@@ -223,6 +227,7 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, onChang
             onChange={(abilityId) => onChange({ abilityId })}
             openOnEmptyFocus={Boolean(selectedSpecies)}
             required
+            invalid={hasError(`pokemon-${index}-ability`)}
           />
           <AutocompleteField
             id={`pokemon-${index}-item`}
@@ -232,6 +237,7 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, onChang
             filterOptions={filterItemOptions}
             onChange={(itemId) => onChange({ itemId })}
             required
+            invalid={hasError(`pokemon-${index}-item`)}
           />
           {entry.moves.map((moveId, moveIndex) => {
             // A Pokémon can't have the same move twice: hide moves already picked
@@ -253,6 +259,7 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, onChang
                 onChange={(nextMoveId) => updateMove(moveIndex, nextMoveId)}
                 openOnEmptyFocus={Boolean(selectedSpecies)}
                 required={moveIndex === 0}
+                invalid={hasError(`pokemon-${index}-move-${moveIndex}`)}
               />
             );
           })}
@@ -263,6 +270,8 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, onChang
               <label htmlFor={`pokemon-${index}-${stat.key}`}>{statFieldLabels[stat.key]}</label>
               <input
                 id={`pokemon-${index}-${stat.key}`}
+                className={hasError(`pokemon-${index}-${stat.key}`) ? "is-invalid" : undefined}
+                aria-invalid={hasError(`pokemon-${index}-${stat.key}`) || undefined}
                 inputMode="numeric"
                 pattern="[0-9]*"
                 value={entryStats[stat.key]}

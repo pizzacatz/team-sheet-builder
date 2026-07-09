@@ -22,6 +22,15 @@ const issue = (
   issues.push({ severity, path, code, message });
 };
 
+// Accepts a complete MM-DD-YY (6 digits) or MM-DD-YYYY (8 digits) date. Two-digit
+// years are allowed. Day is bounded loosely (01-31), not per-month.
+const isValidDateOfBirth = (digits: string): boolean => {
+  if (digits.length !== 6 && digits.length !== 8) return false;
+  const month = Number.parseInt(digits.slice(0, 2), 10);
+  const day = Number.parseInt(digits.slice(2, 4), 10);
+  return month >= 1 && month <= 12 && day >= 1 && day <= 31;
+};
+
 export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
   const issues: ValidationIssue[] = [];
 
@@ -42,6 +51,19 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
   }
   if (!teamSheet.player.playerId?.trim()) {
     issue(issues, "error", "player.playerId", "MISSING_PLAYER_ID", "Player ID is required.");
+  }
+
+  const dobDigits = (teamSheet.player.dateOfBirth ?? "").replace(/\D/g, "");
+  if (!dobDigits) {
+    issue(issues, "error", "player.dateOfBirth", "MISSING_DATE_OF_BIRTH", "Date of Birth is required.");
+  } else if (!isValidDateOfBirth(dobDigits)) {
+    issue(
+      issues,
+      "error",
+      "player.dateOfBirth",
+      "INVALID_DATE_OF_BIRTH",
+      "Date of Birth must be a complete date (MM-DD-YY or MM-DD-YYYY)."
+    );
   }
 
   const speciesDexBySlot = new Map<number, number>();
@@ -91,7 +113,7 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
     }
 
     if (!entry.itemId) {
-      issue(issues, "error", `${path}.itemId`, "ILLEGAL_ITEM", `${slot} needs a held item.`);
+      issue(issues, "error", `${path}.itemId`, "MISSING_ITEM", `${slot} needs a held item.`);
     } else {
       const item = getItemRecord(entry.itemId);
       if (!item) {
@@ -170,7 +192,7 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
           "error",
           `${path}.stats.${stat.key}`,
           "STAT_OUT_OF_RANGE",
-          `${slot} ${stat.label} of ${value} is outside the legal range ${min}–${max}. Enter the final in-game stat, not the Stat Point spread.`
+          `${slot} ${stat.label} of ${value} is outside the expected range. Enter the final in-game stat, not the Stat Point spread.`
         );
       }
     });
