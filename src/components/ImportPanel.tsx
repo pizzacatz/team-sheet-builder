@@ -86,7 +86,6 @@ export function ImportPanel({ onImport, teamHasData }: ImportPanelProps) {
               <span>Paste &amp; Import</span>
             </button>
           ) : null}
-          {paste.trim() ? <span className="tag">Paste ready</span> : null}
           {issues.length ? (
             <button type="button" className="icon-button" onClick={() => setIssues([])} aria-label="Dismiss import issues">
               <X size={16} />
