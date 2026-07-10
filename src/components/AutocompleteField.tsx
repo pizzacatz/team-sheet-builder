@@ -15,6 +15,7 @@ type AutocompleteFieldProps = {
   required?: boolean;
   disabled?: boolean;
   invalid?: boolean;
+  warning?: boolean;
 };
 
 export function AutocompleteField({
@@ -29,7 +30,8 @@ export function AutocompleteField({
   helperText,
   required,
   disabled,
-  invalid
+  invalid,
+  warning
 }: AutocompleteFieldProps) {
   const generatedInputId = useId();
   const inputId = id ?? generatedInputId;
@@ -146,7 +148,7 @@ export function AutocompleteField({
   };
 
   return (
-    <div className={`field autocomplete-field${isOpen ? " is-open" : ""}${disabled ? " is-disabled" : ""}${invalid ? " is-invalid" : ""}`}>
+    <div className={`field autocomplete-field${isOpen ? " is-open" : ""}${disabled ? " is-disabled" : ""}${invalid ? " is-invalid" : ""}${warning && !invalid ? " is-warning" : ""}`}>
       <label htmlFor={inputId}>{label}</label>
       <input
         id={inputId}

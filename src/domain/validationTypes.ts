@@ -8,4 +8,7 @@ export type ValidationIssue = {
   path: string;
   code: string;
   message: string;
+  // Extra field paths to highlight alongside `path` (e.g. the raised/lowered
+  // stats for an alignment issue).
+  relatedFields?: string[];
 };

@@ -55,20 +55,39 @@ export const MISSING_ERROR_CODES = new Set<string>([
   "MISSING_STAT_ALIGNMENT"
 ]);
 
+type IssueLike = { severity: string; code: string; path: string; relatedFields?: string[] };
+
+const addFields = (ids: Set<string>, issue: IssueLike) => {
+  for (const path of [issue.path, ...(issue.relatedFields ?? [])]) {
+    const fieldId = fieldIdForPath(path);
+    if (fieldId) ids.add(fieldId);
+  }
+};
+
 /**
  * DOM ids of fields with an active error. Missing-required errors are included
  * only once `attempted` is true (i.e. the user tried to download/share).
  */
-export const collectErrorFieldIds = (
-  issues: Array<{ severity: string; code: string; path: string }>,
-  attempted: boolean
-): Set<string> => {
+export const collectErrorFieldIds = (issues: IssueLike[], attempted: boolean): Set<string> => {
   const ids = new Set<string>();
   for (const issue of issues) {
     if (issue.severity !== "error") continue;
     if (!attempted && MISSING_ERROR_CODES.has(issue.code)) continue;
-    const fieldId = fieldIdForPath(issue.path);
-    if (fieldId) ids.add(fieldId);
+    addFields(ids, issue);
   }
+  return ids;
+};
+
+/**
+ * DOM ids of fields with an active warning (amber). Excludes anything already
+ * flagged as an error so a field never shows both — error red wins.
+ */
+export const collectWarningFieldIds = (issues: IssueLike[], errorFieldIds: Set<string>): Set<string> => {
+  const ids = new Set<string>();
+  for (const issue of issues) {
+    if (issue.severity !== "warning") continue;
+    addFields(ids, issue);
+  }
+  for (const id of errorFieldIds) ids.delete(id);
   return ids;
 };

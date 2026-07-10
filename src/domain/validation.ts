@@ -26,9 +26,10 @@ const issue = (
   severity: "error" | "warning",
   path: string,
   code: string,
-  message: string
+  message: string,
+  relatedFields?: string[]
 ) => {
-  issues.push({ severity, path, code, message });
+  issues.push({ severity, path, code, message, ...(relatedFields ? { relatedFields } : {}) });
 };
 
 // Accepts a complete MM-DD-YY (6 digits) or MM-DD-YYYY (8 digits) date. Two-digit
@@ -266,17 +267,33 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
           "STAT_POINTS_OVER_BUDGET",
           `${slot} stats add up to more than the ${STAT_POINT_TOTAL_MAX} Stat Point limit — reduce your investment.`
         );
-      } else if (!inconsistent && totalPoints === 0 && !alignmentRecord.raises && !alignmentRecord.lowers) {
-        // Only nudge the unambiguous case: a neutral alignment with every stat at
-        // default. A non-neutral nature already shifts two stats, so a 0-point
-        // spread there is a deliberate choice, not a "nothing entered" tell.
-        issue(
-          issues,
-          "warning",
-          `${path}.statAlignment`,
-          "STATS_LOOK_UNTOUCHED",
-          `${slot} has no Stat Points invested and a neutral Stat Alignment — confirm you entered your spread and picked the right Stat Alignment.`
-        );
+      } else if (!inconsistent && totalPoints === 0) {
+        if (alignmentRecord.raises || alignmentRecord.lowers) {
+          // A non-neutral nature with zero total investment is almost always a
+          // forgotten spread — block it, and flag the alignment plus the two
+          // stats the nature affects.
+          const related = [alignmentRecord.raises, alignmentRecord.lowers]
+            .filter((key): key is string => Boolean(key))
+            .map((key) => `${path}.stats.${key}`);
+          issue(
+            issues,
+            "error",
+            `${path}.statAlignment`,
+            "STAT_ALIGNMENT_NO_POINTS",
+            `${slot} has ${alignmentName} selected but no Stat Points invested — enter your spread, or use a neutral Stat Alignment.`,
+            related
+          );
+        } else {
+          // Neutral alignment with every stat at default: a softer "did you
+          // enter a spread?" nudge.
+          issue(
+            issues,
+            "warning",
+            `${path}.statAlignment`,
+            "STATS_LOOK_UNTOUCHED",
+            `${slot} has no Stat Points invested and a neutral Stat Alignment — confirm you entered your spread and picked the right Stat Alignment.`
+          );
+        }
       }
     }
 

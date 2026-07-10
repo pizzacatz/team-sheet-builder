@@ -5,7 +5,7 @@ import { PdfActions } from "../components/PdfActions";
 import { PlayerInfoForm } from "../components/PlayerInfoForm";
 import { TeamForm } from "../components/TeamForm";
 import { ValidationPanel } from "../components/ValidationPanel";
-import { collectErrorFieldIds, fieldIdForPath, scrollToIssueField } from "../components/validationFields";
+import { collectErrorFieldIds, collectWarningFieldIds, fieldIdForPath, scrollToIssueField } from "../components/validationFields";
 import { entryHasAnyData } from "../domain/legality";
 import { rules } from "../domain/regulationData";
 import { emptyPokemonEntry } from "../domain/teamTypes";
@@ -38,6 +38,10 @@ export function App() {
   const errorFieldIds = useMemo(
     () => collectErrorFieldIds(validation.issues, attemptedDownload),
     [validation.issues, attemptedDownload]
+  );
+  const warningFieldIds = useMemo(
+    () => collectWarningFieldIds(validation.issues, errorFieldIds),
+    [validation.issues, errorFieldIds]
   );
 
   // Tapping a download/share button while invalid: reveal every error (highlight
@@ -143,6 +147,7 @@ export function App() {
             onChange={updatePokemon}
             onClear={(index) => updatePokemon(index, emptyPokemonEntry())}
             errorFieldIds={errorFieldIds}
+            warningFieldIds={warningFieldIds}
           />
         </div>
         <aside className="side-column" ref={sideColumnRef}>
