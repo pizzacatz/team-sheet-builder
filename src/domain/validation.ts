@@ -222,23 +222,27 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
     // exceed the 66-point budget, are errors; a zero-point spread is a warning.
     const alignmentRecord = statAlignmentsById.get(entry.statAlignment.value ?? "");
     if (statsComplete && statsInRange && alignmentRecord) {
+      const alignmentName = alignmentRecord.displayName;
       let totalPoints = 0;
       let inconsistent = false;
       statRows.forEach((stat) => {
         const value = Number.parseInt(entry.stats[stat.key] ?? "", 10);
-        const points = impliedStatPoints(
-          value,
-          presentedStat(species, stat.key),
-          alignmentMultiplier(stat.key, alignmentRecord)
-        );
+        const multiplier = alignmentMultiplier(stat.key, alignmentRecord);
+        const points = impliedStatPoints(value, presentedStat(species, stat.key), multiplier);
         if (points === null) {
           inconsistent = true;
+          const effect =
+            multiplier > 1
+              ? `${alignmentName} raises ${stat.label}`
+              : multiplier < 1
+                ? `${alignmentName} lowers ${stat.label}`
+                : `${alignmentName} does not raise or lower ${stat.label}`;
           issue(
             issues,
             "error",
             `${path}.stats.${stat.key}`,
             "STAT_ALIGNMENT_MISMATCH",
-            `${slot} ${stat.label} of ${value} can't come from the ${alignmentRecord.displayName} Stat Alignment. Re-check your Stat Point totals and Stat Alignment.`
+            `${slot} ${stat.label} of ${value} doesn't fit the ${alignmentName} Stat Alignment (${effect}). Double-check this value and your Stat Points.`
           );
         } else {
           totalPoints += points;
@@ -248,9 +252,9 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
         issue(
           issues,
           "error",
-          `${path}.statAlignment`,
+          path,
           "STAT_POINTS_OVER_BUDGET",
-          `${slot} uses more than the ${STAT_POINT_TOTAL_MAX} Stat Point limit. Reduce your stat spread.`
+          `${slot} stats add up to more than the ${STAT_POINT_TOTAL_MAX} Stat Point limit — reduce your investment.`
         );
       } else if (!inconsistent && totalPoints === 0) {
         issue(
