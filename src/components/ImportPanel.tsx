@@ -1,24 +1,69 @@
 import { ChevronDown, ClipboardPaste, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { ImportIssue } from "../importers/showdown/showdownTypes";
 import { parseShowdownPaste } from "../importers/showdown/parseShowdownPaste";
 import type { PokemonEntry } from "../domain/teamTypes";
 
 type ImportPanelProps = {
   onImport: (entries: PokemonEntry[]) => void;
+  teamHasData?: boolean;
 };
 
-export function ImportPanel({ onImport }: ImportPanelProps) {
+export function ImportPanel({ onImport, teamHasData }: ImportPanelProps) {
   const [paste, setPaste] = useState("");
   const [issues, setIssues] = useState<ImportIssue[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const focusOnOpen = useRef(false);
 
-  const handleImport = () => {
-    const result = parseShowdownPaste(paste);
+  useEffect(() => {
+    if (isOpen && focusOnOpen.current) {
+      textareaRef.current?.focus();
+      focusOnOpen.current = false;
+    }
+  }, [isOpen]);
+
+  const openAndFocus = () => {
+    if (isOpen) {
+      textareaRef.current?.focus();
+    } else {
+      focusOnOpen.current = true;
+      setIsOpen(true);
+    }
+  };
+
+  // Replaces all six Pokémon, so confirm first when the team already has data.
+  const runImport = (text: string) => {
+    if (!text.trim()) {
+      openAndFocus();
+      return;
+    }
+    if (teamHasData && !window.confirm("Replace the current team with this paste?")) return;
+    const result = parseShowdownPaste(text);
     setIssues(result.issues);
     if (result.teamSheet.pokemon?.length) {
       onImport(result.teamSheet.pokemon as PokemonEntry[]);
     }
+  };
+
+  const handleImport = () => runImport(paste);
+
+  // One tap: read the clipboard, fill the box, and import. If the browser blocks
+  // or has no clipboard read, fall back to opening the box for a manual paste.
+  const handlePasteAndImport = async () => {
+    if (navigator.clipboard?.readText) {
+      try {
+        const clip = await navigator.clipboard.readText();
+        if (clip.trim()) {
+          setPaste(clip);
+          runImport(clip);
+          return;
+        }
+      } catch {
+        // fall through to manual paste
+      }
+    }
+    openAndFocus();
   };
 
   return (
@@ -35,6 +80,12 @@ export function ImportPanel({ onImport }: ImportPanelProps) {
           <span id="import-heading">Showdown Import</span>
         </button>
         <div className="heading-actions">
+          {!isOpen ? (
+            <button type="button" className="import-paste-button" onClick={handlePasteAndImport}>
+              <ClipboardPaste size={16} aria-hidden="true" />
+              <span>Paste &amp; Import</span>
+            </button>
+          ) : null}
           {paste.trim() ? <span className="tag">Paste ready</span> : null}
           {issues.length ? (
             <button type="button" className="icon-button" onClick={() => setIssues([])} aria-label="Dismiss import issues">
@@ -48,6 +99,7 @@ export function ImportPanel({ onImport }: ImportPanelProps) {
           <div className="field">
             <label htmlFor="showdown-paste">Paste Export</label>
             <textarea
+              ref={textareaRef}
               id="showdown-paste"
               value={paste}
               onChange={(event) => setPaste(event.target.value)}

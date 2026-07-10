@@ -6,6 +6,7 @@ import { PlayerInfoForm } from "../components/PlayerInfoForm";
 import { TeamForm } from "../components/TeamForm";
 import { ValidationPanel } from "../components/ValidationPanel";
 import { collectErrorFieldIds, fieldIdForPath, scrollToIssueField } from "../components/validationFields";
+import { entryHasAnyData } from "../domain/legality";
 import { rules } from "../domain/regulationData";
 import { emptyPokemonEntry } from "../domain/teamTypes";
 import { useTeamSheetState } from "../state/useTeamSheetState";
@@ -135,7 +136,7 @@ export function App() {
 
       <div className="layout">
         <div className="main-column">
-          <ImportPanel onImport={replacePokemon} />
+          <ImportPanel onImport={replacePokemon} teamHasData={teamSheet.pokemon.some(entryHasAnyData)} />
           <PlayerInfoForm player={teamSheet.player} onChange={updatePlayer} errorFieldIds={errorFieldIds} />
           <TeamForm
             pokemon={teamSheet.pokemon}

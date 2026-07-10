@@ -46,6 +46,8 @@ Autocomplete uses deterministic normalized prefix matching, not fuzzy or relevan
 
 ## Showdown Import Notes
 
+- The collapsed Showdown Import header has a `Paste & Import` button: one tap reads the system clipboard, fills the paste box, and imports. If the browser blocks or lacks clipboard reading, it opens the box and focuses it for a manual paste. Importing replaces the whole team, so it asks for confirmation first when the team already has data.
+
 - `Level 50` lines are ignored silently.
 - `EVs:` are treated as Champions Stat Points, not standard Showdown EVs.
 - Imported Stat Points are added to presented stats and then modified by Stat Alignment:
