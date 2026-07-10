@@ -55,6 +55,7 @@ Autocomplete uses deterministic normalized prefix matching, not fuzzy or relevan
   - lowered stat: `0.9x`
 - Old neutral natures import as `Serious`; the visible neutral list only includes `Serious`.
 - Pokémon only require Move 1 for legality in this app; Moves 2-4 may be blank.
+- Validation reverse-engineers the Stat Points implied by each Pokémon's final stats and chosen Stat Alignment. Stats that can't come from any legal 0-32 allocation, or that exceed the 66 Stat Point total, are errors; a zero-point spread (e.g. a paste imported without EVs) is a warning asking you to confirm your Stat Points and Alignment.
 - Mega Stones:
   - the relevant Mega Stone for a selected species is always available in item suggestions.
   - non-relevant Mega Stones are hidden by default but can be found when typing at least five matching characters.

@@ -1,8 +1,12 @@
-import { items, species } from "../domain/regulationData";
-import { statsFromSpecies } from "../domain/stats";
+import { items, species, statAlignmentsById } from "../domain/regulationData";
+import { statsFromSpeciesWithPoints } from "../domain/stats";
 import type { TeamSheet } from "../domain/teamTypes";
 
 export const makeValidTeamSheet = (): TeamSheet => {
+  // Jolly raises Spe / lowers SpA; stats are computed with a legal spread under
+  // that alignment so the team is internally consistent (64 Stat Points).
+  const jolly = statAlignmentsById.get("Jolly");
+  const points = { hp: 20, def: 12, spe: 32 };
   const itemIds = items.filter((item) => !item.enablesMegaFor?.length).slice(0, 6).map((item) => item.id);
   const selectedSpecies = species
     .filter((record) => record.abilities.length > 0 && record.moves.length >= 4)
@@ -28,7 +32,7 @@ export const makeValidTeamSheet = (): TeamSheet => {
       abilityId: record.abilities[0],
       itemId: itemIds[index],
       moves: [record.moves[0], record.moves[1], record.moves[2], record.moves[3]],
-      stats: statsFromSpecies(record),
+      stats: statsFromSpeciesWithPoints(record, points, jolly),
       statAlignment: {
         value: "Jolly",
         source: "manual",

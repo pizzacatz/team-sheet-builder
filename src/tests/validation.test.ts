@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { items, moves, species } from "../domain/regulationData";
-import { statBounds } from "../domain/stats";
+import { presentedStat, statBounds, statsFromSpecies } from "../domain/stats";
 import { validateTeamSheet } from "../domain/validation";
 import { makeValidTeamSheet } from "./fixtures";
 
@@ -115,16 +115,47 @@ describe("validateTeamSheet", () => {
     expect(result.isValid).toBe(false);
   });
 
-  it("accepts final stats at the range boundaries and requires every stat", () => {
+  it("accepts an alignment-consistent spread and requires every stat", () => {
     const team = makeValidTeamSheet();
-    const first = species.find((record) => record.id === team.pokemon[0].speciesId)!;
-    team.pokemon[0].stats.spa = String(statBounds(first, "spa").max);
-    team.pokemon[0].stats.spe = String(statBounds(first, "spe").min);
-    expect(codes(team)).not.toContain("STAT_OUT_OF_RANGE");
-    expect(codes(team)).not.toContain("MISSING_STAT");
+    const list = codes(team);
+    expect(list).not.toContain("STAT_OUT_OF_RANGE");
+    expect(list).not.toContain("STAT_ALIGNMENT_MISMATCH");
+    expect(list).not.toContain("STAT_POINTS_OVER_BUDGET");
+    expect(list).not.toContain("STATS_LOOK_UNTOUCHED");
+    expect(list).not.toContain("MISSING_STAT");
 
     team.pokemon[0].stats.hp = "";
     expect(codes(team)).toContain("MISSING_STAT");
+  });
+
+  it("errors when stats can't come from the chosen Stat Alignment", () => {
+    const team = makeValidTeamSheet();
+    const first = species.find((record) => record.id === team.pokemon[0].speciesId)!;
+    // Neutral (presented) stats under Jolly: Spe should be raised but sits at its
+    // default, which no Stat Point allocation can produce.
+    team.pokemon[0].stats = statsFromSpecies(first);
+    expect(codes(team)).toContain("STAT_ALIGNMENT_MISMATCH");
+  });
+
+  it("errors when the spread exceeds the 66 Stat Point budget", () => {
+    const team = makeValidTeamSheet();
+    const first = species.find((record) => record.id === team.pokemon[0].speciesId)!;
+    for (const key of ["hp", "atk", "def"] as const) {
+      team.pokemon[0].stats[key] = String(presentedStat(first, key) + 32); // 96+ implied points
+    }
+    expect(codes(team)).toContain("STAT_POINTS_OVER_BUDGET");
+  });
+
+  it("warns (not errors) when a Pokémon has no Stat Points invested", () => {
+    const team = makeValidTeamSheet();
+    const first = species.find((record) => record.id === team.pokemon[0].speciesId)!;
+    team.pokemon[0].statAlignment = { value: "Serious", source: "manual", confidence: "high", requiresReview: false };
+    team.pokemon[0].stats = statsFromSpecies(first);
+    const result = validateTeamSheet(team);
+    expect(result.issues).toEqual(
+      expect.arrayContaining([expect.objectContaining({ code: "STATS_LOOK_UNTOUCHED", severity: "warning" })])
+    );
+    expect(result.issues.some((issue) => issue.code === "STAT_ALIGNMENT_MISMATCH")).toBe(false);
   });
 
   it("catches unavailable abilities and warns on Mega Stone mismatch", () => {

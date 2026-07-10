@@ -8,7 +8,15 @@ import {
   isMegaItemMatched,
   isMoveLearnable
 } from "./legality";
-import { statBounds, statRows } from "./stats";
+import { statAlignmentsById } from "./regulationData";
+import {
+  alignmentMultiplier,
+  impliedStatPoints,
+  presentedStat,
+  statBounds,
+  statRows,
+  STAT_POINT_TOTAL_MAX
+} from "./stats";
 import type { TeamSheet } from "./teamTypes";
 import type { ValidationIssue, ValidationResult } from "./validationTypes";
 
@@ -180,17 +188,24 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
       }
     });
 
+    let statsComplete = true;
+    let statsInRange = true;
     statRows.forEach((stat) => {
       const statPath = `${path}.stats.${stat.key}`;
       const raw = entry.stats[stat.key]?.trim();
       if (!raw) {
         issue(issues, "error", statPath, "MISSING_STAT", `${slot} needs a ${stat.label} value.`);
+        statsComplete = false;
         return;
       }
       const value = Number.parseInt(raw, 10);
-      if (!Number.isFinite(value)) return;
+      if (!Number.isFinite(value)) {
+        statsComplete = false;
+        return;
+      }
       const { min, max } = statBounds(species, stat.key);
       if (value < min || value > max) {
+        statsInRange = false;
         issue(
           issues,
           "error",
@@ -200,6 +215,53 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
         );
       }
     });
+
+    // Alignment-aware pass: when every stat is present and in range and an
+    // alignment is chosen, reverse-engineer the Stat Points implied by that
+    // alignment. Values that can't come from any legal 0..32 allocation, or that
+    // exceed the 66-point budget, are errors; a zero-point spread is a warning.
+    const alignmentRecord = statAlignmentsById.get(entry.statAlignment.value ?? "");
+    if (statsComplete && statsInRange && alignmentRecord) {
+      let totalPoints = 0;
+      let inconsistent = false;
+      statRows.forEach((stat) => {
+        const value = Number.parseInt(entry.stats[stat.key] ?? "", 10);
+        const points = impliedStatPoints(
+          value,
+          presentedStat(species, stat.key),
+          alignmentMultiplier(stat.key, alignmentRecord)
+        );
+        if (points === null) {
+          inconsistent = true;
+          issue(
+            issues,
+            "error",
+            `${path}.stats.${stat.key}`,
+            "STAT_ALIGNMENT_MISMATCH",
+            `${slot} ${stat.label} of ${value} can't come from the ${alignmentRecord.displayName} Stat Alignment. Re-check your Stat Point totals and Stat Alignment.`
+          );
+        } else {
+          totalPoints += points;
+        }
+      });
+      if (!inconsistent && totalPoints > STAT_POINT_TOTAL_MAX) {
+        issue(
+          issues,
+          "error",
+          `${path}.statAlignment`,
+          "STAT_POINTS_OVER_BUDGET",
+          `${slot} uses more than the ${STAT_POINT_TOTAL_MAX} Stat Point limit. Reduce your stat spread.`
+        );
+      } else if (!inconsistent && totalPoints === 0) {
+        issue(
+          issues,
+          "warning",
+          `${path}.statAlignment`,
+          "STATS_LOOK_UNTOUCHED",
+          `${slot} has no Stat Points invested — confirm you entered your spread and picked the right Stat Alignment.`
+        );
+      }
+    }
 
     if (!entry.statAlignment.value) {
       issue(

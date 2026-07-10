@@ -34,12 +34,18 @@ const statValue = (species: SpeciesRecord, stat: StatKey): number => {
   return stat === "hp" ? base + 75 : base + 20;
 };
 
-const alignmentMultiplier = (stat: StatKey, alignment: Pick<StatAlignmentRecord, "raises" | "lowers"> | null | undefined): number => {
+export const alignmentMultiplier = (
+  stat: StatKey,
+  alignment: Pick<StatAlignmentRecord, "raises" | "lowers"> | null | undefined
+): number => {
   if (stat === "hp" || !alignment) return 1;
   if (alignment.raises === stat) return 1.1;
   if (alignment.lowers === stat) return 0.9;
   return 1;
 };
+
+// The displayed stat at 0 Stat Points / neutral alignment (base+20, base+75 HP).
+export const presentedStat = (species: SpeciesRecord, stat: StatKey): number => statValue(species, stat);
 
 export const statsFromSpecies = (species: SpeciesRecord | null | undefined): PokemonStats => {
   if (!species?.presentedStats) return emptyPokemonStats();
@@ -54,8 +60,24 @@ export const statsFromSpecies = (species: SpeciesRecord | null | undefined): Pok
 };
 
 export const STAT_POINT_MAX = 32;
+export const STAT_POINT_TOTAL_MAX = 66;
 
 export type StatBound = { min: number; max: number };
+
+// Reverse-engineer the Stat Points that produce `value` for a stat with the
+// given presented (0-SP) value and alignment multiplier, matching the engine's
+// floor. Returns null when no legal 0..32 allocation yields `value` — i.e. the
+// value can't come from this alignment.
+export const impliedStatPoints = (value: number, presented: number, multiplier: number): number | null => {
+  if (multiplier === 1) {
+    const points = value - presented;
+    return points >= 0 && points <= STAT_POINT_MAX ? points : null;
+  }
+  for (let points = 0; points <= STAT_POINT_MAX; points += 1) {
+    if (Math.floor((presented + points) * multiplier) === value) return points;
+  }
+  return null;
+};
 
 // Legal range for a final displayed stat, matching the engine: a stat is the
 // presented value (base+20, or base+75 for HP) plus 0..32 Stat Points, then
