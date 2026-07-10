@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { items, moves, species } from "../domain/regulationData";
-import { presentedStat, statBounds, statsFromSpecies } from "../domain/stats";
+import { items, moves, species, statAlignmentsById } from "../domain/regulationData";
+import { presentedStat, statBounds, statsFromSpecies, statsFromSpeciesWithPoints } from "../domain/stats";
 import { validateTeamSheet } from "../domain/validation";
 import { makeValidTeamSheet } from "./fixtures";
 
@@ -155,6 +155,16 @@ describe("validateTeamSheet", () => {
     expect(result.issues).toEqual(
       expect.arrayContaining([expect.objectContaining({ code: "STATS_LOOK_UNTOUCHED", severity: "warning" })])
     );
+    expect(result.issues.some((issue) => issue.code === "STAT_ALIGNMENT_MISMATCH")).toBe(false);
+  });
+
+  it("does not warn 'untouched' when a non-neutral alignment has zero points", () => {
+    const team = makeValidTeamSheet();
+    const first = species.find((record) => record.id === team.pokemon[0].speciesId)!;
+    // 0-SP line under the fixture's Jolly alignment: consistent, but not "default".
+    team.pokemon[0].stats = statsFromSpeciesWithPoints(first, {}, statAlignmentsById.get("Jolly"));
+    const result = validateTeamSheet(team);
+    expect(result.issues.some((issue) => issue.code === "STATS_LOOK_UNTOUCHED")).toBe(false);
     expect(result.issues.some((issue) => issue.code === "STAT_ALIGNMENT_MISMATCH")).toBe(false);
   });
 
