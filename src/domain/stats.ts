@@ -68,6 +68,17 @@ export type StatBound = { min: number; max: number };
 // given presented (0-SP) value and alignment multiplier, matching the engine's
 // floor. Returns null when no legal 0..32 allocation yields `value` — i.e. the
 // value can't come from this alignment.
+// Every legal final value for a stat (0..32 Stat Points) under a multiplier,
+// sorted ascending and de-duplicated. For the raised (x1.1) stat this skips some
+// integers, so it doubles as the set used to suggest the nearest legal value.
+export const achievableStatValues = (presented: number, multiplier: number): number[] => {
+  const values = new Set<number>();
+  for (let points = 0; points <= STAT_POINT_MAX; points += 1) {
+    values.add(Math.floor((presented + points) * multiplier));
+  }
+  return [...values].sort((left, right) => left - right);
+};
+
 export const impliedStatPoints = (value: number, presented: number, multiplier: number): number | null => {
   if (multiplier === 1) {
     const points = value - presented;

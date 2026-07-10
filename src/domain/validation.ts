@@ -10,6 +10,7 @@ import {
 } from "./legality";
 import { statAlignmentsById } from "./regulationData";
 import {
+  achievableStatValues,
   alignmentMultiplier,
   impliedStatPoints,
   presentedStat,
@@ -227,22 +228,31 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
       let inconsistent = false;
       statRows.forEach((stat) => {
         const value = Number.parseInt(entry.stats[stat.key] ?? "", 10);
+        const presented = presentedStat(species, stat.key);
         const multiplier = alignmentMultiplier(stat.key, alignmentRecord);
-        const points = impliedStatPoints(value, presentedStat(species, stat.key), multiplier);
+        const points = impliedStatPoints(value, presented, multiplier);
         if (points === null) {
           inconsistent = true;
-          const effect =
-            multiplier > 1
-              ? `${alignmentName} raises ${stat.label}`
-              : multiplier < 1
-                ? `${alignmentName} lowers ${stat.label}`
-                : `${alignmentName} does not raise or lower ${stat.label}`;
+          // Guide the fix: too low, too high (over 32 points), or an unreachable
+          // in-between value (the x1.1 raised stat skips some integers).
+          const legal = achievableStatValues(presented, multiplier);
+          const min = legal[0];
+          const max = legal[legal.length - 1];
+          const nearest = legal.reduce((best, option) =>
+            Math.abs(option - value) < Math.abs(best - value) ? option : best
+          );
+          const hint =
+            value < min
+              ? `it should be at least ${min}`
+              : value > max
+                ? `it can't exceed ${max} with 32 Stat Points`
+                : `the nearest legal value is ${nearest}`;
           issue(
             issues,
             "error",
             `${path}.stats.${stat.key}`,
             "STAT_ALIGNMENT_MISMATCH",
-            `${slot} ${stat.label} of ${value} doesn't fit the ${alignmentName} Stat Alignment (${effect}). Double-check this value and your Stat Points.`
+            `${slot} ${stat.label} of ${value} isn't reachable with the ${alignmentName} Stat Alignment — ${hint}.`
           );
         } else {
           totalPoints += points;
