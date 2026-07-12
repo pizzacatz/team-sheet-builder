@@ -1,4 +1,4 @@
-import { ChevronDown, ClipboardPaste, X } from "lucide-react";
+import { ChevronDown, ClipboardPaste, Trash2, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { ImportIssue } from "../importers/showdown/showdownTypes";
 import { parseShowdownPaste } from "../importers/showdown/parseShowdownPaste";
@@ -46,6 +46,12 @@ export function ImportPanel({ onImport, teamHasData }: ImportPanelProps) {
     }
   };
 
+  // Clears the paste box and any import issues. Does not touch the built team.
+  const handleClear = () => {
+    setPaste("");
+    setIssues([]);
+  };
+
   // One button, both flows: if the box already has text, import that; otherwise
   // read the clipboard, fill the box, and import in a single tap. If the browser
   // blocks or has no clipboard read, fall back to opening the box for manual paste.
@@ -72,16 +78,27 @@ export function ImportPanel({ onImport, teamHasData }: ImportPanelProps) {
   return (
     <section className="section-panel import-panel" aria-labelledby="import-heading">
       <div className="section-heading import-heading">
-        <button
-          type="button"
-          className="collapse-button"
-          aria-expanded={isOpen}
-          aria-controls="showdown-import-body"
-          onClick={() => setIsOpen((current) => !current)}
-        >
-          <ChevronDown size={18} aria-hidden="true" />
-          <span id="import-heading">Showdown Import</span>
-        </button>
+        <div className="import-heading-left">
+          <button
+            type="button"
+            className="icon-button import-clear-button"
+            title="Clear import"
+            aria-label="Clear import"
+            onClick={handleClear}
+          >
+            <Trash2 size={17} />
+          </button>
+          <button
+            type="button"
+            className="collapse-button"
+            aria-expanded={isOpen}
+            aria-controls="showdown-import-body"
+            onClick={() => setIsOpen((current) => !current)}
+          >
+            <ChevronDown size={18} aria-hidden="true" />
+            <span id="import-heading">Showdown Import</span>
+          </button>
+        </div>
         <div className="heading-actions">
           {!isOpen ? (
             <button type="button" className="import-paste-button" onClick={handlePasteAndImport}>
