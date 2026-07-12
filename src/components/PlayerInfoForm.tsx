@@ -1,4 +1,3 @@
-import { CalendarDays } from "lucide-react";
 import { useRef } from "react";
 import type { PlayerInfo } from "../domain/teamTypes";
 
@@ -11,37 +10,36 @@ type PlayerInfoFormProps = {
 const ageDivisions: Array<Exclude<PlayerInfo["division"], "" | undefined>> = ["Junior", "Senior", "Master"];
 const digitsOnly = (value: string): string => value.replace(/\D/g, "");
 
-const formatDateDigits = (value: string): string => {
-  const digits = value.replace(/\D/g, "");
-  if (digits.length === 6) {
-    return `${digits.slice(0, 2)}-${digits.slice(2, 4)}-${digits.slice(4, 6)}`;
-  }
-  if (digits.length === 8) {
-    return `${digits.slice(0, 2)}-${digits.slice(2, 4)}-${digits.slice(4)}`;
-  }
-  return value;
-};
+// Date of Birth is stored as an "MM-DD-YYYY" string (parts may be blank while
+// typing). Splitting on "-" keeps each part in its slot even when an earlier one
+// is empty.
+const dobPart = (value: string | undefined, index: number, max: number): string =>
+  ((value ?? "").split("-")[index] ?? "").replace(/\D/g, "").slice(0, max);
 
-const formatCalendarDate = (value: string): string => {
-  const [year, month, day] = value.split("-");
-  if (!year || !month || !day) return "";
-  return `${month}-${day}-${year.slice(-2)}`;
-};
+const composeDob = (month: string, day: string, year: string): string =>
+  month || day || year ? `${month}-${day}-${year}` : "";
 
 export function PlayerInfoForm({ player, onChange, errorFieldIds }: PlayerInfoFormProps) {
-  const dateInputRef = useRef<HTMLInputElement | null>(null);
+  const dobDayRef = useRef<HTMLInputElement | null>(null);
+  const dobYearRef = useRef<HTMLInputElement | null>(null);
   const invalidClass = (fieldId: string) => (errorFieldIds?.has(fieldId) ? "is-invalid" : undefined);
   const invalidFlag = (fieldId: string) => (errorFieldIds?.has(fieldId) ? true : undefined);
 
-  const openCalendar = () => {
-    const input = dateInputRef.current;
-    if (!input) return;
-    if (typeof input.showPicker === "function") {
-      input.showPicker();
-      return;
-    }
-    input.focus();
-    input.click();
+  const dobMonth = dobPart(player.dateOfBirth, 0, 2);
+  const dobDay = dobPart(player.dateOfBirth, 1, 2);
+  const dobYear = dobPart(player.dateOfBirth, 2, 4);
+
+  const setDobPart = (part: "month" | "day" | "year", raw: string) => {
+    const value = raw.replace(/\D/g, "").slice(0, part === "year" ? 4 : 2);
+    onChange({
+      dateOfBirth: composeDob(
+        part === "month" ? value : dobMonth,
+        part === "day" ? value : dobDay,
+        part === "year" ? value : dobYear
+      )
+    });
+    if (part === "month" && value.length === 2) dobDayRef.current?.focus();
+    else if (part === "day" && value.length === 2) dobYearRef.current?.focus();
   };
 
   return (
@@ -132,29 +130,50 @@ export function PlayerInfoForm({ player, onChange, errorFieldIds }: PlayerInfoFo
               onChange={(event) => onChange({ playerId: digitsOnly(event.target.value) })}
             />
           </div>
-          <div className="field">
-            <label htmlFor="date-of-birth">Date of Birth:</label>
-            <div className="date-field-control">
+          <div className="field dob-field">
+            <label htmlFor="dob-month">Date of Birth:</label>
+            <div
+              className={`date-field-control${invalidClass("date-of-birth") ? " is-invalid" : ""}`}
+              id="date-of-birth"
+              tabIndex={-1}
+              aria-invalid={invalidFlag("date-of-birth")}
+            >
               <input
-                id="date-of-birth"
-                className={invalidClass("date-of-birth")}
-                value={player.dateOfBirth ?? ""}
-                placeholder="02-27-1996"
+                id="dob-month"
+                className="dob-part"
+                value={dobMonth}
+                placeholder="MM"
                 inputMode="numeric"
+                aria-label="Birth month, two digits"
                 aria-required="true"
-                aria-invalid={invalidFlag("date-of-birth")}
-                onChange={(event) => onChange({ dateOfBirth: formatDateDigits(event.target.value) })}
+                maxLength={2}
+                onChange={(event) => setDobPart("month", event.target.value)}
               />
-              <button type="button" className="date-picker-button" aria-label="Open date picker" onClick={openCalendar}>
-                <CalendarDays size={18} />
-              </button>
+              <span className="date-sep" aria-hidden="true">/</span>
               <input
-                ref={dateInputRef}
-                className="native-date-input"
-                type="date"
-                aria-hidden="true"
-                tabIndex={-1}
-                onChange={(event) => onChange({ dateOfBirth: formatCalendarDate(event.target.value) })}
+                ref={dobDayRef}
+                id="dob-day"
+                className="dob-part"
+                value={dobDay}
+                placeholder="DD"
+                inputMode="numeric"
+                aria-label="Birth day, two digits"
+                aria-required="true"
+                maxLength={2}
+                onChange={(event) => setDobPart("day", event.target.value)}
+              />
+              <span className="date-sep" aria-hidden="true">/</span>
+              <input
+                ref={dobYearRef}
+                id="dob-year"
+                className="dob-part dob-year"
+                value={dobYear}
+                placeholder="YYYY"
+                inputMode="numeric"
+                aria-label="Birth year, four digits"
+                aria-required="true"
+                maxLength={4}
+                onChange={(event) => setDobPart("year", event.target.value)}
               />
             </div>
           </div>

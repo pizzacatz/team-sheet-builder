@@ -74,10 +74,8 @@ Player ID accepts digits only and preserves leading zeros.
 
 Date of Birth:
 
-- Uses `02-27-1996` as its format example.
-- Autoformats six digits as `MM-DD-YY` and eight digits as `MM-DD-YYYY`.
-- Required, and validated as a complete date: it must be a six- or eight-digit `MM-DD-YY`/`MM-DD-YYYY` value with a real month and day. Two-digit years are accepted; no century is inferred.
-- Provides a calendar picker on desktop; the picker is hidden on mobile because of inconsistent Chrome mobile behavior.
+- Entered as three fields — `MM` / `DD` / `YYYY` (two, two, and four digits) — with auto-advance between them. The values compose into a stored `MM-DD-YYYY` string.
+- Required, and validated as a complete `MM-DD-YYYY` date (four-digit year) with a real month (01-12) and day (01-31).
 
 ### Error visibility
 

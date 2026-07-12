@@ -32,10 +32,10 @@ const issue = (
   issues.push({ severity, path, code, message, ...(relatedFields ? { relatedFields } : {}) });
 };
 
-// Accepts a complete MM-DD-YY (6 digits) or MM-DD-YYYY (8 digits) date. Two-digit
-// years are allowed. Day is bounded loosely (01-31), not per-month.
+// Accepts a complete MM-DD-YYYY date (8 digits, four-digit year). Day is bounded
+// loosely (01-31), not per-month.
 const isValidDateOfBirth = (digits: string): boolean => {
-  if (digits.length !== 6 && digits.length !== 8) return false;
+  if (digits.length !== 8) return false;
   const month = Number.parseInt(digits.slice(0, 2), 10);
   const day = Number.parseInt(digits.slice(2, 4), 10);
   return month >= 1 && month <= 12 && day >= 1 && day <= 31;
@@ -72,7 +72,7 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
       "error",
       "player.dateOfBirth",
       "INVALID_DATE_OF_BIRTH",
-      "Date of Birth must be a complete date (MM-DD-YY or MM-DD-YYYY)."
+      "Date of Birth must be a complete MM-DD-YYYY date."
     );
   }
 
