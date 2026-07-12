@@ -3,7 +3,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { ImportPanel } from "../components/ImportPanel";
 import { PdfActions } from "../components/PdfActions";
 import { PlayerInfoForm } from "../components/PlayerInfoForm";
-import { ShareTeam } from "../components/ShareTeam";
 import { TeamForm } from "../components/TeamForm";
 import { ValidationPanel } from "../components/ValidationPanel";
 import { collectErrorFieldIds, collectWarningFieldIds, fieldIdForPath, scrollToIssueField } from "../components/validationFields";
@@ -29,7 +28,7 @@ const getInitialTheme = (): ThemeMode => {
 };
 
 export function App() {
-  const { teamSheet, validation, updatePlayer, updatePokemon, replacePokemon, reset } = useTeamSheetState();
+  const { teamSheet, validation, updatePlayer, updatePokemon, replacePokemon } = useTeamSheetState();
   const sideColumnRef = useRef<HTMLElement | null>(null);
   const [theme, setTheme] = useState<ThemeMode>(getInitialTheme);
   const [isMobileFieldEditing, setIsMobileFieldEditing] = useState(false);
@@ -174,11 +173,10 @@ export function App() {
             errorFieldIds={errorFieldIds}
             warningFieldIds={warningFieldIds}
           />
-          <ShareTeam teamSheet={teamSheet} />
         </div>
         <aside className="side-column" ref={sideColumnRef}>
           <ValidationPanel validation={validation} expandSignal={expandSignal} />
-          <PdfActions teamSheet={teamSheet} validation={validation} onClear={reset} onBlockedAttempt={handleBlockedAttempt} />
+          <PdfActions teamSheet={teamSheet} validation={validation} onBlockedAttempt={handleBlockedAttempt} />
         </aside>
       </div>
     </main>

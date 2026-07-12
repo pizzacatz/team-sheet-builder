@@ -12,7 +12,7 @@ type ImportPanelProps = {
 export function ImportPanel({ onImport, teamHasData }: ImportPanelProps) {
   const [paste, setPaste] = useState("");
   const [issues, setIssues] = useState<ImportIssue[]>([]);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const focusOnOpen = useRef(false);
 
@@ -46,11 +46,14 @@ export function ImportPanel({ onImport, teamHasData }: ImportPanelProps) {
     }
   };
 
-  const handleImport = () => runImport(paste);
-
-  // One tap: read the clipboard, fill the box, and import. If the browser blocks
-  // or has no clipboard read, fall back to opening the box for a manual paste.
+  // One button, both flows: if the box already has text, import that; otherwise
+  // read the clipboard, fill the box, and import in a single tap. If the browser
+  // blocks or has no clipboard read, fall back to opening the box for manual paste.
   const handlePasteAndImport = async () => {
+    if (paste.trim()) {
+      runImport(paste);
+      return;
+    }
     if (navigator.clipboard?.readText) {
       try {
         const clip = await navigator.clipboard.readText();
@@ -107,9 +110,9 @@ export function ImportPanel({ onImport, teamHasData }: ImportPanelProps) {
             />
           </div>
           <div className="action-row">
-            <button type="button" className="primary-action" onClick={handleImport}>
+            <button type="button" className="primary-action" onClick={handlePasteAndImport}>
               <ClipboardPaste size={18} />
-              Import Paste
+              Paste &amp; Import
             </button>
           </div>
         </div>

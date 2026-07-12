@@ -2,31 +2,21 @@
 
 Parking lot for larger changes we've discussed but not committed to.
 
-## UI consolidation — the output/share cluster has sprawled
+## UI consolidation — SHIPPED
 
-The *features* are mostly invisible intelligence (validation, autocomplete, etc.),
-but the visible **output/share buttons** have grown: Paste & Import, Team Sheets,
-Preview, Open, Staff, Clear, "Share Team Sheets" (Web Share the PDF), "Copy team
-link" (its own panel), plus a proposed "Mail to TO". There are **three separate
-"share" concepts** as separate controls.
+The output/share cluster was consolidated to a single action row: **Download ·
+Email to TO · Share** (Share is mobile-only, shown when file sharing is
+supported). Removed: the expander, Open/Staff individual downloads, PDF preview,
+whole-team Clear, and the standalone Copy-team-link panel + its "Include player
+info" opt-in. `Email to TO` is a `mailto:` draft (player info + team link in the
+body, no recipient — the player addresses it). The team link always carries player
+info now. Import starts expanded with a unified `Paste & Import` (imports the box
+if it has text, else reads the clipboard). Per-slot trash icons were kept.
 
-**Plan:** consolidate all sharing into **one "Share ▾" control** (menu: Copy team
-link · Email to TO · Share PDF file). Drop the standalone Copy-team-link panel;
-absorb "Share Team Sheets"; make any email option a menu item, not a new button.
-Result: the output area reads as three intents — **Import · Download · Share**.
-Do this consolidation *before* adding more buttons.
-
-## Email team to TO (mailto) — fold into the Share menu
-
-Feasible (unlike attaching the PDF): the team-share URL is text in the `mailto:`
-**body**, not an attachment. The player enters the TO's email; the app opens a
-pre-filled **draft** (it doesn't send — no backend). Body = readable player info
-+ the team link. Deliverable is the **link + info** (the TO opens it and downloads
-the PDF themselves) — decided sufficient. Caveats: mailto body is **plain text**
-(no custom-text hyperlink; clients auto-linkify the raw long URL); `mailto:` needs
-a configured mail app (webmail users may get nothing — keep Copy-link as the
-fallback); ~2000-char body limit on some clients (keep the body lean). Build it as
-a **menu item inside the consolidated Share**, not a standalone button.
+Caveats still worth remembering for the mailto path: body is **plain text** (no
+custom-text hyperlink; clients auto-linkify the raw URL); `mailto:` needs a
+configured mail app (webmail users may get nothing); ~2000-char body limit on some
+clients (the body stays lean — player info + one link).
 
 ## TO-only sister site — extend the cruncher
 

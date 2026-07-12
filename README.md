@@ -10,7 +10,7 @@ Live app: <https://teamsheet.georgiaplayevents.com/>
 - Validates required player/team fields, species clause, item clause, legal species/items/abilities/moves, ability availability, and move learnsets; non-functional Mega Stone pairings produce a warning.
 - Uses local Regulation M-B dictionaries exported from Champions Logic data.
 - Generates Play! Pokémon team-list PDFs entirely in the browser.
-- Supports Open Team Sheet, Staff Team Sheet, Both Team Sheets, and PDF preview before download.
+- Downloads the combined Open + Staff team sheets as a single PDF.
 - Saves the active form in localStorage to reduce accidental data loss.
 - Runs as a static GitHub Pages app with no backend, accounts, database, or external runtime API.
 
@@ -20,11 +20,13 @@ Live app: <https://teamsheet.georgiaplayevents.com/>
 - Mobile layout uses a single-column Pokémon flow with validation/download controls floating at the bottom.
 - Validation details are collapsed by default on desktop and mobile. Selecting the summary expands the list; selecting an issue scrolls to and focuses the associated field.
 - The mobile floating tray hides while a field is being edited so it does not compete with the keyboard.
-- The compact mobile tray exposes the combined `Team Sheets` download alongside a `Share Team Sheets` button when file sharing is supported; its expansion exposes the separate Open and Staff downloads. PDF preview and whole-team clearing remain desktop-only.
+- The action bar is a single row: `Download` (combined team sheets), `Email to TO`, and — on devices that support file sharing (mobile) — `Share`. There is no expander, PDF preview, or whole-team clear button.
+- The Showdown Import panel starts expanded. Its `Paste & Import` button imports the box when it has text, otherwise reads the clipboard and imports in one tap.
 - Each Pokémon card has a trash button for clearing that slot.
 - Persistent, right-aligned in-field labels keep completed fields identifiable without relying on placeholders.
 - Light and dark themes are available from the header toggle.
-- A `Copy team link` control shares the current team as a URL (the team is encoded in the link's `#hash`, so nothing is uploaded). By default the link carries only the PII-free team; an `Include player info` opt-in adds the player fields. Opening a `#t=` link loads the team (confirming first if it would replace existing data). Uses `deflate` compression to keep links short.
+- `Email to TO` opens the player's mail app with a pre-filled body (readable player info plus the team link) and no recipient — the player addresses it to their Tournament Organizer. No backend, no send; just a draft.
+- The team link encodes the whole team, including player info, in the URL's `#hash`, so nothing is uploaded. Opening a `#t=` link loads the team (confirming first if it would replace existing data). Uses `deflate` compression to keep links short.
 - PDF output includes the footer watermark `teamsheet.georgiaplayevents.com`.
 
 ## Autocomplete Behavior
@@ -47,7 +49,7 @@ Autocomplete uses deterministic normalized prefix matching, not fuzzy or relevan
 
 ## Showdown Import Notes
 
-- The collapsed Showdown Import header has a `Paste & Import` button: one tap reads the system clipboard, fills the paste box, and imports. If the browser blocks or lacks clipboard reading, it opens the box and focuses it for a manual paste. Importing replaces the whole team, so it asks for confirmation first when the team already has data.
+- The Showdown Import panel starts expanded and has a `Paste & Import` button. If the paste box already has text, it imports that; otherwise one tap reads the system clipboard, fills the box, and imports. If the browser blocks or lacks clipboard reading, it opens/focuses the box for a manual paste. Importing replaces the whole team, so it asks for confirmation first when the team already has data. (When the panel is collapsed, the header shows the same `Paste & Import` button.)
 
 - `Level 50` lines are ignored silently.
 - `EVs:` are treated as Champions Stat Points, not standard Showdown EVs.
@@ -88,17 +90,15 @@ The complete team form, including Player Info, is saved automatically in browser
 
 ## PDF Output
 
-PDF generation uses `pdf-lib` in the browser. The PDF code is lazy-loaded only when a user previews or downloads a sheet, keeping the initial app bundle smaller.
+PDF generation uses `pdf-lib` in the browser. The PDF code is lazy-loaded only when a user downloads or shares a sheet, keeping the initial app bundle smaller. The generated PDF always combines the opponent-facing Open sheet (no private stats) and the staff-facing Staff sheet (with stats).
 
-Available PDF actions:
+Available actions:
 
-- `Open Team Sheet`: opponent-facing sheet without private stats.
-- `Staff Team Sheet`: staff-facing sheet with stats.
-- `Both Team Sheets`: combined PDF.
-- `Share Team Sheets`: shares the combined PDF through the device share sheet when PDF file sharing is supported.
-- `Preview PDF`: opens a desktop preview modal for the combined PDF before downloading.
+- `Download`: downloads the combined Open + Staff PDF.
+- `Email to TO`: opens a `mailto:` draft (player info + team link in the body, no recipient).
+- `Share`: shares the combined PDF through the device share sheet, shown only when PDF file sharing is supported (mobile).
 
-PDF actions remain disabled while validation contains errors. Mobile omits preview because Chrome mobile does not reliably display the generated object-URL PDF.
+Actions reveal the outstanding errors and jump to the first one instead of proceeding while validation contains errors.
 
 ### Embedded Team Data
 

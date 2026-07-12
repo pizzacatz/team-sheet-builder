@@ -46,14 +46,13 @@ describe("PdfActions file sharing", () => {
         <PdfActions
           teamSheet={teamSheet}
           validation={{ isValid: true, issues: [] }}
-          onClear={vi.fn()}
           onBlockedAttempt={vi.fn()}
         />
       );
     });
 
     const shareButton = Array.from(container.querySelectorAll("button")).find((button) =>
-      button.textContent?.includes("Share Team Sheets")
+      button.getAttribute("aria-label") === "Share team sheets"
     )!;
     await act(async () => {
       shareButton.click();
