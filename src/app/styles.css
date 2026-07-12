@@ -393,40 +393,54 @@ h3 {
   accent-color: var(--accent);
 }
 
+/* The control looks like one field; the three segments are borderless inside it. */
 .date-field-control {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 6px;
-}
-
-.date-field-control .dob-part {
-  width: 40px;
-  min-width: 0;
-  flex-shrink: 0;
+  gap: 3px;
+  min-height: 39px;
   border: 1px solid var(--field-border);
   border-radius: 6px;
   background: var(--field-bg);
+  padding-right: 8px;
+}
+
+.date-field-control:focus-within {
+  border-color: var(--focus);
+  outline: 3px solid var(--focus-ring);
+}
+
+.date-field-control.is-invalid {
+  border-color: var(--error-border);
+  background: var(--error-bg);
+}
+
+.date-field-control .dob-part {
+  width: 26px;
+  min-width: 0;
+  min-height: 0;
+  flex-shrink: 0;
+  border: 0;
+  background: transparent;
   color: var(--field-text);
-  padding: 8px 4px;
+  padding: 4px 0;
   text-align: center;
   line-height: 1.2;
 }
 
-.date-field-control .dob-part.dob-year {
-  width: 52px;
+.date-field-control .dob-part:focus {
+  outline: none;
 }
 
-/* The three DOB segments need more room than a single input, so this field uses
-   a narrower label reservation than the other player fields. */
+.date-field-control .dob-part.dob-year {
+  width: 42px;
+}
+
+/* Three segments need more room than a single input, so this field uses a
+   narrower label reservation than the other player fields. */
 .player-info-panel .field.dob-field {
   --in-field-label-width: 130px;
-}
-
-.date-field-control.is-invalid {
-  outline: 2px solid var(--error-border);
-  outline-offset: 3px;
-  border-radius: 6px;
 }
 
 .date-sep {
@@ -562,8 +576,7 @@ select.is-warning {
 }
 
 .in-field-form .field > input,
-.in-field-form .field > select,
-.in-field-form .date-field-control > input:not(.native-date-input) {
+.in-field-form .field > select {
   min-height: 39px;
 }
 
