@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { AGE_DIVISION_HINTS, divisionForBirthYear } from "../domain/ageDivision";
+import { ageDivisionHint, divisionForBirthYear } from "../domain/ageDivision";
 import type { PlayerInfo } from "../domain/teamTypes";
 
 type PlayerInfoFormProps = {
@@ -112,7 +112,7 @@ export function PlayerInfoForm({ player, onChange, errorFieldIds }: PlayerInfoFo
                 <label
                   key={division}
                   className="radio-option"
-                  title={`${division} — ${AGE_DIVISION_HINTS[division]}`}
+                  title={`${division} — ${ageDivisionHint(division)}`}
                 >
                   <input
                     id={`age-division-${division.toLowerCase()}`}
@@ -121,7 +121,7 @@ export function PlayerInfoForm({ player, onChange, errorFieldIds }: PlayerInfoFo
                     value={division}
                     checked={player.division === division}
                     required
-                    aria-label={`${division} division — ${AGE_DIVISION_HINTS[division]}`}
+                    aria-label={`${division} division — ${ageDivisionHint(division)}`}
                     onChange={() => onChange({ division })}
                   />
                   <span>{division}</span>
