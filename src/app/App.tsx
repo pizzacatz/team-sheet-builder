@@ -3,10 +3,12 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { ImportPanel } from "../components/ImportPanel";
 import { PdfActions } from "../components/PdfActions";
 import { PlayerInfoForm } from "../components/PlayerInfoForm";
+import { ShareTeam } from "../components/ShareTeam";
 import { TeamForm } from "../components/TeamForm";
 import { ValidationPanel } from "../components/ValidationPanel";
 import { collectErrorFieldIds, collectWarningFieldIds, fieldIdForPath, scrollToIssueField } from "../components/validationFields";
 import { entryHasAnyData } from "../domain/legality";
+import { decodeTeamShare } from "../domain/teamShare";
 import { rules } from "../domain/regulationData";
 import { emptyPokemonEntry } from "../domain/teamTypes";
 import { useTeamSheetState } from "../state/useTeamSheetState";
@@ -52,6 +54,29 @@ export function App() {
     const firstError = validation.issues.find((issue) => issue.severity === "error" && fieldIdForPath(issue.path));
     if (firstError) scrollToIssueField(firstError.path);
   };
+
+  // A `#t=` shared-team link loads the encoded team (confirming before it would
+  // replace existing data), then clears the hash so a refresh doesn't re-load.
+  useEffect(() => {
+    const match = window.location.hash.match(/[#&]t=([A-Za-z0-9\-_]+)/);
+    if (!match) return;
+    let active = true;
+    void (async () => {
+      const shared = await decodeTeamShare(match[1]);
+      if (!active || !shared) return;
+      const hasExisting = teamSheet.pokemon.some(entryHasAnyData) || Boolean(teamSheet.player.name?.trim());
+      if (hasExisting && !window.confirm("Load the shared team? This replaces your current team.")) return;
+      replacePokemon(shared.pokemon);
+      if (shared.player) updatePlayer(shared.player);
+      // Clear the hash only after loading so a refresh doesn't re-load — and so
+      // StrictMode's double-mount doesn't drop the hash before the load runs.
+      window.history.replaceState(null, "", window.location.pathname + window.location.search);
+    })();
+    return () => {
+      active = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
@@ -149,6 +174,7 @@ export function App() {
             errorFieldIds={errorFieldIds}
             warningFieldIds={warningFieldIds}
           />
+          <ShareTeam teamSheet={teamSheet} />
         </div>
         <aside className="side-column" ref={sideColumnRef}>
           <ValidationPanel validation={validation} expandSignal={expandSignal} />

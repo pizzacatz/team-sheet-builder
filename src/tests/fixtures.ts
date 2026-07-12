@@ -21,7 +21,7 @@ export const makeValidTeamSheet = (): TeamSheet => {
       teamName: "M-B Test",
       switchProfileName: "Switch",
       playerId: "123456",
-      dateOfBirth: "01 / 01 / 2000",
+      dateOfBirth: "01-01-2000",
       supportId: "SUPPORT"
     },
     regulation: "M-B",

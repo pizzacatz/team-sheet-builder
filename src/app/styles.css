@@ -448,6 +448,33 @@ h3 {
   font-weight: 700;
 }
 
+.share-team-panel {
+  display: grid;
+  gap: 8px;
+}
+
+.share-team-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+}
+
+.share-include-player {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.share-team-hint {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
 .slot-top-grid {
   display: grid;
   gap: 10px;

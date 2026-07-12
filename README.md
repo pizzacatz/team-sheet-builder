@@ -24,6 +24,7 @@ Live app: <https://teamsheet.georgiaplayevents.com/>
 - Each Pokémon card has a trash button for clearing that slot.
 - Persistent, right-aligned in-field labels keep completed fields identifiable without relying on placeholders.
 - Light and dark themes are available from the header toggle.
+- A `Copy team link` control shares the current team as a URL (the team is encoded in the link's `#hash`, so nothing is uploaded). By default the link carries only the PII-free team; an `Include player info` opt-in adds the player fields. Opening a `#t=` link loads the team (confirming first if it would replace existing data). Uses `deflate` compression to keep links short.
 - PDF output includes the footer watermark `teamsheet.georgiaplayevents.com`.
 
 ## Autocomplete Behavior

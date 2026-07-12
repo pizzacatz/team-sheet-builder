@@ -142,6 +142,9 @@ const decodeIndexRecord = (record: string): DecodedPokemon => {
   return { speciesId, formId, abilityId, itemId, moves, statAlignmentId, stats };
 };
 
+/** Decode a raw `<mon>|<mon>|...` slug payload (as produced by encodeTeamDataPayload). */
+export const decodeTeamDataPayload = (payload: string): DecodedPokemon[] => payload.split(MON_SEP).map(decodeMon);
+
 const decodeIndexPayload = (payload: string): DecodedPokemon[] => {
   const body = payload.slice(TEAM_DATA_INDEX_SENTINEL.length + VERSION_WIDTH);
   const records: DecodedPokemon[] = [];
