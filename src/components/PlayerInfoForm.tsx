@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { AGE_DIVISION_HINTS, divisionForBirthYear } from "../domain/ageDivision";
 import type { PlayerInfo } from "../domain/teamTypes";
 
 type PlayerInfoFormProps = {
@@ -31,13 +32,18 @@ export function PlayerInfoForm({ player, onChange, errorFieldIds }: PlayerInfoFo
 
   const setDobPart = (part: "month" | "day" | "year", raw: string) => {
     const value = raw.replace(/\D/g, "").slice(0, part === "year" ? 4 : 2);
-    onChange({
+    const patch: Partial<PlayerInfo> = {
       dateOfBirth: composeDob(
         part === "month" ? value : dobMonth,
         part === "day" ? value : dobDay,
         part === "year" ? value : dobYear
       )
-    });
+    };
+    // A complete birth year fixes the age division (division is set by birth year).
+    if (part === "year" && value.length === 4) {
+      patch.division = divisionForBirthYear(Number.parseInt(value, 10));
+    }
+    onChange(patch);
     if (part === "month" && value.length === 2) dobDayRef.current?.focus();
     else if (part === "day" && value.length === 2) dobYearRef.current?.focus();
   };
@@ -98,10 +104,16 @@ export function PlayerInfoForm({ player, onChange, errorFieldIds }: PlayerInfoFo
             aria-required="true"
             aria-invalid={invalidFlag("age-division-field")}
           >
-            <legend>Age Division:</legend>
+            <legend title="Age division is set by birth year (auto-filled from Date of Birth).">
+              Age Division:
+            </legend>
             <div className="division-options">
               {ageDivisions.map((division) => (
-                <label key={division} className="radio-option">
+                <label
+                  key={division}
+                  className="radio-option"
+                  title={`${division} — ${AGE_DIVISION_HINTS[division]}`}
+                >
                   <input
                     id={`age-division-${division.toLowerCase()}`}
                     type="radio"
@@ -109,6 +121,7 @@ export function PlayerInfoForm({ player, onChange, errorFieldIds }: PlayerInfoFo
                     value={division}
                     checked={player.division === division}
                     required
+                    aria-label={`${division} division — ${AGE_DIVISION_HINTS[division]}`}
                     onChange={() => onChange({ division })}
                   />
                   <span>{division}</span>
