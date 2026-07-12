@@ -20,21 +20,25 @@ export type DecodedShare = {
   player?: PlayerInfo;
 };
 
-const deflateRaw = async (text: string): Promise<Uint8Array> => {
-  const stream = new CompressionStream("deflate-raw");
-  const writer = stream.writable.getWriter();
-  void writer.write(new TextEncoder().encode(text));
-  void writer.close();
-  return new Uint8Array(await new Response(stream.readable).arrayBuffer());
+// Push bytes through a (de)compression stream. The write is awaited concurrently
+// with the read so the output can't be consumed before it's fully flushed — the
+// un-awaited version raced under CI and produced truncated/corrupt data.
+const streamThrough = async (transform: TransformStream<BufferSource, Uint8Array>, input: Uint8Array): Promise<Uint8Array> => {
+  const write = (async () => {
+    const writer = transform.writable.getWriter();
+    await writer.write(input as BufferSource);
+    await writer.close();
+  })();
+  const output = new Uint8Array(await new Response(transform.readable).arrayBuffer());
+  await write;
+  return output;
 };
 
-const inflateRaw = async (bytes: Uint8Array): Promise<string> => {
-  const stream = new DecompressionStream("deflate-raw");
-  const writer = stream.writable.getWriter();
-  void writer.write(bytes as BufferSource);
-  void writer.close();
-  return new TextDecoder().decode(await new Response(stream.readable).arrayBuffer());
-};
+const deflateRaw = async (text: string): Promise<Uint8Array> =>
+  streamThrough(new CompressionStream("deflate-raw"), new TextEncoder().encode(text));
+
+const inflateRaw = async (bytes: Uint8Array): Promise<string> =>
+  new TextDecoder().decode(await streamThrough(new DecompressionStream("deflate-raw"), bytes));
 
 const toBase64Url = (bytes: Uint8Array): string => {
   let binary = "";
