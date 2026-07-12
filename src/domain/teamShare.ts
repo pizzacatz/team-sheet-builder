@@ -20,18 +20,17 @@ export type DecodedShare = {
   player?: PlayerInfo;
 };
 
-// Push bytes through a (de)compression stream. The write is awaited concurrently
-// with the read so the output can't be consumed before it's fully flushed — the
-// un-awaited version raced under CI and produced truncated/corrupt data.
+// Push bytes through a (de)compression stream. On invalid input the stream errors
+// on BOTH ends; the read error propagates to the caller (which returns null),
+// while the write-side rejection is explicitly observed so it never becomes an
+// unhandled rejection (which Vitest fails the run on).
 const streamThrough = async (transform: TransformStream<BufferSource, Uint8Array>, input: Uint8Array): Promise<Uint8Array> => {
-  const write = (async () => {
-    const writer = transform.writable.getWriter();
-    await writer.write(input as BufferSource);
-    await writer.close();
-  })();
-  const output = new Uint8Array(await new Response(transform.readable).arrayBuffer());
-  await write;
-  return output;
+  const writer = transform.writable.getWriter();
+  writer
+    .write(input as BufferSource)
+    .then(() => writer.close())
+    .catch(() => {});
+  return new Uint8Array(await new Response(transform.readable).arrayBuffer());
 };
 
 const deflateRaw = async (text: string): Promise<Uint8Array> =>
