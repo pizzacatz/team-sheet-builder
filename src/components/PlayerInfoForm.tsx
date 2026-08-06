@@ -104,7 +104,7 @@ export function PlayerInfoForm({ player, onChange, errorFieldIds }: PlayerInfoFo
             aria-required="true"
             aria-invalid={invalidFlag("age-division-field")}
           >
-            <legend title="Age division is set by birth year (auto-filled from Date of Birth).">
+            <legend title="Age Division is set by birth year (auto-filled from Date of Birth).">
               Age Division:
             </legend>
             <div className="division-options">
@@ -112,7 +112,7 @@ export function PlayerInfoForm({ player, onChange, errorFieldIds }: PlayerInfoFo
                 <label
                   key={division}
                   className="radio-option"
-                  title={`${division} — ${ageDivisionHint(division)}`}
+                  title={`${division}. ${ageDivisionHint(division)}`}
                 >
                   <input
                     id={`age-division-${division.toLowerCase()}`}
@@ -121,7 +121,7 @@ export function PlayerInfoForm({ player, onChange, errorFieldIds }: PlayerInfoFo
                     value={division}
                     checked={player.division === division}
                     required
-                    aria-label={`${division} division — ${ageDivisionHint(division)}`}
+                    aria-label={`${division} division. ${ageDivisionHint(division)}`}
                     onChange={() => onChange({ division })}
                   />
                   <span>{division}</span>

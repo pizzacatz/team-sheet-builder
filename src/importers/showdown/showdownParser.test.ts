@@ -103,3 +103,31 @@ Serious Nature
     expect(result.issues.some((issue) => issue.code === "NEUTRAL_NATURE_NORMALIZED")).toBe(false);
   });
 });
+
+describe("mega species names", () => {
+  it("imports a mega form as its base species with a note", () => {
+    const result = parseShowdownPaste(`
+Venusaur-Mega @ Venusaurite
+Ability: Chlorophyll
+Jolly Nature
+- Protect
+`);
+
+    const entry = result.teamSheet.pokemon?.[0];
+    expect(entry?.speciesId).toBe("venusaur");
+    expect(entry?.displayName).toBe("Venusaur");
+    expect(result.issues.some((issue) => issue.code === "MEGA_FORM_BASE_USED")).toBe(true);
+  });
+
+  it("imports a suffixed mega form as its base species", () => {
+    const result = parseShowdownPaste(`
+Charizard-Mega-X @ Charizardite X
+Ability: Blaze
+Jolly Nature
+- Protect
+`);
+
+    expect(result.teamSheet.pokemon?.[0]?.speciesId).toBe("charizard");
+    expect(result.issues.some((issue) => issue.code === "MEGA_FORM_BASE_USED")).toBe(true);
+  });
+});

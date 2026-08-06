@@ -117,7 +117,7 @@ export function ValidationPanel({ validation, expandSignal }: ValidationPanelPro
               ))}
               {hiddenErrorCount > 0 ? (
                 <button type="button" className="issue-peek-more" tabIndex={-1} onClick={() => setIsExpanded(true)}>
-                  {`+${hiddenErrorCount} more — tap to expand`}
+                  {`+${hiddenErrorCount} more. Tap to expand`}
                 </button>
               ) : null}
             </div>

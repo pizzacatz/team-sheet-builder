@@ -62,6 +62,7 @@ Autocomplete uses deterministic normalized prefix matching, not fuzzy or relevan
 - Mega Stones:
   - the relevant Mega Stone for a selected species is always available in item suggestions.
   - non-relevant Mega Stones are hidden by default but can be found when typing at least five matching characters.
+- Mega form names (e.g. `Venusaur-Mega`, `Mega Charizard X`) are not separate species in Champions. Typing one in the Pokémon field or importing one from a paste resolves to the base (non-mega) species; the import adds a note when this happens.
 
 ## Player Info Rules
 
@@ -85,7 +86,7 @@ Date of Birth:
 - The validation summary auto-expands the full list on desktop when there are errors; on mobile it shows a compact two-error peek that expands on tap.
 - Fields with a wrong value (illegal, duplicate, out-of-range, malformed date) are outlined in the error color immediately. Empty required fields are outlined only after the first download/share attempt, so a fresh form stays clean.
 - Download/share buttons stay tappable while errors remain: tapping one reveals the error list and jumps to the first problem instead of generating a PDF.
-- After a blocked attempt, a `Download anyway` escape hatch appears below the action row. It downloads the combined PDF as-is, validation errors and all — for players who need the sheet anyway (its tooltip warns the sheet may be rejected at check-in).
+- While errors remain, a `Download anyway` button sits below the action row as an alternative option (not a confirmation). It downloads the combined PDF as-is, validation errors and all — for players who need the sheet anyway (its tooltip warns the sheet may be rejected at check-in).
 
 The complete team form, including Player Info, is saved automatically in browser localStorage.
 
@@ -99,7 +100,7 @@ Available actions:
 - `Email to TO`: opens a `mailto:` draft (player info + team link in the body, no recipient).
 - `Share`: shares the combined PDF through the device share sheet, shown only when PDF file sharing is supported (mobile).
 
-Actions reveal the outstanding errors and jump to the first one instead of proceeding while validation contains errors. After that first blocked attempt, a `Download anyway` button appears and downloads the combined PDF without fixing anything.
+Actions reveal the outstanding errors and jump to the first one instead of proceeding while validation contains errors. Whenever errors are present, a `Download anyway` button is also shown and downloads the combined PDF without fixing anything.
 
 ### Embedded Team Data
 

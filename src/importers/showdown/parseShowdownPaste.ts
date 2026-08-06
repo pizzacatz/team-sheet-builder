@@ -90,6 +90,23 @@ const parseBlock = (block: string, pokemonIndex: number, issues: ImportIssue[]):
         "species"
       );
     }
+    // A mega form pasted as the species (e.g. "Venusaur-Mega") resolves to its
+    // base species; megas aren't separate species in Champions.
+    const normalizedSpeciesText = normalizeName(speciesText);
+    if (
+      speciesResolution.record.allowedMegaForms?.length &&
+      normalizedSpeciesText !== normalizeName(speciesResolution.record.displayName) &&
+      normalizedSpeciesText.includes("mega")
+    ) {
+      addIssue(
+        issues,
+        "warning",
+        "MEGA_FORM_BASE_USED",
+        `${speciesText} isn't a separate species in Champions. Imported as ${speciesResolution.record.displayName}.`,
+        pokemonIndex,
+        "species"
+      );
+    }
   } else {
     entry.displayName = speciesText;
     addIssue(issues, "warning", "UNKNOWN_SPECIES", `Could not match species "${speciesText}".`, pokemonIndex, "species");

@@ -99,14 +99,13 @@ describe("PdfActions download-anyway override", () => {
   const findButton = (label: string) =>
     Array.from(container.querySelectorAll("button")).find((button) => button.textContent?.includes(label));
 
-  it("stays hidden until a blocked attempt has happened", async () => {
+  it("stays hidden while the team is valid", async () => {
     await act(async () => {
       root.render(
         <PdfActions
           teamSheet={createEmptyTeamSheet()}
-          validation={invalidValidation}
+          validation={{ isValid: true, issues: [] }}
           onBlockedAttempt={vi.fn()}
-          hasBlockedAttempt={false}
         />
       );
     });
@@ -122,7 +121,6 @@ describe("PdfActions download-anyway override", () => {
           teamSheet={createEmptyTeamSheet()}
           validation={invalidValidation}
           onBlockedAttempt={onBlockedAttempt}
-          hasBlockedAttempt
         />
       );
     });

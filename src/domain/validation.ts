@@ -45,7 +45,7 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
   const issues: ValidationIssue[] = [];
 
   if (!teamSheet.player.name.trim()) {
-    issue(issues, "error", "player.name", "MISSING_PLAYER_NAME", "Player name is required.");
+    issue(issues, "error", "player.name", "MISSING_PLAYER_NAME", "Player Name is required.");
   }
   if (!teamSheet.player.trainerName?.trim()) {
     issue(
@@ -91,7 +91,7 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
 
     const species = getSpeciesRecord(entry.speciesId);
     if (!species) {
-      issue(issues, "error", `${path}.speciesId`, "ILLEGAL_SPECIES", `${slot} species is not legal in M-B.`);
+      issue(issues, "error", `${path}.speciesId`, "ILLEGAL_SPECIES", `${slot}'s species is not legal in M-B.`);
       return;
     }
 
@@ -111,7 +111,7 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
     if (!entry.abilityId) {
       issue(issues, "error", `${path}.abilityId`, "MISSING_ABILITY", `${slot} needs an ability.`);
     } else if (!getAbilityRecord(entry.abilityId)) {
-      issue(issues, "error", `${path}.abilityId`, "ILLEGAL_ABILITY", `${slot} ability is not legal in M-B.`);
+      issue(issues, "error", `${path}.abilityId`, "ILLEGAL_ABILITY", `${slot}'s ability is not legal in M-B.`);
     } else if (!isAbilityAvailable(entry)) {
       issue(
         issues,
@@ -127,7 +127,7 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
     } else {
       const item = getItemRecord(entry.itemId);
       if (!item) {
-        issue(issues, "error", `${path}.itemId`, "ILLEGAL_ITEM", `${slot} item is not legal in M-B.`);
+        issue(issues, "error", `${path}.itemId`, "ILLEGAL_ITEM", `${slot}'s item is not legal in M-B.`);
       } else {
         const existingItemSlot = itemBySlot.get(item.id);
         if (item.itemClauseEligible && existingItemSlot !== undefined) {
@@ -136,7 +136,7 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
             "error",
             `${path}.itemId`,
             "DUPLICATE_ITEM",
-            `${slot} has a duplicate held item — the same item is already on Pokémon ${existingItemSlot + 1}.`
+            `${slot} has a duplicate held item. The same item is already on Pokémon ${existingItemSlot + 1}.`
           );
         } else if (item.itemClauseEligible) {
           itemBySlot.set(item.id, index);
@@ -170,13 +170,13 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
           "error",
           movePath,
           "DUPLICATE_MOVE",
-          `${slot} has a duplicate move — ${getMoveRecord(moveId)?.displayName ?? moveId} is already on move ${firstSlot + 1}.`
+          `${slot} has a duplicate move. ${getMoveRecord(moveId)?.displayName ?? moveId} is already on move ${firstSlot + 1}.`
         );
       } else {
         moveSlotById.set(moveId, moveIndex);
       }
       if (!getMoveRecord(moveId)) {
-        issue(issues, "error", movePath, "ILLEGAL_MOVE", `${slot} move ${moveIndex + 1} is not legal in M-B.`);
+        issue(issues, "error", movePath, "ILLEGAL_MOVE", `${slot}'s move ${moveIndex + 1} is not legal in M-B.`);
         return;
       }
       if (!isMoveLearnable(entry, moveId)) {
@@ -196,7 +196,7 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
       const statPath = `${path}.stats.${stat.key}`;
       const raw = entry.stats[stat.key]?.trim();
       if (!raw) {
-        issue(issues, "error", statPath, "MISSING_STAT", `${slot} needs a ${stat.label} value.`);
+        issue(issues, "error", statPath, "MISSING_STAT", `${slot} is missing its ${stat.label} value.`);
         statsComplete = false;
         return;
       }
@@ -213,7 +213,7 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
           "error",
           statPath,
           "STAT_OUT_OF_RANGE",
-          `${slot} ${stat.label} of ${value} is outside the expected range. Enter the final in-game stat, not the Stat Point spread.`
+          `${slot}'s ${stat.label} of ${value} is outside the expected range. Enter the final in-game stat, not the Stat Point spread.`
         );
       }
     });
@@ -244,16 +244,16 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
           );
           const hint =
             value < min
-              ? `it should be at least ${min}`
+              ? `It should be at least ${min}`
               : value > max
-                ? `it can't exceed ${max} with 32 Stat Points`
-                : `the nearest legal value is ${nearest}`;
+                ? `It can't exceed ${max} with 32 Stat Points`
+                : `The nearest legal value is ${nearest}`;
           issue(
             issues,
             "error",
             `${path}.stats.${stat.key}`,
             "STAT_ALIGNMENT_MISMATCH",
-            `${slot} ${stat.label} of ${value} isn't reachable with the ${alignmentName} Stat Alignment — ${hint}.`
+            `${slot}'s ${stat.label} of ${value} isn't reachable with the ${alignmentName} Stat Alignment. ${hint}.`
           );
         } else {
           totalPoints += points;
@@ -265,7 +265,7 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
           "error",
           path,
           "STAT_POINTS_OVER_BUDGET",
-          `${slot} stats add up to more than the ${STAT_POINT_TOTAL_MAX} Stat Point limit — reduce your investment.`
+          `${slot}'s stats add up to more than the ${STAT_POINT_TOTAL_MAX} Stat Point limit. Reduce your investment.`
         );
       } else if (!inconsistent && totalPoints === 0) {
         if (alignmentRecord.raises || alignmentRecord.lowers) {
@@ -280,7 +280,7 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
             "error",
             `${path}.statAlignment`,
             "STAT_ALIGNMENT_NO_POINTS",
-            `${slot} has ${alignmentName} selected but no Stat Points invested — enter your spread, or use a neutral Stat Alignment.`,
+            `${slot} has ${alignmentName} selected but no Stat Points invested. Enter your spread, or use a neutral Stat Alignment.`,
             related
           );
         } else {
@@ -291,7 +291,7 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
             "warning",
             `${path}.statAlignment`,
             "STATS_LOOK_UNTOUCHED",
-            `${slot} has no Stat Points invested and a neutral Stat Alignment — confirm you entered your spread and picked the right Stat Alignment.`
+            `${slot} has no Stat Points invested and a neutral Stat Alignment. Confirm you entered your spread and picked the right Stat Alignment.`
           );
         }
       }

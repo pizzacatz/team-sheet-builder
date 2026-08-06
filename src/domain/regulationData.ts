@@ -15,7 +15,21 @@ import type {
   StatAlignmentRecord
 } from "./dataTypes";
 
-export const species = speciesJson as SpeciesRecord[];
+// Mega forms aren't separate species in Champions. Registering each mega name
+// (e.g. "Venusaur-Mega", "Mega Charizard X") as an alias of its base species
+// makes typed and imported mega names default to the non-mega version.
+const megaAliasesFor = (record: SpeciesRecord): string[] =>
+  (record.allowedMegaForms ?? []).flatMap((mega) => [
+    mega.displayName,
+    mega.displayName.replace(/^(.+?)-Mega(?:-(.+))?$/, (_match, base: string, suffix?: string) =>
+      suffix ? `Mega ${base} ${suffix}` : `Mega ${base}`
+    )
+  ]);
+
+export const species = (speciesJson as SpeciesRecord[]).map((record) => {
+  const megaAliases = megaAliasesFor(record);
+  return megaAliases.length ? { ...record, aliases: [...(record.aliases ?? []), ...megaAliases] } : record;
+});
 export const moves = movesJson as MoveRecord[];
 export const abilities = abilitiesJson as AbilityRecord[];
 export const items = itemsJson as ItemRecord[];

@@ -9,9 +9,6 @@ type PdfActionsProps = {
   teamSheet: TeamSheet;
   validation: ValidationResult;
   onBlockedAttempt: () => void;
-  // True once a download/share attempt has been blocked; reveals the
-  // "Download anyway" escape hatch.
-  hasBlockedAttempt?: boolean;
 };
 
 type DownloadType = TeamSheetPdfType;
@@ -51,7 +48,7 @@ const emailBodyFor = (player: PlayerInfo, teamLink: string) => {
   return lines.join("\n");
 };
 
-export function PdfActions({ teamSheet, validation, onBlockedAttempt, hasBlockedAttempt = false }: PdfActionsProps) {
+export function PdfActions({ teamSheet, validation, onBlockedAttempt }: PdfActionsProps) {
   const [generatingType, setGeneratingType] = useState<GeneratingType | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [canShareFiles, setCanShareFiles] = useState(false);
@@ -113,7 +110,7 @@ export function PdfActions({ teamSheet, validation, onBlockedAttempt, hasBlocked
     try {
       const encoded = await encodeTeamShare(teamSheet, true);
       const teamLink = `${window.location.origin}${window.location.pathname}#t=${encoded}`;
-      const subject = `${teamSheet.player.name.trim() || "Player"} — VGC Team List`;
+      const subject = `${teamSheet.player.name.trim() || "Player"} - VGC Team List`;
       const body = emailBodyFor(teamSheet.player, teamLink);
       window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     } catch (emailError) {
@@ -196,7 +193,7 @@ export function PdfActions({ teamSheet, validation, onBlockedAttempt, hasBlocked
           </button>
         ) : null}
       </div>
-      {!validation.isValid && hasBlockedAttempt ? (
+      {!validation.isValid ? (
         <button
           type="button"
           className="override-action"
