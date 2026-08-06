@@ -68,7 +68,7 @@ describe("PdfActions file sharing", () => {
   });
 });
 
-describe("PdfActions ignore-all-errors override", () => {
+describe("PdfActions download-anyway override", () => {
   let container: HTMLDivElement;
   let root: Root;
   let anchorClick: ReturnType<typeof vi.spyOn>;
@@ -111,7 +111,7 @@ describe("PdfActions ignore-all-errors override", () => {
       );
     });
 
-    expect(findButton("Ignore all errors")).toBeUndefined();
+    expect(findButton("Download anyway")).toBeUndefined();
   });
 
   it("generates the combined PDF despite errors, while Download stays blocked", async () => {
@@ -134,7 +134,7 @@ describe("PdfActions ignore-all-errors override", () => {
     expect(generateTeamSheetPdf).not.toHaveBeenCalled();
 
     await act(async () => {
-      findButton("Ignore all errors")!.click();
+      findButton("Download anyway")!.click();
     });
     expect(generateTeamSheetPdf).toHaveBeenCalledOnce();
     expect(vi.mocked(generateTeamSheetPdf).mock.calls[0]![1]).toBe("both");

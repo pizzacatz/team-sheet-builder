@@ -10,7 +10,7 @@ type PdfActionsProps = {
   validation: ValidationResult;
   onBlockedAttempt: () => void;
   // True once a download/share attempt has been blocked; reveals the
-  // "Ignore all errors" escape hatch.
+  // "Download anyway" escape hatch.
   hasBlockedAttempt?: boolean;
 };
 
@@ -74,7 +74,7 @@ export function PdfActions({ teamSheet, validation, onBlockedAttempt, hasBlocked
     return generateTeamSheetPdf(teamSheet, sheetType);
   };
 
-  // `force` skips the validity gate: the "Ignore all errors" escape hatch for
+  // `force` skips the validity gate: the "Download anyway" escape hatch for
   // players who want the rule-breaking PDF anyway (e.g. staff asked for it as-is).
   const handleDownload = async (sheetType: DownloadType, force = false) => {
     if (!validation.isValid && !force) {
@@ -205,7 +205,7 @@ export function PdfActions({ teamSheet, validation, onBlockedAttempt, hasBlocked
           onClick={() => handleDownload("both", true)}
         >
           <AlertTriangle size={16} />
-          <span className="action-label">{generatingType === "force" ? "Generating..." : "Ignore all errors"}</span>
+          <span className="action-label">{generatingType === "force" ? "Generating..." : "Download anyway"}</span>
         </button>
       ) : null}
       {error ? <p className="error-text">{error}</p> : null}
