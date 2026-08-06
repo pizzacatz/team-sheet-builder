@@ -176,7 +176,12 @@ export function App() {
         </div>
         <aside className="side-column" ref={sideColumnRef}>
           <ValidationPanel validation={validation} expandSignal={expandSignal} />
-          <PdfActions teamSheet={teamSheet} validation={validation} onBlockedAttempt={handleBlockedAttempt} />
+          <PdfActions
+            teamSheet={teamSheet}
+            validation={validation}
+            onBlockedAttempt={handleBlockedAttempt}
+            hasBlockedAttempt={attemptedDownload}
+          />
         </aside>
       </div>
     </main>

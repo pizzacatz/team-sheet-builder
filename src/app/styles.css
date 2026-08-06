@@ -831,6 +831,26 @@ select.is-warning {
   opacity: 0.5;
 }
 
+/* Escape hatch shown after a blocked attempt: downloads despite errors. */
+.override-action {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px dashed var(--error-border);
+  border-radius: 6px;
+  background: var(--error-bg);
+  color: var(--danger-text);
+  padding: 7px 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.override-action:hover:not(:disabled) {
+  border-style: solid;
+}
+
 .issue {
   display: grid;
   gap: 2px;
@@ -1118,7 +1138,8 @@ select.is-warning {
   }
 
   .actions-panel .primary-action,
-  .actions-panel .secondary-action {
+  .actions-panel .secondary-action,
+  .actions-panel .override-action {
     min-width: 0;
     min-height: 42px;
     padding: 8px 9px;

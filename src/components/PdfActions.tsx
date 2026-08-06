@@ -1,4 +1,4 @@
-import { Download, Mail, Share2 } from "lucide-react";
+import { AlertTriangle, Download, Mail, Share2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { encodeTeamShare } from "../domain/teamShare";
 import type { PlayerInfo, TeamSheet } from "../domain/teamTypes";
@@ -9,10 +9,13 @@ type PdfActionsProps = {
   teamSheet: TeamSheet;
   validation: ValidationResult;
   onBlockedAttempt: () => void;
+  // True once a download/share attempt has been blocked; reveals the
+  // "Ignore all errors" escape hatch.
+  hasBlockedAttempt?: boolean;
 };
 
 type DownloadType = TeamSheetPdfType;
-type GeneratingType = DownloadType | "share" | "email";
+type GeneratingType = DownloadType | "share" | "email" | "force";
 
 const filenameFor = (teamSheet: TeamSheet, sheetType: DownloadType) => {
   const player = teamSheet.player.name.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
@@ -48,7 +51,7 @@ const emailBodyFor = (player: PlayerInfo, teamLink: string) => {
   return lines.join("\n");
 };
 
-export function PdfActions({ teamSheet, validation, onBlockedAttempt }: PdfActionsProps) {
+export function PdfActions({ teamSheet, validation, onBlockedAttempt, hasBlockedAttempt = false }: PdfActionsProps) {
   const [generatingType, setGeneratingType] = useState<GeneratingType | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [canShareFiles, setCanShareFiles] = useState(false);
@@ -71,13 +74,15 @@ export function PdfActions({ teamSheet, validation, onBlockedAttempt }: PdfActio
     return generateTeamSheetPdf(teamSheet, sheetType);
   };
 
-  const handleDownload = async (sheetType: DownloadType) => {
-    if (!validation.isValid) {
+  // `force` skips the validity gate: the "Ignore all errors" escape hatch for
+  // players who want the rule-breaking PDF anyway (e.g. staff asked for it as-is).
+  const handleDownload = async (sheetType: DownloadType, force = false) => {
+    if (!validation.isValid && !force) {
       onBlockedAttempt();
       return;
     }
     setError(null);
-    setGeneratingType(sheetType);
+    setGeneratingType(force ? "force" : sheetType);
     try {
       const blob = await generatePdfBlob(sheetType);
       const url = URL.createObjectURL(blob);
@@ -191,6 +196,18 @@ export function PdfActions({ teamSheet, validation, onBlockedAttempt }: PdfActio
           </button>
         ) : null}
       </div>
+      {!validation.isValid && hasBlockedAttempt ? (
+        <button
+          type="button"
+          className="override-action"
+          disabled={generating}
+          title="Download the combined PDF without fixing the validation errors. The sheet may be rejected at check-in."
+          onClick={() => handleDownload("both", true)}
+        >
+          <AlertTriangle size={16} />
+          <span className="action-label">{generatingType === "force" ? "Generating..." : "Ignore all errors"}</span>
+        </button>
+      ) : null}
       {error ? <p className="error-text">{error}</p> : null}
     </section>
   );
