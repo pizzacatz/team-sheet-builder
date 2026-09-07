@@ -480,6 +480,33 @@ h3 {
   gap: 5px;
 }
 
+/* Replica Team ID lookup row inside the import panel */
+.replica-lookup {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.replica-lookup .replica-field input {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.replica-lookup .replica-error {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--error, #c0392b);
+}
+
+.replica-fetch-button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
 .field label {
   font-size: 0.78rem;
   font-weight: 700;

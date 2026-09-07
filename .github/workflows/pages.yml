@@ -27,6 +27,9 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
+        env:
+          # Set repo variable REPLICA_VIEWER_URL to enable the Replica Team ID import.
+          VITE_REPLICA_VIEWER_URL: ${{ vars.REPLICA_VIEWER_URL }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
