@@ -275,12 +275,6 @@ h3 {
   margin-bottom: 0;
 }
 
-.import-heading-left {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
 .import-clear-button {
   flex: 0 0 auto;
 }
@@ -442,12 +436,6 @@ h3 {
 
 .date-field-control .dob-part.dob-year {
   width: 42px;
-}
-
-/* Three segments need more room than a single input, so this field uses a
-   narrower label reservation than the other player fields. */
-.player-info-panel .field.dob-field {
-  --in-field-label-width: 130px;
 }
 
 .date-sep {
@@ -1210,7 +1198,7 @@ select.is-warning {
   }
 
   .player-info-panel .field > label[for="switch-profile"],
-  .player-info-panel .field > label[for="date-of-birth"] {
+  .player-info-panel .field > label[for="dob-month"] {
     font-size: 0.72rem;
   }
 

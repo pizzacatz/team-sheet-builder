@@ -109,27 +109,16 @@ export function ImportPanel({ onImport, teamHasData }: ImportPanelProps) {
   return (
     <section className="section-panel import-panel" aria-labelledby="import-heading">
       <div className="section-heading import-heading">
-        <div className="import-heading-left">
-          <button
-            type="button"
-            className="icon-button import-clear-button"
-            title="Clear import"
-            aria-label="Clear import"
-            onClick={handleClear}
-          >
-            <Trash2 size={17} />
-          </button>
-          <button
-            type="button"
-            className="collapse-button"
-            aria-expanded={isOpen}
-            aria-controls="showdown-import-body"
-            onClick={() => setIsOpen((current) => !current)}
-          >
-            <ChevronDown size={18} aria-hidden="true" />
-            <span id="import-heading">Showdown Import</span>
-          </button>
-        </div>
+        <button
+          type="button"
+          className="collapse-button"
+          aria-expanded={isOpen}
+          aria-controls="showdown-import-body"
+          onClick={() => setIsOpen((current) => !current)}
+        >
+          <ChevronDown size={18} aria-hidden="true" />
+          <span id="import-heading">Showdown Import</span>
+        </button>
         <div className="heading-actions">
           {!isOpen ? (
             <button type="button" className="import-paste-button" onClick={handlePasteAndImport}>
@@ -142,6 +131,15 @@ export function ImportPanel({ onImport, teamHasData }: ImportPanelProps) {
               <X size={16} />
             </button>
           ) : null}
+          <button
+            type="button"
+            className="icon-button import-clear-button"
+            title="Clear import"
+            aria-label="Clear import"
+            onClick={handleClear}
+          >
+            <Trash2 size={17} />
+          </button>
         </div>
       </div>
       {isOpen ? (
