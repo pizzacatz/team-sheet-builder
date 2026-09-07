@@ -33,7 +33,11 @@ export and committing the regenerated files.
 Each domain record (`SpeciesRecord`, `MoveRecord`, `AbilityRecord`,
 `ItemRecord`, `StatAlignmentRecord` in `src/domain/dataTypes.ts`) carries a
 stable **slug id**, a `displayName`, and an `aliases`/`showdownAliases`
-array. A **normalization** function (`normalizeName` in
+array. The species list is also **augmented at module load**
+(`src/domain/regulationData.ts`): each species' Mega form names (from its
+`allowedMegaForms`, e.g. `Venusaur-Mega`, `Mega Charizard X`) are appended as
+aliases of the base species, so a typed or imported mega name resolves to the
+non-mega record — megas are not separate species in Champions. A **normalization** function (`normalizeName` in
 `src/domain/normalization.ts`) folds Unicode **diacritics** via
 `.normalize("NFKD")` and strips non-alphanumerics, so lookups are
 **case-insensitive** and **accent-insensitive**. An **inverted index** (`Map<
@@ -172,7 +176,10 @@ re-committed when the rules or Pokédex change.
 Every Pokémon, move, ability, and item is stored as a short, stable
 computer-friendly name (an **id**, like `charizard`), plus a human-friendly
 display name and a list of alternate spellings it should also match (an
-**alias list**). Typed text gets stripped down to bare lowercase letters and
+**alias list**). Mega names like "Venusaur-Mega" are added to the regular
+Pokémon's alternate-spelling list when the app starts, so typing or pasting a
+mega lands on the normal, non-mega Pokémon (megas aren't their own entries in
+this ruleset). Typed text gets stripped down to bare lowercase letters and
 numbers before comparing (**normalizing**), which is also how accented
 letters get matched to their plain equivalents. To make typing fast, the app
 pre-builds a lookup table from every possible spelling to its Pokémon/move/etc.
@@ -280,7 +287,7 @@ anything meaningful.
 | **slug id** | a short, stable, machine-friendly identifier | `species.id` like `"charizard"`, used as the join key everywhere |
 | **normalization** | reducing text to a canonical comparable form | `normalizeName` in `src/domain/normalization.ts`: NFKD-fold accents, lowercase, strip non-alphanumerics |
 | **inverted index** | a map from every searchable term back to its record(s) | `buildIndex` builds `Map<normalizedAlias, Record[]>` for species/moves/items/abilities/alignments |
-| **alias** | an alternate name that should resolve to the same record | `aliases`/`showdownAliases` arrays on every data record |
+| **alias** | an alternate name that should resolve to the same record | `aliases`/`showdownAliases` arrays on every data record; mega form names ("Venusaur-Mega") are appended to their base species' aliases at load, so megas resolve to the non-mega species |
 | **ambiguous match** | a lookup whose normalized key maps to more than one record | `Resolution.ambiguous`, surfaced as `AMBIGUOUS_ALIAS_RESOLVED` on import |
 | **deterministic prefix matching** | consistent, rule-based text matching, not relevance scoring | `searchOptions` in `src/domain/autocomplete.ts`; explicitly not fuzzy search |
 | **match tier** | a priority bucket results are grouped into before sorting | label-prefix → later-word-prefix → alias-prefix → later-alias-word-prefix in `optionMatchTier` |
