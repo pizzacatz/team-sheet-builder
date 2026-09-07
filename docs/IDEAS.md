@@ -12,6 +12,11 @@ info" opt-in. `Email to TO` is a `mailto:` draft (player info + team link in the
 body, no recipient — the player addresses it). The team link always carries player
 info now. Import starts expanded with a unified `Paste & Import` (imports the box
 if it has text, else reads the clipboard). Per-slot trash icons were kept.
+Later addition: a `Download anyway` override button sits below the action row
+whenever validation errors remain. Later still: an optional `Replica Team ID`
+field (build-time `VITE_REPLICA_VIEWER_URL`) fetches a Showdown paste from the
+companion Replica Team Viewer and feeds it through the same import path — the
+builder stays static; only the viewer has a backend.
 
 Caveats still worth remembering for the mailto path: body is **plain text** (no
 custom-text hyperlink; clients auto-linkify the raw URL); `mailto:` needs a

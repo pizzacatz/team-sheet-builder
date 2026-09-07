@@ -1,7 +1,13 @@
-import { ChevronDown, ClipboardPaste, Trash2, X } from "lucide-react";
+import { ChevronDown, ClipboardPaste, Search, Trash2, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { ImportIssue } from "../importers/showdown/showdownTypes";
 import { parseShowdownPaste } from "../importers/showdown/parseShowdownPaste";
+import {
+  ReplicaLookupError,
+  fetchReplicaPaste,
+  isReplicaLookupEnabled,
+  normalizeReplicaId,
+} from "../importers/replica/fetchReplicaPaste";
 import type { PokemonEntry } from "../domain/teamTypes";
 
 type ImportPanelProps = {
@@ -13,6 +19,10 @@ export function ImportPanel({ onImport, teamHasData }: ImportPanelProps) {
   const [paste, setPaste] = useState("");
   const [issues, setIssues] = useState<ImportIssue[]>([]);
   const [isOpen, setIsOpen] = useState(true);
+  const [replicaId, setReplicaId] = useState("");
+  const [replicaError, setReplicaError] = useState("");
+  const [replicaBusy, setReplicaBusy] = useState(false);
+  const replicaEnabled = isReplicaLookupEnabled();
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const focusOnOpen = useRef(false);
 
@@ -50,6 +60,27 @@ export function ImportPanel({ onImport, teamHasData }: ImportPanelProps) {
   const handleClear = () => {
     setPaste("");
     setIssues([]);
+    setReplicaId("");
+    setReplicaError("");
+  };
+
+  // Looks a Replica Team ID up through the Replica Team Viewer, drops the
+  // resulting Showdown paste into the box, and imports it via the normal path.
+  const handleReplicaLookup = async () => {
+    if (replicaBusy) return;
+    setReplicaError("");
+    setReplicaBusy(true);
+    try {
+      const fetched = await fetchReplicaPaste(replicaId);
+      setPaste(fetched);
+      runImport(fetched);
+    } catch (error) {
+      setReplicaError(
+        error instanceof ReplicaLookupError ? error.message : "Replica lookup failed. Try again."
+      );
+    } finally {
+      setReplicaBusy(false);
+    }
   };
 
   // One button, both flows: if the box already has text, import that; otherwise
@@ -115,6 +146,50 @@ export function ImportPanel({ onImport, teamHasData }: ImportPanelProps) {
       </div>
       {isOpen ? (
         <div id="showdown-import-body" className="collapsible-body">
+          {replicaEnabled ? (
+            <div className="replica-lookup">
+              <div className="field replica-field">
+                <label htmlFor="replica-team-id">Replica Team ID</label>
+                <input
+                  id="replica-team-id"
+                  type="text"
+                  inputMode="text"
+                  autoComplete="off"
+                  autoCapitalize="characters"
+                  spellCheck={false}
+                  maxLength={12}
+                  placeholder="e.g. 442E6DPRET"
+                  value={replicaId}
+                  onChange={(event) => {
+                    setReplicaId(normalizeReplicaId(event.target.value));
+                    if (replicaError) setReplicaError("");
+                  }}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") {
+                      event.preventDefault();
+                      void handleReplicaLookup();
+                    }
+                  }}
+                  aria-invalid={replicaError ? true : undefined}
+                  aria-describedby={replicaError ? "replica-team-id-error" : undefined}
+                />
+              </div>
+              <button
+                type="button"
+                className="primary-action replica-fetch-button"
+                onClick={() => void handleReplicaLookup()}
+                disabled={replicaBusy || !replicaId}
+              >
+                <Search size={18} aria-hidden="true" />
+                {replicaBusy ? "Fetching…" : "Fetch & Import"}
+              </button>
+              {replicaError ? (
+                <p id="replica-team-id-error" className="replica-error" role="alert">
+                  {replicaError}
+                </p>
+              ) : null}
+            </div>
+          ) : null}
           <div className="field">
             <label htmlFor="showdown-paste">Paste Export</label>
             <textarea

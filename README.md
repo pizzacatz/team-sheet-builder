@@ -7,7 +7,9 @@ Live app: <https://teamsheet.georgiaplayevents.com/>
 ## What It Does
 
 - Builds Regulation M-B team sheets from manual entry or a Pokémon Showdown paste.
+- Optionally imports a team straight from a Pokémon Champions **Replica Team ID** through a deployed [Replica Team Viewer](https://github.com/pizzacatz/replica-team-viewer) (hidden unless configured, see below).
 - Validates required player/team fields, species clause, item clause, legal species/items/abilities/moves, ability availability, and move learnsets; non-functional Mega Stone pairings produce a warning.
+- Blocks the normal download/share actions while errors remain, but offers an explicit `Download anyway` override that generates the sheet as-is.
 - Uses local Regulation M-B dictionaries exported from Champions Logic data.
 - Generates Play! Pokémon team-list PDFs entirely in the browser.
 - Downloads the combined Open + Staff team sheets as a single PDF.
@@ -20,8 +22,9 @@ Live app: <https://teamsheet.georgiaplayevents.com/>
 - Mobile layout uses a single-column Pokémon flow with validation/download controls floating at the bottom.
 - Validation details are collapsed by default on desktop and mobile. Selecting the summary expands the list; selecting an issue scrolls to and focuses the associated field.
 - The mobile floating tray hides while a field is being edited so it does not compete with the keyboard.
-- The action bar is a single row: `Download` (combined team sheets), `Email to TO`, and — on devices that support file sharing (mobile) — `Share`. There is no expander, PDF preview, or whole-team clear button.
+- The action bar is a single row: `Download` (combined team sheets), `Email to TO`, and — on devices that support file sharing (mobile) — `Share`. While validation errors remain, a `Download anyway` button also appears below the row. There is no expander, PDF preview, or whole-team clear button.
 - The Showdown Import panel starts expanded. Its `Paste & Import` button imports the box when it has text, otherwise reads the clipboard and imports in one tap.
+- When a Replica Team Viewer URL is configured, the import panel also shows a `Replica Team ID` field with a `Fetch & Import` button. The fetched paste lands in the box and imports through the normal path; lookup errors show inline and leave the paste box as the fallback.
 - Each Pokémon card has a trash button for clearing that slot.
 - Persistent, right-aligned in-field labels keep completed fields identifiable without relying on placeholders.
 - Light and dark themes are available from the header toggle.
@@ -46,6 +49,17 @@ Autocomplete uses deterministic normalized prefix matching, not fuzzy or relevan
 - Results are alphabetical within each tier. For example, `wave` places `Wave Crash` before `Heat Wave`.
 - Arrow keys navigate results, Enter selects, and Escape closes the menu.
 - Clicking a completed field again opens its complete relevant list.
+
+## Replica Team ID Import
+
+The builder itself stays static. Replica lookups call a separately deployed
+[Replica Team Viewer](https://github.com/pizzacatz/replica-team-viewer), which
+returns the team as a Showdown paste from `GET /api/team/<ID>?format=paste`.
+
+- Enable it by setting `VITE_REPLICA_VIEWER_URL` at build time (see `.env.example`). For GitHub Pages, add a repository variable named `REPLICA_VIEWER_URL`; the workflow passes it through. When unset, the field is not rendered and no external request is ever made.
+- The viewer must list this site's origin in its `ALLOWED_ORIGINS` so the browser permits the cross-origin call.
+- IDs are normalized (upper-cased, spaces and dashes removed) and validated locally (10 characters, no I, O, or Z) before any request.
+- Logic lives in `src/importers/replica/fetchReplicaPaste.ts`; the UI is part of `ImportPanel`.
 
 ## Showdown Import Notes
 
@@ -189,6 +203,7 @@ src/
   data/regulation-mb/  Local Regulation M-B JSON dictionaries
   domain/              Team types, validation, legality, stats, normalization
   importers/showdown/  Showdown paste parser
+  importers/replica/   Replica Team ID lookup via the Replica Team Viewer API
   pdf/                 PDF generation and coordinate mapping
   state/               localStorage-backed team sheet state
   tests/               Shared fixtures and domain/PDF tests
@@ -225,6 +240,7 @@ For UI changes, also check:
 - mobile layout around the floating validation/download tray.
 - PDF preview/download for a known-valid team.
 - Showdown paste import with Stat Points and Stat Alignment.
+- Replica Team ID import (via the companion Replica Team Viewer).
 
 ## Product Spec
 
