@@ -567,11 +567,11 @@ select.is-warning {
 .in-field-form .field > label {
   position: absolute;
   z-index: 1;
-  top: 1px;
+  top: 0;
+  bottom: 0;
   left: 4px;
   display: flex;
   width: var(--in-field-label-width);
-  height: 37px;
   align-items: center;
   justify-content: flex-end;
   color: var(--label);
@@ -1035,11 +1035,11 @@ select.is-warning {
 
   .player-info-panel .division-field legend {
     position: absolute;
-    top: 1px;
+    top: 0;
+    bottom: 0;
     left: 4px;
     display: flex;
     width: var(--in-field-label-width);
-    height: 37px;
     align-items: center;
     justify-content: flex-end;
     color: var(--label);
