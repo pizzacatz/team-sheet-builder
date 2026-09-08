@@ -26,9 +26,54 @@ const megaAliasesFor = (record: SpeciesRecord): string[] =>
     )
   ]);
 
+// Manual per-species display overrides, keyed by species id (slug). The
+// generated data uses bare names for default forms; these relabel the sheet
+// (pdfName) and the UI (displayName) to distinguish them from their regional or
+// gender counterparts, which are separate records. The original name stays an
+// alias (below) so pastes/imports still resolve here, and showdownAliases are
+// left untouched so import matching and any future Showdown export keep the
+// real names. Add more "slug": "Label" entries as needed.
+const displayOverrides: Record<string, string> = {
+  // Regional base forms (paired with an Alola/Galar/Hisui/Paldea variant),
+  // labelled by the base form's origin region.
+  raichu: "Raichu-Kanto",
+  ninetales: "Ninetales-Kanto",
+  arcanine: "Arcanine-Kanto",
+  slowbro: "Slowbro-Kanto",
+  tauros: "Tauros-Kanto",
+  typhlosion: "Typhlosion-Johto",
+  slowking: "Slowking-Johto",
+  samurott: "Samurott-Unova",
+  zoroark: "Zoroark-Unova",
+  stunfisk: "Stunfisk-Unova",
+  goodra: "Goodra-Kalos",
+  avalugg: "Avalugg-Kalos",
+  decidueye: "Decidueye-Alola",
+  // Gender base forms (paired with an -F variant).
+  meowstic: "Meowstic-M",
+  basculegion: "Basculegion-M",
+  // Other multi-form base forms.
+  gourgeist: "Gourgeist-Average",
+  lycanroc: "Lycanroc-Midday",
+  // Base Rotom has no regional/gender qualifier; its variants are appliance
+  // forms (Heat/Wash/…), so the bare name is already unambiguous. Listed for
+  // completeness — remove if you don't want it relabelled.
+  rotom: "Rotom"
+};
+
 export const species = (speciesJson as SpeciesRecord[]).map((record) => {
-  const megaAliases = megaAliasesFor(record);
-  return megaAliases.length ? { ...record, aliases: [...(record.aliases ?? []), ...megaAliases] } : record;
+  const override = displayOverrides[record.id];
+  const extraAliases = [...megaAliasesFor(record), ...(override ? [override] : [])];
+  if (!override && extraAliases.length === 0) return record;
+  const next: SpeciesRecord = { ...record };
+  if (override) {
+    next.displayName = override;
+    next.pdfName = override;
+  }
+  if (extraAliases.length) {
+    next.aliases = [...(record.aliases ?? []), ...extraAliases];
+  }
+  return next;
 });
 export const moves = movesJson as MoveRecord[];
 export const abilities = abilitiesJson as AbilityRecord[];
