@@ -4,6 +4,16 @@ import type { StatAlignmentRecord } from "../../domain/dataTypes";
 import { createEmptyTeamSheet, emptyPokemonEntry, type PokemonEntry } from "../../domain/teamTypes";
 import { extractSpeciesTextFromHeader } from "./showdownNormalization";
 import type { ImportIssue, ImportResult } from "./showdownTypes";
+import { speciesById } from "../../domain/regulationData";
+
+// Gender-difference species: the female form is a distinct species record.
+// A header gender marker like "Basculegion (F)" is stripped during
+// normalization, so map the base id to its female record when the marker is F.
+// Male or absent keeps the base record (which the display override labels -M).
+const GENDER_FEMALE_FORM: Record<string, string> = {
+  basculegion: "basculegionf",
+  meowstic: "meowsticf"
+};
 
 const IGNORED_FIELD_PREFIXES = [
   "tera type:",
@@ -73,13 +83,16 @@ const parseBlock = (block: string, pokemonIndex: number, issues: ImportIssue[]):
 
   if (!lines.length) return entry;
 
-  const { speciesText, itemText } = extractSpeciesTextFromHeader(lines[0]);
+  const { speciesText, itemText, gender } = extractSpeciesTextFromHeader(lines[0]);
   const speciesResolution = resolveSpecies(speciesText);
-  const selectedSpecies = speciesResolution?.record;
-  if (speciesResolution) {
-    entry.speciesId = speciesResolution.record.id;
-    entry.displayName = speciesResolution.record.displayName;
-    entry.canMegaEvolve = Boolean(speciesResolution.record.allowedMegaForms?.length);
+  // For gender-difference species, a female marker selects the -F record.
+  const femaleId =
+    gender === "F" && speciesResolution ? GENDER_FEMALE_FORM[speciesResolution.record.id] : undefined;
+  const selectedSpecies = (femaleId && speciesById.get(femaleId)) || speciesResolution?.record;
+  if (speciesResolution && selectedSpecies) {
+    entry.speciesId = selectedSpecies.id;
+    entry.displayName = selectedSpecies.displayName;
+    entry.canMegaEvolve = Boolean(selectedSpecies.allowedMegaForms?.length);
     if (speciesResolution.ambiguous) {
       addIssue(
         issues,

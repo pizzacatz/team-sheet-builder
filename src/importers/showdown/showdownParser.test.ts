@@ -62,6 +62,32 @@ Jolly Nature
     expect(result.teamSheet.pokemon?.[0]?.speciesId).toBe("arcaninehisui");
   });
 
+  it("routes a female gender marker to the -F species record", () => {
+    const female = parseShowdownPaste(`
+Basculegion (F) @ Choice Band
+Ability: Adaptability
+Adamant Nature
+- Wave Crash
+`);
+    expect(female.teamSheet.pokemon?.[0]?.speciesId).toBe("basculegionf");
+
+    const male = parseShowdownPaste(`
+Basculegion (M) @ Choice Band
+Ability: Adaptability
+Adamant Nature
+- Wave Crash
+`);
+    expect(male.teamSheet.pokemon?.[0]?.speciesId).toBe("basculegion");
+
+    const meowstic = parseShowdownPaste(`
+Meowstic (F) @ Light Clay
+Ability: Competitive
+Bold Nature
+- Reflect
+`);
+    expect(meowstic.teamSheet.pokemon?.[0]?.speciesId).toBe("meowsticf");
+  });
+
   it("silently ignores Level lines", () => {
     const result = parseShowdownPaste(`
 Garchomp @ Life Orb
