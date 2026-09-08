@@ -64,14 +64,30 @@ export function ImportPanel({ onImport, teamHasData }: ImportPanelProps) {
     setReplicaError("");
   };
 
-  // Looks a Replica Team ID up through the Replica Team Viewer, drops the
-  // resulting Showdown paste into the box, and imports it via the normal path.
+  // One button, both flows: if the field has an ID, use it; otherwise read the
+  // clipboard, fill the field, and use that. Then fetch the Replica Team through
+  // the viewer and import the resulting paste via the normal path. If the
+  // browser blocks clipboard reading, prompt for a manual entry instead.
   const handleReplicaLookup = async () => {
     if (replicaBusy) return;
     setReplicaError("");
+    let id = replicaId.trim();
+    if (!id && navigator.clipboard?.readText) {
+      try {
+        const clip = await navigator.clipboard.readText();
+        id = normalizeReplicaId(clip);
+        if (id) setReplicaId(id);
+      } catch {
+        // clipboard blocked/unavailable; fall through to the empty-field message
+      }
+    }
+    if (!id) {
+      setReplicaError("Enter a Replica Team ID, or copy one to your clipboard first.");
+      return;
+    }
     setReplicaBusy(true);
     try {
-      const fetched = await fetchReplicaPaste(replicaId);
+      const fetched = await fetchReplicaPaste(id);
       setPaste(fetched);
       runImport(fetched);
     } catch (error) {
@@ -176,7 +192,8 @@ export function ImportPanel({ onImport, teamHasData }: ImportPanelProps) {
                 type="button"
                 className="primary-action replica-fetch-button"
                 onClick={() => void handleReplicaLookup()}
-                disabled={replicaBusy || !replicaId}
+                disabled={replicaBusy}
+                title="Uses the field if filled, otherwise reads a code from your clipboard"
               >
                 <Search size={18} aria-hidden="true" />
                 {replicaBusy ? "Fetching…" : "Fetch & Import"}
