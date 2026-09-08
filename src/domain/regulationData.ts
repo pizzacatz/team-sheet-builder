@@ -34,31 +34,29 @@ const megaAliasesFor = (record: SpeciesRecord): string[] =>
 // left untouched so import matching and any future Showdown export keep the
 // real names. Add more "slug": "Label" entries as needed.
 const displayOverrides: Record<string, string> = {
-  // Regional base forms (paired with an Alola/Galar/Hisui/Paldea variant),
-  // labelled by the base form's origin region.
-  raichu: "Raichu-Kanto",
-  ninetales: "Ninetales-Kanto",
-  arcanine: "Arcanine-Kanto",
-  slowbro: "Slowbro-Kanto",
-  tauros: "Tauros-Kanto",
-  typhlosion: "Typhlosion-Johto",
-  slowking: "Slowking-Johto",
-  samurott: "Samurott-Unova",
-  zoroark: "Zoroark-Unova",
-  stunfisk: "Stunfisk-Unova",
-  goodra: "Goodra-Kalos",
-  avalugg: "Avalugg-Kalos",
-  decidueye: "Decidueye-Alola",
-  // Gender base forms (paired with an -F variant).
+  // Gender base forms (paired with an -F variant). A female import is routed to
+  // the -F record (see parseShowdownPaste), so the base carries the -M label.
   meowstic: "Meowstic-M",
-  basculegion: "Basculegion-M",
-  // Other multi-form base forms.
-  gourgeist: "Gourgeist-Average",
-  lycanroc: "Lycanroc-Midday",
-  // Base Rotom has no regional/gender qualifier; its variants are appliance
-  // forms (Heat/Wash/…), so the bare name is already unambiguous. Listed for
-  // completeness — remove if you don't want it relabelled.
-  rotom: "Rotom"
+  basculegion: "Basculegion-M"
+
+  // Regional / size / other base-form labels — disabled as unnecessary.
+  // Re-enable if you want default forms disambiguated from their variants.
+  // raichu: "Raichu-Kanto",
+  // ninetales: "Ninetales-Kanto",
+  // arcanine: "Arcanine-Kanto",
+  // slowbro: "Slowbro-Kanto",
+  // tauros: "Tauros-Kanto",
+  // typhlosion: "Typhlosion-Johto",
+  // slowking: "Slowking-Johto",
+  // samurott: "Samurott-Unova",
+  // zoroark: "Zoroark-Unova",
+  // stunfisk: "Stunfisk-Unova",
+  // goodra: "Goodra-Kalos",
+  // avalugg: "Avalugg-Kalos",
+  // decidueye: "Decidueye-Alola",
+  // gourgeist: "Gourgeist-Average",
+  // lycanroc: "Lycanroc-Midday",
+  // rotom: "Rotom"
 };
 
 export const species = (speciesJson as SpeciesRecord[]).map((record) => {
