@@ -1,4 +1,4 @@
-import codeIndexJson from "../data/regulation-mb/code-index.json";
+import codeIndexJson from "../data/regulation-mc/code-index.json";
 
 // Append-only registry mapping every id to a permanent number (see
 // scripts/build_code_index.mjs). Numbers are never changed, reordered, or

@@ -34,7 +34,7 @@ we do (the paste example uses `32 Atk / 32 Spe` Champions Stat Points).
   engagement (thousands of views). Content network effects, SEO (indexable
   reports), and stickiness we don't have.
 - **Brand & reach** — Freezai's audience is a massive distribution advantage.
-- **Multi-format breadth** — all VGC regs + Smogon singles, vs our M-B-only focus.
+- **Multi-format breadth** — all VGC regs + Smogon singles, vs our M-C-only focus.
 - **Low-friction sharing** — pokepaste-in, anonymous posting, rich writeups.
 - **Established & active** — Devlog/Feedback, growing report count.
 
@@ -67,14 +67,14 @@ we do (the paste example uses `32 Atk / 32 Spe` Champions Stat Points).
 - **Privacy / no backend** — fully client-side; PII never leaves the device.
 - **TO analytics (unique)** — embedded machine-readable text + corner QR →
   bulk-PDF usage dashboards (the cruncher).
-- **Fast, free, static, offline-capable**; regulation-accurate M-B data.
+- **Fast, free, static, offline-capable**; regulation-accurate M-C data.
 
 ### Weaknesses
 - **Single-purpose** — no community, content, browsing, or social; nothing to
   return for after generating a sheet.
 - **No brand / audience / marketing** — no landing page, no distribution.
 - **No sharing / accounts / cloud save** (localStorage only).
-- **M-B-only** — narrow vs their multi-format breadth.
+- **M-C-only** — narrow vs their multi-format breadth.
 - Solo project; ongoing regulation-data maintenance burden.
 
 ### Opportunities
@@ -104,7 +104,7 @@ we do (the paste example uses `32 Atk / 32 Spe` Champions Stat Points).
 | TO usage analytics | **Yes (cruncher)** | No |
 | Team sharing / reports | No (planned: URL share) | **Yes, rich** |
 | Community / browse / social | No | **Yes** |
-| Multi-format | No (M-B) | **Yes** |
+| Multi-format | No (M-C) | **Yes** |
 | Brand / audience | No | **Yes (Freezai)** |
 
 ## Strategy to win

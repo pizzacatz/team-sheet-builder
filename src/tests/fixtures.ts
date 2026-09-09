@@ -18,13 +18,13 @@ export const makeValidTeamSheet = (): TeamSheet => {
       name: "Test Player",
       division: "Master",
       trainerName: "Tester",
-      teamName: "M-B Test",
+      teamName: "M-C Test",
       switchProfileName: "Switch",
       playerId: "123456",
       dateOfBirth: "01-01-2000",
       supportId: "SUPPORT"
     },
-    regulation: "M-B",
+    regulation: "M-C",
     pokemon: selectedSpecies.map((record, index) => ({
       speciesId: record.id,
       formId: null,

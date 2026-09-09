@@ -11,7 +11,7 @@
       "Abomasite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -30,7 +30,27 @@
       "Absolite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
+    ],
+    "itemClauseEligible": true,
+    "enablesMegaFor": [
+      "absol"
+    ]
+  },
+  {
+    "id": "absolite-z",
+    "displayName": "Absolite Z",
+    "aliases": [
+      "Absolite Z",
+      "absolite-z",
+      "absolitez"
+    ],
+    "showdownAliases": [
+      "absolite-z",
+      "Absolite Z"
+    ],
+    "legalIn": [
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -49,7 +69,7 @@
       "Aerodactylite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -68,12 +88,30 @@
       "Aggronite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
       "aggron"
     ]
+  },
+  {
+    "id": "air-balloon",
+    "displayName": "Air Balloon",
+    "aliases": [
+      "Air Balloon",
+      "air-balloon",
+      "airballoon"
+    ],
+    "showdownAliases": [
+      "air-balloon",
+      "Air Balloon"
+    ],
+    "legalIn": [
+      "M-C"
+    ],
+    "itemClauseEligible": true,
+    "enablesMegaFor": []
   },
   {
     "id": "alakazite",
@@ -87,7 +125,7 @@
       "Alakazite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -106,7 +144,7 @@
       "Altarianite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -125,7 +163,7 @@
       "Ampharosite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -145,7 +183,7 @@
       "Aspear Berry"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -162,7 +200,7 @@
       "Audinite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -182,7 +220,7 @@
       "Babiri Berry"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -199,7 +237,7 @@
       "Banettite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -218,11 +256,30 @@
       "Barbaracite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
       "barbaracle"
+    ]
+  },
+  {
+    "id": "baxcalibrite",
+    "displayName": "Baxcalibrite",
+    "aliases": [
+      "Baxcalibrite",
+      "baxcalibrite"
+    ],
+    "showdownAliases": [
+      "baxcalibrite",
+      "Baxcalibrite"
+    ],
+    "legalIn": [
+      "M-C"
+    ],
+    "itemClauseEligible": true,
+    "enablesMegaFor": [
+      "baxcalibur"
     ]
   },
   {
@@ -237,7 +294,7 @@
       "Beedrillite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -257,7 +314,25 @@
       "Big Root"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
+    ],
+    "itemClauseEligible": true,
+    "enablesMegaFor": []
+  },
+  {
+    "id": "binding-band",
+    "displayName": "Binding Band",
+    "aliases": [
+      "Binding Band",
+      "binding-band",
+      "bindingband"
+    ],
+    "showdownAliases": [
+      "binding-band",
+      "Binding Band"
+    ],
+    "legalIn": [
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -275,7 +350,7 @@
       "Black Belt"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -293,7 +368,7 @@
       "Black Glasses"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -310,7 +385,7 @@
       "Blastoisinite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -329,7 +404,7 @@
       "Blazikenite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -349,7 +424,7 @@
       "Bright Powder"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -366,7 +441,7 @@
       "Cameruptite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -385,7 +460,7 @@
       "Chandelurite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -404,7 +479,7 @@
       "Charcoal"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -422,7 +497,7 @@
       "Charizardite X"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -442,7 +517,7 @@
       "Charizardite Y"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -462,7 +537,7 @@
       "Charti Berry"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -480,7 +555,7 @@
       "Cheri Berry"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -497,7 +572,7 @@
       "Chesnaughtite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -517,7 +592,7 @@
       "Chesto Berry"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -535,7 +610,7 @@
       "Chilan Berry"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -552,7 +627,7 @@
       "Chimechite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -572,7 +647,7 @@
       "Choice Scarf"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -590,7 +665,7 @@
       "Chople Berry"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -607,7 +682,7 @@
       "Clefablite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -627,7 +702,7 @@
       "Coba Berry"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -645,7 +720,7 @@
       "Colbur Berry"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -662,7 +737,7 @@
       "Crabominite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -682,7 +757,7 @@
       "Damp Rock"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -699,7 +774,7 @@
       "Delphoxite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -718,7 +793,7 @@
       "Dragalgite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -738,7 +813,7 @@
       "Dragon Fang"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -755,7 +830,7 @@
       "Dragoninite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -774,7 +849,7 @@
       "Drampanite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -793,12 +868,48 @@
       "Eelektrossite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
       "eelektross"
     ]
+  },
+  {
+    "id": "eject-button",
+    "displayName": "Eject Button",
+    "aliases": [
+      "Eject Button",
+      "eject-button",
+      "ejectbutton"
+    ],
+    "showdownAliases": [
+      "eject-button",
+      "Eject Button"
+    ],
+    "legalIn": [
+      "M-C"
+    ],
+    "itemClauseEligible": true,
+    "enablesMegaFor": []
+  },
+  {
+    "id": "electric-seed",
+    "displayName": "Electric Seed",
+    "aliases": [
+      "Electric Seed",
+      "electric-seed",
+      "electricseed"
+    ],
+    "showdownAliases": [
+      "electric-seed",
+      "Electric Seed"
+    ],
+    "legalIn": [
+      "M-C"
+    ],
+    "itemClauseEligible": true,
+    "enablesMegaFor": []
   },
   {
     "id": "emboarite",
@@ -812,7 +923,7 @@
       "Emboarite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -831,7 +942,7 @@
       "Excadrite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -851,7 +962,7 @@
       "Expert Belt"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -869,7 +980,7 @@
       "Fairy Feather"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -886,7 +997,7 @@
       "Falinksite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -905,7 +1016,7 @@
       "Feraligite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -924,7 +1035,7 @@
       "Floettite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -944,7 +1055,7 @@
       "Focus Band"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -962,7 +1073,7 @@
       "Focus Sash"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -979,7 +1090,7 @@
       "Froslassite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -998,7 +1109,7 @@
       "Galladite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -1017,7 +1128,27 @@
       "Garchompite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
+    ],
+    "itemClauseEligible": true,
+    "enablesMegaFor": [
+      "garchomp"
+    ]
+  },
+  {
+    "id": "garchompite-z",
+    "displayName": "Garchompite Z",
+    "aliases": [
+      "Garchompite Z",
+      "garchompite-z",
+      "garchompitez"
+    ],
+    "showdownAliases": [
+      "garchompite-z",
+      "Garchompite Z"
+    ],
+    "legalIn": [
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -1036,7 +1167,7 @@
       "Gardevoirite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -1055,7 +1186,7 @@
       "Gengarite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -1074,7 +1205,7 @@
       "Glalitite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -1093,11 +1224,30 @@
       "Glimmoranite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
       "glimmora"
+    ]
+  },
+  {
+    "id": "golisopite",
+    "displayName": "Golisopite",
+    "aliases": [
+      "Golisopite",
+      "golisopite"
+    ],
+    "showdownAliases": [
+      "golisopite",
+      "Golisopite"
+    ],
+    "legalIn": [
+      "M-C"
+    ],
+    "itemClauseEligible": true,
+    "enablesMegaFor": [
+      "golisopod"
     ]
   },
   {
@@ -1112,12 +1262,30 @@
       "Golurkite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
       "golurk"
     ]
+  },
+  {
+    "id": "grassy-seed",
+    "displayName": "Grassy Seed",
+    "aliases": [
+      "Grassy Seed",
+      "grassy-seed",
+      "grassyseed"
+    ],
+    "showdownAliases": [
+      "grassy-seed",
+      "Grassy Seed"
+    ],
+    "legalIn": [
+      "M-C"
+    ],
+    "itemClauseEligible": true,
+    "enablesMegaFor": []
   },
   {
     "id": "greninjite",
@@ -1131,7 +1299,7 @@
       "Greninjite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -1150,7 +1318,7 @@
       "Gyaradosite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -1170,7 +1338,7 @@
       "Haban Berry"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -1188,7 +1356,7 @@
       "Hard Stone"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -1205,7 +1373,7 @@
       "Hawluchanite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -1225,7 +1393,7 @@
       "Heat Rock"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -1242,7 +1410,7 @@
       "Heracronite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -1261,7 +1429,7 @@
       "Houndoominite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -1281,7 +1449,7 @@
       "Icy Rock"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -1299,7 +1467,7 @@
       "Iron Ball"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -1316,7 +1484,7 @@
       "Kangaskhanite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -1336,7 +1504,7 @@
       "Kasib Berry"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -1354,7 +1522,7 @@
       "Kebia Berry"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -1372,7 +1540,24 @@
       "King's Rock"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
+    ],
+    "itemClauseEligible": true,
+    "enablesMegaFor": []
+  },
+  {
+    "id": "leek",
+    "displayName": "Leek",
+    "aliases": [
+      "Leek",
+      "leek"
+    ],
+    "showdownAliases": [
+      "leek",
+      "Leek"
+    ],
+    "legalIn": [
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -1389,7 +1574,7 @@
       "Leftovers"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -1407,7 +1592,7 @@
       "Leppa Berry"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -1425,7 +1610,7 @@
       "Life Orb"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -1443,7 +1628,7 @@
       "Light Ball"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -1461,7 +1646,7 @@
       "Light Clay"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -1478,7 +1663,7 @@
       "Lopunnite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -1497,7 +1682,27 @@
       "Lucarionite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
+    ],
+    "itemClauseEligible": true,
+    "enablesMegaFor": [
+      "lucario"
+    ]
+  },
+  {
+    "id": "lucarionite-z",
+    "displayName": "Lucarionite Z",
+    "aliases": [
+      "Lucarionite Z",
+      "lucarionite-z",
+      "lucarionitez"
+    ],
+    "showdownAliases": [
+      "lucarionite-z",
+      "Lucarionite Z"
+    ],
+    "legalIn": [
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -1517,7 +1722,7 @@
       "Lum Berry"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -1534,7 +1739,7 @@
       "Magnet"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -1551,7 +1756,7 @@
       "Malamarite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -1570,7 +1775,7 @@
       "Manectite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -1589,7 +1794,7 @@
       "Mawilite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -1608,7 +1813,7 @@
       "Medichamite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -1627,7 +1832,7 @@
       "Meganiumite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -1647,7 +1852,7 @@
       "Mental Herb"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -1664,7 +1869,7 @@
       "Meowsticite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -1684,7 +1889,7 @@
       "Metagrossite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -1704,7 +1909,7 @@
       "Metal Coat"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -1721,7 +1926,7 @@
       "Metronome"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -1739,7 +1944,25 @@
       "Miracle Seed"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
+    ],
+    "itemClauseEligible": true,
+    "enablesMegaFor": []
+  },
+  {
+    "id": "misty-seed",
+    "displayName": "Misty Seed",
+    "aliases": [
+      "Misty Seed",
+      "misty-seed",
+      "mistyseed"
+    ],
+    "showdownAliases": [
+      "misty-seed",
+      "Misty Seed"
+    ],
+    "legalIn": [
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -1757,7 +1980,7 @@
       "Muscle Band"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -1775,7 +1998,7 @@
       "Mystic Water"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -1794,7 +2017,25 @@
       "Never-Melt Ice"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
+    ],
+    "itemClauseEligible": true,
+    "enablesMegaFor": []
+  },
+  {
+    "id": "normal-gem",
+    "displayName": "Normal Gem",
+    "aliases": [
+      "Normal Gem",
+      "normal-gem",
+      "normalgem"
+    ],
+    "showdownAliases": [
+      "normal-gem",
+      "Normal Gem"
+    ],
+    "legalIn": [
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -1812,7 +2053,7 @@
       "Occa Berry"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -1830,7 +2071,7 @@
       "Oran Berry"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -1848,7 +2089,7 @@
       "Passho Berry"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -1866,7 +2107,7 @@
       "Payapa Berry"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -1884,7 +2125,7 @@
       "Pecha Berry"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -1902,7 +2143,7 @@
       "Persim Berry"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -1919,7 +2160,7 @@
       "Pidgeotite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -1938,7 +2179,7 @@
       "Pinsirite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -1958,7 +2199,25 @@
       "Poison Barb"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
+    ],
+    "itemClauseEligible": true,
+    "enablesMegaFor": []
+  },
+  {
+    "id": "psychic-seed",
+    "displayName": "Psychic Seed",
+    "aliases": [
+      "Psychic Seed",
+      "psychic-seed",
+      "psychicseed"
+    ],
+    "showdownAliases": [
+      "psychic-seed",
+      "Psychic Seed"
+    ],
+    "legalIn": [
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -1975,7 +2234,7 @@
       "Pyroarite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -1995,7 +2254,7 @@
       "Quick Claw"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -2013,7 +2272,7 @@
       "Raichunite X"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -2033,7 +2292,7 @@
       "Raichunite Y"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -2053,7 +2312,25 @@
       "Rawst Berry"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
+    ],
+    "itemClauseEligible": true,
+    "enablesMegaFor": []
+  },
+  {
+    "id": "red-card",
+    "displayName": "Red Card",
+    "aliases": [
+      "Red Card",
+      "red-card",
+      "redcard"
+    ],
+    "showdownAliases": [
+      "red-card",
+      "Red Card"
+    ],
+    "legalIn": [
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -2071,7 +2348,25 @@
       "Rindo Berry"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
+    ],
+    "itemClauseEligible": true,
+    "enablesMegaFor": []
+  },
+  {
+    "id": "rocky-helmet",
+    "displayName": "Rocky Helmet",
+    "aliases": [
+      "Rocky Helmet",
+      "rocky-helmet",
+      "rockyhelmet"
+    ],
+    "showdownAliases": [
+      "rocky-helmet",
+      "Rocky Helmet"
+    ],
+    "legalIn": [
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -2089,7 +2384,7 @@
       "Roseli Berry"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -2106,11 +2401,30 @@
       "Sablenite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
       "sableye"
+    ]
+  },
+  {
+    "id": "salamencite",
+    "displayName": "Salamencite",
+    "aliases": [
+      "Salamencite",
+      "salamencite"
+    ],
+    "showdownAliases": [
+      "salamencite",
+      "Salamencite"
+    ],
+    "legalIn": [
+      "M-C"
+    ],
+    "itemClauseEligible": true,
+    "enablesMegaFor": [
+      "salamence"
     ]
   },
   {
@@ -2125,7 +2439,7 @@
       "Sceptilite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -2144,7 +2458,7 @@
       "Scizorite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -2163,7 +2477,7 @@
       "Scolipite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -2183,7 +2497,7 @@
       "Scope Lens"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -2200,7 +2514,7 @@
       "Scovillainite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -2219,7 +2533,7 @@
       "Scraftinite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -2239,7 +2553,7 @@
       "Sharp Beak"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -2256,7 +2570,7 @@
       "Sharpedonite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -2276,7 +2590,7 @@
       "Shed Shell"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -2294,7 +2608,7 @@
       "Shell Bell"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -2312,7 +2626,7 @@
       "Shuca Berry"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -2330,7 +2644,7 @@
       "Silk Scarf"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -2348,7 +2662,7 @@
       "Silver Powder"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -2366,7 +2680,7 @@
       "Sitrus Berry"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -2383,7 +2697,7 @@
       "Skarmorite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -2402,7 +2716,7 @@
       "Slowbronite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -2422,7 +2736,7 @@
       "Smooth Rock"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -2440,7 +2754,7 @@
       "Soft Sand"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -2458,7 +2772,7 @@
       "Spell Tag"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -2475,7 +2789,7 @@
       "Staraptite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -2494,7 +2808,7 @@
       "Starminite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -2513,7 +2827,7 @@
       "Steelixite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -2532,7 +2846,7 @@
       "Swampertite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -2552,7 +2866,25 @@
       "Tanga Berry"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
+    ],
+    "itemClauseEligible": true,
+    "enablesMegaFor": []
+  },
+  {
+    "id": "terrain-extender",
+    "displayName": "Terrain Extender",
+    "aliases": [
+      "Terrain Extender",
+      "terrain-extender",
+      "terrainextender"
+    ],
+    "showdownAliases": [
+      "terrain-extender",
+      "Terrain Extender"
+    ],
+    "legalIn": [
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -2570,7 +2902,7 @@
       "Twisted Spoon"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -2587,7 +2919,7 @@
       "Tyranitarite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -2606,7 +2938,7 @@
       "Venusaurite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -2625,7 +2957,7 @@
       "Victreebelite"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": [
@@ -2645,7 +2977,7 @@
       "Wacan Berry"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -2663,7 +2995,7 @@
       "White Herb"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -2681,7 +3013,7 @@
       "Wide Lens"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -2699,7 +3031,7 @@
       "Wise Glasses"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -2717,7 +3049,7 @@
       "Yache Berry"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []
@@ -2735,7 +3067,7 @@
       "Zoom Lens"
     ],
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "itemClauseEligible": true,
     "enablesMegaFor": []

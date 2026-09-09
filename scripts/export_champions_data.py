@@ -10,8 +10,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DB = Path("/home/nuc1/Documents/Coding Projects/champions_logic/data/champions_logic.db")
-OUT = ROOT / "src" / "data" / "regulation-mb"
-REGULATION = "M-B"
+OUT = ROOT / "src" / "data" / "regulation-mc"
+REGULATION = "M-C"
 
 
 def normalize_key(value: str) -> str:
@@ -238,9 +238,11 @@ def main() -> None:
             }
         )
 
+    meta = {row["key"]: row["value"] for row in fetchall(conn, "SELECT key, value FROM meta")}
+
     rules = {
         "regulation": REGULATION,
-        "dataVersion": "M-B+2026-06-22",
+        "dataVersion": meta.get("data_version", REGULATION),
         "enabledGimmicks": ["mega"],
         "statPoints": {"totalMax": 66, "perStatMax": 32},
         "speciesClause": "nationalDexNumber",

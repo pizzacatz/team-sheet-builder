@@ -13,7 +13,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const dataDir = resolve(dirname(fileURLToPath(import.meta.url)), "../src/data/regulation-mb");
+const dataDir = resolve(dirname(fileURLToPath(import.meta.url)), "../src/data/regulation-mc");
 const registryPath = resolve(dataDir, "code-index.json");
 
 const readJson = (file) => JSON.parse(readFileSync(resolve(dataDir, file), "utf8"));

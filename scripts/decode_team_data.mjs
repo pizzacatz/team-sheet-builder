@@ -7,7 +7,7 @@
 //   pdftotext staff.pdf - | node scripts/decode_team_data.mjs -   # read text from stdin
 //   echo 'TSBI1...' | node scripts/decode_team_data.mjs -        # scanned corner QR string
 //
-// Prints human-readable team data (IDs expanded via src/data/regulation-mb).
+// Prints human-readable team data (IDs expanded via src/data/regulation-mc).
 // Player Info is never embedded, so it is never recovered.
 
 import { execFileSync } from "node:child_process";
@@ -28,7 +28,7 @@ const STAT_KEYS = ["hp", "atk", "def", "spa", "spd", "spe"];
 const STAT_LABELS = { hp: "HP", atk: "Atk", def: "Def", spa: "SpA", spd: "SpD", spe: "Spe" };
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
-const dataDir = resolve(scriptDir, "../src/data/regulation-mb");
+const dataDir = resolve(scriptDir, "../src/data/regulation-mc");
 
 const loadById = (file, key = "id") => {
   const records = JSON.parse(readFileSync(resolve(dataDir, file), "utf8"));

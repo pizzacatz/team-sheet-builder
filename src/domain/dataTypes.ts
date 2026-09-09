@@ -1,4 +1,4 @@
-export type Regulation = "M-B";
+export type Regulation = "M-C";
 
 export type MoveCategory = "Physical" | "Special" | "Status";
 

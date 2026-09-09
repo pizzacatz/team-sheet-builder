@@ -1,10 +1,10 @@
-import abilitiesJson from "../data/regulation-mb/abilities.json";
-import itemsJson from "../data/regulation-mb/items.json";
-import megaEvolutionsJson from "../data/regulation-mb/mega-evolutions.json";
-import movesJson from "../data/regulation-mb/moves.json";
-import rulesJson from "../data/regulation-mb/rules.json";
-import speciesJson from "../data/regulation-mb/species.json";
-import statAlignmentsJson from "../data/regulation-mb/stat-alignments.json";
+import abilitiesJson from "../data/regulation-mc/abilities.json";
+import itemsJson from "../data/regulation-mc/items.json";
+import megaEvolutionsJson from "../data/regulation-mc/mega-evolutions.json";
+import movesJson from "../data/regulation-mc/moves.json";
+import rulesJson from "../data/regulation-mc/rules.json";
+import speciesJson from "../data/regulation-mc/species.json";
+import statAlignmentsJson from "../data/regulation-mc/stat-alignments.json";
 import type {
   AbilityRecord,
   ItemRecord,

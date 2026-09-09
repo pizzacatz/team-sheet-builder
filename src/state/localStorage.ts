@@ -43,6 +43,9 @@ export const loadTeamSheet = (): TeamSheet => {
     return {
       ...createEmptyTeamSheet(),
       ...parsed,
+      // A sheet saved under an earlier regulation keeps its entries, but the
+      // regulation stamp always follows the data the app currently ships.
+      regulation: createEmptyTeamSheet().regulation,
       player: normalizePlayerInfo(parsed.player),
       pokemon: createEmptyTeamSheet().pokemon.map((emptyEntry, index) => ({
         ...emptyEntry,

@@ -14,7 +14,7 @@
     ],
     "pdfName": "Venusaur",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "grass",
@@ -127,7 +127,7 @@
     ],
     "pdfName": "Charizard",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fire",
@@ -216,6 +216,7 @@
       "scary-face",
       "scorching-sands",
       "shadow-claw",
+      "slash",
       "sleep-talk",
       "snore",
       "solar-beam",
@@ -264,7 +265,7 @@
     ],
     "pdfName": "Blastoise",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "water"
@@ -392,7 +393,7 @@
     ],
     "pdfName": "Beedrill",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "bug",
@@ -501,7 +502,7 @@
     ],
     "pdfName": "Pidgeot",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "normal",
@@ -589,7 +590,7 @@
     ],
     "pdfName": "Arbok",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "poison"
@@ -705,7 +706,7 @@
     ],
     "pdfName": "Pikachu",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "electric"
@@ -810,7 +811,7 @@
     ],
     "pdfName": "Raichu",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "electric"
@@ -942,7 +943,7 @@
     ],
     "pdfName": "Raichu-Alola",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "electric",
@@ -1061,7 +1062,7 @@
     ],
     "pdfName": "Clefable",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fairy"
@@ -1208,7 +1209,7 @@
     ],
     "pdfName": "Ninetales",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fire"
@@ -1322,7 +1323,7 @@
     ],
     "pdfName": "Ninetales-Alola",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "ice",
@@ -1418,6 +1419,151 @@
     "allowedMegaForms": []
   },
   {
+    "id": "wigglytuff",
+    "nationalDexNumber": 40,
+    "displayName": "Wigglytuff",
+    "aliases": [
+      "Wigglytuff",
+      "wigglytuff"
+    ],
+    "showdownAliases": [
+      "wigglytuff",
+      "Wigglytuff",
+      "Wigglytuff"
+    ],
+    "pdfName": "Wigglytuff",
+    "legalIn": [
+      "M-C"
+    ],
+    "types": [
+      "normal",
+      "fairy"
+    ],
+    "baseStats": {
+      "hp": 140,
+      "atk": 70,
+      "def": 45,
+      "spa": 85,
+      "spd": 50,
+      "spe": 45
+    },
+    "presentedStats": {
+      "hp": 215,
+      "atk": 90,
+      "def": 65,
+      "spa": 105,
+      "spd": 70,
+      "spe": 65
+    },
+    "forms": [],
+    "abilities": [
+      "competitive",
+      "cute-charm",
+      "frisk"
+    ],
+    "moves": [
+      "alluring-voice",
+      "amnesia",
+      "baton-pass",
+      "blizzard",
+      "body-press",
+      "body-slam",
+      "bounce",
+      "brick-break",
+      "calm-mind",
+      "charm",
+      "chilling-water",
+      "copycat",
+      "covet",
+      "dark-pulse",
+      "dazzling-gleam",
+      "dig",
+      "disable",
+      "double-edge",
+      "drain-punch",
+      "draining-kiss",
+      "encore",
+      "endeavor",
+      "endure",
+      "energy-ball",
+      "expanding-force",
+      "facade",
+      "fake-tears",
+      "fire-blast",
+      "fire-punch",
+      "flamethrower",
+      "fling",
+      "focus-blast",
+      "focus-punch",
+      "giga-impact",
+      "grass-knot",
+      "gravity",
+      "gyro-ball",
+      "heal-pulse",
+      "helping-hand",
+      "hyper-beam",
+      "hyper-voice",
+      "ice-beam",
+      "ice-punch",
+      "ice-spinner",
+      "icy-wind",
+      "knock-off",
+      "last-resort",
+      "light-screen",
+      "magic-room",
+      "mega-kick",
+      "misty-explosion",
+      "misty-terrain",
+      "moonblast",
+      "nasty-plot",
+      "pain-split",
+      "perish-song",
+      "play-rough",
+      "protect",
+      "psych-up",
+      "psychic",
+      "psychic-noise",
+      "psyshock",
+      "rain-dance",
+      "reflect",
+      "rest",
+      "round",
+      "safeguard",
+      "sandstorm",
+      "screech",
+      "self-destruct",
+      "shadow-ball",
+      "sing",
+      "skill-swap",
+      "sleep-talk",
+      "snore",
+      "solar-beam",
+      "spit-up",
+      "stealth-rock",
+      "steel-roller",
+      "stockpile",
+      "stored-power",
+      "substitute",
+      "sunny-day",
+      "swallow",
+      "sweet-kiss",
+      "taunt",
+      "thief",
+      "thunder",
+      "thunder-punch",
+      "thunder-wave",
+      "thunderbolt",
+      "trailblaze",
+      "tri-attack",
+      "uproar",
+      "water-pulse",
+      "wild-charge",
+      "wish",
+      "zen-headbutt"
+    ],
+    "allowedMegaForms": []
+  },
+  {
     "id": "vileplume",
     "nationalDexNumber": 45,
     "displayName": "Vileplume",
@@ -1432,7 +1578,7 @@
     ],
     "pdfName": "Vileplume",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "grass",
@@ -1518,6 +1664,239 @@
     "allowedMegaForms": []
   },
   {
+    "id": "persian",
+    "nationalDexNumber": 53,
+    "displayName": "Persian",
+    "aliases": [
+      "Persian",
+      "persian"
+    ],
+    "showdownAliases": [
+      "persian",
+      "Persian",
+      "Persian"
+    ],
+    "pdfName": "Persian",
+    "legalIn": [
+      "M-C"
+    ],
+    "types": [
+      "normal"
+    ],
+    "baseStats": {
+      "hp": 65,
+      "atk": 70,
+      "def": 60,
+      "spa": 65,
+      "spd": 65,
+      "spe": 115
+    },
+    "presentedStats": {
+      "hp": 140,
+      "atk": 90,
+      "def": 80,
+      "spa": 85,
+      "spd": 85,
+      "spe": 135
+    },
+    "forms": [],
+    "abilities": [
+      "limber",
+      "technician",
+      "unnerve"
+    ],
+    "moves": [
+      "aerial-ace",
+      "agility",
+      "amnesia",
+      "assurance",
+      "bite",
+      "body-slam",
+      "charm",
+      "chilling-water",
+      "covet",
+      "dark-pulse",
+      "dig",
+      "double-edge",
+      "double-team",
+      "endeavor",
+      "endure",
+      "facade",
+      "fake-out",
+      "fake-tears",
+      "feint",
+      "flail",
+      "foul-play",
+      "giga-impact",
+      "gunk-shot",
+      "helping-hand",
+      "hyper-beam",
+      "hyper-voice",
+      "hypnosis",
+      "icy-wind",
+      "iron-tail",
+      "knock-off",
+      "lash-out",
+      "last-resort",
+      "nasty-plot",
+      "pain-split",
+      "payback",
+      "play-rough",
+      "power-gem",
+      "protect",
+      "psych-up",
+      "rain-dance",
+      "rest",
+      "roar",
+      "round",
+      "screech",
+      "seed-bomb",
+      "shadow-ball",
+      "shadow-claw",
+      "skitter-smack",
+      "slash",
+      "sleep-talk",
+      "snarl",
+      "snore",
+      "spite",
+      "substitute",
+      "sunny-day",
+      "switcheroo",
+      "taunt",
+      "thief",
+      "throat-chop",
+      "thunder",
+      "thunder-wave",
+      "thunderbolt",
+      "trailblaze",
+      "u-turn",
+      "uproar",
+      "water-pulse"
+    ],
+    "allowedMegaForms": []
+  },
+  {
+    "id": "persianalola",
+    "nationalDexNumber": 53,
+    "displayName": "Persian-Alola",
+    "aliases": [
+      "Alolan Persian",
+      "Persian Alola",
+      "Persian-Alola",
+      "persianalola"
+    ],
+    "showdownAliases": [
+      "persianalola",
+      "Persian-Alola",
+      "PersianAlola"
+    ],
+    "pdfName": "Persian-Alola",
+    "legalIn": [
+      "M-C"
+    ],
+    "types": [
+      "dark"
+    ],
+    "baseStats": {
+      "hp": 65,
+      "atk": 60,
+      "def": 60,
+      "spa": 75,
+      "spd": 65,
+      "spe": 115
+    },
+    "presentedStats": {
+      "hp": 140,
+      "atk": 80,
+      "def": 80,
+      "spa": 95,
+      "spd": 85,
+      "spe": 135
+    },
+    "forms": [],
+    "abilities": [
+      "fur-coat",
+      "rattled",
+      "technician"
+    ],
+    "moves": [
+      "aerial-ace",
+      "agility",
+      "amnesia",
+      "assurance",
+      "beat-up",
+      "bite",
+      "body-slam",
+      "burning-jealousy",
+      "charm",
+      "chilling-water",
+      "confuse-ray",
+      "covet",
+      "curse",
+      "dark-pulse",
+      "dig",
+      "double-edge",
+      "double-team",
+      "endeavor",
+      "endure",
+      "facade",
+      "fake-out",
+      "fake-tears",
+      "feint",
+      "flail",
+      "flatter",
+      "foul-play",
+      "giga-impact",
+      "gunk-shot",
+      "helping-hand",
+      "hyper-beam",
+      "hyper-voice",
+      "hypnosis",
+      "icy-wind",
+      "iron-tail",
+      "knock-off",
+      "lash-out",
+      "nasty-plot",
+      "night-slash",
+      "parting-shot",
+      "payback",
+      "play-rough",
+      "power-gem",
+      "protect",
+      "psych-up",
+      "quash",
+      "rain-dance",
+      "rest",
+      "roar",
+      "round",
+      "screech",
+      "seed-bomb",
+      "shadow-ball",
+      "shadow-claw",
+      "skitter-smack",
+      "slash",
+      "sleep-talk",
+      "smack-down",
+      "snarl",
+      "snore",
+      "spite",
+      "substitute",
+      "sunny-day",
+      "switcheroo",
+      "taunt",
+      "thief",
+      "throat-chop",
+      "thunder",
+      "thunder-wave",
+      "thunderbolt",
+      "trailblaze",
+      "u-turn",
+      "uproar",
+      "water-pulse"
+    ],
+    "allowedMegaForms": []
+  },
+  {
     "id": "arcanine",
     "nationalDexNumber": 59,
     "displayName": "Arcanine",
@@ -1532,7 +1911,7 @@
     ],
     "pdfName": "Arcanine",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fire"
@@ -1637,7 +2016,7 @@
     ],
     "pdfName": "Arcanine-Hisui",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fire",
@@ -1748,7 +2127,7 @@
     ],
     "pdfName": "Alakazam",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "psychic"
@@ -1864,7 +2243,7 @@
     ],
     "pdfName": "Machamp",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fighting"
@@ -1976,7 +2355,7 @@
     ],
     "pdfName": "Victreebel",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "grass",
@@ -2091,7 +2470,7 @@
     ],
     "pdfName": "Slowbro",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "water",
@@ -2228,7 +2607,7 @@
     ],
     "pdfName": "Slowbro-Galar",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "poison",
@@ -2353,6 +2732,103 @@
     "allowedMegaForms": []
   },
   {
+    "id": "farfetchd",
+    "nationalDexNumber": 83,
+    "displayName": "Farfetch’d",
+    "aliases": [
+      "Farfetch’d",
+      "farfetchd"
+    ],
+    "showdownAliases": [
+      "farfetchd",
+      "Farfetch’d",
+      "Farfetch’d"
+    ],
+    "pdfName": "Farfetch’d",
+    "legalIn": [
+      "M-C"
+    ],
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "baseStats": {
+      "hp": 52,
+      "atk": 90,
+      "def": 55,
+      "spa": 58,
+      "spd": 62,
+      "spe": 60
+    },
+    "presentedStats": {
+      "hp": 127,
+      "atk": 110,
+      "def": 75,
+      "spa": 78,
+      "spd": 82,
+      "spe": 80
+    },
+    "forms": [],
+    "abilities": [
+      "defiant",
+      "inner-focus",
+      "keen-eye"
+    ],
+    "moves": [
+      "acrobatics",
+      "aerial-ace",
+      "agility",
+      "air-cutter",
+      "air-slash",
+      "attract",
+      "baton-pass",
+      "body-slam",
+      "brave-bird",
+      "brutal-swing",
+      "close-combat",
+      "covet",
+      "curse",
+      "dual-wingbeat",
+      "endure",
+      "facade",
+      "feather-dance",
+      "feint",
+      "final-gambit",
+      "first-impression",
+      "flail",
+      "fly",
+      "focus-energy",
+      "heat-wave",
+      "helping-hand",
+      "iron-tail",
+      "knock-off",
+      "leaf-blade",
+      "night-slash",
+      "poison-jab",
+      "protect",
+      "quick-attack",
+      "rest",
+      "roost",
+      "round",
+      "simple-beam",
+      "sky-attack",
+      "slash",
+      "sleep-talk",
+      "snore",
+      "solar-blade",
+      "steel-wing",
+      "substitute",
+      "sunny-day",
+      "swords-dance",
+      "thief",
+      "throat-chop",
+      "trailblaze",
+      "u-turn",
+      "uproar"
+    ],
+    "allowedMegaForms": []
+  },
+  {
     "id": "gengar",
     "nationalDexNumber": 94,
     "displayName": "Gengar",
@@ -2367,7 +2843,7 @@
     ],
     "pdfName": "Gengar",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "ghost",
@@ -2498,7 +2974,7 @@
     ],
     "pdfName": "Kangaskhan",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "normal"
@@ -2621,7 +3097,7 @@
     ],
     "pdfName": "Starmie",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "water",
@@ -2726,6 +3202,130 @@
     ]
   },
   {
+    "id": "mrmime",
+    "nationalDexNumber": 122,
+    "displayName": "Mr. Mime",
+    "aliases": [
+      "Mr. Mime",
+      "mrmime"
+    ],
+    "showdownAliases": [
+      "mrmime",
+      "Mr. Mime",
+      "Mr. Mime"
+    ],
+    "pdfName": "Mr. Mime",
+    "legalIn": [
+      "M-C"
+    ],
+    "types": [
+      "psychic",
+      "fairy"
+    ],
+    "baseStats": {
+      "hp": 40,
+      "atk": 45,
+      "def": 65,
+      "spa": 100,
+      "spd": 120,
+      "spe": 90
+    },
+    "presentedStats": {
+      "hp": 115,
+      "atk": 65,
+      "def": 85,
+      "spa": 120,
+      "spd": 140,
+      "spe": 110
+    },
+    "forms": [],
+    "abilities": [
+      "filter",
+      "soundproof",
+      "technician"
+    ],
+    "moves": [
+      "ally-switch",
+      "attract",
+      "baton-pass",
+      "body-slam",
+      "brick-break",
+      "calm-mind",
+      "charge-beam",
+      "charm",
+      "confuse-ray",
+      "copycat",
+      "dazzling-gleam",
+      "drain-punch",
+      "encore",
+      "endure",
+      "energy-ball",
+      "expanding-force",
+      "facade",
+      "fake-out",
+      "fire-punch",
+      "fling",
+      "focus-blast",
+      "foul-play",
+      "future-sight",
+      "giga-impact",
+      "grass-knot",
+      "guard-swap",
+      "helping-hand",
+      "hyper-beam",
+      "hypnosis",
+      "ice-punch",
+      "icy-wind",
+      "iron-defense",
+      "light-screen",
+      "magic-room",
+      "mega-kick",
+      "misty-terrain",
+      "mystical-fire",
+      "nasty-plot",
+      "payback",
+      "power-split",
+      "power-swap",
+      "protect",
+      "psychic",
+      "psychic-terrain",
+      "psyshock",
+      "quick-guard",
+      "rain-dance",
+      "recycle",
+      "reflect",
+      "rest",
+      "role-play",
+      "round",
+      "safeguard",
+      "shadow-ball",
+      "skill-swap",
+      "sleep-talk",
+      "snore",
+      "solar-beam",
+      "stored-power",
+      "substitute",
+      "sucker-punch",
+      "sunny-day",
+      "taunt",
+      "teeter-dance",
+      "thief",
+      "thunder",
+      "thunder-punch",
+      "thunder-wave",
+      "thunderbolt",
+      "tickle",
+      "torment",
+      "trick",
+      "trick-room",
+      "uproar",
+      "wide-guard",
+      "wonder-room",
+      "zen-headbutt"
+    ],
+    "allowedMegaForms": []
+  },
+  {
     "id": "pinsir",
     "nationalDexNumber": 127,
     "displayName": "Pinsir",
@@ -2740,7 +3340,7 @@
     ],
     "pdfName": "Pinsir",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "bug"
@@ -2808,6 +3408,7 @@
       "rock-tomb",
       "round",
       "seismic-toss",
+      "slash",
       "sleep-talk",
       "snore",
       "stealth-rock",
@@ -2849,7 +3450,7 @@
     ],
     "pdfName": "Tauros",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "normal"
@@ -2953,7 +3554,7 @@
     ],
     "pdfName": "Tauros-Paldea-Aqua",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fighting",
@@ -3053,7 +3654,7 @@
     ],
     "pdfName": "Tauros-Paldea-Blaze",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fighting",
@@ -3154,7 +3755,7 @@
     ],
     "pdfName": "Tauros-Paldea-Combat",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fighting"
@@ -3248,7 +3849,7 @@
     ],
     "pdfName": "Gyarados",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "water",
@@ -3371,7 +3972,7 @@
     ],
     "pdfName": "Ditto",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "normal"
@@ -3417,7 +4018,7 @@
     ],
     "pdfName": "Vaporeon",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "water"
@@ -3521,7 +4122,7 @@
     ],
     "pdfName": "Jolteon",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "electric"
@@ -3625,7 +4226,7 @@
     ],
     "pdfName": "Flareon",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fire"
@@ -3727,7 +4328,7 @@
     ],
     "pdfName": "Aerodactyl",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "rock",
@@ -3842,7 +4443,7 @@
     ],
     "pdfName": "Snorlax",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "normal"
@@ -3971,7 +4572,7 @@
     ],
     "pdfName": "Dragonite",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "dragon",
@@ -4110,7 +4711,7 @@
     ],
     "pdfName": "Meganium",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "grass"
@@ -4226,7 +4827,7 @@
     ],
     "pdfName": "Typhlosion",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fire"
@@ -4336,7 +4937,7 @@
     ],
     "pdfName": "Typhlosion-Hisui",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fire",
@@ -4448,7 +5049,7 @@
     ],
     "pdfName": "Feraligatr",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "water"
@@ -4541,6 +5142,7 @@
       "scary-face",
       "screech",
       "shadow-claw",
+      "slash",
       "sleep-talk",
       "snarl",
       "snore",
@@ -4585,7 +5187,7 @@
     ],
     "pdfName": "Ariados",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "bug",
@@ -4696,7 +5298,7 @@
     ],
     "pdfName": "Ampharos",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "electric"
@@ -4818,7 +5420,7 @@
     ],
     "pdfName": "Azumarill",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "water",
@@ -4931,7 +5533,7 @@
     ],
     "pdfName": "Politoed",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "water"
@@ -4997,7 +5599,6 @@
       "mud-slap",
       "muddy-water",
       "perish-song",
-      "pound",
       "protect",
       "psych-up",
       "psychic",
@@ -5034,7 +5635,7 @@
     ],
     "pdfName": "Espeon",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "psychic"
@@ -5146,7 +5747,7 @@
     ],
     "pdfName": "Umbreon",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "dark"
@@ -5258,7 +5859,7 @@
     ],
     "pdfName": "Slowking",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "water",
@@ -5392,7 +5993,7 @@
     ],
     "pdfName": "Slowking-Galar",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "poison",
@@ -5534,7 +6135,7 @@
     ],
     "pdfName": "Forretress",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "bug",
@@ -5649,7 +6250,7 @@
     ],
     "pdfName": "Steelix",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "steel",
@@ -5772,7 +6373,7 @@
     ],
     "pdfName": "Qwilfish",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "water",
@@ -5807,6 +6408,7 @@
       "aqua-jet",
       "aqua-tail",
       "assurance",
+      "barb-barrage",
       "blizzard",
       "chilling-water",
       "crunch",
@@ -5882,7 +6484,7 @@
     ],
     "pdfName": "Scizor",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "bug",
@@ -5960,6 +6562,7 @@
       "sandstorm",
       "scary-face",
       "skitter-smack",
+      "slash",
       "sleep-talk",
       "snore",
       "steel-beam",
@@ -6003,7 +6606,7 @@
     ],
     "pdfName": "Heracross",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "bug",
@@ -6126,7 +6729,7 @@
     ],
     "pdfName": "Skarmory",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "steel",
@@ -6192,6 +6795,7 @@
       "sand-tomb",
       "sandstorm",
       "sky-attack",
+      "slash",
       "sleep-talk",
       "snore",
       "spikes",
@@ -6234,7 +6838,7 @@
     ],
     "pdfName": "Houndoom",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "dark",
@@ -6358,7 +6962,7 @@
     ],
     "pdfName": "Tyranitar",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "rock",
@@ -6506,7 +7110,7 @@
     ],
     "pdfName": "Sceptile",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "grass"
@@ -6594,6 +7198,7 @@
       "screech",
       "seed-bomb",
       "shed-tail",
+      "slash",
       "sleep-talk",
       "snore",
       "solar-beam",
@@ -6638,7 +7243,7 @@
     ],
     "pdfName": "Blaziken",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fire",
@@ -6728,6 +7333,7 @@
       "round",
       "scorching-sands",
       "shadow-claw",
+      "slash",
       "sleep-talk",
       "snore",
       "solar-beam",
@@ -6772,7 +7378,7 @@
     ],
     "pdfName": "Swampert",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "water",
@@ -6905,7 +7511,7 @@
     ],
     "pdfName": "Pelipper",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "water",
@@ -7005,7 +7611,7 @@
     ],
     "pdfName": "Gardevoir",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "psychic",
@@ -7142,7 +7748,7 @@
     ],
     "pdfName": "Sableye",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "dark",
@@ -7287,7 +7893,7 @@
     ],
     "pdfName": "Mawile",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "steel",
@@ -7415,7 +8021,7 @@
     ],
     "pdfName": "Aggron",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "steel",
@@ -7555,7 +8161,7 @@
     ],
     "pdfName": "Medicham",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fighting",
@@ -7688,7 +8294,7 @@
     ],
     "pdfName": "Manectric",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "electric"
@@ -7779,6 +8385,114 @@
     ]
   },
   {
+    "id": "swalot",
+    "nationalDexNumber": 317,
+    "displayName": "Swalot",
+    "aliases": [
+      "Swalot",
+      "swalot"
+    ],
+    "showdownAliases": [
+      "swalot",
+      "Swalot",
+      "Swalot"
+    ],
+    "pdfName": "Swalot",
+    "legalIn": [
+      "M-C"
+    ],
+    "types": [
+      "poison"
+    ],
+    "baseStats": {
+      "hp": 100,
+      "atk": 73,
+      "def": 83,
+      "spa": 73,
+      "spd": 83,
+      "spe": 55
+    },
+    "presentedStats": {
+      "hp": 175,
+      "atk": 93,
+      "def": 103,
+      "spa": 93,
+      "spd": 103,
+      "spe": 75
+    },
+    "forms": [],
+    "abilities": [
+      "gluttony",
+      "liquid-ooze",
+      "sticky-hold"
+    ],
+    "moves": [
+      "acid-armor",
+      "acid-spray",
+      "amnesia",
+      "belch",
+      "body-press",
+      "body-slam",
+      "brick-break",
+      "bulldoze",
+      "bullet-seed",
+      "clear-smog",
+      "corrosive-gas",
+      "curse",
+      "destiny-bond",
+      "double-edge",
+      "earthquake",
+      "encore",
+      "endure",
+      "facade",
+      "fire-punch",
+      "fling",
+      "gastro-acid",
+      "giga-drain",
+      "giga-impact",
+      "gunk-shot",
+      "helping-hand",
+      "hyper-beam",
+      "ice-beam",
+      "ice-punch",
+      "knock-off",
+      "mud-shot",
+      "mud-slap",
+      "pain-split",
+      "poison-jab",
+      "protect",
+      "rain-dance",
+      "rest",
+      "round",
+      "seed-bomb",
+      "self-destruct",
+      "shadow-ball",
+      "skitter-smack",
+      "sleep-talk",
+      "sludge-bomb",
+      "sludge-wave",
+      "snore",
+      "solar-beam",
+      "spit-up",
+      "stockpile",
+      "stuff-cheeks",
+      "substitute",
+      "sunny-day",
+      "swallow",
+      "swords-dance",
+      "thief",
+      "thunder-punch",
+      "thunder-wave",
+      "toxic",
+      "toxic-spikes",
+      "venoshock",
+      "water-pulse",
+      "yawn",
+      "zen-headbutt"
+    ],
+    "allowedMegaForms": []
+  },
+  {
     "id": "sharpedo",
     "nationalDexNumber": 319,
     "displayName": "Sharpedo",
@@ -7793,7 +8507,7 @@
     ],
     "pdfName": "Sharpedo",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "water",
@@ -7864,6 +8578,7 @@
       "scale-shot",
       "scary-face",
       "screech",
+      "slash",
       "sleep-talk",
       "snarl",
       "snore",
@@ -7906,7 +8621,7 @@
     ],
     "pdfName": "Camerupt",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fire",
@@ -8030,7 +8745,7 @@
     ],
     "pdfName": "Torkoal",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fire"
@@ -8133,7 +8848,7 @@
     ],
     "pdfName": "Altaria",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "dragon",
@@ -8254,7 +8969,7 @@
     ],
     "pdfName": "Milotic",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "water"
@@ -8361,7 +9076,7 @@
     ],
     "pdfName": "Castform",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "normal"
@@ -8442,7 +9157,7 @@
     ],
     "pdfName": "Banette",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "ghost"
@@ -8516,6 +9231,7 @@
       "shadow-sneak",
       "skill-swap",
       "skitter-smack",
+      "slash",
       "sleep-talk",
       "snore",
       "spite",
@@ -8564,7 +9280,7 @@
     ],
     "pdfName": "Chimecho",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "psychic"
@@ -8683,7 +9399,7 @@
     ],
     "pdfName": "Absol",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "dark"
@@ -8763,6 +9479,7 @@
       "shadow-ball",
       "shadow-claw",
       "shadow-sneak",
+      "slash",
       "sleep-talk",
       "snarl",
       "snore",
@@ -8792,6 +9509,15 @@
         "abilityId": "magic-bounce",
         "abilityName": "Magic Bounce",
         "pdfName": "Absol-Mega"
+      },
+      {
+        "id": "absolmegaz",
+        "baseSpeciesId": "absol",
+        "displayName": "Absol-Mega-Z",
+        "megaStoneId": "absolite-z",
+        "abilityId": "sharpness",
+        "abilityName": "Sharpness",
+        "pdfName": "Absol-Mega-Z"
       }
     ]
   },
@@ -8810,7 +9536,7 @@
     ],
     "pdfName": "Glalie",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "ice"
@@ -8906,6 +9632,124 @@
     ]
   },
   {
+    "id": "salamence",
+    "nationalDexNumber": 373,
+    "displayName": "Salamence",
+    "aliases": [
+      "Salamence",
+      "salamence"
+    ],
+    "showdownAliases": [
+      "salamence",
+      "Salamence",
+      "Salamence"
+    ],
+    "pdfName": "Salamence",
+    "legalIn": [
+      "M-C"
+    ],
+    "types": [
+      "dragon",
+      "flying"
+    ],
+    "baseStats": {
+      "hp": 95,
+      "atk": 135,
+      "def": 80,
+      "spa": 110,
+      "spd": 80,
+      "spe": 100
+    },
+    "presentedStats": {
+      "hp": 170,
+      "atk": 155,
+      "def": 100,
+      "spa": 130,
+      "spd": 100,
+      "spe": 120
+    },
+    "forms": [],
+    "abilities": [
+      "intimidate",
+      "moxie"
+    ],
+    "moves": [
+      "aerial-ace",
+      "air-slash",
+      "bite",
+      "body-slam",
+      "breaking-swipe",
+      "brick-break",
+      "brutal-swing",
+      "bulldoze",
+      "crunch",
+      "double-edge",
+      "draco-meteor",
+      "dragon-cheer",
+      "dragon-claw",
+      "dragon-dance",
+      "dragon-pulse",
+      "dragon-rush",
+      "dragon-tail",
+      "dual-wingbeat",
+      "earthquake",
+      "endure",
+      "facade",
+      "fire-blast",
+      "fire-fang",
+      "fire-spin",
+      "flamethrower",
+      "fly",
+      "focus-energy",
+      "giga-impact",
+      "heat-wave",
+      "helping-hand",
+      "hurricane",
+      "hydro-pump",
+      "hyper-beam",
+      "hyper-voice",
+      "iron-defense",
+      "iron-head",
+      "iron-tail",
+      "mud-slap",
+      "outrage",
+      "protect",
+      "psychic-fangs",
+      "rain-dance",
+      "rest",
+      "roar",
+      "rock-slide",
+      "rock-tomb",
+      "roost",
+      "round",
+      "scary-face",
+      "shadow-claw",
+      "slash",
+      "sleep-talk",
+      "snore",
+      "steel-wing",
+      "stone-edge",
+      "substitute",
+      "sunny-day",
+      "tailwind",
+      "temper-flare",
+      "thrash",
+      "thunder-fang",
+      "zen-headbutt"
+    ],
+    "allowedMegaForms": [
+      {
+        "id": "salamencemega",
+        "baseSpeciesId": "salamence",
+        "displayName": "Salamence-Mega",
+        "megaStoneId": "salamencite",
+        "abilityId": "aerilate",
+        "abilityName": "Aerilate",
+        "pdfName": "Salamence-Mega"
+      }
+    ]
+  },
+  {
     "id": "metagross",
     "nationalDexNumber": 376,
     "displayName": "Metagross",
@@ -8920,7 +9764,7 @@
     ],
     "pdfName": "Metagross",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "steel",
@@ -9044,7 +9888,7 @@
     ],
     "pdfName": "Torterra",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "grass",
@@ -9162,7 +10006,7 @@
     ],
     "pdfName": "Infernape",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fire",
@@ -9296,7 +10140,7 @@
     ],
     "pdfName": "Empoleon",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "water",
@@ -9416,7 +10260,7 @@
     ],
     "pdfName": "Staraptor",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "normal",
@@ -9515,7 +10359,7 @@
     ],
     "pdfName": "Luxray",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "electric"
@@ -9614,7 +10458,7 @@
     ],
     "pdfName": "Roserade",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "grass",
@@ -9712,7 +10556,7 @@
     ],
     "pdfName": "Rampardos",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "rock"
@@ -9831,7 +10675,7 @@
     ],
     "pdfName": "Bastiodon",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "rock",
@@ -9945,7 +10789,7 @@
     ],
     "pdfName": "Lopunny",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "normal"
@@ -10077,7 +10921,7 @@
     ],
     "pdfName": "Spiritomb",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "ghost",
@@ -10177,7 +11021,7 @@
     ],
     "pdfName": "Garchomp",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "dragon",
@@ -10251,6 +11095,7 @@
       "scary-face",
       "scorching-sands",
       "shadow-claw",
+      "slash",
       "sleep-talk",
       "snore",
       "spikes",
@@ -10273,6 +11118,15 @@
         "abilityId": "sand-force",
         "abilityName": "Sand Force",
         "pdfName": "Garchomp-Mega"
+      },
+      {
+        "id": "garchompmegaz",
+        "baseSpeciesId": "garchomp",
+        "displayName": "Garchomp-Mega-Z",
+        "megaStoneId": "garchompite-z",
+        "abilityId": "levitate",
+        "abilityName": "Levitate",
+        "pdfName": "Garchomp-Mega-Z"
       }
     ]
   },
@@ -10291,7 +11145,7 @@
     ],
     "pdfName": "Lucario",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fighting",
@@ -10413,6 +11267,15 @@
         "abilityId": "adaptability",
         "abilityName": "Adaptability",
         "pdfName": "Lucario-Mega"
+      },
+      {
+        "id": "lucariomegaz",
+        "baseSpeciesId": "lucario",
+        "displayName": "Lucario-Mega-Z",
+        "megaStoneId": "lucarionite-z",
+        "abilityId": "aura-guard",
+        "abilityName": "Aura Guard",
+        "pdfName": "Lucario-Mega-Z"
       }
     ]
   },
@@ -10431,7 +11294,7 @@
     ],
     "pdfName": "Hippowdon",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "ground"
@@ -10527,7 +11390,7 @@
     ],
     "pdfName": "Toxicroak",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "poison",
@@ -10655,7 +11518,7 @@
     ],
     "pdfName": "Abomasnow",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "grass",
@@ -10776,7 +11639,7 @@
     ],
     "pdfName": "Weavile",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "dark",
@@ -10859,6 +11722,7 @@
       "screech",
       "shadow-ball",
       "shadow-claw",
+      "slash",
       "sleep-talk",
       "snarl",
       "snore",
@@ -10894,7 +11758,7 @@
     ],
     "pdfName": "Rhyperior",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "ground",
@@ -11032,7 +11896,7 @@
     ],
     "pdfName": "Leafeon",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "grass"
@@ -11135,7 +11999,7 @@
     ],
     "pdfName": "Glaceon",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "ice"
@@ -11238,7 +12102,7 @@
     ],
     "pdfName": "Gliscor",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "ground",
@@ -11321,6 +12185,7 @@
       "scary-face",
       "screech",
       "skitter-smack",
+      "slash",
       "sleep-talk",
       "sludge-bomb",
       "snore",
@@ -11359,7 +12224,7 @@
     ],
     "pdfName": "Mamoswine",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "ice",
@@ -11469,7 +12334,7 @@
     ],
     "pdfName": "Gallade",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "psychic",
@@ -11579,6 +12444,7 @@
       "shadow-claw",
       "shadow-sneak",
       "skill-swap",
+      "slash",
       "sleep-talk",
       "snore",
       "solar-blade",
@@ -11631,7 +12497,7 @@
     ],
     "pdfName": "Froslass",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "ice",
@@ -11755,7 +12621,7 @@
     ],
     "pdfName": "Rotom",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "electric",
@@ -11843,7 +12709,7 @@
     ],
     "pdfName": "Rotom-Fan",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "electric",
@@ -11932,7 +12798,7 @@
     ],
     "pdfName": "Rotom-Frost",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "electric",
@@ -12021,7 +12887,7 @@
     ],
     "pdfName": "Rotom-Heat",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "electric",
@@ -12110,7 +12976,7 @@
     ],
     "pdfName": "Rotom-Mow",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "electric",
@@ -12199,7 +13065,7 @@
     ],
     "pdfName": "Rotom-Wash",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "electric",
@@ -12287,7 +13153,7 @@
     ],
     "pdfName": "Serperior",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "grass"
@@ -12385,7 +13251,7 @@
     ],
     "pdfName": "Emboar",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fire",
@@ -12520,7 +13386,7 @@
     ],
     "pdfName": "Samurott",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "water"
@@ -12591,6 +13457,7 @@
       "sacred-sword",
       "scary-face",
       "screech",
+      "slash",
       "sleep-talk",
       "smart-strike",
       "snore",
@@ -12628,7 +13495,7 @@
     ],
     "pdfName": "Samurott-Hisui",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "water",
@@ -12703,6 +13570,7 @@
       "sacred-sword",
       "scary-face",
       "screech",
+      "slash",
       "sleep-talk",
       "smart-strike",
       "snarl",
@@ -12741,7 +13609,7 @@
     ],
     "pdfName": "Watchog",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "normal"
@@ -12839,7 +13707,7 @@
     ],
     "pdfName": "Liepard",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "dark"
@@ -12910,6 +13778,7 @@
       "shadow-ball",
       "shadow-claw",
       "skitter-smack",
+      "slash",
       "sleep-talk",
       "snarl",
       "snore",
@@ -12945,7 +13814,7 @@
     ],
     "pdfName": "Simisage",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "grass"
@@ -13040,7 +13909,7 @@
     ],
     "pdfName": "Simisear",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fire"
@@ -13140,7 +14009,7 @@
     ],
     "pdfName": "Simipour",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "water"
@@ -13237,7 +14106,7 @@
     ],
     "pdfName": "Musharna",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "psychic"
@@ -13333,7 +14202,7 @@
     ],
     "pdfName": "Excadrill",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "ground",
@@ -13403,6 +14272,7 @@
       "scary-face",
       "scorching-sands",
       "shadow-claw",
+      "slash",
       "sleep-talk",
       "sludge-bomb",
       "smart-strike",
@@ -13443,7 +14313,7 @@
     ],
     "pdfName": "Audino",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "normal"
@@ -13568,7 +14438,7 @@
     ],
     "pdfName": "Conkeldurr",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fighting"
@@ -13675,7 +14545,7 @@
     ],
     "pdfName": "Scolipede",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "bug",
@@ -13785,7 +14655,7 @@
     ],
     "pdfName": "Whimsicott",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "grass",
@@ -13882,7 +14752,7 @@
     ],
     "pdfName": "Krookodile",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "ground",
@@ -14012,7 +14882,7 @@
     ],
     "pdfName": "Scrafty",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "dark",
@@ -14151,7 +15021,7 @@
     ],
     "pdfName": "Cofagrigus",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "ghost"
@@ -14249,7 +15119,7 @@
     ],
     "pdfName": "Garbodor",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "poison"
@@ -14348,7 +15218,7 @@
     ],
     "pdfName": "Zoroark",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "dark"
@@ -14464,7 +15334,7 @@
     ],
     "pdfName": "Zoroark-Hisui",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "normal",
@@ -14582,7 +15452,7 @@
     ],
     "pdfName": "Reuniclus",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "psychic"
@@ -14694,7 +15564,7 @@
     ],
     "pdfName": "Vanilluxe",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "ice"
@@ -14781,7 +15651,7 @@
     ],
     "pdfName": "Emolga",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "electric",
@@ -14873,7 +15743,7 @@
     ],
     "pdfName": "Eelektross",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "electric"
@@ -15002,7 +15872,7 @@
     ],
     "pdfName": "Chandelure",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "ghost",
@@ -15113,7 +15983,7 @@
     ],
     "pdfName": "Beartic",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "ice"
@@ -15198,6 +16068,7 @@
       "scary-face",
       "shadow-claw",
       "sheer-cold",
+      "slash",
       "sleep-talk",
       "snarl",
       "snore",
@@ -15234,7 +16105,7 @@
     ],
     "pdfName": "Stunfisk",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "ground",
@@ -15331,7 +16202,7 @@
     ],
     "pdfName": "Stunfisk-Galar",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "ground",
@@ -15428,7 +16299,7 @@
     ],
     "pdfName": "Golurk",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "ground",
@@ -15563,7 +16434,7 @@
     ],
     "pdfName": "Hydreigon",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "dark",
@@ -15686,7 +16557,7 @@
     ],
     "pdfName": "Volcarona",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "bug",
@@ -15789,7 +16660,7 @@
     ],
     "pdfName": "Chesnaught",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "grass",
@@ -15932,7 +16803,7 @@
     ],
     "pdfName": "Delphox",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fire",
@@ -16060,7 +16931,7 @@
     ],
     "pdfName": "Greninja",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "water",
@@ -16180,7 +17051,7 @@
     ],
     "pdfName": "Diggersby",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "normal",
@@ -16285,7 +17156,7 @@
     ],
     "pdfName": "Talonflame",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fire",
@@ -16381,7 +17252,7 @@
     ],
     "pdfName": "Vivillon",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "bug",
@@ -16471,7 +17342,7 @@
     ],
     "pdfName": "Pyroar",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fire",
@@ -16578,7 +17449,7 @@
     ],
     "pdfName": "Floette-Eternal",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fairy"
@@ -16674,7 +17545,7 @@
     ],
     "pdfName": "Florges",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fairy"
@@ -16751,6 +17622,105 @@
     "allowedMegaForms": []
   },
   {
+    "id": "gogoat",
+    "nationalDexNumber": 673,
+    "displayName": "Gogoat",
+    "aliases": [
+      "Gogoat",
+      "gogoat"
+    ],
+    "showdownAliases": [
+      "gogoat",
+      "Gogoat",
+      "Gogoat"
+    ],
+    "pdfName": "Gogoat",
+    "legalIn": [
+      "M-C"
+    ],
+    "types": [
+      "grass"
+    ],
+    "baseStats": {
+      "hp": 123,
+      "atk": 100,
+      "def": 62,
+      "spa": 97,
+      "spd": 81,
+      "spe": 68
+    },
+    "presentedStats": {
+      "hp": 198,
+      "atk": 120,
+      "def": 82,
+      "spa": 117,
+      "spd": 101,
+      "spe": 88
+    },
+    "forms": [],
+    "abilities": [
+      "grass-pelt",
+      "sap-sipper"
+    ],
+    "moves": [
+      "aerial-ace",
+      "body-slam",
+      "brick-break",
+      "bulk-up",
+      "bulldoze",
+      "bullet-seed",
+      "dig",
+      "double-edge",
+      "earthquake",
+      "endeavor",
+      "endure",
+      "energy-ball",
+      "facade",
+      "giga-drain",
+      "giga-impact",
+      "grass-knot",
+      "grassy-glide",
+      "grassy-terrain",
+      "growth",
+      "helping-hand",
+      "high-horsepower",
+      "horn-leech",
+      "hyper-beam",
+      "iron-tail",
+      "leaf-blade",
+      "leaf-storm",
+      "leech-seed",
+      "megahorn",
+      "milk-drink",
+      "mud-shot",
+      "mud-slap",
+      "payback",
+      "play-rough",
+      "protect",
+      "rain-dance",
+      "rest",
+      "roar",
+      "rock-slide",
+      "round",
+      "seed-bomb",
+      "sleep-talk",
+      "snore",
+      "solar-beam",
+      "stomping-tantrum",
+      "substitute",
+      "sunny-day",
+      "superpower",
+      "surf",
+      "synthesis",
+      "throat-chop",
+      "trailblaze",
+      "wild-charge",
+      "worry-seed",
+      "zen-headbutt"
+    ],
+    "allowedMegaForms": []
+  },
+  {
     "id": "pangoro",
     "nationalDexNumber": 675,
     "displayName": "Pangoro",
@@ -16765,7 +17735,7 @@
     ],
     "pdfName": "Pangoro",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fighting",
@@ -16855,6 +17825,7 @@
       "scary-face",
       "seismic-toss",
       "shadow-claw",
+      "slash",
       "sleep-talk",
       "sludge-bomb",
       "snarl",
@@ -16892,7 +17863,7 @@
     ],
     "pdfName": "Furfrou",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "normal"
@@ -16976,7 +17947,7 @@
     ],
     "pdfName": "Meowstic",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "psychic"
@@ -17092,7 +18063,7 @@
     ],
     "pdfName": "Meowstic-F",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "psychic"
@@ -17204,7 +18175,7 @@
     ],
     "pdfName": "Aegislash",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "steel",
@@ -17267,6 +18238,7 @@
       "shadow-ball",
       "shadow-claw",
       "shadow-sneak",
+      "slash",
       "sleep-talk",
       "snore",
       "solar-blade",
@@ -17294,7 +18266,7 @@
     ],
     "pdfName": "Aromatisse",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fairy"
@@ -17387,7 +18359,7 @@
     ],
     "pdfName": "Slurpuff",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fairy"
@@ -17474,7 +18446,7 @@
     ],
     "pdfName": "Malamar",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "dark",
@@ -17551,6 +18523,7 @@
       "round",
       "scary-face",
       "skill-swap",
+      "slash",
       "sleep-talk",
       "snore",
       "spite",
@@ -17599,7 +18572,7 @@
     ],
     "pdfName": "Barbaracle",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "rock",
@@ -17682,6 +18655,7 @@
       "screech",
       "shadow-claw",
       "shell-smash",
+      "slash",
       "sleep-talk",
       "sludge-bomb",
       "sludge-wave",
@@ -17727,7 +18701,7 @@
     ],
     "pdfName": "Dragalge",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "poison",
@@ -17836,7 +18810,7 @@
     ],
     "pdfName": "Clawitzer",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "water"
@@ -17932,7 +18906,7 @@
     ],
     "pdfName": "Heliolisk",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "electric",
@@ -18042,7 +19016,7 @@
     ],
     "pdfName": "Tyrantrum",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "rock",
@@ -18152,7 +19126,7 @@
     ],
     "pdfName": "Aurorus",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "rock",
@@ -18254,7 +19228,7 @@
     ],
     "pdfName": "Sylveon",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fairy"
@@ -18354,7 +19328,7 @@
     ],
     "pdfName": "Hawlucha",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fighting",
@@ -18485,7 +19459,7 @@
     ],
     "pdfName": "Dedenne",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "electric",
@@ -18582,7 +19556,7 @@
     ],
     "pdfName": "Goodra",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "dragon"
@@ -18695,7 +19669,7 @@
     ],
     "pdfName": "Goodra-Hisui",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "steel",
@@ -18805,7 +19779,7 @@
     ],
     "pdfName": "Klefki",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "steel",
@@ -18895,7 +19869,7 @@
     ],
     "pdfName": "Trevenant",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "ghost",
@@ -19015,7 +19989,7 @@
     ],
     "pdfName": "Gourgeist",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "ghost",
@@ -19123,7 +20097,7 @@
     ],
     "pdfName": "Gourgeist-Large",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "ghost",
@@ -19231,7 +20205,7 @@
     ],
     "pdfName": "Gourgeist-Small",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "ghost",
@@ -19339,7 +20313,7 @@
     ],
     "pdfName": "Gourgeist-Super",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "ghost",
@@ -19449,7 +20423,7 @@
     ],
     "pdfName": "Avalugg",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "ice"
@@ -19546,7 +20520,7 @@
     ],
     "pdfName": "Avalugg-Hisui",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "ice",
@@ -19642,7 +20616,7 @@
     ],
     "pdfName": "Noivern",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "flying",
@@ -19753,7 +20727,7 @@
     ],
     "pdfName": "Decidueye",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "grass",
@@ -19867,7 +20841,7 @@
     ],
     "pdfName": "Decidueye-Hisui",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "grass",
@@ -19979,7 +20953,7 @@
     ],
     "pdfName": "Incineroar",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fire",
@@ -20102,7 +21076,7 @@
     ],
     "pdfName": "Primarina",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "water",
@@ -20211,7 +21185,7 @@
     ],
     "pdfName": "Toucannon",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "normal",
@@ -20311,7 +21285,7 @@
     ],
     "pdfName": "Crabominable",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fighting",
@@ -20431,7 +21405,7 @@
     ],
     "pdfName": "Lycanroc",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "rock"
@@ -20536,7 +21510,7 @@
     ],
     "pdfName": "Lycanroc-Dusk",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "rock"
@@ -20642,7 +21616,7 @@
     ],
     "pdfName": "Lycanroc-Midnight",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "rock"
@@ -20756,7 +21730,7 @@
     ],
     "pdfName": "Toxapex",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "poison",
@@ -20854,7 +21828,7 @@
     ],
     "pdfName": "Mudsdale",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "ground"
@@ -20945,7 +21919,7 @@
     ],
     "pdfName": "Araquanid",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "water",
@@ -21042,7 +22016,7 @@
     ],
     "pdfName": "Salazzle",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "poison",
@@ -21158,7 +22132,7 @@
     ],
     "pdfName": "Tsareena",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "grass"
@@ -21258,7 +22232,7 @@
     ],
     "pdfName": "Oranguru",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "normal",
@@ -21369,7 +22343,7 @@
     ],
     "pdfName": "Passimian",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fighting"
@@ -21466,6 +22440,128 @@
     "allowedMegaForms": []
   },
   {
+    "id": "golisopod",
+    "nationalDexNumber": 768,
+    "displayName": "Golisopod",
+    "aliases": [
+      "Golisopod",
+      "golisopod"
+    ],
+    "showdownAliases": [
+      "golisopod",
+      "Golisopod",
+      "Golisopod"
+    ],
+    "pdfName": "Golisopod",
+    "legalIn": [
+      "M-C"
+    ],
+    "types": [
+      "bug",
+      "water"
+    ],
+    "baseStats": {
+      "hp": 75,
+      "atk": 125,
+      "def": 140,
+      "spa": 60,
+      "spd": 90,
+      "spe": 40
+    },
+    "presentedStats": {
+      "hp": 150,
+      "atk": 145,
+      "def": 160,
+      "spa": 80,
+      "spd": 110,
+      "spe": 60
+    },
+    "forms": [],
+    "abilities": [
+      "emergency-exit"
+    ],
+    "moves": [
+      "agility",
+      "aqua-jet",
+      "assurance",
+      "attract",
+      "blizzard",
+      "brick-break",
+      "bug-bite",
+      "bug-buzz",
+      "bulk-up",
+      "chilling-water",
+      "close-combat",
+      "dark-pulse",
+      "dive",
+      "double-hit",
+      "drill-run",
+      "endure",
+      "facade",
+      "first-impression",
+      "fling",
+      "focus-blast",
+      "giga-impact",
+      "gunk-shot",
+      "hyper-beam",
+      "ice-beam",
+      "icy-wind",
+      "iron-defense",
+      "iron-head",
+      "leech-life",
+      "liquidation",
+      "mud-shot",
+      "muddy-water",
+      "night-slash",
+      "payback",
+      "pin-missile",
+      "poison-jab",
+      "pounce",
+      "protect",
+      "rain-dance",
+      "razor-shell",
+      "rest",
+      "rock-slide",
+      "rock-tomb",
+      "round",
+      "scald",
+      "screech",
+      "shadow-claw",
+      "skitter-smack",
+      "slash",
+      "sleep-talk",
+      "sludge-bomb",
+      "sludge-wave",
+      "snarl",
+      "snore",
+      "spikes",
+      "spite",
+      "struggle-bug",
+      "substitute",
+      "sucker-punch",
+      "surf",
+      "swords-dance",
+      "taunt",
+      "throat-chop",
+      "u-turn",
+      "venoshock",
+      "waterfall",
+      "wide-guard",
+      "x-scissor"
+    ],
+    "allowedMegaForms": [
+      {
+        "id": "golisopodmega",
+        "baseSpeciesId": "golisopod",
+        "displayName": "Golisopod-Mega",
+        "megaStoneId": "golisopite",
+        "abilityId": "tough-claws",
+        "abilityName": "Tough Claws",
+        "pdfName": "Golisopod-Mega"
+      }
+    ]
+  },
+  {
     "id": "mimikyu",
     "nationalDexNumber": 778,
     "displayName": "Mimikyu",
@@ -21480,7 +22576,7 @@
     ],
     "pdfName": "Mimikyu",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "ghost",
@@ -21550,6 +22646,7 @@
       "shadow-ball",
       "shadow-claw",
       "shadow-sneak",
+      "slash",
       "sleep-talk",
       "snore",
       "spite",
@@ -21585,7 +22682,7 @@
     ],
     "pdfName": "Drampa",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "normal",
@@ -21709,7 +22806,7 @@
     ],
     "pdfName": "Kommo-o",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "dragon",
@@ -21820,6 +22917,334 @@
     "allowedMegaForms": []
   },
   {
+    "id": "rillaboom",
+    "nationalDexNumber": 812,
+    "displayName": "Rillaboom",
+    "aliases": [
+      "Rillaboom",
+      "rillaboom"
+    ],
+    "showdownAliases": [
+      "rillaboom",
+      "Rillaboom",
+      "Rillaboom"
+    ],
+    "pdfName": "Rillaboom",
+    "legalIn": [
+      "M-C"
+    ],
+    "types": [
+      "grass"
+    ],
+    "baseStats": {
+      "hp": 100,
+      "atk": 125,
+      "def": 90,
+      "spa": 60,
+      "spd": 70,
+      "spe": 85
+    },
+    "presentedStats": {
+      "hp": 175,
+      "atk": 145,
+      "def": 110,
+      "spa": 80,
+      "spd": 90,
+      "spe": 105
+    },
+    "forms": [],
+    "abilities": [
+      "grassy-surge",
+      "overgrow"
+    ],
+    "moves": [
+      "acrobatics",
+      "assurance",
+      "body-press",
+      "body-slam",
+      "boomburst",
+      "brick-break",
+      "brutal-swing",
+      "bulk-up",
+      "bulldoze",
+      "bullet-seed",
+      "double-edge",
+      "double-hit",
+      "drain-punch",
+      "drum-beating",
+      "earth-power",
+      "earthquake",
+      "endeavor",
+      "endure",
+      "energy-ball",
+      "facade",
+      "fake-out",
+      "fling",
+      "focus-blast",
+      "focus-energy",
+      "focus-punch",
+      "frenzy-plant",
+      "giga-drain",
+      "giga-impact",
+      "grass-knot",
+      "grassy-glide",
+      "grassy-terrain",
+      "growth",
+      "hammer-arm",
+      "high-horsepower",
+      "hyper-beam",
+      "hyper-voice",
+      "knock-off",
+      "leaf-storm",
+      "leech-seed",
+      "low-kick",
+      "low-sweep",
+      "mega-kick",
+      "mud-shot",
+      "noble-roar",
+      "protect",
+      "rest",
+      "round",
+      "scary-face",
+      "screech",
+      "seed-bomb",
+      "sleep-talk",
+      "snarl",
+      "snore",
+      "solar-beam",
+      "solar-blade",
+      "stomping-tantrum",
+      "substitute",
+      "sunny-day",
+      "superpower",
+      "swords-dance",
+      "taunt",
+      "thief",
+      "trailblaze",
+      "u-turn",
+      "uproar",
+      "wood-hammer",
+      "worry-seed"
+    ],
+    "allowedMegaForms": []
+  },
+  {
+    "id": "cinderace",
+    "nationalDexNumber": 815,
+    "displayName": "Cinderace",
+    "aliases": [
+      "Cinderace",
+      "cinderace"
+    ],
+    "showdownAliases": [
+      "cinderace",
+      "Cinderace",
+      "Cinderace"
+    ],
+    "pdfName": "Cinderace",
+    "legalIn": [
+      "M-C"
+    ],
+    "types": [
+      "fire"
+    ],
+    "baseStats": {
+      "hp": 80,
+      "atk": 116,
+      "def": 75,
+      "spa": 65,
+      "spd": 75,
+      "spe": 119
+    },
+    "presentedStats": {
+      "hp": 155,
+      "atk": 136,
+      "def": 95,
+      "spa": 85,
+      "spd": 95,
+      "spe": 139
+    },
+    "forms": [],
+    "abilities": [
+      "blaze",
+      "libero"
+    ],
+    "moves": [
+      "acrobatics",
+      "agility",
+      "assurance",
+      "baton-pass",
+      "blast-burn",
+      "blaze-kick",
+      "bounce",
+      "bulk-up",
+      "burning-jealousy",
+      "coaching",
+      "counter",
+      "court-change",
+      "double-edge",
+      "electro-ball",
+      "endure",
+      "facade",
+      "feint",
+      "fire-blast",
+      "fire-fang",
+      "fire-punch",
+      "fire-spin",
+      "flame-charge",
+      "flamethrower",
+      "flare-blitz",
+      "fling",
+      "focus-blast",
+      "focus-energy",
+      "giga-impact",
+      "gunk-shot",
+      "heat-wave",
+      "helping-hand",
+      "high-jump-kick",
+      "hyper-beam",
+      "iron-head",
+      "low-kick",
+      "low-sweep",
+      "mega-kick",
+      "mud-shot",
+      "mud-slap",
+      "overheat",
+      "protect",
+      "pyro-ball",
+      "quick-attack",
+      "rest",
+      "reversal",
+      "round",
+      "scorching-sands",
+      "shadow-ball",
+      "sleep-talk",
+      "smack-down",
+      "snarl",
+      "snore",
+      "substitute",
+      "sucker-punch",
+      "sunny-day",
+      "super-fang",
+      "swords-dance",
+      "taunt",
+      "temper-flare",
+      "trailblaze",
+      "u-turn",
+      "weather-ball",
+      "will-o-wisp",
+      "zen-headbutt"
+    ],
+    "allowedMegaForms": []
+  },
+  {
+    "id": "inteleon",
+    "nationalDexNumber": 818,
+    "displayName": "Inteleon",
+    "aliases": [
+      "Inteleon",
+      "inteleon"
+    ],
+    "showdownAliases": [
+      "inteleon",
+      "Inteleon",
+      "Inteleon"
+    ],
+    "pdfName": "Inteleon",
+    "legalIn": [
+      "M-C"
+    ],
+    "types": [
+      "water"
+    ],
+    "baseStats": {
+      "hp": 70,
+      "atk": 85,
+      "def": 65,
+      "spa": 125,
+      "spd": 65,
+      "spe": 120
+    },
+    "presentedStats": {
+      "hp": 145,
+      "atk": 105,
+      "def": 85,
+      "spa": 145,
+      "spd": 85,
+      "spe": 140
+    },
+    "forms": [],
+    "abilities": [
+      "sniper",
+      "torrent"
+    ],
+    "moves": [
+      "acrobatics",
+      "agility",
+      "air-cutter",
+      "air-slash",
+      "aqua-jet",
+      "aqua-ring",
+      "baton-pass",
+      "bind",
+      "blizzard",
+      "bounce",
+      "breaking-swipe",
+      "chilling-water",
+      "dark-pulse",
+      "dive",
+      "double-team",
+      "endure",
+      "facade",
+      "fell-stinger",
+      "fling",
+      "flip-turn",
+      "focus-energy",
+      "giga-impact",
+      "haze",
+      "hydro-cannon",
+      "hydro-pump",
+      "hyper-beam",
+      "ice-beam",
+      "ice-shard",
+      "icicle-spear",
+      "icy-wind",
+      "light-screen",
+      "liquidation",
+      "mud-shot",
+      "muddy-water",
+      "protect",
+      "psych-up",
+      "rain-dance",
+      "reflect",
+      "rest",
+      "round",
+      "scald",
+      "scale-shot",
+      "shadow-ball",
+      "skitter-smack",
+      "sleep-talk",
+      "smack-down",
+      "snipe-shot",
+      "snore",
+      "snowscape",
+      "soak",
+      "substitute",
+      "sucker-punch",
+      "surf",
+      "swords-dance",
+      "taunt",
+      "tearful-look",
+      "u-turn",
+      "vacuum-wave",
+      "water-pulse",
+      "waterfall",
+      "weather-ball",
+      "whirlpool"
+    ],
+    "allowedMegaForms": []
+  },
+  {
     "id": "corviknight",
     "nationalDexNumber": 823,
     "displayName": "Corviknight",
@@ -21834,7 +23259,7 @@
     ],
     "pdfName": "Corviknight",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "flying",
@@ -21922,6 +23347,103 @@
     "allowedMegaForms": []
   },
   {
+    "id": "thievul",
+    "nationalDexNumber": 828,
+    "displayName": "Thievul",
+    "aliases": [
+      "Thievul",
+      "thievul"
+    ],
+    "showdownAliases": [
+      "thievul",
+      "Thievul",
+      "Thievul"
+    ],
+    "pdfName": "Thievul",
+    "legalIn": [
+      "M-C"
+    ],
+    "types": [
+      "dark"
+    ],
+    "baseStats": {
+      "hp": 70,
+      "atk": 58,
+      "def": 58,
+      "spa": 87,
+      "spd": 92,
+      "spe": 90
+    },
+    "presentedStats": {
+      "hp": 145,
+      "atk": 78,
+      "def": 78,
+      "spa": 107,
+      "spd": 112,
+      "spe": 110
+    },
+    "forms": [],
+    "abilities": [
+      "run-away",
+      "stakeout",
+      "unburden"
+    ],
+    "moves": [
+      "acrobatics",
+      "agility",
+      "assurance",
+      "attract",
+      "baton-pass",
+      "beat-up",
+      "burning-jealousy",
+      "crunch",
+      "dark-pulse",
+      "dig",
+      "double-team",
+      "endure",
+      "facade",
+      "fake-tears",
+      "fire-fang",
+      "first-impression",
+      "foul-play",
+      "giga-impact",
+      "grass-knot",
+      "howl",
+      "hyper-beam",
+      "ice-fang",
+      "knock-off",
+      "lash-out",
+      "mud-shot",
+      "nasty-plot",
+      "night-slash",
+      "parting-shot",
+      "play-rough",
+      "protect",
+      "psychic",
+      "quick-attack",
+      "quick-guard",
+      "rest",
+      "roar",
+      "round",
+      "screech",
+      "shadow-ball",
+      "shadow-claw",
+      "sleep-talk",
+      "snarl",
+      "snore",
+      "substitute",
+      "sucker-punch",
+      "tail-slap",
+      "taunt",
+      "thief",
+      "thunder-fang",
+      "torment",
+      "trailblaze",
+      "u-turn"
+    ],
+    "allowedMegaForms": []
+  },
+  {
     "id": "flapple",
     "nationalDexNumber": 841,
     "displayName": "Flapple",
@@ -21936,7 +23458,7 @@
     ],
     "pdfName": "Flapple",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "grass",
@@ -22027,7 +23549,7 @@
     ],
     "pdfName": "Appletun",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "grass",
@@ -22125,7 +23647,7 @@
     ],
     "pdfName": "Sandaconda",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "ground"
@@ -22205,6 +23727,331 @@
     "allowedMegaForms": []
   },
   {
+    "id": "toxtricity",
+    "nationalDexNumber": 849,
+    "displayName": "Toxtricity",
+    "aliases": [
+      "Toxtricity",
+      "toxtricity"
+    ],
+    "showdownAliases": [
+      "toxtricity",
+      "Toxtricity",
+      "Toxtricity"
+    ],
+    "pdfName": "Toxtricity",
+    "legalIn": [
+      "M-C"
+    ],
+    "types": [
+      "electric",
+      "poison"
+    ],
+    "baseStats": {
+      "hp": 75,
+      "atk": 98,
+      "def": 70,
+      "spa": 114,
+      "spd": 70,
+      "spe": 75
+    },
+    "presentedStats": {
+      "hp": 150,
+      "atk": 118,
+      "def": 90,
+      "spa": 134,
+      "spd": 90,
+      "spe": 95
+    },
+    "forms": [],
+    "abilities": [
+      "plus",
+      "punk-rock",
+      "technician"
+    ],
+    "moves": [
+      "acid-spray",
+      "belch",
+      "boomburst",
+      "brick-break",
+      "charge",
+      "charge-beam",
+      "charm",
+      "discharge",
+      "drain-punch",
+      "eerie-impulse",
+      "electric-terrain",
+      "electro-ball",
+      "electroweb",
+      "encore",
+      "endeavor",
+      "endure",
+      "facade",
+      "fire-punch",
+      "flail",
+      "fling",
+      "giga-impact",
+      "gunk-shot",
+      "helping-hand",
+      "hex",
+      "hyper-beam",
+      "hyper-voice",
+      "mega-kick",
+      "metal-sound",
+      "noble-roar",
+      "nuzzle",
+      "overdrive",
+      "payback",
+      "poison-jab",
+      "protect",
+      "psychic-noise",
+      "rain-dance",
+      "rest",
+      "rising-voltage",
+      "round",
+      "scary-face",
+      "screech",
+      "shift-gear",
+      "sleep-talk",
+      "sludge-bomb",
+      "sludge-wave",
+      "snarl",
+      "snore",
+      "stored-power",
+      "substitute",
+      "sunny-day",
+      "swagger",
+      "taunt",
+      "tearful-look",
+      "thief",
+      "throat-chop",
+      "thunder",
+      "thunder-fang",
+      "thunder-punch",
+      "thunder-wave",
+      "thunderbolt",
+      "toxic",
+      "toxic-spikes",
+      "trailblaze",
+      "uproar",
+      "venoshock",
+      "volt-switch",
+      "wild-charge",
+      "zap-cannon"
+    ],
+    "allowedMegaForms": []
+  },
+  {
+    "id": "toxtricitylowkey",
+    "nationalDexNumber": 849,
+    "displayName": "Toxtricity-Low-Key",
+    "aliases": [
+      "Toxtricity Low Key",
+      "Toxtricity-Low-Key",
+      "toxtricitylowkey"
+    ],
+    "showdownAliases": [
+      "toxtricitylowkey",
+      "Toxtricity-Low-Key",
+      "ToxtricityLowKey"
+    ],
+    "pdfName": "Toxtricity-Low-Key",
+    "legalIn": [
+      "M-C"
+    ],
+    "types": [
+      "electric",
+      "poison"
+    ],
+    "baseStats": {
+      "hp": 75,
+      "atk": 98,
+      "def": 70,
+      "spa": 114,
+      "spd": 70,
+      "spe": 75
+    },
+    "presentedStats": {
+      "hp": 150,
+      "atk": 118,
+      "def": 90,
+      "spa": 134,
+      "spd": 90,
+      "spe": 95
+    },
+    "forms": [],
+    "abilities": [
+      "minus",
+      "punk-rock",
+      "technician"
+    ],
+    "moves": [
+      "acid-spray",
+      "belch",
+      "boomburst",
+      "brick-break",
+      "charge",
+      "charge-beam",
+      "charm",
+      "discharge",
+      "drain-punch",
+      "eerie-impulse",
+      "electric-terrain",
+      "electro-ball",
+      "electroweb",
+      "encore",
+      "endeavor",
+      "endure",
+      "facade",
+      "fire-punch",
+      "flail",
+      "fling",
+      "giga-impact",
+      "gunk-shot",
+      "helping-hand",
+      "hex",
+      "hyper-beam",
+      "hyper-voice",
+      "magnetic-flux",
+      "mega-kick",
+      "metal-sound",
+      "noble-roar",
+      "nuzzle",
+      "overdrive",
+      "parabolic-charge",
+      "payback",
+      "poison-jab",
+      "protect",
+      "psychic-noise",
+      "rain-dance",
+      "rest",
+      "rising-voltage",
+      "round",
+      "scary-face",
+      "screech",
+      "sleep-talk",
+      "sludge-bomb",
+      "sludge-wave",
+      "snarl",
+      "snore",
+      "stored-power",
+      "substitute",
+      "sunny-day",
+      "swagger",
+      "taunt",
+      "tearful-look",
+      "thief",
+      "throat-chop",
+      "thunder",
+      "thunder-fang",
+      "thunder-punch",
+      "thunder-wave",
+      "thunderbolt",
+      "toxic",
+      "toxic-spikes",
+      "trailblaze",
+      "uproar",
+      "venoshock",
+      "volt-switch",
+      "wild-charge"
+    ],
+    "allowedMegaForms": []
+  },
+  {
+    "id": "grapploct",
+    "nationalDexNumber": 853,
+    "displayName": "Grapploct",
+    "aliases": [
+      "Grapploct",
+      "grapploct"
+    ],
+    "showdownAliases": [
+      "grapploct",
+      "Grapploct",
+      "Grapploct"
+    ],
+    "pdfName": "Grapploct",
+    "legalIn": [
+      "M-C"
+    ],
+    "types": [
+      "fighting"
+    ],
+    "baseStats": {
+      "hp": 80,
+      "atk": 118,
+      "def": 90,
+      "spa": 70,
+      "spd": 80,
+      "spe": 42
+    },
+    "presentedStats": {
+      "hp": 155,
+      "atk": 138,
+      "def": 110,
+      "spa": 90,
+      "spd": 100,
+      "spe": 62
+    },
+    "forms": [],
+    "abilities": [
+      "limber",
+      "technician"
+    ],
+    "moves": [
+      "attract",
+      "bind",
+      "body-slam",
+      "brick-break",
+      "brutal-swing",
+      "bulk-up",
+      "chilling-water",
+      "circle-throw",
+      "close-combat",
+      "coaching",
+      "detect",
+      "dig",
+      "dive",
+      "drain-punch",
+      "endure",
+      "facade",
+      "feint",
+      "focus-blast",
+      "giga-impact",
+      "hydro-pump",
+      "hyper-beam",
+      "ice-punch",
+      "liquidation",
+      "mach-punch",
+      "mud-shot",
+      "muddy-water",
+      "octolock",
+      "pain-split",
+      "payback",
+      "protect",
+      "rest",
+      "reversal",
+      "round",
+      "scary-face",
+      "seismic-toss",
+      "skitter-smack",
+      "sleep-talk",
+      "snore",
+      "soak",
+      "stomping-tantrum",
+      "storm-throw",
+      "substitute",
+      "sucker-punch",
+      "superpower",
+      "surf",
+      "taunt",
+      "topsy-turvy",
+      "waterfall",
+      "whirlpool"
+    ],
+    "allowedMegaForms": []
+  },
+  {
     "id": "polteageist",
     "nationalDexNumber": 855,
     "displayName": "Polteageist",
@@ -22219,7 +24066,7 @@
     ],
     "pdfName": "Polteageist",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "ghost"
@@ -22310,7 +24157,7 @@
     ],
     "pdfName": "Hatterene",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "psychic",
@@ -22416,7 +24263,7 @@
     ],
     "pdfName": "Grimmsnarl",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "dark",
@@ -22513,6 +24360,220 @@
     "allowedMegaForms": []
   },
   {
+    "id": "perrserker",
+    "nationalDexNumber": 863,
+    "displayName": "Perrserker",
+    "aliases": [
+      "Perrserker",
+      "perrserker"
+    ],
+    "showdownAliases": [
+      "perrserker",
+      "Perrserker",
+      "Perrserker"
+    ],
+    "pdfName": "Perrserker",
+    "legalIn": [
+      "M-C"
+    ],
+    "types": [
+      "steel"
+    ],
+    "baseStats": {
+      "hp": 70,
+      "atk": 110,
+      "def": 100,
+      "spa": 50,
+      "spd": 60,
+      "spe": 50
+    },
+    "presentedStats": {
+      "hp": 145,
+      "atk": 130,
+      "def": 120,
+      "spa": 70,
+      "spd": 80,
+      "spe": 70
+    },
+    "forms": [],
+    "abilities": [
+      "battle-armor",
+      "steely-spirit",
+      "tough-claws"
+    ],
+    "moves": [
+      "aerial-ace",
+      "amnesia",
+      "assurance",
+      "baton-pass",
+      "bite",
+      "body-slam",
+      "brick-break",
+      "bulk-up",
+      "charm",
+      "chilling-water",
+      "close-combat",
+      "covet",
+      "crunch",
+      "curse",
+      "dark-pulse",
+      "dig",
+      "double-edge",
+      "endeavor",
+      "endure",
+      "facade",
+      "fake-out",
+      "fake-tears",
+      "flail",
+      "flash-cannon",
+      "fling",
+      "foul-play",
+      "giga-impact",
+      "gunk-shot",
+      "gyro-ball",
+      "heavy-slam",
+      "helping-hand",
+      "hyper-beam",
+      "hyper-voice",
+      "iron-defense",
+      "iron-head",
+      "iron-tail",
+      "knock-off",
+      "lash-out",
+      "metal-burst",
+      "metal-sound",
+      "nasty-plot",
+      "night-slash",
+      "payback",
+      "play-rough",
+      "protect",
+      "rain-dance",
+      "rest",
+      "round",
+      "screech",
+      "seed-bomb",
+      "shadow-ball",
+      "shadow-claw",
+      "slash",
+      "sleep-talk",
+      "snore",
+      "spikes",
+      "spite",
+      "stealth-rock",
+      "steel-beam",
+      "substitute",
+      "sunny-day",
+      "swagger",
+      "swords-dance",
+      "taunt",
+      "thief",
+      "thrash",
+      "throat-chop",
+      "thunder",
+      "thunder-wave",
+      "thunderbolt",
+      "trailblaze",
+      "u-turn",
+      "uproar",
+      "x-scissor"
+    ],
+    "allowedMegaForms": []
+  },
+  {
+    "id": "sirfetchd",
+    "nationalDexNumber": 865,
+    "displayName": "Sirfetch’d",
+    "aliases": [
+      "Sirfetch’d",
+      "sirfetchd"
+    ],
+    "showdownAliases": [
+      "sirfetchd",
+      "Sirfetch’d",
+      "Sirfetch’d"
+    ],
+    "pdfName": "Sirfetch’d",
+    "legalIn": [
+      "M-C"
+    ],
+    "types": [
+      "fighting"
+    ],
+    "baseStats": {
+      "hp": 62,
+      "atk": 135,
+      "def": 95,
+      "spa": 68,
+      "spd": 82,
+      "spe": 65
+    },
+    "presentedStats": {
+      "hp": 137,
+      "atk": 155,
+      "def": 115,
+      "spa": 88,
+      "spd": 102,
+      "spe": 85
+    },
+    "forms": [],
+    "abilities": [
+      "scrappy",
+      "steadfast"
+    ],
+    "moves": [
+      "aerial-ace",
+      "assurance",
+      "attract",
+      "body-slam",
+      "brave-bird",
+      "brick-break",
+      "brutal-swing",
+      "close-combat",
+      "coaching",
+      "counter",
+      "covet",
+      "curse",
+      "defog",
+      "detect",
+      "double-edge",
+      "dual-wingbeat",
+      "endure",
+      "facade",
+      "feather-dance",
+      "feint",
+      "final-gambit",
+      "first-impression",
+      "flail",
+      "focus-energy",
+      "grassy-glide",
+      "helping-hand",
+      "iron-defense",
+      "knock-off",
+      "leaf-blade",
+      "meteor-assault",
+      "night-slash",
+      "poison-jab",
+      "protect",
+      "quick-attack",
+      "quick-guard",
+      "rest",
+      "round",
+      "simple-beam",
+      "sky-attack",
+      "slash",
+      "sleep-talk",
+      "snore",
+      "solar-blade",
+      "steel-wing",
+      "substitute",
+      "sunny-day",
+      "superpower",
+      "swords-dance",
+      "throat-chop"
+    ],
+    "allowedMegaForms": []
+  },
+  {
     "id": "mrrime",
     "nationalDexNumber": 866,
     "displayName": "Mr. Rime",
@@ -22527,7 +24588,7 @@
     ],
     "pdfName": "Mr. Rime",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "ice",
@@ -22667,7 +24728,7 @@
     ],
     "pdfName": "Runerigus",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "ground",
@@ -22781,7 +24842,7 @@
     ],
     "pdfName": "Alcremie",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fairy"
@@ -22875,7 +24936,7 @@
     ],
     "pdfName": "Falinks",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fighting"
@@ -22967,6 +25028,285 @@
     ]
   },
   {
+    "id": "pincurchin",
+    "nationalDexNumber": 871,
+    "displayName": "Pincurchin",
+    "aliases": [
+      "Pincurchin",
+      "pincurchin"
+    ],
+    "showdownAliases": [
+      "pincurchin",
+      "Pincurchin",
+      "Pincurchin"
+    ],
+    "pdfName": "Pincurchin",
+    "legalIn": [
+      "M-C"
+    ],
+    "types": [
+      "electric"
+    ],
+    "baseStats": {
+      "hp": 48,
+      "atk": 101,
+      "def": 95,
+      "spa": 91,
+      "spd": 85,
+      "spe": 15
+    },
+    "presentedStats": {
+      "hp": 123,
+      "atk": 121,
+      "def": 115,
+      "spa": 111,
+      "spd": 105,
+      "spe": 35
+    },
+    "forms": [],
+    "abilities": [
+      "electric-surge",
+      "lightning-rod"
+    ],
+    "moves": [
+      "acupressure",
+      "assurance",
+      "body-slam",
+      "charge",
+      "charge-beam",
+      "chilling-water",
+      "curse",
+      "discharge",
+      "electric-terrain",
+      "electro-ball",
+      "electroweb",
+      "endure",
+      "facade",
+      "giga-impact",
+      "hex",
+      "hydro-pump",
+      "hyper-beam",
+      "liquidation",
+      "memento",
+      "muddy-water",
+      "pain-split",
+      "payback",
+      "pin-missile",
+      "poison-jab",
+      "protect",
+      "rain-dance",
+      "recover",
+      "rest",
+      "reversal",
+      "rising-voltage",
+      "round",
+      "scald",
+      "self-destruct",
+      "sleep-talk",
+      "snore",
+      "spikes",
+      "substitute",
+      "sucker-punch",
+      "supercell-slam",
+      "surf",
+      "throat-chop",
+      "thunder",
+      "thunder-wave",
+      "thunderbolt",
+      "toxic-spikes",
+      "venoshock",
+      "wild-charge",
+      "zing-zap"
+    ],
+    "allowedMegaForms": []
+  },
+  {
+    "id": "indeedee",
+    "nationalDexNumber": 876,
+    "displayName": "Indeedee",
+    "aliases": [
+      "Indeedee",
+      "indeedee"
+    ],
+    "showdownAliases": [
+      "indeedee",
+      "Indeedee",
+      "Indeedee"
+    ],
+    "pdfName": "Indeedee",
+    "legalIn": [
+      "M-C"
+    ],
+    "types": [
+      "psychic",
+      "normal"
+    ],
+    "baseStats": {
+      "hp": 60,
+      "atk": 65,
+      "def": 55,
+      "spa": 105,
+      "spd": 95,
+      "spe": 95
+    },
+    "presentedStats": {
+      "hp": 135,
+      "atk": 85,
+      "def": 75,
+      "spa": 125,
+      "spd": 115,
+      "spe": 115
+    },
+    "forms": [],
+    "abilities": [
+      "inner-focus",
+      "psychic-surge",
+      "synchronize"
+    ],
+    "moves": [
+      "after-you",
+      "body-slam",
+      "calm-mind",
+      "dazzling-gleam",
+      "drain-punch",
+      "draining-kiss",
+      "encore",
+      "endure",
+      "energy-ball",
+      "expanding-force",
+      "extrasensory",
+      "facade",
+      "fake-out",
+      "future-sight",
+      "gravity",
+      "healing-wish",
+      "helping-hand",
+      "hyper-voice",
+      "imprison",
+      "last-resort",
+      "magic-room",
+      "mystical-fire",
+      "play-rough",
+      "power-split",
+      "power-swap",
+      "protect",
+      "psych-up",
+      "psychic",
+      "psychic-noise",
+      "psychic-terrain",
+      "psyshock",
+      "rest",
+      "round",
+      "shadow-ball",
+      "skill-swap",
+      "sleep-talk",
+      "snore",
+      "stored-power",
+      "substitute",
+      "terrain-pulse",
+      "tri-attack",
+      "trick",
+      "trick-room",
+      "wish",
+      "wonder-room",
+      "zen-headbutt"
+    ],
+    "allowedMegaForms": []
+  },
+  {
+    "id": "indeedeef",
+    "nationalDexNumber": 876,
+    "displayName": "Indeedee-F",
+    "aliases": [
+      "Indeedee F",
+      "Indeedee-F",
+      "indeedeef"
+    ],
+    "showdownAliases": [
+      "indeedeef",
+      "Indeedee-F",
+      "IndeedeeF"
+    ],
+    "pdfName": "Indeedee-F",
+    "legalIn": [
+      "M-C"
+    ],
+    "types": [
+      "psychic",
+      "normal"
+    ],
+    "baseStats": {
+      "hp": 70,
+      "atk": 55,
+      "def": 65,
+      "spa": 95,
+      "spd": 105,
+      "spe": 85
+    },
+    "presentedStats": {
+      "hp": 145,
+      "atk": 75,
+      "def": 85,
+      "spa": 115,
+      "spd": 125,
+      "spe": 105
+    },
+    "forms": [],
+    "abilities": [
+      "own-tempo",
+      "psychic-surge",
+      "synchronize"
+    ],
+    "moves": [
+      "alluring-voice",
+      "baton-pass",
+      "body-slam",
+      "calm-mind",
+      "charm",
+      "dazzling-gleam",
+      "drain-punch",
+      "draining-kiss",
+      "endure",
+      "energy-ball",
+      "facade",
+      "fake-out",
+      "follow-me",
+      "future-sight",
+      "guard-split",
+      "guard-swap",
+      "heal-pulse",
+      "healing-wish",
+      "helping-hand",
+      "hyper-voice",
+      "imprison",
+      "light-screen",
+      "mystical-fire",
+      "play-rough",
+      "protect",
+      "psych-up",
+      "psychic",
+      "psychic-terrain",
+      "psyshock",
+      "reflect",
+      "rest",
+      "round",
+      "safeguard",
+      "shadow-ball",
+      "sing",
+      "skill-swap",
+      "sleep-talk",
+      "snore",
+      "stored-power",
+      "substitute",
+      "terrain-pulse",
+      "trick",
+      "trick-room",
+      "wish",
+      "zen-headbutt"
+    ],
+    "allowedMegaForms": []
+  },
+  {
     "id": "morpeko",
     "nationalDexNumber": 877,
     "displayName": "Morpeko",
@@ -22981,7 +25321,7 @@
     ],
     "pdfName": "Morpeko",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "electric",
@@ -23091,7 +25431,7 @@
     ],
     "pdfName": "Dragapult",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "dragon",
@@ -23201,7 +25541,7 @@
     ],
     "pdfName": "Wyrdeer",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "normal",
@@ -23309,7 +25649,7 @@
     ],
     "pdfName": "Kleavor",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "bug",
@@ -23379,6 +25719,7 @@
       "sandstorm",
       "scary-face",
       "skitter-smack",
+      "slash",
       "sleep-talk",
       "smack-down",
       "stealth-rock",
@@ -23412,7 +25753,7 @@
     ],
     "pdfName": "Basculegion",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "water",
@@ -23509,7 +25850,7 @@
     ],
     "pdfName": "Basculegion-F",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "water",
@@ -23605,7 +25946,7 @@
     ],
     "pdfName": "Sneasler",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fighting",
@@ -23676,6 +26017,7 @@
       "screech",
       "shadow-ball",
       "shadow-claw",
+      "slash",
       "sleep-talk",
       "sludge-bomb",
       "sludge-wave",
@@ -23713,7 +26055,7 @@
     ],
     "pdfName": "Overqwil",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "dark",
@@ -23820,7 +26162,7 @@
     ],
     "pdfName": "Meowscarada",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "grass",
@@ -23897,6 +26239,7 @@
       "shadow-ball",
       "shadow-claw",
       "skill-swap",
+      "slash",
       "sleep-talk",
       "solar-beam",
       "spikes",
@@ -23931,7 +26274,7 @@
     ],
     "pdfName": "Skeledirge",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fire",
@@ -24033,7 +26376,7 @@
     ],
     "pdfName": "Quaquaval",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "water",
@@ -24124,6 +26467,117 @@
     "allowedMegaForms": []
   },
   {
+    "id": "pawmot",
+    "nationalDexNumber": 923,
+    "displayName": "Pawmot",
+    "aliases": [
+      "Pawmot",
+      "pawmot"
+    ],
+    "showdownAliases": [
+      "pawmot",
+      "Pawmot",
+      "Pawmot"
+    ],
+    "pdfName": "Pawmot",
+    "legalIn": [
+      "M-C"
+    ],
+    "types": [
+      "electric",
+      "fighting"
+    ],
+    "baseStats": {
+      "hp": 70,
+      "atk": 115,
+      "def": 70,
+      "spa": 70,
+      "spd": 60,
+      "spe": 105
+    },
+    "presentedStats": {
+      "hp": 145,
+      "atk": 135,
+      "def": 90,
+      "spa": 90,
+      "spd": 80,
+      "spe": 125
+    },
+    "forms": [],
+    "abilities": [
+      "iron-fist",
+      "natural-cure",
+      "volt-absorb"
+    ],
+    "moves": [
+      "agility",
+      "baton-pass",
+      "bite",
+      "body-press",
+      "brick-break",
+      "bulk-up",
+      "charge",
+      "charge-beam",
+      "charm",
+      "close-combat",
+      "coaching",
+      "crunch",
+      "dig",
+      "discharge",
+      "double-edge",
+      "double-shock",
+      "eerie-impulse",
+      "electric-terrain",
+      "electro-ball",
+      "electroweb",
+      "encore",
+      "endure",
+      "entrainment",
+      "facade",
+      "fake-out",
+      "fire-punch",
+      "fling",
+      "focus-blast",
+      "focus-punch",
+      "giga-impact",
+      "grass-knot",
+      "helping-hand",
+      "hyper-beam",
+      "ice-punch",
+      "knock-off",
+      "low-kick",
+      "low-sweep",
+      "mach-punch",
+      "nuzzle",
+      "play-rough",
+      "protect",
+      "quick-attack",
+      "rain-dance",
+      "rest",
+      "revival-blessing",
+      "rock-tomb",
+      "seed-bomb",
+      "sleep-talk",
+      "substitute",
+      "sunny-day",
+      "super-fang",
+      "supercell-slam",
+      "sweet-kiss",
+      "thief",
+      "throat-chop",
+      "thunder",
+      "thunder-fang",
+      "thunder-punch",
+      "thunder-wave",
+      "thunderbolt",
+      "upper-hand",
+      "volt-switch",
+      "wild-charge",
+      "wish"
+    ],
+    "allowedMegaForms": []
+  },
+  {
     "id": "maushold",
     "nationalDexNumber": 925,
     "displayName": "Maushold",
@@ -24138,7 +26592,7 @@
     ],
     "pdfName": "Maushold",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "normal"
@@ -24220,6 +26674,459 @@
     "allowedMegaForms": []
   },
   {
+    "id": "arboliva",
+    "nationalDexNumber": 930,
+    "displayName": "Arboliva",
+    "aliases": [
+      "Arboliva",
+      "arboliva"
+    ],
+    "showdownAliases": [
+      "arboliva",
+      "Arboliva",
+      "Arboliva"
+    ],
+    "pdfName": "Arboliva",
+    "legalIn": [
+      "M-C"
+    ],
+    "types": [
+      "grass",
+      "normal"
+    ],
+    "baseStats": {
+      "hp": 78,
+      "atk": 69,
+      "def": 90,
+      "spa": 125,
+      "spd": 109,
+      "spe": 39
+    },
+    "presentedStats": {
+      "hp": 153,
+      "atk": 89,
+      "def": 110,
+      "spa": 145,
+      "spd": 129,
+      "spe": 59
+    },
+    "forms": [],
+    "abilities": [
+      "harvest",
+      "seed-sower"
+    ],
+    "moves": [
+      "alluring-voice",
+      "bullet-seed",
+      "charm",
+      "dazzling-gleam",
+      "earth-power",
+      "encore",
+      "endure",
+      "energy-ball",
+      "facade",
+      "flail",
+      "fling",
+      "giga-drain",
+      "giga-impact",
+      "grass-knot",
+      "grassy-terrain",
+      "growth",
+      "helping-hand",
+      "hyper-beam",
+      "hyper-voice",
+      "leaf-storm",
+      "leech-seed",
+      "light-screen",
+      "memento",
+      "mirror-coat",
+      "petal-blizzard",
+      "petal-dance",
+      "pollen-puff",
+      "protect",
+      "psych-up",
+      "reflect",
+      "rest",
+      "safeguard",
+      "seed-bomb",
+      "sleep-talk",
+      "solar-beam",
+      "solar-blade",
+      "strength-sap",
+      "substitute",
+      "sunny-day",
+      "sweet-scent",
+      "synthesis",
+      "terrain-pulse",
+      "trailblaze",
+      "weather-ball"
+    ],
+    "allowedMegaForms": []
+  },
+  {
+    "id": "squawkabilly",
+    "nationalDexNumber": 931,
+    "displayName": "Squawkabilly",
+    "aliases": [
+      "Squawkabilly",
+      "squawkabilly"
+    ],
+    "showdownAliases": [
+      "squawkabilly",
+      "Squawkabilly",
+      "Squawkabilly"
+    ],
+    "pdfName": "Squawkabilly",
+    "legalIn": [
+      "M-C"
+    ],
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "baseStats": {
+      "hp": 82,
+      "atk": 96,
+      "def": 51,
+      "spa": 45,
+      "spd": 51,
+      "spe": 92
+    },
+    "presentedStats": {
+      "hp": 157,
+      "atk": 116,
+      "def": 71,
+      "spa": 65,
+      "spd": 71,
+      "spe": 112
+    },
+    "forms": [],
+    "abilities": [
+      "guts",
+      "hustle",
+      "intimidate"
+    ],
+    "moves": [
+      "aerial-ace",
+      "air-cutter",
+      "air-slash",
+      "brave-bird",
+      "copycat",
+      "double-edge",
+      "dual-wingbeat",
+      "endeavor",
+      "endure",
+      "facade",
+      "fake-tears",
+      "feather-dance",
+      "final-gambit",
+      "flatter",
+      "fly",
+      "foul-play",
+      "giga-impact",
+      "heat-wave",
+      "helping-hand",
+      "hurricane",
+      "hyper-beam",
+      "hyper-voice",
+      "lash-out",
+      "lunge",
+      "parting-shot",
+      "pounce",
+      "protect",
+      "quick-attack",
+      "rest",
+      "reversal",
+      "roost",
+      "scary-face",
+      "seed-bomb",
+      "sleep-talk",
+      "substitute",
+      "sunny-day",
+      "swagger",
+      "tailwind",
+      "taunt",
+      "thief",
+      "torment",
+      "u-turn",
+      "uproar"
+    ],
+    "allowedMegaForms": []
+  },
+  {
+    "id": "squawkabillyblue",
+    "nationalDexNumber": 931,
+    "displayName": "Squawkabilly-Blue",
+    "aliases": [
+      "Squawkabilly Blue",
+      "Squawkabilly-Blue",
+      "squawkabillyblue"
+    ],
+    "showdownAliases": [
+      "squawkabillyblue",
+      "Squawkabilly-Blue",
+      "SquawkabillyBlue"
+    ],
+    "pdfName": "Squawkabilly-Blue",
+    "legalIn": [
+      "M-C"
+    ],
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "baseStats": {
+      "hp": 82,
+      "atk": 96,
+      "def": 51,
+      "spa": 45,
+      "spd": 51,
+      "spe": 92
+    },
+    "presentedStats": {
+      "hp": 157,
+      "atk": 116,
+      "def": 71,
+      "spa": 65,
+      "spd": 71,
+      "spe": 112
+    },
+    "forms": [],
+    "abilities": [
+      "guts",
+      "hustle",
+      "intimidate"
+    ],
+    "moves": [
+      "aerial-ace",
+      "air-cutter",
+      "air-slash",
+      "brave-bird",
+      "copycat",
+      "double-edge",
+      "dual-wingbeat",
+      "endeavor",
+      "endure",
+      "facade",
+      "fake-tears",
+      "feather-dance",
+      "final-gambit",
+      "flatter",
+      "fly",
+      "foul-play",
+      "giga-impact",
+      "heat-wave",
+      "helping-hand",
+      "hurricane",
+      "hyper-beam",
+      "hyper-voice",
+      "lash-out",
+      "lunge",
+      "parting-shot",
+      "pounce",
+      "protect",
+      "quick-attack",
+      "rest",
+      "reversal",
+      "roost",
+      "scary-face",
+      "seed-bomb",
+      "sleep-talk",
+      "substitute",
+      "sunny-day",
+      "swagger",
+      "tailwind",
+      "taunt",
+      "thief",
+      "torment",
+      "u-turn",
+      "uproar"
+    ],
+    "allowedMegaForms": []
+  },
+  {
+    "id": "squawkabillywhite",
+    "nationalDexNumber": 931,
+    "displayName": "Squawkabilly-White",
+    "aliases": [
+      "Squawkabilly White",
+      "Squawkabilly-White",
+      "squawkabillywhite"
+    ],
+    "showdownAliases": [
+      "squawkabillywhite",
+      "Squawkabilly-White",
+      "SquawkabillyWhite"
+    ],
+    "pdfName": "Squawkabilly-White",
+    "legalIn": [
+      "M-C"
+    ],
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "baseStats": {
+      "hp": 82,
+      "atk": 96,
+      "def": 51,
+      "spa": 45,
+      "spd": 51,
+      "spe": 92
+    },
+    "presentedStats": {
+      "hp": 157,
+      "atk": 116,
+      "def": 71,
+      "spa": 65,
+      "spd": 71,
+      "spe": 112
+    },
+    "forms": [],
+    "abilities": [
+      "hustle",
+      "intimidate",
+      "sheer-force"
+    ],
+    "moves": [
+      "aerial-ace",
+      "air-cutter",
+      "air-slash",
+      "brave-bird",
+      "copycat",
+      "double-edge",
+      "dual-wingbeat",
+      "endeavor",
+      "endure",
+      "facade",
+      "fake-tears",
+      "feather-dance",
+      "final-gambit",
+      "flatter",
+      "fly",
+      "foul-play",
+      "giga-impact",
+      "heat-wave",
+      "helping-hand",
+      "hurricane",
+      "hyper-beam",
+      "hyper-voice",
+      "lash-out",
+      "lunge",
+      "parting-shot",
+      "pounce",
+      "protect",
+      "quick-attack",
+      "rest",
+      "reversal",
+      "roost",
+      "scary-face",
+      "seed-bomb",
+      "sleep-talk",
+      "substitute",
+      "sunny-day",
+      "swagger",
+      "tailwind",
+      "taunt",
+      "thief",
+      "torment",
+      "u-turn",
+      "uproar"
+    ],
+    "allowedMegaForms": []
+  },
+  {
+    "id": "squawkabillyyellow",
+    "nationalDexNumber": 931,
+    "displayName": "Squawkabilly-Yellow",
+    "aliases": [
+      "Squawkabilly Yellow",
+      "Squawkabilly-Yellow",
+      "squawkabillyyellow"
+    ],
+    "showdownAliases": [
+      "squawkabillyyellow",
+      "Squawkabilly-Yellow",
+      "SquawkabillyYellow"
+    ],
+    "pdfName": "Squawkabilly-Yellow",
+    "legalIn": [
+      "M-C"
+    ],
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "baseStats": {
+      "hp": 82,
+      "atk": 96,
+      "def": 51,
+      "spa": 45,
+      "spd": 51,
+      "spe": 92
+    },
+    "presentedStats": {
+      "hp": 157,
+      "atk": 116,
+      "def": 71,
+      "spa": 65,
+      "spd": 71,
+      "spe": 112
+    },
+    "forms": [],
+    "abilities": [
+      "hustle",
+      "intimidate",
+      "sheer-force"
+    ],
+    "moves": [
+      "aerial-ace",
+      "air-cutter",
+      "air-slash",
+      "brave-bird",
+      "copycat",
+      "double-edge",
+      "dual-wingbeat",
+      "endeavor",
+      "endure",
+      "facade",
+      "fake-tears",
+      "feather-dance",
+      "final-gambit",
+      "flatter",
+      "fly",
+      "foul-play",
+      "giga-impact",
+      "heat-wave",
+      "helping-hand",
+      "hurricane",
+      "hyper-beam",
+      "hyper-voice",
+      "lash-out",
+      "lunge",
+      "parting-shot",
+      "pounce",
+      "protect",
+      "quick-attack",
+      "rest",
+      "reversal",
+      "roost",
+      "scary-face",
+      "seed-bomb",
+      "sleep-talk",
+      "substitute",
+      "sunny-day",
+      "swagger",
+      "tailwind",
+      "taunt",
+      "thief",
+      "torment",
+      "u-turn",
+      "uproar"
+    ],
+    "allowedMegaForms": []
+  },
+  {
     "id": "garganacl",
     "nationalDexNumber": 934,
     "displayName": "Garganacl",
@@ -24234,7 +27141,7 @@
     ],
     "pdfName": "Garganacl",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "rock"
@@ -24334,7 +27241,7 @@
     ],
     "pdfName": "Armarouge",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fire",
@@ -24435,7 +27342,7 @@
     ],
     "pdfName": "Ceruledge",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fire",
@@ -24536,7 +27443,7 @@
     ],
     "pdfName": "Bellibolt",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "electric"
@@ -24607,6 +27514,96 @@
     "allowedMegaForms": []
   },
   {
+    "id": "mabosstiff",
+    "nationalDexNumber": 943,
+    "displayName": "Mabosstiff",
+    "aliases": [
+      "Mabosstiff",
+      "mabosstiff"
+    ],
+    "showdownAliases": [
+      "mabosstiff",
+      "Mabosstiff",
+      "Mabosstiff"
+    ],
+    "pdfName": "Mabosstiff",
+    "legalIn": [
+      "M-C"
+    ],
+    "types": [
+      "dark"
+    ],
+    "baseStats": {
+      "hp": 80,
+      "atk": 120,
+      "def": 90,
+      "spa": 60,
+      "spd": 70,
+      "spe": 85
+    },
+    "presentedStats": {
+      "hp": 155,
+      "atk": 140,
+      "def": 110,
+      "spa": 80,
+      "spd": 90,
+      "spe": 105
+    },
+    "forms": [],
+    "abilities": [
+      "guard-dog",
+      "intimidate",
+      "stakeout"
+    ],
+    "moves": [
+      "bite",
+      "body-slam",
+      "comeuppance",
+      "crunch",
+      "curse",
+      "dark-pulse",
+      "destiny-bond",
+      "dig",
+      "double-edge",
+      "endeavor",
+      "endure",
+      "facade",
+      "fake-tears",
+      "fire-fang",
+      "focus-energy",
+      "giga-impact",
+      "helping-hand",
+      "hyper-beam",
+      "hyper-voice",
+      "ice-fang",
+      "jaw-lock",
+      "lash-out",
+      "outrage",
+      "pain-split",
+      "payback",
+      "play-rough",
+      "protect",
+      "psychic-fangs",
+      "rain-dance",
+      "rest",
+      "reversal",
+      "roar",
+      "scary-face",
+      "sleep-talk",
+      "snarl",
+      "spite",
+      "substitute",
+      "sunny-day",
+      "swagger",
+      "taunt",
+      "thief",
+      "thunder-fang",
+      "trailblaze",
+      "wild-charge"
+    ],
+    "allowedMegaForms": []
+  },
+  {
     "id": "scovillain",
     "nationalDexNumber": 952,
     "displayName": "Scovillain",
@@ -24621,7 +27618,7 @@
     ],
     "pdfName": "Scovillain",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "grass",
@@ -24726,7 +27723,7 @@
     ],
     "pdfName": "Espathra",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "psychic"
@@ -24829,7 +27826,7 @@
     ],
     "pdfName": "Tinkaton",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fairy",
@@ -24923,7 +27920,7 @@
     ],
     "pdfName": "Palafin",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "water"
@@ -25025,7 +28022,7 @@
     ],
     "pdfName": "Orthworm",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "steel"
@@ -25110,7 +28107,7 @@
     ],
     "pdfName": "Glimmora",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "rock",
@@ -25212,7 +28209,7 @@
     ],
     "pdfName": "Houndstone",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "ghost"
@@ -25309,7 +28306,7 @@
     ],
     "pdfName": "Annihilape",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "fighting",
@@ -25431,7 +28428,7 @@
     ],
     "pdfName": "Farigiraf",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "normal",
@@ -25548,7 +28545,7 @@
     ],
     "pdfName": "Kingambit",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "dark",
@@ -25613,6 +28610,7 @@
       "sandstorm",
       "scary-face",
       "shadow-claw",
+      "slash",
       "sleep-talk",
       "snarl",
       "spite",
@@ -25633,6 +28631,113 @@
     "allowedMegaForms": []
   },
   {
+    "id": "baxcalibur",
+    "nationalDexNumber": 998,
+    "displayName": "Baxcalibur",
+    "aliases": [
+      "Baxcalibur",
+      "baxcalibur"
+    ],
+    "showdownAliases": [
+      "baxcalibur",
+      "Baxcalibur",
+      "Baxcalibur"
+    ],
+    "pdfName": "Baxcalibur",
+    "legalIn": [
+      "M-C"
+    ],
+    "types": [
+      "dragon",
+      "ice"
+    ],
+    "baseStats": {
+      "hp": 115,
+      "atk": 145,
+      "def": 92,
+      "spa": 75,
+      "spd": 86,
+      "spe": 87
+    },
+    "presentedStats": {
+      "hp": 190,
+      "atk": 165,
+      "def": 112,
+      "spa": 95,
+      "spd": 106,
+      "spe": 107
+    },
+    "forms": [],
+    "abilities": [
+      "ice-body",
+      "thermal-exchange"
+    ],
+    "moves": [
+      "aerial-ace",
+      "aqua-tail",
+      "avalanche",
+      "bite",
+      "blizzard",
+      "body-press",
+      "body-slam",
+      "breaking-swipe",
+      "brick-break",
+      "bulldoze",
+      "crunch",
+      "dig",
+      "double-edge",
+      "draco-meteor",
+      "dragon-cheer",
+      "dragon-claw",
+      "dragon-dance",
+      "dragon-pulse",
+      "dragon-rush",
+      "dragon-tail",
+      "earthquake",
+      "endure",
+      "facade",
+      "focus-energy",
+      "freeze-dry",
+      "frost-breath",
+      "giga-impact",
+      "glaive-rush",
+      "helping-hand",
+      "high-horsepower",
+      "hyper-beam",
+      "ice-beam",
+      "ice-fang",
+      "ice-shard",
+      "icicle-crash",
+      "icicle-spear",
+      "icy-wind",
+      "iron-head",
+      "outrage",
+      "protect",
+      "rain-dance",
+      "rest",
+      "scale-shot",
+      "scary-face",
+      "sleep-talk",
+      "snowscape",
+      "stomping-tantrum",
+      "substitute",
+      "swords-dance",
+      "thunder-fang",
+      "zen-headbutt"
+    ],
+    "allowedMegaForms": [
+      {
+        "id": "baxcaliburmega",
+        "baseSpeciesId": "baxcalibur",
+        "displayName": "Baxcalibur-Mega",
+        "megaStoneId": "baxcalibrite",
+        "abilityId": "thermal-exchange",
+        "abilityName": "Thermal Exchange",
+        "pdfName": "Baxcalibur-Mega"
+      }
+    ]
+  },
+  {
     "id": "gholdengo",
     "nationalDexNumber": 1000,
     "displayName": "Gholdengo",
@@ -25647,7 +28752,7 @@
     ],
     "pdfName": "Gholdengo",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "steel",
@@ -25734,7 +28839,7 @@
     ],
     "pdfName": "Sinistcha",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "grass",
@@ -25815,7 +28920,7 @@
     ],
     "pdfName": "Archaludon",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "steel",
@@ -25870,10 +28975,8 @@
       "iron-defense",
       "iron-head",
       "light-screen",
-      "metal-burst",
       "metal-sound",
       "meteor-beam",
-      "mirror-coat",
       "night-slash",
       "outrage",
       "protect",
@@ -25883,6 +28986,7 @@
       "rock-slide",
       "rock-tomb",
       "scary-face",
+      "slash",
       "sleep-talk",
       "smack-down",
       "snarl",
@@ -25913,7 +29017,7 @@
     ],
     "pdfName": "Hydrapple",
     "legalIn": [
-      "M-B"
+      "M-C"
     ],
     "types": [
       "grass",

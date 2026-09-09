@@ -1,7 +1,7 @@
 # Code-Index Registry (the QR "dictionary")
 
-This document is the maintenance contract for `src/data/regulation-mb/code-index.json`,
-the append-only dictionary that maps every Regulation M-B id to a permanent number.
+This document is the maintenance contract for `src/data/regulation-mc/code-index.json`,
+the append-only dictionary that maps every Regulation M-C id to a permanent number.
 Read it in full before touching that file or the script that builds it.
 
 > **Scope note.** "Dictionary" here means the **code-index registry** — the
@@ -235,7 +235,7 @@ Old sheets keep decoding under `TSBI1`; new sheets use `TSBI2`.
   `node scripts/decode_team_data.mjs your-staff-sheet.pdf` (needs poppler's
   `pdftotext` for the digital text) or scan the corner QR and pipe the string:
   `echo 'TSBI1...' | node scripts/decode_team_data.mjs -`.
-- **Confirm append-only after a rebuild:** `git diff src/data/regulation-mb/code-index.json`
+- **Confirm append-only after a rebuild:** `git diff src/data/regulation-mc/code-index.json`
   should show only added keys and possibly a changed `version`. Any modified or
   removed existing key is a red flag — do not commit it.
 

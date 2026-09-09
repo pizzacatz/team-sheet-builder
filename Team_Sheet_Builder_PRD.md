@@ -1,7 +1,7 @@
 # Team Sheet Builder — Product Requirements Document
 
 **Project name:** Team Sheet Builder  
-**Target regulation:** Pokémon VGC / Pokémon Champions Regulation M-B  
+**Target regulation:** Pokémon VGC / Pokémon Champions Regulation M-C  
 **Document type:** PRD for spec-driven development  
 **Primary implementation agent:** Codex CLI  
 **Original date:** 2026-07-06<br>
@@ -19,7 +19,7 @@ Current implementation highlights:
 - Official-template desktop layout with a 2x3 Pokémon grid and a one-slot-wide mobile flow.
 - Open, Staff, combined, and desktop-preview PDF paths with a footer watermark.
 - Browser-native combined-PDF sharing on devices that support sharing PDF files.
-- Local Regulation M-B data exported from Champions Logic.
+- Local Regulation M-C data exported from Champions Logic.
 - Deterministic normalized prefix autocomplete instead of fuzzy relevance search.
 - Collapsible validation on desktop and mobile with issue-to-field navigation.
 - Automatic localStorage recovery for the complete team form.
@@ -31,7 +31,7 @@ For current operation, development, data export, and deployment details, see [RE
 
 ## 1. Summary
 
-Team Sheet Builder is a static, mobile-responsive single-page webapp for quickly creating Pokémon VGC team sheets for Regulation M-B.
+Team Sheet Builder is a static, mobile-responsive single-page webapp for quickly creating Pokémon VGC team sheets for Regulation M-C.
 
 The app must support two team-entry paths:
 
@@ -49,10 +49,10 @@ The project is successful when there is a single-page webapp that:
 - Is mobile-responsive.
 - Runs entirely client-side.
 - Can be hosted on GitHub Pages.
-- Allows users to manually enter a Regulation M-B team.
+- Allows users to manually enter a Regulation M-C team.
 - Allows users to paste a Pokémon Showdown team and convert it into editable team-sheet data.
 - Provides autocomplete for species, forms, abilities, items, moves, and Stat Alignment.
-- Validates required team-sheet fields and major Regulation M-B legality constraints.
+- Validates required team-sheet fields and major Regulation M-C legality constraints.
 - Generates a PDF team sheet in the expected official/open-team-list format.
 - Uses local dictionaries and rules files to power autocomplete, parsing, normalization, and validation.
 
@@ -77,7 +77,7 @@ Showdown paste import should be added after PDF generation works unless it is al
 
 ## 4. Primary User
 
-The primary user is an enfranchised Pokémon VGC player who already understands teams, moves, abilities, held items, open team sheets, Pokémon Showdown exports, and Regulation M-B.
+The primary user is an enfranchised Pokémon VGC player who already understands teams, moves, abilities, held items, open team sheets, Pokémon Showdown exports, and Regulation M-C.
 
 This is not a beginner VGC education app. The product should optimize for speed, accuracy, and low-friction event preparation.
 
@@ -142,7 +142,7 @@ Team Sheet Builder reduces that friction by converting structured or semi-struct
 - Automatic downloading from Pokémon Showdown, Pastebin, Limitless, PokéPaste, or other external sites.
 - Perfect full Pokédex coverage before the PDF path works.
 - Export back to Pokémon Showdown format.
-- Multi-regulation support beyond M-B.
+- Multi-regulation support beyond M-C.
 
 ---
 
@@ -237,7 +237,7 @@ team-sheet-builder/
       ValidationPanel.tsx
       PdfActions.tsx
     data/
-      regulation-mb/
+      regulation-mc/
         abilities.json
         items.json
         moves.json
@@ -290,7 +290,7 @@ All manual entry and imported data must be normalized into one canonical model.
 ```ts
 export type TeamSheet = {
   player: PlayerInfo;
-  regulation: "M-B";
+  regulation: "M-C";
   pokemon: PokemonEntry[];
 };
 
@@ -622,9 +622,9 @@ MEGA_ITEM_MISMATCH
 - Each Pokémon has Stat Alignment.
 - No duplicate held items, unless the item is explicitly exempt in rules data.
 - No duplicate species by National Dex number.
-- Species/form is legal in Regulation M-B.
+- Species/form is legal in Regulation M-C.
 - Ability is legal and available to selected species/form.
-- Held item is legal in Regulation M-B.
+- Held item is legal in Regulation M-C.
 - Moves are legal and learnable by selected species/form.
 - A mismatched Mega Stone produces a warning because a Pokémon may legally hold a non-functional stone.
 
@@ -720,7 +720,7 @@ The app exposes separate Open and Staff downloads, a combined Both Team Sheets d
 
 Species autocomplete:
 
-- Blank focus shows every legal Regulation M-B species/form in a scrollable list.
+- Blank focus shows every legal Regulation M-C species/form in a scrollable list.
 - Match normalized display names, aliases, and Showdown names.
 
 Ability autocomplete:
@@ -735,7 +735,7 @@ Move autocomplete:
 
 Item autocomplete:
 
-- Blank focus shows legal Regulation M-B items.
+- Blank focus shows legal Regulation M-C items.
 - Always include the selected species' relevant Mega Stone.
 - Hide non-relevant Mega Stones until at least five matching characters are entered.
 - Warn on duplicate item.
@@ -845,7 +845,7 @@ Manually verify representative autocomplete searches and desktop/mobile dropdown
 
 ## 21. Implementation Order
 
-Follow this order. Do not start with the full complete Regulation M-B dataset.
+Follow this order. Do not start with the full complete Regulation M-C dataset.
 
 ```txt
 1. Create Vite + React + TypeScript project.
@@ -862,7 +862,7 @@ Follow this order. Do not start with the full complete Regulation M-B dataset.
 12. Import Showdown paste into editable TeamSheet state.
 13. Add Stat Alignment parse/infer/review behavior.
 14. Add autocomplete against local data.
-15. Replace sample data with Regulation M-B data.
+15. Replace sample data with Regulation M-C data.
 16. Add parser and validation tests.
 17. Polish mobile layout.
 18. Deploy to GitHub Pages.
@@ -894,7 +894,7 @@ Do not spend significant time perfecting the data dictionary before this works.
 - User can manually correct imported values.
 - Validation catches missing required fields.
 - Validation catches duplicate species and duplicate held items.
-- Validation catches obviously illegal Regulation M-B data when represented in dictionary/rules files.
+- Validation catches obviously illegal Regulation M-C data when represented in dictionary/rules files.
 - Autocomplete exposes complete relevant choices and deterministic prefix search without fuzzy ranking.
 - User can generate and download Open, Staff, or combined team-sheet PDFs.
 - Desktop and mobile layouts preserve the official field grouping without covering editable content.
@@ -926,7 +926,7 @@ Mitigation:
 
 ### 23.2 Data Accuracy Risk
 
-Regulation M-B legality data, forms, learnsets, ability availability, and Mega Evolution legality may be incomplete or inconsistent across sources.
+Regulation M-C legality data, forms, learnsets, ability availability, and Mega Evolution legality may be incomplete or inconsistent across sources.
 
 Mitigation:
 
@@ -991,7 +991,7 @@ Build a Vite + React + TypeScript static SPA that can run on GitHub Pages. Follo
 
 Implementation priority:
 1. Create the canonical TeamSheet types.
-2. Add a tiny sample Regulation M-B dictionary.
+2. Add a tiny sample Regulation M-C dictionary.
 3. Generate a PDF from a hardcoded TeamSheet object using pdf-lib.
 4. Build the manual form.
 5. Add validation.

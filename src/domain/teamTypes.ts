@@ -89,6 +89,6 @@ export const createEmptyTeamSheet = (): TeamSheet => ({
     supportId: "",
     dateOfBirth: ""
   },
-  regulation: "M-B",
+  regulation: "M-C",
   pokemon: Array.from({ length: 6 }, emptyPokemonEntry)
 });

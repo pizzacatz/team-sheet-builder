@@ -1,16 +1,16 @@
 # Team Sheet Builder
 
-A static, client-side team sheet builder for Pokémon Champions Regulation M-B.
+A static, client-side team sheet builder for Pokémon Champions Regulation M-C.
 
 Live app: <https://teamsheet.georgiaplayevents.com/>
 
 ## What It Does
 
-- Builds Regulation M-B team sheets from manual entry or a Pokémon Showdown paste.
+- Builds Regulation M-C team sheets from manual entry or a Pokémon Showdown paste.
 - Optionally imports a team straight from a Pokémon Champions **Replica Team ID** through a deployed [Replica Team Viewer](https://github.com/pizzacatz/replica-team-viewer) (hidden unless configured, see below).
 - Validates required player/team fields, species clause, item clause, legal species/items/abilities/moves, ability availability, and move learnsets; non-functional Mega Stone pairings produce a warning.
 - Blocks the normal download/share actions while errors remain, but offers an explicit `Download anyway` override that generates the sheet as-is.
-- Uses local Regulation M-B dictionaries exported from Champions Logic data.
+- Uses local Regulation M-C dictionaries exported from Champions Logic data.
 - Generates Play! Pokémon team-list PDFs entirely in the browser.
 - Downloads the combined Open + Staff team sheets as a single PDF.
 - Saves the active form in localStorage to reduce accidental data loss.
@@ -135,7 +135,7 @@ The serializer/decoder lives in `src/pdf/teamDataCode.ts`; QR rendering (via `qr
 
 #### Code-index registry
 
-The QR references each id by a permanent number from `src/data/regulation-mb/code-index.json`, an **append-only registry**: every id is assigned a number the first time it is seen, and that number is never changed, reordered, or reused. New Pokémon/moves/abilities/items get fresh numbers appended at the end, so any QR printed under an older registry still decodes correctly. The registry is rebuilt (preserving all existing numbers) by `npm run data:index`, which `npm run data:export` runs automatically. Its `version` stamp is embedded in each QR so a decoder with older data warns instead of silently mis-decoding.
+The QR references each id by a permanent number from `src/data/regulation-mc/code-index.json`, an **append-only registry**: every id is assigned a number the first time it is seen, and that number is never changed, reordered, or reused. New Pokémon/moves/abilities/items get fresh numbers appended at the end, so any QR printed under an older registry still decodes correctly. The registry is rebuilt (preserving all existing numbers) by `npm run data:index`, which `npm run data:export` runs automatically. Its `version` stamp is embedded in each QR so a decoder with older data warns instead of silently mis-decoding.
 
 **Before editing or regenerating the registry, read [docs/CODE_INDEX.md](docs/CODE_INDEX.md)** — it is the full maintenance contract, with the append/rebuild workflow, guard rails, DON'T list, and capacity limits.
 
@@ -178,7 +178,7 @@ npm run preview
 
 ## Data Export
 
-Regulation data lives under `src/data/regulation-mb/` and is generated from a local Champions Logic SQLite export.
+Regulation data lives under `src/data/regulation-mc/` and is generated from a local Champions Logic SQLite export.
 
 ```bash
 npm run data:export
@@ -200,7 +200,7 @@ After regenerating data, run tests and a production build before committing.
 src/
   app/                 React app shell, styling, mobile tray helpers
   components/          Form panels, autocomplete, validation, PDF actions
-  data/regulation-mb/  Local Regulation M-B JSON dictionaries
+  data/regulation-mc/  Local Regulation M-C JSON dictionaries
   domain/              Team types, validation, legality, stats, normalization
   importers/showdown/  Showdown paste parser
   importers/replica/   Replica Team ID lookup via the Replica Team Viewer API

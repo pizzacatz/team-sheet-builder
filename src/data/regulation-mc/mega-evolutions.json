@@ -18,6 +18,15 @@
     "pdfName": "Absol-Mega"
   },
   {
+    "id": "absolmegaz",
+    "baseSpeciesId": "absol",
+    "displayName": "Absol-Mega-Z",
+    "megaStoneId": "absolite-z",
+    "abilityId": "sharpness",
+    "abilityName": "Sharpness",
+    "pdfName": "Absol-Mega-Z"
+  },
+  {
     "id": "aerodactylmega",
     "baseSpeciesId": "aerodactyl",
     "displayName": "Aerodactyl-Mega",
@@ -88,6 +97,15 @@
     "abilityId": "tough-claws",
     "abilityName": "Tough Claws",
     "pdfName": "Barbaracle-Mega"
+  },
+  {
+    "id": "baxcaliburmega",
+    "baseSpeciesId": "baxcalibur",
+    "displayName": "Baxcalibur-Mega",
+    "megaStoneId": "baxcalibrite",
+    "abilityId": "thermal-exchange",
+    "abilityName": "Thermal Exchange",
+    "pdfName": "Baxcalibur-Mega"
   },
   {
     "id": "beedrillmega",
@@ -306,6 +324,15 @@
     "pdfName": "Garchomp-Mega"
   },
   {
+    "id": "garchompmegaz",
+    "baseSpeciesId": "garchomp",
+    "displayName": "Garchomp-Mega-Z",
+    "megaStoneId": "garchompite-z",
+    "abilityId": "levitate",
+    "abilityName": "Levitate",
+    "pdfName": "Garchomp-Mega-Z"
+  },
+  {
     "id": "gardevoirmega",
     "baseSpeciesId": "gardevoir",
     "displayName": "Gardevoir-Mega",
@@ -340,6 +367,15 @@
     "abilityId": "adaptability",
     "abilityName": "Adaptability",
     "pdfName": "Glimmora-Mega"
+  },
+  {
+    "id": "golisopodmega",
+    "baseSpeciesId": "golisopod",
+    "displayName": "Golisopod-Mega",
+    "megaStoneId": "golisopite",
+    "abilityId": "tough-claws",
+    "abilityName": "Tough Claws",
+    "pdfName": "Golisopod-Mega"
   },
   {
     "id": "golurkmega",
@@ -421,6 +457,15 @@
     "abilityId": "adaptability",
     "abilityName": "Adaptability",
     "pdfName": "Lucario-Mega"
+  },
+  {
+    "id": "lucariomegaz",
+    "baseSpeciesId": "lucario",
+    "displayName": "Lucario-Mega-Z",
+    "megaStoneId": "lucarionite-z",
+    "abilityId": "aura-guard",
+    "abilityName": "Aura Guard",
+    "pdfName": "Lucario-Mega-Z"
   },
   {
     "id": "malamarmega",
@@ -547,6 +592,15 @@
     "abilityId": "magic-bounce",
     "abilityName": "Magic Bounce",
     "pdfName": "Sableye-Mega"
+  },
+  {
+    "id": "salamencemega",
+    "baseSpeciesId": "salamence",
+    "displayName": "Salamence-Mega",
+    "megaStoneId": "salamencite",
+    "abilityId": "aerilate",
+    "abilityName": "Aerilate",
+    "pdfName": "Salamence-Mega"
   },
   {
     "id": "sceptilemega",

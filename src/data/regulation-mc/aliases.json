@@ -169,6 +169,18 @@
   },
   {
     "kind": "species",
+    "alias": "Wigglytuff",
+    "normalized": "wigglytuff",
+    "id": "wigglytuff"
+  },
+  {
+    "kind": "species",
+    "alias": "wigglytuff",
+    "normalized": "wigglytuff",
+    "id": "wigglytuff"
+  },
+  {
+    "kind": "species",
     "alias": "Vileplume",
     "normalized": "vileplume",
     "id": "vileplume"
@@ -178,6 +190,42 @@
     "alias": "vileplume",
     "normalized": "vileplume",
     "id": "vileplume"
+  },
+  {
+    "kind": "species",
+    "alias": "Persian",
+    "normalized": "persian",
+    "id": "persian"
+  },
+  {
+    "kind": "species",
+    "alias": "persian",
+    "normalized": "persian",
+    "id": "persian"
+  },
+  {
+    "kind": "species",
+    "alias": "Alolan Persian",
+    "normalized": "alolanpersian",
+    "id": "persianalola"
+  },
+  {
+    "kind": "species",
+    "alias": "Persian Alola",
+    "normalized": "persianalola",
+    "id": "persianalola"
+  },
+  {
+    "kind": "species",
+    "alias": "Persian-Alola",
+    "normalized": "persianalola",
+    "id": "persianalola"
+  },
+  {
+    "kind": "species",
+    "alias": "persianalola",
+    "normalized": "persianalola",
+    "id": "persianalola"
   },
   {
     "kind": "species",
@@ -289,6 +337,18 @@
   },
   {
     "kind": "species",
+    "alias": "Farfetch’d",
+    "normalized": "farfetchd",
+    "id": "farfetchd"
+  },
+  {
+    "kind": "species",
+    "alias": "farfetchd",
+    "normalized": "farfetchd",
+    "id": "farfetchd"
+  },
+  {
+    "kind": "species",
     "alias": "Gengar",
     "normalized": "gengar",
     "id": "gengar"
@@ -322,6 +382,18 @@
     "alias": "starmie",
     "normalized": "starmie",
     "id": "starmie"
+  },
+  {
+    "kind": "species",
+    "alias": "Mr. Mime",
+    "normalized": "mrmime",
+    "id": "mrmime"
+  },
+  {
+    "kind": "species",
+    "alias": "mrmime",
+    "normalized": "mrmime",
+    "id": "mrmime"
   },
   {
     "kind": "species",
@@ -883,6 +955,18 @@
   },
   {
     "kind": "species",
+    "alias": "Swalot",
+    "normalized": "swalot",
+    "id": "swalot"
+  },
+  {
+    "kind": "species",
+    "alias": "swalot",
+    "normalized": "swalot",
+    "id": "swalot"
+  },
+  {
+    "kind": "species",
     "alias": "Sharpedo",
     "normalized": "sharpedo",
     "id": "sharpedo"
@@ -1000,6 +1084,18 @@
     "alias": "glalie",
     "normalized": "glalie",
     "id": "glalie"
+  },
+  {
+    "kind": "species",
+    "alias": "Salamence",
+    "normalized": "salamence",
+    "id": "salamence"
+  },
+  {
+    "kind": "species",
+    "alias": "salamence",
+    "normalized": "salamence",
+    "id": "salamence"
   },
   {
     "kind": "species",
@@ -1927,6 +2023,18 @@
   },
   {
     "kind": "species",
+    "alias": "Gogoat",
+    "normalized": "gogoat",
+    "id": "gogoat"
+  },
+  {
+    "kind": "species",
+    "alias": "gogoat",
+    "normalized": "gogoat",
+    "id": "gogoat"
+  },
+  {
+    "kind": "species",
     "alias": "Pangoro",
     "normalized": "pangoro",
     "id": "pangoro"
@@ -2527,6 +2635,18 @@
   },
   {
     "kind": "species",
+    "alias": "Golisopod",
+    "normalized": "golisopod",
+    "id": "golisopod"
+  },
+  {
+    "kind": "species",
+    "alias": "golisopod",
+    "normalized": "golisopod",
+    "id": "golisopod"
+  },
+  {
+    "kind": "species",
     "alias": "Mimikyu",
     "normalized": "mimikyu",
     "id": "mimikyu"
@@ -2569,6 +2689,42 @@
   },
   {
     "kind": "species",
+    "alias": "Rillaboom",
+    "normalized": "rillaboom",
+    "id": "rillaboom"
+  },
+  {
+    "kind": "species",
+    "alias": "rillaboom",
+    "normalized": "rillaboom",
+    "id": "rillaboom"
+  },
+  {
+    "kind": "species",
+    "alias": "Cinderace",
+    "normalized": "cinderace",
+    "id": "cinderace"
+  },
+  {
+    "kind": "species",
+    "alias": "cinderace",
+    "normalized": "cinderace",
+    "id": "cinderace"
+  },
+  {
+    "kind": "species",
+    "alias": "Inteleon",
+    "normalized": "inteleon",
+    "id": "inteleon"
+  },
+  {
+    "kind": "species",
+    "alias": "inteleon",
+    "normalized": "inteleon",
+    "id": "inteleon"
+  },
+  {
+    "kind": "species",
     "alias": "Corviknight",
     "normalized": "corviknight",
     "id": "corviknight"
@@ -2578,6 +2734,18 @@
     "alias": "corviknight",
     "normalized": "corviknight",
     "id": "corviknight"
+  },
+  {
+    "kind": "species",
+    "alias": "Thievul",
+    "normalized": "thievul",
+    "id": "thievul"
+  },
+  {
+    "kind": "species",
+    "alias": "thievul",
+    "normalized": "thievul",
+    "id": "thievul"
   },
   {
     "kind": "species",
@@ -2617,6 +2785,48 @@
   },
   {
     "kind": "species",
+    "alias": "Toxtricity",
+    "normalized": "toxtricity",
+    "id": "toxtricity"
+  },
+  {
+    "kind": "species",
+    "alias": "toxtricity",
+    "normalized": "toxtricity",
+    "id": "toxtricity"
+  },
+  {
+    "kind": "species",
+    "alias": "Toxtricity Low Key",
+    "normalized": "toxtricitylowkey",
+    "id": "toxtricitylowkey"
+  },
+  {
+    "kind": "species",
+    "alias": "Toxtricity-Low-Key",
+    "normalized": "toxtricitylowkey",
+    "id": "toxtricitylowkey"
+  },
+  {
+    "kind": "species",
+    "alias": "toxtricitylowkey",
+    "normalized": "toxtricitylowkey",
+    "id": "toxtricitylowkey"
+  },
+  {
+    "kind": "species",
+    "alias": "Grapploct",
+    "normalized": "grapploct",
+    "id": "grapploct"
+  },
+  {
+    "kind": "species",
+    "alias": "grapploct",
+    "normalized": "grapploct",
+    "id": "grapploct"
+  },
+  {
+    "kind": "species",
     "alias": "Polteageist",
     "normalized": "polteageist",
     "id": "polteageist"
@@ -2650,6 +2860,30 @@
     "alias": "grimmsnarl",
     "normalized": "grimmsnarl",
     "id": "grimmsnarl"
+  },
+  {
+    "kind": "species",
+    "alias": "Perrserker",
+    "normalized": "perrserker",
+    "id": "perrserker"
+  },
+  {
+    "kind": "species",
+    "alias": "perrserker",
+    "normalized": "perrserker",
+    "id": "perrserker"
+  },
+  {
+    "kind": "species",
+    "alias": "Sirfetch’d",
+    "normalized": "sirfetchd",
+    "id": "sirfetchd"
+  },
+  {
+    "kind": "species",
+    "alias": "sirfetchd",
+    "normalized": "sirfetchd",
+    "id": "sirfetchd"
   },
   {
     "kind": "species",
@@ -2698,6 +2932,48 @@
     "alias": "falinks",
     "normalized": "falinks",
     "id": "falinks"
+  },
+  {
+    "kind": "species",
+    "alias": "Pincurchin",
+    "normalized": "pincurchin",
+    "id": "pincurchin"
+  },
+  {
+    "kind": "species",
+    "alias": "pincurchin",
+    "normalized": "pincurchin",
+    "id": "pincurchin"
+  },
+  {
+    "kind": "species",
+    "alias": "Indeedee",
+    "normalized": "indeedee",
+    "id": "indeedee"
+  },
+  {
+    "kind": "species",
+    "alias": "indeedee",
+    "normalized": "indeedee",
+    "id": "indeedee"
+  },
+  {
+    "kind": "species",
+    "alias": "Indeedee F",
+    "normalized": "indeedeef",
+    "id": "indeedeef"
+  },
+  {
+    "kind": "species",
+    "alias": "Indeedee-F",
+    "normalized": "indeedeef",
+    "id": "indeedeef"
+  },
+  {
+    "kind": "species",
+    "alias": "indeedeef",
+    "normalized": "indeedeef",
+    "id": "indeedeef"
   },
   {
     "kind": "species",
@@ -2839,6 +3115,18 @@
   },
   {
     "kind": "species",
+    "alias": "Pawmot",
+    "normalized": "pawmot",
+    "id": "pawmot"
+  },
+  {
+    "kind": "species",
+    "alias": "pawmot",
+    "normalized": "pawmot",
+    "id": "pawmot"
+  },
+  {
+    "kind": "species",
     "alias": "Maushold",
     "normalized": "maushold",
     "id": "maushold"
@@ -2848,6 +3136,84 @@
     "alias": "maushold",
     "normalized": "maushold",
     "id": "maushold"
+  },
+  {
+    "kind": "species",
+    "alias": "Arboliva",
+    "normalized": "arboliva",
+    "id": "arboliva"
+  },
+  {
+    "kind": "species",
+    "alias": "arboliva",
+    "normalized": "arboliva",
+    "id": "arboliva"
+  },
+  {
+    "kind": "species",
+    "alias": "Squawkabilly",
+    "normalized": "squawkabilly",
+    "id": "squawkabilly"
+  },
+  {
+    "kind": "species",
+    "alias": "squawkabilly",
+    "normalized": "squawkabilly",
+    "id": "squawkabilly"
+  },
+  {
+    "kind": "species",
+    "alias": "Squawkabilly Blue",
+    "normalized": "squawkabillyblue",
+    "id": "squawkabillyblue"
+  },
+  {
+    "kind": "species",
+    "alias": "Squawkabilly-Blue",
+    "normalized": "squawkabillyblue",
+    "id": "squawkabillyblue"
+  },
+  {
+    "kind": "species",
+    "alias": "squawkabillyblue",
+    "normalized": "squawkabillyblue",
+    "id": "squawkabillyblue"
+  },
+  {
+    "kind": "species",
+    "alias": "Squawkabilly White",
+    "normalized": "squawkabillywhite",
+    "id": "squawkabillywhite"
+  },
+  {
+    "kind": "species",
+    "alias": "Squawkabilly-White",
+    "normalized": "squawkabillywhite",
+    "id": "squawkabillywhite"
+  },
+  {
+    "kind": "species",
+    "alias": "squawkabillywhite",
+    "normalized": "squawkabillywhite",
+    "id": "squawkabillywhite"
+  },
+  {
+    "kind": "species",
+    "alias": "Squawkabilly Yellow",
+    "normalized": "squawkabillyyellow",
+    "id": "squawkabillyyellow"
+  },
+  {
+    "kind": "species",
+    "alias": "Squawkabilly-Yellow",
+    "normalized": "squawkabillyyellow",
+    "id": "squawkabillyyellow"
+  },
+  {
+    "kind": "species",
+    "alias": "squawkabillyyellow",
+    "normalized": "squawkabillyyellow",
+    "id": "squawkabillyyellow"
   },
   {
     "kind": "species",
@@ -2896,6 +3262,18 @@
     "alias": "bellibolt",
     "normalized": "bellibolt",
     "id": "bellibolt"
+  },
+  {
+    "kind": "species",
+    "alias": "Mabosstiff",
+    "normalized": "mabosstiff",
+    "id": "mabosstiff"
+  },
+  {
+    "kind": "species",
+    "alias": "mabosstiff",
+    "normalized": "mabosstiff",
+    "id": "mabosstiff"
   },
   {
     "kind": "species",
@@ -3016,6 +3394,18 @@
     "alias": "kingambit",
     "normalized": "kingambit",
     "id": "kingambit"
+  },
+  {
+    "kind": "species",
+    "alias": "Baxcalibur",
+    "normalized": "baxcalibur",
+    "id": "baxcalibur"
+  },
+  {
+    "kind": "species",
+    "alias": "baxcalibur",
+    "normalized": "baxcalibur",
+    "id": "baxcalibur"
   },
   {
     "kind": "species",
@@ -3178,6 +3568,24 @@
     "alias": "aromaveil",
     "normalized": "aromaveil",
     "id": "aroma-veil"
+  },
+  {
+    "kind": "ability",
+    "alias": "Aura Guard",
+    "normalized": "auraguard",
+    "id": "aura-guard"
+  },
+  {
+    "kind": "ability",
+    "alias": "aura-guard",
+    "normalized": "auraguard",
+    "id": "aura-guard"
+  },
+  {
+    "kind": "ability",
+    "alias": "auraguard",
+    "normalized": "auraguard",
+    "id": "aura-guard"
   },
   {
     "kind": "ability",
@@ -3631,6 +4039,24 @@
   },
   {
     "kind": "ability",
+    "alias": "Emergency Exit",
+    "normalized": "emergencyexit",
+    "id": "emergency-exit"
+  },
+  {
+    "kind": "ability",
+    "alias": "emergency-exit",
+    "normalized": "emergencyexit",
+    "id": "emergency-exit"
+  },
+  {
+    "kind": "ability",
+    "alias": "emergencyexit",
+    "normalized": "emergencyexit",
+    "id": "emergency-exit"
+  },
+  {
+    "kind": "ability",
     "alias": "Fairy Aura",
     "normalized": "fairyaura",
     "id": "fairy-aura"
@@ -3874,6 +4300,60 @@
     "alias": "gooey",
     "normalized": "gooey",
     "id": "gooey"
+  },
+  {
+    "kind": "ability",
+    "alias": "Grass Pelt",
+    "normalized": "grasspelt",
+    "id": "grass-pelt"
+  },
+  {
+    "kind": "ability",
+    "alias": "grass-pelt",
+    "normalized": "grasspelt",
+    "id": "grass-pelt"
+  },
+  {
+    "kind": "ability",
+    "alias": "grasspelt",
+    "normalized": "grasspelt",
+    "id": "grass-pelt"
+  },
+  {
+    "kind": "ability",
+    "alias": "Grassy Surge",
+    "normalized": "grassysurge",
+    "id": "grassy-surge"
+  },
+  {
+    "kind": "ability",
+    "alias": "grassy-surge",
+    "normalized": "grassysurge",
+    "id": "grassy-surge"
+  },
+  {
+    "kind": "ability",
+    "alias": "grassysurge",
+    "normalized": "grassysurge",
+    "id": "grassy-surge"
+  },
+  {
+    "kind": "ability",
+    "alias": "Guard Dog",
+    "normalized": "guarddog",
+    "id": "guard-dog"
+  },
+  {
+    "kind": "ability",
+    "alias": "guard-dog",
+    "normalized": "guarddog",
+    "id": "guard-dog"
+  },
+  {
+    "kind": "ability",
+    "alias": "guarddog",
+    "normalized": "guarddog",
+    "id": "guard-dog"
   },
   {
     "kind": "ability",
@@ -4261,6 +4741,18 @@
   },
   {
     "kind": "ability",
+    "alias": "Libero",
+    "normalized": "libero",
+    "id": "libero"
+  },
+  {
+    "kind": "ability",
+    "alias": "libero",
+    "normalized": "libero",
+    "id": "libero"
+  },
+  {
+    "kind": "ability",
     "alias": "Light Metal",
     "normalized": "lightmetal",
     "id": "light-metal"
@@ -4306,6 +4798,24 @@
     "alias": "limber",
     "normalized": "limber",
     "id": "limber"
+  },
+  {
+    "kind": "ability",
+    "alias": "Liquid Ooze",
+    "normalized": "liquidooze",
+    "id": "liquid-ooze"
+  },
+  {
+    "kind": "ability",
+    "alias": "liquid-ooze",
+    "normalized": "liquidooze",
+    "id": "liquid-ooze"
+  },
+  {
+    "kind": "ability",
+    "alias": "liquidooze",
+    "normalized": "liquidooze",
+    "id": "liquid-ooze"
   },
   {
     "kind": "ability",
@@ -4879,6 +5389,42 @@
   },
   {
     "kind": "ability",
+    "alias": "Psychic Surge",
+    "normalized": "psychicsurge",
+    "id": "psychic-surge"
+  },
+  {
+    "kind": "ability",
+    "alias": "psychic-surge",
+    "normalized": "psychicsurge",
+    "id": "psychic-surge"
+  },
+  {
+    "kind": "ability",
+    "alias": "psychicsurge",
+    "normalized": "psychicsurge",
+    "id": "psychic-surge"
+  },
+  {
+    "kind": "ability",
+    "alias": "Punk Rock",
+    "normalized": "punkrock",
+    "id": "punk-rock"
+  },
+  {
+    "kind": "ability",
+    "alias": "punk-rock",
+    "normalized": "punkrock",
+    "id": "punk-rock"
+  },
+  {
+    "kind": "ability",
+    "alias": "punkrock",
+    "normalized": "punkrock",
+    "id": "punk-rock"
+  },
+  {
+    "kind": "ability",
     "alias": "Pure Power",
     "normalized": "purepower",
     "id": "pure-power"
@@ -4987,6 +5533,18 @@
   },
   {
     "kind": "ability",
+    "alias": "Rattled",
+    "normalized": "rattled",
+    "id": "rattled"
+  },
+  {
+    "kind": "ability",
+    "alias": "rattled",
+    "normalized": "rattled",
+    "id": "rattled"
+  },
+  {
+    "kind": "ability",
     "alias": "Receiver",
     "normalized": "receiver",
     "id": "receiver"
@@ -5092,6 +5650,24 @@
     "alias": "roughskin",
     "normalized": "roughskin",
     "id": "rough-skin"
+  },
+  {
+    "kind": "ability",
+    "alias": "Run Away",
+    "normalized": "runaway",
+    "id": "run-away"
+  },
+  {
+    "kind": "ability",
+    "alias": "run-away",
+    "normalized": "runaway",
+    "id": "run-away"
+  },
+  {
+    "kind": "ability",
+    "alias": "runaway",
+    "normalized": "runaway",
+    "id": "run-away"
   },
   {
     "kind": "ability",
@@ -5230,6 +5806,24 @@
     "alias": "screencleaner",
     "normalized": "screencleaner",
     "id": "screen-cleaner"
+  },
+  {
+    "kind": "ability",
+    "alias": "Seed Sower",
+    "normalized": "seedsower",
+    "id": "seed-sower"
+  },
+  {
+    "kind": "ability",
+    "alias": "seed-sower",
+    "normalized": "seedsower",
+    "id": "seed-sower"
+  },
+  {
+    "kind": "ability",
+    "alias": "seedsower",
+    "normalized": "seedsower",
+    "id": "seed-sower"
   },
   {
     "kind": "ability",
@@ -5515,6 +6109,18 @@
   },
   {
     "kind": "ability",
+    "alias": "Stakeout",
+    "normalized": "stakeout",
+    "id": "stakeout"
+  },
+  {
+    "kind": "ability",
+    "alias": "stakeout",
+    "normalized": "stakeout",
+    "id": "stakeout"
+  },
+  {
+    "kind": "ability",
     "alias": "Stall",
     "normalized": "stall",
     "id": "stall"
@@ -5590,6 +6196,24 @@
     "alias": "steadfast",
     "normalized": "steadfast",
     "id": "steadfast"
+  },
+  {
+    "kind": "ability",
+    "alias": "Steely Spirit",
+    "normalized": "steelyspirit",
+    "id": "steely-spirit"
+  },
+  {
+    "kind": "ability",
+    "alias": "steely-spirit",
+    "normalized": "steelyspirit",
+    "id": "steely-spirit"
+  },
+  {
+    "kind": "ability",
+    "alias": "steelyspirit",
+    "normalized": "steelyspirit",
+    "id": "steely-spirit"
   },
   {
     "kind": "ability",
@@ -5854,6 +6478,24 @@
     "alias": "telepathy",
     "normalized": "telepathy",
     "id": "telepathy"
+  },
+  {
+    "kind": "ability",
+    "alias": "Thermal Exchange",
+    "normalized": "thermalexchange",
+    "id": "thermal-exchange"
+  },
+  {
+    "kind": "ability",
+    "alias": "thermal-exchange",
+    "normalized": "thermalexchange",
+    "id": "thermal-exchange"
+  },
+  {
+    "kind": "ability",
+    "alias": "thermalexchange",
+    "normalized": "thermalexchange",
+    "id": "thermal-exchange"
   },
   {
     "kind": "ability",
@@ -6157,6 +6799,24 @@
   },
   {
     "kind": "item",
+    "alias": "Absolite Z",
+    "normalized": "absolitez",
+    "id": "absolite-z"
+  },
+  {
+    "kind": "item",
+    "alias": "absolite-z",
+    "normalized": "absolitez",
+    "id": "absolite-z"
+  },
+  {
+    "kind": "item",
+    "alias": "absolitez",
+    "normalized": "absolitez",
+    "id": "absolite-z"
+  },
+  {
+    "kind": "item",
     "alias": "Aerodactylite",
     "normalized": "aerodactylite",
     "id": "aerodactylite"
@@ -6178,6 +6838,24 @@
     "alias": "aggronite",
     "normalized": "aggronite",
     "id": "aggronite"
+  },
+  {
+    "kind": "item",
+    "alias": "Air Balloon",
+    "normalized": "airballoon",
+    "id": "air-balloon"
+  },
+  {
+    "kind": "item",
+    "alias": "air-balloon",
+    "normalized": "airballoon",
+    "id": "air-balloon"
+  },
+  {
+    "kind": "item",
+    "alias": "airballoon",
+    "normalized": "airballoon",
+    "id": "air-balloon"
   },
   {
     "kind": "item",
@@ -6289,6 +6967,18 @@
   },
   {
     "kind": "item",
+    "alias": "Baxcalibrite",
+    "normalized": "baxcalibrite",
+    "id": "baxcalibrite"
+  },
+  {
+    "kind": "item",
+    "alias": "baxcalibrite",
+    "normalized": "baxcalibrite",
+    "id": "baxcalibrite"
+  },
+  {
+    "kind": "item",
     "alias": "Beedrillite",
     "normalized": "beedrillite",
     "id": "beedrillite"
@@ -6316,6 +7006,24 @@
     "alias": "bigroot",
     "normalized": "bigroot",
     "id": "big-root"
+  },
+  {
+    "kind": "item",
+    "alias": "Binding Band",
+    "normalized": "bindingband",
+    "id": "binding-band"
+  },
+  {
+    "kind": "item",
+    "alias": "binding-band",
+    "normalized": "bindingband",
+    "id": "binding-band"
+  },
+  {
+    "kind": "item",
+    "alias": "bindingband",
+    "normalized": "bindingband",
+    "id": "binding-band"
   },
   {
     "kind": "item",
@@ -6757,6 +7465,42 @@
   },
   {
     "kind": "item",
+    "alias": "Eject Button",
+    "normalized": "ejectbutton",
+    "id": "eject-button"
+  },
+  {
+    "kind": "item",
+    "alias": "eject-button",
+    "normalized": "ejectbutton",
+    "id": "eject-button"
+  },
+  {
+    "kind": "item",
+    "alias": "ejectbutton",
+    "normalized": "ejectbutton",
+    "id": "eject-button"
+  },
+  {
+    "kind": "item",
+    "alias": "Electric Seed",
+    "normalized": "electricseed",
+    "id": "electric-seed"
+  },
+  {
+    "kind": "item",
+    "alias": "electric-seed",
+    "normalized": "electricseed",
+    "id": "electric-seed"
+  },
+  {
+    "kind": "item",
+    "alias": "electricseed",
+    "normalized": "electricseed",
+    "id": "electric-seed"
+  },
+  {
+    "kind": "item",
     "alias": "Emboarite",
     "normalized": "emboarite",
     "id": "emboarite"
@@ -6925,6 +7669,24 @@
   },
   {
     "kind": "item",
+    "alias": "Garchompite Z",
+    "normalized": "garchompitez",
+    "id": "garchompite-z"
+  },
+  {
+    "kind": "item",
+    "alias": "garchompite-z",
+    "normalized": "garchompitez",
+    "id": "garchompite-z"
+  },
+  {
+    "kind": "item",
+    "alias": "garchompitez",
+    "normalized": "garchompitez",
+    "id": "garchompite-z"
+  },
+  {
+    "kind": "item",
     "alias": "Gardevoirite",
     "normalized": "gardevoirite",
     "id": "gardevoirite"
@@ -6973,6 +7735,18 @@
   },
   {
     "kind": "item",
+    "alias": "Golisopite",
+    "normalized": "golisopite",
+    "id": "golisopite"
+  },
+  {
+    "kind": "item",
+    "alias": "golisopite",
+    "normalized": "golisopite",
+    "id": "golisopite"
+  },
+  {
+    "kind": "item",
     "alias": "Golurkite",
     "normalized": "golurkite",
     "id": "golurkite"
@@ -6982,6 +7756,24 @@
     "alias": "golurkite",
     "normalized": "golurkite",
     "id": "golurkite"
+  },
+  {
+    "kind": "item",
+    "alias": "Grassy Seed",
+    "normalized": "grassyseed",
+    "id": "grassy-seed"
+  },
+  {
+    "kind": "item",
+    "alias": "grassy-seed",
+    "normalized": "grassyseed",
+    "id": "grassy-seed"
+  },
+  {
+    "kind": "item",
+    "alias": "grassyseed",
+    "normalized": "grassyseed",
+    "id": "grassy-seed"
   },
   {
     "kind": "item",
@@ -7201,6 +7993,18 @@
   },
   {
     "kind": "item",
+    "alias": "Leek",
+    "normalized": "leek",
+    "id": "leek"
+  },
+  {
+    "kind": "item",
+    "alias": "leek",
+    "normalized": "leek",
+    "id": "leek"
+  },
+  {
+    "kind": "item",
     "alias": "Leftovers",
     "normalized": "leftovers",
     "id": "leftovers"
@@ -7306,6 +8110,24 @@
     "alias": "lucarionite",
     "normalized": "lucarionite",
     "id": "lucarionite"
+  },
+  {
+    "kind": "item",
+    "alias": "Lucarionite Z",
+    "normalized": "lucarionitez",
+    "id": "lucarionite-z"
+  },
+  {
+    "kind": "item",
+    "alias": "lucarionite-z",
+    "normalized": "lucarionitez",
+    "id": "lucarionite-z"
+  },
+  {
+    "kind": "item",
+    "alias": "lucarionitez",
+    "normalized": "lucarionitez",
+    "id": "lucarionite-z"
   },
   {
     "kind": "item",
@@ -7489,6 +8311,24 @@
   },
   {
     "kind": "item",
+    "alias": "Misty Seed",
+    "normalized": "mistyseed",
+    "id": "misty-seed"
+  },
+  {
+    "kind": "item",
+    "alias": "misty-seed",
+    "normalized": "mistyseed",
+    "id": "misty-seed"
+  },
+  {
+    "kind": "item",
+    "alias": "mistyseed",
+    "normalized": "mistyseed",
+    "id": "misty-seed"
+  },
+  {
+    "kind": "item",
     "alias": "Muscle Band",
     "normalized": "muscleband",
     "id": "muscle-band"
@@ -7546,6 +8386,24 @@
     "alias": "nevermeltice",
     "normalized": "nevermeltice",
     "id": "never-melt-ice"
+  },
+  {
+    "kind": "item",
+    "alias": "Normal Gem",
+    "normalized": "normalgem",
+    "id": "normal-gem"
+  },
+  {
+    "kind": "item",
+    "alias": "normal-gem",
+    "normalized": "normalgem",
+    "id": "normal-gem"
+  },
+  {
+    "kind": "item",
+    "alias": "normalgem",
+    "normalized": "normalgem",
+    "id": "normal-gem"
   },
   {
     "kind": "item",
@@ -7699,6 +8557,24 @@
   },
   {
     "kind": "item",
+    "alias": "Psychic Seed",
+    "normalized": "psychicseed",
+    "id": "psychic-seed"
+  },
+  {
+    "kind": "item",
+    "alias": "psychic-seed",
+    "normalized": "psychicseed",
+    "id": "psychic-seed"
+  },
+  {
+    "kind": "item",
+    "alias": "psychicseed",
+    "normalized": "psychicseed",
+    "id": "psychic-seed"
+  },
+  {
+    "kind": "item",
     "alias": "Pyroarite",
     "normalized": "pyroarite",
     "id": "pyroarite"
@@ -7783,6 +8659,24 @@
   },
   {
     "kind": "item",
+    "alias": "Red Card",
+    "normalized": "redcard",
+    "id": "red-card"
+  },
+  {
+    "kind": "item",
+    "alias": "red-card",
+    "normalized": "redcard",
+    "id": "red-card"
+  },
+  {
+    "kind": "item",
+    "alias": "redcard",
+    "normalized": "redcard",
+    "id": "red-card"
+  },
+  {
+    "kind": "item",
     "alias": "Rindo Berry",
     "normalized": "rindoberry",
     "id": "rindo-berry"
@@ -7798,6 +8692,24 @@
     "alias": "rindoberry",
     "normalized": "rindoberry",
     "id": "rindo-berry"
+  },
+  {
+    "kind": "item",
+    "alias": "Rocky Helmet",
+    "normalized": "rockyhelmet",
+    "id": "rocky-helmet"
+  },
+  {
+    "kind": "item",
+    "alias": "rocky-helmet",
+    "normalized": "rockyhelmet",
+    "id": "rocky-helmet"
+  },
+  {
+    "kind": "item",
+    "alias": "rockyhelmet",
+    "normalized": "rockyhelmet",
+    "id": "rocky-helmet"
   },
   {
     "kind": "item",
@@ -7828,6 +8740,18 @@
     "alias": "sablenite",
     "normalized": "sablenite",
     "id": "sablenite"
+  },
+  {
+    "kind": "item",
+    "alias": "Salamencite",
+    "normalized": "salamencite",
+    "id": "salamencite"
+  },
+  {
+    "kind": "item",
+    "alias": "salamencite",
+    "normalized": "salamencite",
+    "id": "salamencite"
   },
   {
     "kind": "item",
@@ -8188,6 +9112,24 @@
     "alias": "tangaberry",
     "normalized": "tangaberry",
     "id": "tanga-berry"
+  },
+  {
+    "kind": "item",
+    "alias": "Terrain Extender",
+    "normalized": "terrainextender",
+    "id": "terrain-extender"
+  },
+  {
+    "kind": "item",
+    "alias": "terrain-extender",
+    "normalized": "terrainextender",
+    "id": "terrain-extender"
+  },
+  {
+    "kind": "item",
+    "alias": "terrainextender",
+    "normalized": "terrainextender",
+    "id": "terrain-extender"
   },
   {
     "kind": "item",
@@ -9733,6 +10675,24 @@
   },
   {
     "kind": "move",
+    "alias": "Court Change",
+    "normalized": "courtchange",
+    "id": "court-change"
+  },
+  {
+    "kind": "move",
+    "alias": "court-change",
+    "normalized": "courtchange",
+    "id": "court-change"
+  },
+  {
+    "kind": "move",
+    "alias": "courtchange",
+    "normalized": "courtchange",
+    "id": "court-change"
+  },
+  {
+    "kind": "move",
     "alias": "Covet",
     "normalized": "covet",
     "id": "covet"
@@ -10027,6 +10987,24 @@
   },
   {
     "kind": "move",
+    "alias": "Double Shock",
+    "normalized": "doubleshock",
+    "id": "double-shock"
+  },
+  {
+    "kind": "move",
+    "alias": "double-shock",
+    "normalized": "doubleshock",
+    "id": "double-shock"
+  },
+  {
+    "kind": "move",
+    "alias": "doubleshock",
+    "normalized": "doubleshock",
+    "id": "double-shock"
+  },
+  {
+    "kind": "move",
     "alias": "Double Team",
     "normalized": "doubleteam",
     "id": "double-team"
@@ -10282,6 +11260,24 @@
     "alias": "drillrun",
     "normalized": "drillrun",
     "id": "drill-run"
+  },
+  {
+    "kind": "move",
+    "alias": "Drum Beating",
+    "normalized": "drumbeating",
+    "id": "drum-beating"
+  },
+  {
+    "kind": "move",
+    "alias": "drum-beating",
+    "normalized": "drumbeating",
+    "id": "drum-beating"
+  },
+  {
+    "kind": "move",
+    "alias": "drumbeating",
+    "normalized": "drumbeating",
+    "id": "drum-beating"
   },
   {
     "kind": "move",
@@ -11317,6 +12313,24 @@
   },
   {
     "kind": "move",
+    "alias": "Glaive Rush",
+    "normalized": "glaiverush",
+    "id": "glaive-rush"
+  },
+  {
+    "kind": "move",
+    "alias": "glaive-rush",
+    "normalized": "glaiverush",
+    "id": "glaive-rush"
+  },
+  {
+    "kind": "move",
+    "alias": "glaiverush",
+    "normalized": "glaiverush",
+    "id": "glaive-rush"
+  },
+  {
+    "kind": "move",
     "alias": "Glare",
     "normalized": "glare",
     "id": "glare"
@@ -12205,6 +13219,24 @@
   },
   {
     "kind": "move",
+    "alias": "Jaw Lock",
+    "normalized": "jawlock",
+    "id": "jaw-lock"
+  },
+  {
+    "kind": "move",
+    "alias": "jaw-lock",
+    "normalized": "jawlock",
+    "id": "jaw-lock"
+  },
+  {
+    "kind": "move",
+    "alias": "jawlock",
+    "normalized": "jawlock",
+    "id": "jaw-lock"
+  },
+  {
+    "kind": "move",
     "alias": "Jet Punch",
     "normalized": "jetpunch",
     "id": "jet-punch"
@@ -12799,6 +13831,24 @@
   },
   {
     "kind": "move",
+    "alias": "Meteor Assault",
+    "normalized": "meteorassault",
+    "id": "meteor-assault"
+  },
+  {
+    "kind": "move",
+    "alias": "meteor-assault",
+    "normalized": "meteorassault",
+    "id": "meteor-assault"
+  },
+  {
+    "kind": "move",
+    "alias": "meteorassault",
+    "normalized": "meteorassault",
+    "id": "meteor-assault"
+  },
+  {
+    "kind": "move",
     "alias": "Meteor Beam",
     "normalized": "meteorbeam",
     "id": "meteor-beam"
@@ -12832,6 +13882,24 @@
     "alias": "meteormash",
     "normalized": "meteormash",
     "id": "meteor-mash"
+  },
+  {
+    "kind": "move",
+    "alias": "Milk Drink",
+    "normalized": "milkdrink",
+    "id": "milk-drink"
+  },
+  {
+    "kind": "move",
+    "alias": "milk-drink",
+    "normalized": "milkdrink",
+    "id": "milk-drink"
+  },
+  {
+    "kind": "move",
+    "alias": "milkdrink",
+    "normalized": "milkdrink",
+    "id": "milk-drink"
   },
   {
     "kind": "move",
@@ -13177,6 +14245,18 @@
   },
   {
     "kind": "move",
+    "alias": "Octolock",
+    "normalized": "octolock",
+    "id": "octolock"
+  },
+  {
+    "kind": "move",
+    "alias": "octolock",
+    "normalized": "octolock",
+    "id": "octolock"
+  },
+  {
+    "kind": "move",
     "alias": "Outrage",
     "normalized": "outrage",
     "id": "outrage"
@@ -13186,6 +14266,18 @@
     "alias": "outrage",
     "normalized": "outrage",
     "id": "outrage"
+  },
+  {
+    "kind": "move",
+    "alias": "Overdrive",
+    "normalized": "overdrive",
+    "id": "overdrive"
+  },
+  {
+    "kind": "move",
+    "alias": "overdrive",
+    "normalized": "overdrive",
+    "id": "overdrive"
   },
   {
     "kind": "move",
@@ -13783,6 +14875,24 @@
   },
   {
     "kind": "move",
+    "alias": "Pyro Ball",
+    "normalized": "pyroball",
+    "id": "pyro-ball"
+  },
+  {
+    "kind": "move",
+    "alias": "pyro-ball",
+    "normalized": "pyroball",
+    "id": "pyro-ball"
+  },
+  {
+    "kind": "move",
+    "alias": "pyroball",
+    "normalized": "pyroball",
+    "id": "pyro-ball"
+  },
+  {
+    "kind": "move",
     "alias": "Quash",
     "normalized": "quash",
     "id": "quash"
@@ -14050,6 +15160,24 @@
     "alias": "reversal",
     "normalized": "reversal",
     "id": "reversal"
+  },
+  {
+    "kind": "move",
+    "alias": "Revival Blessing",
+    "normalized": "revivalblessing",
+    "id": "revival-blessing"
+  },
+  {
+    "kind": "move",
+    "alias": "revival-blessing",
+    "normalized": "revivalblessing",
+    "id": "revival-blessing"
+  },
+  {
+    "kind": "move",
+    "alias": "revivalblessing",
+    "normalized": "revivalblessing",
+    "id": "revival-blessing"
   },
   {
     "kind": "move",
@@ -14587,6 +15715,24 @@
   },
   {
     "kind": "move",
+    "alias": "Shift Gear",
+    "normalized": "shiftgear",
+    "id": "shift-gear"
+  },
+  {
+    "kind": "move",
+    "alias": "shift-gear",
+    "normalized": "shiftgear",
+    "id": "shift-gear"
+  },
+  {
+    "kind": "move",
+    "alias": "shiftgear",
+    "normalized": "shiftgear",
+    "id": "shift-gear"
+  },
+  {
+    "kind": "move",
     "alias": "Simple Beam",
     "normalized": "simplebeam",
     "id": "simple-beam"
@@ -14686,6 +15832,18 @@
     "alias": "slackoff",
     "normalized": "slackoff",
     "id": "slack-off"
+  },
+  {
+    "kind": "move",
+    "alias": "Slash",
+    "normalized": "slash",
+    "id": "slash"
+  },
+  {
+    "kind": "move",
+    "alias": "slash",
+    "normalized": "slash",
+    "id": "slash"
   },
   {
     "kind": "move",
@@ -14824,6 +15982,24 @@
     "alias": "snarl",
     "normalized": "snarl",
     "id": "snarl"
+  },
+  {
+    "kind": "move",
+    "alias": "Snipe Shot",
+    "normalized": "snipeshot",
+    "id": "snipe-shot"
+  },
+  {
+    "kind": "move",
+    "alias": "snipe-shot",
+    "normalized": "snipeshot",
+    "id": "snipe-shot"
+  },
+  {
+    "kind": "move",
+    "alias": "snipeshot",
+    "normalized": "snipeshot",
+    "id": "snipe-shot"
   },
   {
     "kind": "move",
@@ -16606,6 +17782,24 @@
     "alias": "zenheadbutt",
     "normalized": "zenheadbutt",
     "id": "zen-headbutt"
+  },
+  {
+    "kind": "move",
+    "alias": "Zing Zap",
+    "normalized": "zingzap",
+    "id": "zing-zap"
+  },
+  {
+    "kind": "move",
+    "alias": "zing-zap",
+    "normalized": "zingzap",
+    "id": "zing-zap"
+  },
+  {
+    "kind": "move",
+    "alias": "zingzap",
+    "normalized": "zingzap",
+    "id": "zing-zap"
   },
   {
     "kind": "statAlignment",

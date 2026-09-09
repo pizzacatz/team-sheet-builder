@@ -8,7 +8,7 @@ import {
   isMegaItemMatched,
   isMoveLearnable
 } from "./legality";
-import { statAlignmentsById } from "./regulationData";
+import { rules, statAlignmentsById } from "./regulationData";
 import {
   achievableStatValues,
   alignmentMultiplier,
@@ -91,7 +91,7 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
 
     const species = getSpeciesRecord(entry.speciesId);
     if (!species) {
-      issue(issues, "error", `${path}.speciesId`, "ILLEGAL_SPECIES", `${slot}'s species is not legal in M-B.`);
+      issue(issues, "error", `${path}.speciesId`, "ILLEGAL_SPECIES", `${slot}'s species is not legal in ${rules.regulation}.`);
       return;
     }
 
@@ -111,7 +111,7 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
     if (!entry.abilityId) {
       issue(issues, "error", `${path}.abilityId`, "MISSING_ABILITY", `${slot} needs an ability.`);
     } else if (!getAbilityRecord(entry.abilityId)) {
-      issue(issues, "error", `${path}.abilityId`, "ILLEGAL_ABILITY", `${slot}'s ability is not legal in M-B.`);
+      issue(issues, "error", `${path}.abilityId`, "ILLEGAL_ABILITY", `${slot}'s ability is not legal in ${rules.regulation}.`);
     } else if (!isAbilityAvailable(entry)) {
       issue(
         issues,
@@ -127,7 +127,7 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
     } else {
       const item = getItemRecord(entry.itemId);
       if (!item) {
-        issue(issues, "error", `${path}.itemId`, "ILLEGAL_ITEM", `${slot}'s item is not legal in M-B.`);
+        issue(issues, "error", `${path}.itemId`, "ILLEGAL_ITEM", `${slot}'s item is not legal in ${rules.regulation}.`);
       } else {
         const existingItemSlot = itemBySlot.get(item.id);
         if (item.itemClauseEligible && existingItemSlot !== undefined) {
@@ -176,7 +176,7 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
         moveSlotById.set(moveId, moveIndex);
       }
       if (!getMoveRecord(moveId)) {
-        issue(issues, "error", movePath, "ILLEGAL_MOVE", `${slot}'s move ${moveIndex + 1} is not legal in M-B.`);
+        issue(issues, "error", movePath, "ILLEGAL_MOVE", `${slot}'s move ${moveIndex + 1} is not legal in ${rules.regulation}.`);
         return;
       }
       if (!isMoveLearnable(entry, moveId)) {

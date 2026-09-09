@@ -23,7 +23,7 @@ The domain is governed by an external **rules engine** — a separate
 "Champions Logic" project — whose SQLite database is the **source of truth**.
 A **build-time ETL script** (`scripts/export_champions_data.py`) queries that
 database and emits compact **JSON dictionaries** under
-`src/data/regulation-mb/` (species, moves, abilities, items, stat
+`src/data/regulation-mc/` (species, moves, abilities, items, stat
 alignments). The app never calls a live API for this data; it **bundles** a
 frozen **snapshot**, so correctness depends on periodically re-running the
 export and committing the regenerated files.
@@ -119,7 +119,7 @@ function (`decodeTeamDataFromScan`):
   library into the one open corner of the template. Because QR **capacity**
   is the binding constraint at that physical size, this carrier swaps slugs
   for 2-character **base36**-encoded numbers from an **append-only lookup
-  registry** (`src/data/regulation-mb/code-index.json`, built by
+  registry** (`src/data/regulation-mc/code-index.json`, built by
   `scripts/build_code_index.mjs`) — an *id → permanent number* mapping where
   numbers are assigned once and never reordered or reused, so a QR **printed
   under an older registry version still decodes correctly** against a newer
@@ -275,7 +275,7 @@ anything meaningful.
 | **type-checking as a build gate** | fail the build on type errors, not just at edit time | `"build": "tsc -b && vite build"` |
 | **CI/CD pipeline** | automated test/build/deploy on code changes | `.github/workflows/pages.yml`: install → `npm test` → build → deploy |
 | **lazy loading** | deferring a module's download until it's actually needed | `await import("../pdf/generateTeamSheetPdf")` and `await import("qrcode")`, only on Download/Share |
-| **ETL script (extract/transform/load)** | pulls data from one system, reshapes it, writes it for another | `scripts/export_champions_data.py` reads the Champions Logic SQLite DB, writes `src/data/regulation-mb/*.json` |
+| **ETL script (extract/transform/load)** | pulls data from one system, reshapes it, writes it for another | `scripts/export_champions_data.py` reads the Champions Logic SQLite DB, writes `src/data/regulation-mc/*.json` |
 | **snapshot / bundled data** | a frozen copy shipped with the app, not fetched live | the regulation JSON dictionaries; refreshed only by re-running `npm run data:export` |
 | **unit test / component test** | an automated check of one function or component in isolation | `vitest` files like `stats.test.ts`, `AutocompleteField.test.tsx` |
 | **test environment (jsdom)** | a fake DOM so browser-shaped code can run under Node | `vitest.config.ts`: `environment: "jsdom"` |
@@ -291,7 +291,7 @@ anything meaningful.
 | **ambiguous match** | a lookup whose normalized key maps to more than one record | `Resolution.ambiguous`, surfaced as `AMBIGUOUS_ALIAS_RESOLVED` on import |
 | **deterministic prefix matching** | consistent, rule-based text matching, not relevance scoring | `searchOptions` in `src/domain/autocomplete.ts`; explicitly not fuzzy search |
 | **match tier** | a priority bucket results are grouped into before sorting | label-prefix → later-word-prefix → alias-prefix → later-alias-word-prefix in `optionMatchTier` |
-| **append-only registry** | a lookup table that may only ever gain entries, never mutate existing ones | `src/data/regulation-mb/code-index.json`, contract documented in `docs/CODE_INDEX.md` |
+| **append-only registry** | a lookup table that may only ever gain entries, never mutate existing ones | `src/data/regulation-mc/code-index.json`, contract documented in `docs/CODE_INDEX.md` |
 | **tombstone** | a retired entry kept in place (not deleted) to preserve numbering | a removed Pokémon/move's row stays in `code-index.json` forever |
 
 ### Domain rules & validation
