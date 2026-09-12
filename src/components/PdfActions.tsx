@@ -5,6 +5,9 @@ import type { PlayerInfo, TeamSheet } from "../domain/teamTypes";
 import type { ValidationResult } from "../domain/validationTypes";
 import type { TeamSheetPdfType } from "../pdf/generateTeamSheetPdf";
 
+// Default recipient for the "Email to TO" draft.
+const TO_EMAIL = "supernerdyido@gmail.com";
+
 type PdfActionsProps = {
   teamSheet: TeamSheet;
   validation: ValidationResult;
@@ -97,9 +100,9 @@ export function PdfActions({ teamSheet, validation, onBlockedAttempt }: PdfActio
     }
   };
 
-  // Opens the player's mail app with a pre-filled body (player info + the team
-  // link) and no recipient. No backend, no send — just a draft the player
-  // addresses to their TO.
+  // Opens the player's mail app with the TO pre-filled as the recipient and a
+  // pre-filled body (player info + the team link). No backend, no send — just a
+  // draft the player can review and send.
   const handleEmail = async () => {
     if (!validation.isValid) {
       onBlockedAttempt();
@@ -112,7 +115,7 @@ export function PdfActions({ teamSheet, validation, onBlockedAttempt }: PdfActio
       const teamLink = `${window.location.origin}${window.location.pathname}#t=${encoded}`;
       const subject = `${teamSheet.player.name.trim() || "Player"} - VGC Team List`;
       const body = emailBodyFor(teamSheet.player, teamLink);
-      window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = `mailto:${TO_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     } catch (emailError) {
       setError(emailError instanceof Error ? emailError.message : "Couldn't open an email draft.");
     } finally {

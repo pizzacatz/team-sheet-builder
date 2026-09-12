@@ -28,7 +28,7 @@ Live app: <https://teamsheet.georgiaplayevents.com/>
 - Each Pokémon card has a trash button for clearing that slot.
 - Persistent, right-aligned in-field labels keep completed fields identifiable without relying on placeholders.
 - Light and dark themes are available from the header toggle.
-- `Email to TO` opens the player's mail app with a pre-filled body (readable player info plus the team link) and no recipient — the player addresses it to their Tournament Organizer. No backend, no send; just a draft.
+- `Email to TO` opens the player's mail app with a pre-filled body (readable player info plus the team link) addressed to the Tournament Organizer (`supernerdyido@gmail.com`). No backend, no send; just a draft.
 - The team link encodes the whole team, including player info, in the URL's `#hash`, so nothing is uploaded. Opening a `#t=` link loads the team (confirming first if it would replace existing data). Uses `deflate` compression to keep links short.
 - PDF output includes the footer watermark `teamsheet.georgiaplayevents.com`.
 
@@ -111,7 +111,7 @@ PDF generation uses `pdf-lib` in the browser. The PDF code is lazy-loaded only w
 Available actions:
 
 - `Download`: downloads the combined Open + Staff PDF.
-- `Email to TO`: opens a `mailto:` draft (player info + team link in the body, no recipient).
+- `Email to TO`: opens a `mailto:` draft to `supernerdyido@gmail.com` (player info + team link in the body).
 - `Share`: shares the combined PDF through the device share sheet, shown only when PDF file sharing is supported (mobile).
 
 Actions reveal the outstanding errors and jump to the first one instead of proceeding while validation contains errors. Whenever errors are present, a `Download anyway` button is also shown and downloads the combined PDF without fixing anything.
