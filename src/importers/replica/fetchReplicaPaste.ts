@@ -11,7 +11,12 @@ export const REPLICA_VIEWER_URL: string = (import.meta.env.VITE_REPLICA_VIEWER_U
   .trim()
   .replace(/\/+$/, "");
 
-export const isReplicaLookupEnabled = (): boolean => REPLICA_VIEWER_URL.length > 0;
+// Temporary kill switch. While true the Replica Team ID field is hidden even
+// when VITE_REPLICA_VIEWER_URL is set. Flip to false to re-enable.
+export const REPLICA_LOOKUP_DISABLED = true;
+
+export const isReplicaLookupEnabled = (): boolean =>
+  !REPLICA_LOOKUP_DISABLED && REPLICA_VIEWER_URL.length > 0;
 
 /** 10 characters, letters and digits, excluding the confusable I, O and Z. */
 export const REPLICA_ID_PATTERN = /^[A-HJ-NP-Y0-9]{10}$/;

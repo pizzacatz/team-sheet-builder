@@ -56,6 +56,7 @@ The builder itself stays static. Replica lookups call a separately deployed
 [Replica Team Viewer](https://github.com/pizzacatz/replica-team-viewer), which
 returns the team as a Showdown paste from `GET /api/team/<ID>?format=paste`.
 
+- Currently disabled by the `REPLICA_LOOKUP_DISABLED` kill switch in `src/importers/replica/fetchReplicaPaste.ts`; set it to `false` to bring the feature back.
 - Enable it by setting `VITE_REPLICA_VIEWER_URL` at build time (see `.env.example`). For GitHub Pages, add a repository variable named `REPLICA_VIEWER_URL`; the workflow passes it through. When unset, the field is not rendered and no external request is ever made.
 - The viewer must list this site's origin in its `ALLOWED_ORIGINS` so the browser permits the cross-origin call.
 - IDs are normalized (upper-cased, spaces and dashes removed) and validated locally (10 characters, no I, O, or Z) before any request.
