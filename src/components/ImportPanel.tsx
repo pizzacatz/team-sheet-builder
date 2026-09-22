@@ -138,13 +138,13 @@ export function ImportPanel({ onImport, teamHasData }: ImportPanelProps) {
         <div className="heading-actions">
           {!isOpen ? (
             <button type="button" className="import-paste-button" onClick={handlePasteAndImport}>
-              <ClipboardPaste size={16} aria-hidden="true" />
-              <span>Paste &amp; Import</span>
+              <ClipboardPaste size={18} aria-hidden="true" />
+              <span>Paste and import</span>
             </button>
           ) : null}
           {issues.length ? (
             <button type="button" className="icon-button" onClick={() => setIssues([])} aria-label="Dismiss import issues">
-              <X size={16} />
+              <X size={18} />
             </button>
           ) : null}
           <button
@@ -154,7 +154,7 @@ export function ImportPanel({ onImport, teamHasData }: ImportPanelProps) {
             aria-label="Clear import"
             onClick={handleClear}
           >
-            <Trash2 size={17} />
+            <Trash2 size={18} />
           </button>
         </div>
       </div>
@@ -196,7 +196,7 @@ export function ImportPanel({ onImport, teamHasData }: ImportPanelProps) {
                 title="Uses the field if filled, otherwise reads a code from your clipboard"
               >
                 <Search size={18} aria-hidden="true" />
-                {replicaBusy ? "Fetching…" : "Fetch & Import"}
+                {replicaBusy ? "Fetching…" : "Fetch and import"}
               </button>
               {replicaError ? (
                 <p id="replica-team-id-error" className="replica-error" role="alert">
@@ -219,7 +219,7 @@ export function ImportPanel({ onImport, teamHasData }: ImportPanelProps) {
           <div className="action-row">
             <button type="button" className="primary-action" onClick={handlePasteAndImport}>
               <ClipboardPaste size={18} />
-              Paste &amp; Import
+              Paste and import
             </button>
           </div>
         </div>

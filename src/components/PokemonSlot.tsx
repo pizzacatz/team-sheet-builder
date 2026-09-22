@@ -185,7 +185,7 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, errorFi
       <div className="slot-heading">
         <h3 id={`pokemon-${index}-heading`}>Pokémon {index + 1}</h3>
         <button type="button" className="icon-button slot-clear-button" title={`Clear Pokémon ${index + 1}`} aria-label={`Clear Pokémon ${index + 1}`} onClick={onClear}>
-          <Trash2 size={17} />
+          <Trash2 size={18} />
         </button>
       </div>
       <div className="slot-top-grid">

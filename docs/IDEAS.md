@@ -10,7 +10,7 @@ supported). Removed: the expander, Open/Staff individual downloads, PDF preview,
 whole-team Clear, and the standalone Copy-team-link panel + its "Include player
 info" opt-in. `Email to TO` is a `mailto:` draft (player info + team link in the
 body, no recipient — the player addresses it). The team link always carries player
-info now. Import starts expanded with a unified `Paste & Import` (imports the box
+info now. Import starts expanded with a unified `Paste and import` (imports the box
 if it has text, else reads the clipboard). Per-slot trash icons were kept.
 Later addition: a `Download anyway` override button sits below the action row
 whenever validation errors remain. Later still: an optional `Replica Team ID`

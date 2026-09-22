@@ -207,7 +207,7 @@ export function PdfActions({ teamSheet, validation, pristine, onBlockedAttempt }
           title="Download the combined PDF without fixing the validation errors. The sheet may be rejected at check-in."
           onClick={() => handleDownload("both", true)}
         >
-          <AlertTriangle size={16} />
+          <AlertTriangle size={18} />
           <span className="action-label">{generatingType === "force" ? "Generating..." : "Download anyway"}</span>
         </button>
       ) : null}
