@@ -731,6 +731,11 @@ select.is-warning {
   color: var(--warning-text);
 }
 
+.status-pill.pending {
+  background: var(--surface-hover);
+  color: var(--muted);
+}
+
 .primary-action,
 .secondary-action,
 .icon-button {
@@ -819,26 +824,6 @@ select.is-warning {
 .issue-list.compact {
   max-height: 220px;
   margin-top: 12px;
-}
-
-/* Compact error preview — shown only on mobile when the panel is collapsed. */
-.issue-peek {
-  display: none;
-  gap: 8px;
-  margin-top: 12px;
-}
-
-.issue-peek-more {
-  margin: 0;
-  border: 0;
-  background: transparent;
-  padding: 2px 0 0;
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--danger-text);
-  text-align: left;
-  text-decoration: underline;
-  cursor: pointer;
 }
 
 /* Blocked download/share buttons stay tappable but read as not-ready. */
@@ -1121,17 +1106,6 @@ select.is-warning {
     min-height: 0;
     max-height: 264px;
     margin: 0 14px 14px;
-  }
-
-  /* Mobile: instead of collapsing on error, show a 2-error peek. Expanding
-     swaps the peek for the full list. */
-  .validation-panel.has-errors:not(.is-expanded) .issue-peek {
-    display: grid;
-    margin: 0 14px 14px;
-  }
-
-  .validation-panel.is-expanded .issue-peek {
-    display: none;
   }
 
   .validation-panel.is-expanded .validation-summary {

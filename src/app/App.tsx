@@ -35,6 +35,13 @@ export function App() {
   const [attemptedDownload, setAttemptedDownload] = useState(false);
   const [expandSignal, setExpandSignal] = useState(0);
   const isDarkMode = theme === "dark";
+  const teamHasData = teamSheet.pokemon.some(entryHasAnyData);
+  const playerHasData = Object.values(teamSheet.player).some(
+    (value) => typeof value === "string" && value.trim().length > 0
+  );
+  // An untouched form is "not started", not "invalid": the error list and the
+  // override button stay hidden until the user edits something or taps an action.
+  const isPristine = !attemptedDownload && !teamHasData && !playerHasData;
 
   const errorFieldIds = useMemo(
     () => collectErrorFieldIds(validation.issues, attemptedDownload),
@@ -164,7 +171,7 @@ export function App() {
 
       <div className="layout">
         <div className="main-column">
-          <ImportPanel onImport={replacePokemon} teamHasData={teamSheet.pokemon.some(entryHasAnyData)} />
+          <ImportPanel onImport={replacePokemon} teamHasData={teamHasData} />
           <PlayerInfoForm player={teamSheet.player} onChange={updatePlayer} errorFieldIds={errorFieldIds} />
           <TeamForm
             pokemon={teamSheet.pokemon}
@@ -175,8 +182,13 @@ export function App() {
           />
         </div>
         <aside className="side-column" ref={sideColumnRef}>
-          <ValidationPanel validation={validation} expandSignal={expandSignal} />
-          <PdfActions teamSheet={teamSheet} validation={validation} onBlockedAttempt={handleBlockedAttempt} />
+          <ValidationPanel validation={validation} expandSignal={expandSignal} pristine={isPristine} />
+          <PdfActions
+            teamSheet={teamSheet}
+            validation={validation}
+            pristine={isPristine}
+            onBlockedAttempt={handleBlockedAttempt}
+          />
         </aside>
       </div>
     </main>

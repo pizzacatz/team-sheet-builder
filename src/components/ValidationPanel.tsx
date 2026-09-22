@@ -1,4 +1,4 @@
-import { AlertTriangle, CheckCircle2 } from "lucide-react";
+import { AlertTriangle, CheckCircle2, CircleDashed } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { ValidationIssue } from "../domain/validationTypes";
 import type { ValidationResult } from "../domain/validationTypes";
@@ -8,9 +8,9 @@ type ValidationPanelProps = {
   validation: ValidationResult;
   // Bumps whenever a blocked download/share attempt should force the list open.
   expandSignal?: number;
+  // Untouched form: show a neutral "Not started" summary instead of errors.
+  pristine?: boolean;
 };
-
-const PEEK_COUNT = 2;
 
 const IssueRow = ({ issue, index }: { issue: ValidationIssue; index: number }) => {
   const targetId = fieldIdForPath(issue.path);
@@ -38,11 +38,11 @@ const IssueRow = ({ issue, index }: { issue: ValidationIssue; index: number }) =
   );
 };
 
-export function ValidationPanel({ validation, expandSignal }: ValidationPanelProps) {
+export function ValidationPanel({ validation, expandSignal, pristine = false }: ValidationPanelProps) {
   const errors = validation.issues.filter((issue) => issue.severity === "error");
   const warnings = validation.issues.filter((issue) => issue.severity === "warning");
-  const hasIssues = validation.issues.length > 0;
-  const hasErrors = errors.length > 0;
+  const hasIssues = !pristine && validation.issues.length > 0;
+  const hasErrors = !pristine && errors.length > 0;
   const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
@@ -56,7 +56,7 @@ export function ValidationPanel({ validation, expandSignal }: ValidationPanelPro
   }, [expandSignal]);
 
   // Auto-expand the full list on desktop when errors appear. On mobile we leave
-  // it collapsed so the compact 2-error peek shows instead of a tall list.
+  // it collapsed so the tray stays small; a blocked download expands it.
   useEffect(() => {
     if (!hasErrors) return;
     if (window.matchMedia("(min-width: 761px)").matches) setIsExpanded(true);
@@ -67,7 +67,12 @@ export function ValidationPanel({ validation, expandSignal }: ValidationPanelPro
     <>
       <h2 id="validation-heading">Validation</h2>
       <span className="status-pill-group">
-        {hasErrors ? (
+        {pristine ? (
+          <span className="status-pill pending">
+            <CircleDashed size={16} />
+            Not started
+          </span>
+        ) : hasErrors ? (
           <span className="status-pill invalid">
             <AlertTriangle size={16} />
             {`${errors.length} ${errors.length === 1 ? "error" : "errors"}`}
@@ -85,8 +90,6 @@ export function ValidationPanel({ validation, expandSignal }: ValidationPanelPro
     </>
   );
 
-  const peekErrors = errors.slice(0, PEEK_COUNT);
-  const hiddenErrorCount = errors.length - peekErrors.length;
 
   return (
     <section
@@ -106,22 +109,10 @@ export function ValidationPanel({ validation, expandSignal }: ValidationPanelPro
       ) : (
         <div className={summaryClassName}>{summaryContent}</div>
       )}
-      {validation.issues.length === 0 ? (
+      {!hasIssues ? (
         <p className="empty-state">Complete team data will be checked here.</p>
       ) : (
         <>
-          {hasErrors ? (
-            <div className="issue-peek" aria-hidden="true">
-              {peekErrors.map((issue, index) => (
-                <IssueRow key={`peek-${issue.path}-${issue.code}-${index}`} issue={issue} index={index} />
-              ))}
-              {hiddenErrorCount > 0 ? (
-                <button type="button" className="issue-peek-more" tabIndex={-1} onClick={() => setIsExpanded(true)}>
-                  {`+${hiddenErrorCount} more. Tap to expand`}
-                </button>
-              ) : null}
-            </div>
-          ) : null}
           <div className="issue-list" id="validation-issue-list">
             {errors.map((issue, index) => (
               <IssueRow key={`${issue.path}-${issue.code}-${index}`} issue={issue} index={index} />

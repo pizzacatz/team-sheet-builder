@@ -97,7 +97,7 @@ Date of Birth:
 
 ### Error visibility
 
-- The validation summary auto-expands the full list on desktop when there are errors; on mobile it shows a compact two-error peek that expands on tap.
+- An untouched form shows a neutral `Not started` pill with no error list and no `Download anyway` button; errors appear once the user edits a field, taps an action, or loads a shared team. The validation summary auto-expands the full list on desktop when there are errors; on mobile the tray stays collapsed to the summary bar and buttons until tapped, and a blocked download expands it.
 - Fields with a wrong value (illegal, duplicate, out-of-range, malformed date) are outlined in the error color immediately. Empty required fields are outlined only after the first download/share attempt, so a fresh form stays clean.
 - Download/share buttons stay tappable while errors remain: tapping one reveals the error list and jumps to the first problem instead of generating a PDF.
 - While errors remain, a `Download anyway` button sits below the action row as an alternative option (not a confirmation). It downloads the combined PDF as-is, validation errors and all — for players who need the sheet anyway (its tooltip warns the sheet may be rejected at check-in).

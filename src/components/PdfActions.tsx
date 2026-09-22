@@ -11,6 +11,9 @@ const TO_EMAIL = "";
 type PdfActionsProps = {
   teamSheet: TeamSheet;
   validation: ValidationResult;
+  // Untouched form: hide the "Download anyway" escape hatch until there is
+  // something to override.
+  pristine?: boolean;
   onBlockedAttempt: () => void;
 };
 
@@ -51,7 +54,7 @@ const emailBodyFor = (player: PlayerInfo, teamLink: string) => {
   return lines.join("\n");
 };
 
-export function PdfActions({ teamSheet, validation, onBlockedAttempt }: PdfActionsProps) {
+export function PdfActions({ teamSheet, validation, pristine, onBlockedAttempt }: PdfActionsProps) {
   const [generatingType, setGeneratingType] = useState<GeneratingType | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [canShareFiles, setCanShareFiles] = useState(false);
@@ -196,7 +199,7 @@ export function PdfActions({ teamSheet, validation, onBlockedAttempt }: PdfActio
           </button>
         ) : null}
       </div>
-      {!validation.isValid ? (
+      {!validation.isValid && !pristine ? (
         <button
           type="button"
           className="override-action"
