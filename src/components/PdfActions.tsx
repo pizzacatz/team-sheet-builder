@@ -6,7 +6,7 @@ import type { ValidationResult } from "../domain/validationTypes";
 import type { TeamSheetPdfType } from "../pdf/generateTeamSheetPdf";
 
 // Default recipient for the "Email to TO" draft.
-const TO_EMAIL = "supernerdyido@gmail.com";
+const TO_EMAIL = "";
 
 type PdfActionsProps = {
   teamSheet: TeamSheet;
