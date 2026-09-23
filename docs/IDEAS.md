@@ -13,7 +13,8 @@ body, no recipient — the player addresses it). The team link always carries pl
 info now. Import starts expanded with a unified `Paste and import` (imports the box
 if it has text, else reads the clipboard). Per-slot trash icons were kept.
 Later addition: a `Download anyway` override button sits below the action row
-whenever validation errors remain. Later still: an optional `Replica Team ID`
+whenever validation errors remain on a form the player has touched (an untouched
+form reads `Not started` and hides the error list). Later still: an optional `Replica Team ID`
 field (build-time `VITE_REPLICA_VIEWER_URL`) fetches a Showdown paste from the
 companion Replica Team Viewer and feeds it through the same import path — the
 builder stays static; only the viewer has a backend.

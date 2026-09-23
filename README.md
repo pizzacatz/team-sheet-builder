@@ -22,7 +22,7 @@ Live app: <https://teamsheet.georgiaplayevents.com/>
 - Mobile layout uses a single-column Pokémon flow with validation/download controls floating at the bottom.
 - Validation details are collapsed by default on desktop and mobile. Selecting the summary expands the list; selecting an issue scrolls to and focuses the associated field.
 - The mobile floating tray hides while a field is being edited so it does not compete with the keyboard.
-- The action bar is a single row: `Download` (combined team sheets), `Email to TO`, and — on devices that support file sharing (mobile) — `Share`. While validation errors remain, a `Download anyway` button also appears below the row. There is no expander, PDF preview, or whole-team clear button.
+- The action bar is a single row: `Download` (combined team sheets), `Email to TO`, and — on devices that support file sharing (mobile) — `Share`. Once the form has been touched and validation errors remain, a `Download anyway` button also appears below the row. There is no expander, PDF preview, or whole-team clear button.
 - The Showdown Import panel starts expanded. Its `Paste and import` button imports the box when it has text, otherwise reads the clipboard and imports in one tap.
 - When a Replica Team Viewer URL is configured, the import panel also shows a `Replica Team ID` field with a `Fetch and import` button. One tap does everything: if the field has an ID it uses that, otherwise it reads a code from the clipboard and fills the field, then fetches the team and imports the resulting paste through the normal path. Lookup errors show inline and leave the paste box as the fallback.
 - Each Pokémon card has a trash button for clearing that slot.
