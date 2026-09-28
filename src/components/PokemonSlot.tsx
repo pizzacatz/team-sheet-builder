@@ -7,14 +7,14 @@ import { abilities, abilitiesById, items, itemsById, moves, movesById, species, 
 import { normalizePokemonStats, statRows } from "../domain/stats";
 import { emptyPokemonEntry, type PokemonEntry, type StatKey } from "../domain/teamTypes";
 import { AutocompleteField } from "./AutocompleteField";
+import type { FieldFlags } from "./validationFields";
 
 type PokemonSlotProps = {
   index: number;
   entry: PokemonEntry;
   usedSpeciesDex?: Set<number>;
   usedItemIds?: Set<string>;
-  errorFieldIds?: Set<string>;
-  warningFieldIds?: Set<string>;
+  fieldFlags?: FieldFlags;
   onChange: (patch: Partial<PokemonEntry>) => void;
   onClear: () => void;
 };
@@ -61,9 +61,15 @@ const statFieldLabels: Record<StatKey, string> = {
   spe: "Spe"
 };
 
-export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, errorFieldIds, warningFieldIds, onChange, onClear }: PokemonSlotProps) {
-  const hasError = (fieldId: string) => Boolean(errorFieldIds?.has(fieldId));
-  const hasWarning = (fieldId: string) => Boolean(warningFieldIds?.has(fieldId));
+export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, fieldFlags, onChange, onClear }: PokemonSlotProps) {
+  const hasError = (fieldId: string) => Boolean(fieldFlags?.errors.has(fieldId));
+  const hasWarning = (fieldId: string) => Boolean(fieldFlags?.warnings.has(fieldId));
+  const messagesFor = (fieldId: string) => fieldFlags?.messages.get(fieldId);
+  // The stat boxes are too narrow for a message each: collect theirs under the grid.
+  const statMessages = statRows
+    .flatMap((stat) => messagesFor(`pokemon-${index}-${stat.key}`) ?? [])
+    .filter((message, position, all) => all.findIndex((other) => other.text === message.text) === position)
+    .sort((a, b) => (a.severity === b.severity ? 0 : a.severity === "error" ? -1 : 1));
   const lastSelectedSpeciesId = useRef(entry.speciesId);
   const allSpeciesOptions = useMemo(() => makeOptions(species, (record) => record.types.join(" / ")), []);
   const allAbilityOptions = useMemo(() => makeOptions(abilities), []);
@@ -181,7 +187,7 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, errorFi
   const statDescription = entry.statAlignment.requiresReview ? "Review the imported neutral alignment." : undefined;
 
   return (
-    <section className="pokemon-slot in-field-form" aria-labelledby={`pokemon-${index}-heading`}>
+    <section className="pokemon-slot in-field-form" data-section={`pokemon-${index}`} aria-labelledby={`pokemon-${index}-heading`}>
       <div className="slot-heading">
         <h3 id={`pokemon-${index}-heading`}>Pokémon {index + 1}</h3>
         <button type="button" className="icon-button slot-clear-button" title={`Clear Pokémon ${index + 1}`} aria-label={`Clear Pokémon ${index + 1}`} onClick={onClear}>
@@ -199,6 +205,7 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, errorFi
           required
           invalid={hasError(`pokemon-${index}-species`)}
           warning={hasWarning(`pokemon-${index}-species`)}
+          messages={messagesFor(`pokemon-${index}-species`)}
         />
         <AutocompleteField
           id={`pokemon-${index}-stat-alignment`}
@@ -219,6 +226,7 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, errorFi
           helperText={statDescription}
           invalid={hasError(`pokemon-${index}-stat-alignment`)}
           warning={hasWarning(`pokemon-${index}-stat-alignment`)}
+          messages={messagesFor(`pokemon-${index}-stat-alignment`)}
         />
       </div>
       <div className="slot-pdf-grid">
@@ -233,6 +241,7 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, errorFi
             required
             invalid={hasError(`pokemon-${index}-ability`)}
             warning={hasWarning(`pokemon-${index}-ability`)}
+            messages={messagesFor(`pokemon-${index}-ability`)}
           />
           <AutocompleteField
             id={`pokemon-${index}-item`}
@@ -244,6 +253,7 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, errorFi
             required
             invalid={hasError(`pokemon-${index}-item`)}
             warning={hasWarning(`pokemon-${index}-item`)}
+            messages={messagesFor(`pokemon-${index}-item`)}
           />
           {entry.moves.map((moveId, moveIndex) => {
             // A Pokémon can't have the same move twice: hide moves already picked
@@ -267,6 +277,7 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, errorFi
                 required={moveIndex === 0}
                 invalid={hasError(`pokemon-${index}-move-${moveIndex}`)}
                 warning={hasWarning(`pokemon-${index}-move-${moveIndex}`)}
+                messages={messagesFor(`pokemon-${index}-move-${moveIndex}`)}
               />
             );
           })}
@@ -294,6 +305,15 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, errorFi
           ))}
         </div>
       </div>
+      {statMessages.length ? (
+        <ul className="slot-stat-messages" aria-live="polite">
+          {statMessages.map((message) => (
+            <li key={message.text} className={`field-message ${message.severity}`}>
+              {message.text}
+            </li>
+          ))}
+        </ul>
+      ) : null}
     </section>
   );
 }

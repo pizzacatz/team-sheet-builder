@@ -1,6 +1,8 @@
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { normalizeName } from "../domain/normalization";
 import { searchOptions, type AutocompleteOption } from "../domain/autocomplete";
+import { FieldMessage, fieldMessageId } from "./FieldMessage";
+import type { FieldMessage as FieldMessageData } from "./validationFields";
 
 type AutocompleteFieldProps = {
   id?: string;
@@ -16,6 +18,7 @@ type AutocompleteFieldProps = {
   disabled?: boolean;
   invalid?: boolean;
   warning?: boolean;
+  messages?: FieldMessageData[];
 };
 
 export function AutocompleteField({
@@ -31,7 +34,8 @@ export function AutocompleteField({
   required,
   disabled,
   invalid,
-  warning
+  warning,
+  messages
 }: AutocompleteFieldProps) {
   const generatedInputId = useId();
   const inputId = id ?? generatedInputId;
@@ -158,6 +162,7 @@ export function AutocompleteField({
         placeholder={placeholder}
         disabled={disabled}
         aria-invalid={invalid || undefined}
+        aria-describedby={messages?.length ? fieldMessageId(inputId) : undefined}
         autoComplete="off"
         aria-autocomplete="list"
         aria-controls={isOpen && suggestions.length > 0 ? listboxId : undefined}
@@ -176,6 +181,7 @@ export function AutocompleteField({
         onKeyDown={handleKeyDown}
         onChange={(event) => handleInput(event.target.value)}
       />
+      <FieldMessage fieldId={inputId} messages={messages} />
       {helperText ? <p className="field-help">{helperText}</p> : null}
       {isOpen && suggestions.length > 0 ? (
         <div id={listboxId} className="suggestions" role="listbox">

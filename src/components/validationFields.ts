@@ -1,6 +1,6 @@
 // Shared mapping from a validation issue's `path` to the DOM id of its field,
-// used both by the validation list (click-to-focus) and by the form fields
-// (error highlighting).
+// plus the rules for *when* an issue is shown. The validation panel and the
+// form fields both read `visibleIssues`, so they always agree.
 
 export const fieldIdForPath = (path: string): string | null => {
   if (path === "player.name") return "player-name";
@@ -38,9 +38,8 @@ export const scrollToIssueField = (path: string) => {
   }, 250);
 };
 
-// Errors for empty required fields — highlighted on the field only after a
-// download/share attempt, so a fresh empty form is not a wall of red. Every
-// other error (a wrong value that was actually entered) highlights immediately.
+// Errors for empty required fields. These wait until the user has had a fair
+// chance to fill the field in (see isIssueVisible).
 export const MISSING_ERROR_CODES = new Set<string>([
   "MISSING_PLAYER_NAME",
   "MISSING_TRAINER_NAME",
@@ -55,39 +54,157 @@ export const MISSING_ERROR_CODES = new Set<string>([
   "MISSING_STAT_ALIGNMENT"
 ]);
 
-type IssueLike = { severity: string; code: string; path: string; relatedFields?: string[] };
+type IssueLike = { severity: string; code: string; path: string; message?: string; relatedFields?: string[] };
 
-const addFields = (ids: Set<string>, issue: IssueLike) => {
-  for (const path of [issue.path, ...(issue.relatedFields ?? [])]) {
-    const fieldId = fieldIdForPath(path);
-    if (fieldId) ids.add(fieldId);
-  }
+// Sections are the unit of "started" / "finished": Player Info and each slot.
+export const SECTIONS = ["player", "pokemon-0", "pokemon-1", "pokemon-2", "pokemon-3", "pokemon-4", "pokemon-5"];
+
+export const sectionLabel = (section: string): string =>
+  section === "player" ? "Player Info" : `Pokémon ${Number(section.slice("pokemon-".length)) + 1}`;
+
+export const sectionForPath = (path: string): string | null => {
+  if (path.startsWith("player.")) return "player";
+  const match = path.match(/^pokemon\.(\d+)/);
+  return match ? `pokemon-${match[1]}` : null;
 };
 
-/**
- * DOM ids of fields with an active error. Missing-required errors are included
- * only once `attempted` is true (i.e. the user tried to download/share).
- */
-export const collectErrorFieldIds = (issues: IssueLike[], attempted: boolean): Set<string> => {
-  const ids = new Set<string>();
-  for (const issue of issues) {
-    if (issue.severity !== "error") continue;
-    if (!attempted && MISSING_ERROR_CODES.has(issue.code)) continue;
-    addFields(ids, issue);
-  }
-  return ids;
+export const sectionForFieldId = (fieldId: string): string | null => {
+  if (/^(player-name|trainer-name|age-division-field|player-id|date-of-birth)$/.test(fieldId)) return "player";
+  const match = fieldId.match(/^pokemon-(\d+)-/);
+  return match ? `pokemon-${match[1]}` : null;
 };
 
-/**
- * DOM ids of fields with an active warning (amber). Excludes anything already
- * flagged as an error so a field never shows both — error red wins.
- */
-export const collectWarningFieldIds = (issues: IssueLike[], errorFieldIds: Set<string>): Set<string> => {
-  const ids = new Set<string>();
-  for (const issue of issues) {
-    if (issue.severity !== "warning") continue;
-    addFields(ids, issue);
+// Free-typed fields. Their wrong-value errors wait for blur, so a half-typed
+// "1" on the way to "150" is never flagged. Dropdown and radio picks are
+// complete the moment they're made, so those check straight away.
+const TEXT_FIELD_ID = /^(player-name|trainer-name|player-id|date-of-birth|pokemon-\d+-(hp|atk|def|spa|spd|spe))$/;
+
+const FIELD_ID =
+  /^(player-name|trainer-name|age-division-field|player-id|date-of-birth|pokemon-\d+-(species|ability|item|stat-alignment|move-\d|hp|atk|def|spa|spd|spe))$/;
+
+/** The validation field an element belongs to (DOB parts map to the whole date). */
+export const fieldIdForElement = (element: EventTarget | null): string | null => {
+  let node = element instanceof Element ? element : null;
+  while (node) {
+    const id = node.id;
+    if (id && FIELD_ID.test(id)) return id;
+    node = node.parentElement;
   }
-  for (const id of errorFieldIds) ids.delete(id);
-  return ids;
+  return null;
+};
+
+/** The section an element sits in, from the `data-section` attribute on each panel. */
+export const sectionForElement = (element: EventTarget | null): string | null =>
+  element instanceof Element ? element.closest<HTMLElement>("[data-section]")?.dataset.section ?? null : null;
+
+export type RevealState = {
+  // Fields the user has left at least once.
+  touchedFields: Set<string>;
+  // Started sections the user has moved on from (or imported): show everything.
+  finishedSections: Set<string>;
+  // Sections revealed by a blocked download/share: show everything, even empty.
+  attemptedSections: Set<string>;
+  // The text field being typed in right now; its own issues wait for blur.
+  focusedField: string | null;
+};
+
+export const emptyRevealState = (): RevealState => ({
+  touchedFields: new Set(),
+  finishedSections: new Set(),
+  attemptedSections: new Set(),
+  focusedField: null
+});
+
+const fieldIdsFor = (issue: IssueLike): string[] =>
+  [issue.path, ...(issue.relatedFields ?? [])].map(fieldIdForPath).filter((id): id is string => Boolean(id));
+
+/**
+ * One rule for every issue: show it once the user has had a fair chance to fill
+ * the field in.
+ * - A blocked download reveals everything (until the sheet is valid).
+ * - Nothing in an empty section shows otherwise.
+ * - A text field being typed in hides its own issues until blur.
+ * - Leaving a field, or moving on from a started section, reveals its issues.
+ * - Wrong values in dropdown/radio fields show as soon as they're picked.
+ */
+export const isIssueVisible = (
+  issue: IssueLike,
+  reveal: RevealState,
+  sectionHasData: (section: string) => boolean
+): boolean => {
+  const section = sectionForPath(issue.path);
+  if (!section) return true;
+  if (reveal.attemptedSections.has(section)) return true;
+  if (!sectionHasData(section)) return false;
+
+  const primary = fieldIdForPath(issue.path);
+  if (primary && primary === reveal.focusedField && TEXT_FIELD_ID.test(primary)) return false;
+  if (reveal.finishedSections.has(section)) return true;
+  if (fieldIdsFor(issue).some((id) => reveal.touchedFields.has(id))) return true;
+  return !MISSING_ERROR_CODES.has(issue.code) && Boolean(primary) && !TEXT_FIELD_ID.test(primary!);
+};
+
+// "Pokémon 2's HP of 400 is..." reads as "HP of 400 is..." under the field or
+// in the panel, where the section is already named.
+export const inlineMessage = (message: string): string =>
+  message.replace(/^Pokémon \d+(?:'s)? (\S)/, (_, first: string) => first.toUpperCase());
+
+export type FieldMessage = { severity: "error" | "warning"; text: string };
+
+export type FieldFlags = {
+  errors: Set<string>;
+  warnings: Set<string>;
+  // Primary field shows the short message; related fields (the other half of a
+  // duplicate, the other stats in a budget error) show the full one.
+  messages: Map<string, FieldMessage[]>;
+};
+
+export const collectFieldFlags = (issues: IssueLike[]): FieldFlags => {
+  const errors = new Set<string>();
+  const warnings = new Set<string>();
+  const messages = new Map<string, FieldMessage[]>();
+  const push = (id: string, message: FieldMessage) => {
+    const list = messages.get(id) ?? [];
+    if (!list.some((existing) => existing.text === message.text)) list.push(message);
+    messages.set(id, list);
+  };
+  for (const issue of issues) {
+    const severity = issue.severity === "error" ? "error" : "warning";
+    const target = severity === "error" ? errors : warnings;
+    const primary = fieldIdForPath(issue.path);
+    if (primary) {
+      target.add(primary);
+      push(primary, { severity, text: inlineMessage(issue.message ?? "") });
+    }
+    for (const path of issue.relatedFields ?? []) {
+      const id = fieldIdForPath(path);
+      if (!id) continue;
+      target.add(id);
+      push(id, { severity, text: issue.message ?? "" });
+    }
+  }
+  for (const id of errors) warnings.delete(id);
+  for (const list of messages.values()) list.sort((a, b) => (a.severity === b.severity ? 0 : a.severity === "error" ? -1 : 1));
+  return { errors, warnings, messages };
+};
+
+const PLAYER_REQUIRED_PATHS = ["player.name", "player.trainerName", "player.division", "player.playerId", "player.dateOfBirth"];
+
+/** "Player Info 3/5 · Team 2/6" counts, from all issues (visible or not). */
+export const computeProgress = (issues: IssueLike[]) => {
+  const errorPaths = new Set(issues.filter((issue) => issue.severity === "error").map((issue) => issue.path));
+  const playerDone = PLAYER_REQUIRED_PATHS.filter((path) => !errorPaths.has(path)).length;
+  const slotsWithErrors = new Set(
+    issues
+      .filter((issue) => issue.severity === "error")
+      .flatMap((issue) => [issue.path, ...(issue.relatedFields ?? [])])
+      .map(sectionForPath)
+      .filter((section): section is string => Boolean(section?.startsWith("pokemon-")))
+  );
+  return {
+    playerDone,
+    playerTotal: PLAYER_REQUIRED_PATHS.length,
+    teamDone: 6 - slotsWithErrors.size,
+    teamTotal: 6
+  };
 };

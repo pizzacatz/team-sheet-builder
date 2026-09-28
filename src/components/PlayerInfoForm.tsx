@@ -2,12 +2,14 @@ import { useRef } from "react";
 import { Trash2 } from "lucide-react";
 import { ageDivisionHint, divisionForBirthYear } from "../domain/ageDivision";
 import type { PlayerInfo } from "../domain/teamTypes";
+import { FieldMessage, fieldMessageId } from "./FieldMessage";
+import type { FieldFlags } from "./validationFields";
 
 type PlayerInfoFormProps = {
   player: PlayerInfo;
   onChange: (patch: Partial<PlayerInfo>) => void;
   onClear: () => void;
-  errorFieldIds?: Set<string>;
+  fieldFlags?: FieldFlags;
 };
 
 const ageDivisions: Array<Exclude<PlayerInfo["division"], "" | undefined>> = ["Junior", "Senior", "Master"];
@@ -22,11 +24,13 @@ const dobPart = (value: string | undefined, index: number, max: number): string 
 const composeDob = (month: string, day: string, year: string): string =>
   month || day || year ? `${month}-${day}-${year}` : "";
 
-export function PlayerInfoForm({ player, onChange, onClear, errorFieldIds }: PlayerInfoFormProps) {
+export function PlayerInfoForm({ player, onChange, onClear, fieldFlags }: PlayerInfoFormProps) {
   const dobDayRef = useRef<HTMLInputElement | null>(null);
   const dobYearRef = useRef<HTMLInputElement | null>(null);
-  const invalidClass = (fieldId: string) => (errorFieldIds?.has(fieldId) ? "is-invalid" : undefined);
-  const invalidFlag = (fieldId: string) => (errorFieldIds?.has(fieldId) ? true : undefined);
+  const invalidClass = (fieldId: string) => (fieldFlags?.errors.has(fieldId) ? "is-invalid" : undefined);
+  const invalidFlag = (fieldId: string) => (fieldFlags?.errors.has(fieldId) ? true : undefined);
+  const describedBy = (fieldId: string) => (fieldFlags?.messages.has(fieldId) ? fieldMessageId(fieldId) : undefined);
+  const message = (fieldId: string) => <FieldMessage fieldId={fieldId} messages={fieldFlags?.messages.get(fieldId)} />;
 
   const dobMonth = dobPart(player.dateOfBirth, 0, 2);
   const dobDay = dobPart(player.dateOfBirth, 1, 2);
@@ -51,7 +55,7 @@ export function PlayerInfoForm({ player, onChange, onClear, errorFieldIds }: Pla
   };
 
   return (
-    <section className="section-panel player-info-panel in-field-form" aria-labelledby="player-info-heading">
+    <section className="section-panel player-info-panel in-field-form" data-section="player" aria-labelledby="player-info-heading">
       <div className="section-heading">
         <h2 id="player-info-heading">Player Info</h2>
         <button type="button" className="icon-button player-clear-button" title="Clear Player Info" aria-label="Clear Player Info" onClick={onClear}>
@@ -68,9 +72,11 @@ export function PlayerInfoForm({ player, onChange, onClear, errorFieldIds }: Pla
               value={player.name}
               aria-required="true"
               aria-invalid={invalidFlag("player-name")}
+              aria-describedby={describedBy("player-name")}
               required
               onChange={(event) => onChange({ name: event.target.value })}
             />
+            {message("player-name")}
           </div>
           <div className="field compact-label">
             <label htmlFor="trainer-name">Trainer Name in Game:</label>
@@ -80,9 +86,11 @@ export function PlayerInfoForm({ player, onChange, onClear, errorFieldIds }: Pla
               value={player.trainerName ?? ""}
               aria-required="true"
               aria-invalid={invalidFlag("trainer-name")}
+              aria-describedby={describedBy("trainer-name")}
               required
               onChange={(event) => onChange({ trainerName: event.target.value })}
             />
+            {message("trainer-name")}
           </div>
           <div className="field compact-label">
             <label htmlFor="team-name">Battle Team Number / Name:</label>
@@ -108,6 +116,7 @@ export function PlayerInfoForm({ player, onChange, onClear, errorFieldIds }: Pla
             tabIndex={-1}
             aria-required="true"
             aria-invalid={invalidFlag("age-division-field")}
+            aria-describedby={describedBy("age-division-field")}
           >
             <legend title="Age Division is set by birth year (auto-filled from Date of Birth).">
               Age Division:
@@ -133,6 +142,7 @@ export function PlayerInfoForm({ player, onChange, onClear, errorFieldIds }: Pla
                 </label>
               ))}
             </div>
+            {message("age-division-field")}
           </fieldset>
           <div className="field">
             <label htmlFor="player-id">Player ID:</label>
@@ -144,9 +154,11 @@ export function PlayerInfoForm({ player, onChange, onClear, errorFieldIds }: Pla
               pattern="[0-9]*"
               aria-required="true"
               aria-invalid={invalidFlag("player-id")}
+              aria-describedby={describedBy("player-id")}
               required
               onChange={(event) => onChange({ playerId: digitsOnly(event.target.value) })}
             />
+            {message("player-id")}
           </div>
           <div className="field dob-field">
             <label htmlFor="dob-month">Date of Birth:</label>
@@ -155,6 +167,7 @@ export function PlayerInfoForm({ player, onChange, onClear, errorFieldIds }: Pla
               id="date-of-birth"
               tabIndex={-1}
               aria-invalid={invalidFlag("date-of-birth")}
+              aria-describedby={describedBy("date-of-birth")}
             >
               <input
                 id="dob-month"
@@ -194,6 +207,7 @@ export function PlayerInfoForm({ player, onChange, onClear, errorFieldIds }: Pla
                 onChange={(event) => setDobPart("year", event.target.value)}
               />
             </div>
+            {message("date-of-birth")}
           </div>
           <div className="field">
             <label htmlFor="support-id">Support ID:</label>

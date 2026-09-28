@@ -546,6 +546,34 @@ select.is-warning {
   background: var(--warning-bg);
 }
 
+/* Inline validation message under a field (or under a slot's stat grid). */
+.field-message {
+  margin: 4px 0 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.field-message.error {
+  color: var(--danger-text);
+}
+
+.field-message.warning {
+  color: var(--warning-text);
+}
+
+.slot-stat-messages {
+  display: grid;
+  gap: 2px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.slot-stat-messages .field-message {
+  margin: 0;
+}
+
 .field-help {
   margin: 0;
   font-size: 0.75rem;
@@ -568,7 +596,8 @@ select.is-warning {
   position: absolute;
   z-index: 1;
   top: 0;
-  bottom: 0;
+  /* Pinned to the control row so a message under the field doesn't move it. */
+  height: var(--control-height);
   left: 4px;
   display: flex;
   width: var(--in-field-label-width);
@@ -634,6 +663,17 @@ select.is-warning {
   text-align: center;
 }
 
+/* Same specificity as .stat-field input, so these must come after it. */
+.stat-field input.is-invalid {
+  border-color: var(--error-border);
+  background: var(--error-bg);
+}
+
+.stat-field input.is-warning {
+  border-color: var(--warning-border);
+  background: var(--warning-bg);
+}
+
 .stat-field input:focus {
   border-color: var(--focus);
   outline: 3px solid var(--focus-ring);
@@ -653,6 +693,11 @@ select.is-warning {
 
 .autocomplete-field.is-disabled input {
   cursor: not-allowed;
+}
+
+/* Anchored to the input, not the field, so it opens over any message below. */
+.in-field-form .suggestions {
+  top: calc(var(--control-height) + 4px);
 }
 
 .suggestions {
@@ -880,8 +925,25 @@ button:focus-visible {
   text-align: left;
 }
 
-.issue strong {
+.issue-group {
+  display: grid;
+  gap: 6px;
+}
+
+.issue-group-heading {
+  margin: 4px 0 0;
+  color: var(--label-muted);
   font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.validation-progress {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 0.84rem;
+  font-weight: 600;
 }
 
 .issue span {
@@ -1127,6 +1189,10 @@ button:focus-visible {
 
   .validation-panel .empty-state {
     display: none;
+  }
+
+  .validation-panel .validation-progress {
+    margin: -6px 16px 10px;
   }
 
   .actions-panel {

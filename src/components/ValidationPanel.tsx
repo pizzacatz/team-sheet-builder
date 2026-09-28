@@ -2,47 +2,47 @@ import { AlertTriangle, CheckCircle2, CircleDashed } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { ValidationIssue } from "../domain/validationTypes";
 import type { ValidationResult } from "../domain/validationTypes";
-import { fieldIdForPath, scrollToIssueField } from "./validationFields";
+import { SECTIONS, computeProgress, fieldIdForPath, inlineMessage, scrollToIssueField, sectionForPath, sectionLabel } from "./validationFields";
 
 type ValidationPanelProps = {
   validation: ValidationResult;
+  // The issues the form is currently showing; the panel lists exactly these.
+  visibleIssues: ValidationIssue[];
+  progress: ReturnType<typeof computeProgress>;
   // Bumps whenever a blocked download/share attempt should force the list open.
   expandSignal?: number;
   // Untouched form: show a neutral "Not started" summary instead of errors.
   pristine?: boolean;
 };
 
-const IssueRow = ({ issue, index }: { issue: ValidationIssue; index: number }) => {
+const IssueRow = ({ issue }: { issue: ValidationIssue }) => {
   const targetId = fieldIdForPath(issue.path);
   const className = `issue ${issue.severity}${targetId ? " issue-action" : ""}`;
+  const text = inlineMessage(issue.message);
 
   if (!targetId) {
     return (
       <div className={className}>
-        <strong>{issue.code}</strong>
-        <span>{issue.message}</span>
+        <span>{text}</span>
       </div>
     );
   }
 
   return (
-    <button
-      type="button"
-      className={className}
-      onClick={() => scrollToIssueField(issue.path)}
-      aria-label={`${issue.message} Go to field.`}
-    >
-      <strong>{issue.code}</strong>
-      <span>{issue.message}</span>
+    <button type="button" className={className} onClick={() => scrollToIssueField(issue.path)} aria-label={`${issue.message} Go to field.`}>
+      <span>{text}</span>
     </button>
   );
 };
 
-export function ValidationPanel({ validation, expandSignal, pristine = false }: ValidationPanelProps) {
-  const errors = validation.issues.filter((issue) => issue.severity === "error");
-  const warnings = validation.issues.filter((issue) => issue.severity === "warning");
-  const hasIssues = !pristine && validation.issues.length > 0;
+const plural = (count: number, word: string) => `${count} ${word}${count === 1 ? "" : "s"}`;
+
+export function ValidationPanel({ validation, visibleIssues, progress, expandSignal, pristine = false }: ValidationPanelProps) {
+  const errors = visibleIssues.filter((issue) => issue.severity === "error");
+  const warnings = visibleIssues.filter((issue) => issue.severity === "warning");
+  const hasIssues = !pristine && visibleIssues.length > 0;
   const hasErrors = !pristine && errors.length > 0;
+  const inProgress = !pristine && !validation.isValid;
   const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
@@ -62,6 +62,12 @@ export function ValidationPanel({ validation, expandSignal, pristine = false }: 
     if (window.matchMedia("(min-width: 761px)").matches) setIsExpanded(true);
   }, [hasErrors]);
 
+  // Grouped by section in form order, errors before warnings within each.
+  const groups = SECTIONS.map((section) => ({
+    section,
+    issues: [...errors, ...warnings].filter((issue) => sectionForPath(issue.path) === section)
+  })).filter((group) => group.issues.length > 0);
+
   const summaryClassName = `section-heading validation-summary${hasIssues ? " validation-summary-button" : ""}`;
   const summaryContent = (
     <>
@@ -75,21 +81,29 @@ export function ValidationPanel({ validation, expandSignal, pristine = false }: 
         ) : hasErrors ? (
           <span className="status-pill invalid">
             <AlertTriangle size={16} />
-            {`${errors.length} ${errors.length === 1 ? "error" : "errors"}`}
+            {plural(errors.length, "error")}
+          </span>
+        ) : inProgress ? (
+          <span className="status-pill pending">
+            <CircleDashed size={16} />
+            In progress
           </span>
         ) : (
           <span className="status-pill valid">
             <CheckCircle2 size={16} />
-            {warnings.length ? "No errors" : "Ready"}
+            Ready
           </span>
         )}
-        {!hasErrors && warnings.length ? (
-          <span className="status-pill warning">{`${warnings.length} ${warnings.length === 1 ? "warning" : "warnings"}`}</span>
-        ) : null}
+        {!pristine && warnings.length ? <span className="status-pill warning">{plural(warnings.length, "warning")}</span> : null}
       </span>
     </>
   );
 
+  const emptyText = pristine
+    ? "Complete team data will be checked here."
+    : validation.isValid
+      ? "Ready to download."
+      : "No problems so far. Empty fields are flagged when you move on, or when you download.";
 
   return (
     <section
@@ -109,19 +123,24 @@ export function ValidationPanel({ validation, expandSignal, pristine = false }: 
       ) : (
         <div className={summaryClassName}>{summaryContent}</div>
       )}
+      {inProgress ? (
+        <p className="validation-progress">
+          Player Info {progress.playerDone}/{progress.playerTotal} · Team {progress.teamDone}/{progress.teamTotal}
+        </p>
+      ) : null}
       {!hasIssues ? (
-        <p className="empty-state">Complete team data will be checked here.</p>
+        <p className="empty-state">{emptyText}</p>
       ) : (
-        <>
-          <div className="issue-list" id="validation-issue-list">
-            {errors.map((issue, index) => (
-              <IssueRow key={`${issue.path}-${issue.code}-${index}`} issue={issue} index={index} />
-            ))}
-            {warnings.map((issue, index) => (
-              <IssueRow key={`${issue.path}-${issue.code}-${index}`} issue={issue} index={index} />
-            ))}
-          </div>
-        </>
+        <div className="issue-list" id="validation-issue-list">
+          {groups.map((group) => (
+            <div className="issue-group" key={group.section}>
+              <h3 className="issue-group-heading">{sectionLabel(group.section)}</h3>
+              {group.issues.map((issue, index) => (
+                <IssueRow key={`${issue.path}-${issue.code}-${index}`} issue={issue} />
+              ))}
+            </div>
+          ))}
+        </div>
       )}
     </section>
   );

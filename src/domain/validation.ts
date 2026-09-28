@@ -1,5 +1,4 @@
 import {
-  entryHasAnyData,
   getAbilityRecord,
   getItemRecord,
   getMoveRecord,
@@ -82,7 +81,6 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
   teamSheet.pokemon.forEach((entry, index) => {
     const path = `pokemon.${index}`;
     const slot = `Pokémon ${index + 1}`;
-    const hasData = entryHasAnyData(entry);
 
     if (!entry.speciesId) {
       issue(issues, "error", `${path}.speciesId`, "MISSING_SPECIES", `${slot} needs a species.`);
@@ -102,7 +100,8 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
         "error",
         `${path}.speciesId`,
         "DUPLICATE_SPECIES",
-        `${slot} duplicates the Pokédex number used by Pokémon ${existingSpeciesSlot + 1}.`
+        `${slot} duplicates the Pokédex number used by Pokémon ${existingSpeciesSlot + 1}.`,
+        [`pokemon.${existingSpeciesSlot}.speciesId`]
       );
     } else {
       speciesDexBySlot.set(species.nationalDexNumber, index);
@@ -136,7 +135,8 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
             "error",
             `${path}.itemId`,
             "DUPLICATE_ITEM",
-            `${slot} has a duplicate held item. The same item is already on Pokémon ${existingItemSlot + 1}.`
+            `${slot} has a duplicate held item. The same item is already on Pokémon ${existingItemSlot + 1}.`,
+            [`pokemon.${existingItemSlot}.itemId`]
           );
         } else if (item.itemClauseEligible) {
           itemBySlot.set(item.id, index);
@@ -260,24 +260,26 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
         }
       });
       if (!inconsistent && totalPoints > STAT_POINT_TOTAL_MAX) {
+        // Anchored on HP so the row can jump to the stats; all six boxes light up.
         issue(
           issues,
           "error",
-          path,
+          `${path}.stats.hp`,
           "STAT_POINTS_OVER_BUDGET",
-          `${slot}'s stats add up to more than the ${STAT_POINT_TOTAL_MAX} Stat Point limit. Reduce your investment.`
+          `${slot}'s stats add up to more than the ${STAT_POINT_TOTAL_MAX} Stat Point limit. Reduce your investment.`,
+          statRows.filter((stat) => stat.key !== "hp").map((stat) => `${path}.stats.${stat.key}`)
         );
       } else if (!inconsistent && totalPoints === 0) {
         if (alignmentRecord.raises || alignmentRecord.lowers) {
           // A non-neutral nature with zero total investment is almost always a
-          // forgotten spread — block it, and flag the alignment plus the two
-          // stats the nature affects.
+          // forgotten spread, but it is legal, so warn rather than block. Flag
+          // the alignment plus the two stats the nature affects.
           const related = [alignmentRecord.raises, alignmentRecord.lowers]
             .filter((key): key is string => Boolean(key))
             .map((key) => `${path}.stats.${key}`);
           issue(
             issues,
-            "error",
+            "warning",
             `${path}.statAlignment`,
             "STAT_ALIGNMENT_NO_POINTS",
             `${slot} has ${alignmentName} selected but no Stat Points invested. Enter your spread, or use a neutral Stat Alignment.`,
@@ -313,10 +315,6 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
         "STAT_ALIGNMENT_REQUIRES_REVIEW",
         `${slot} Stat Alignment was imported with review required.`
       );
-    }
-
-    if (!hasData) {
-      issue(issues, "warning", path, "LESS_THAN_SIX_POKEMON", `${slot} is empty.`);
     }
   });
 
