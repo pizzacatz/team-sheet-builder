@@ -1092,10 +1092,39 @@ button:focus-visible {
     height: 64px;
   }
 
-  /* The theme toggle sits in the top-right corner; keep the title clear of it. */
+  /* The logo shares a row with the title, centred on its lines; the eyebrow
+     sits above and the links below. The theme toggle sits in the top-right
+     corner, so the title keeps clear of it. */
   .app-brand {
-    gap: 12px;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas:
+      "eyebrow eyebrow"
+      "logo title"
+      "subtitle subtitle";
+    align-items: center;
+    column-gap: 12px;
     padding-right: calc(var(--control-height) + 8px);
+  }
+
+  .brand-text {
+    display: contents;
+  }
+
+  .app-brand .eyebrow {
+    grid-area: eyebrow;
+  }
+
+  .brand-logo {
+    grid-area: logo;
+  }
+
+  .app-brand .app-title {
+    grid-area: title;
+  }
+
+  .app-brand .header-subtitle {
+    grid-area: subtitle;
   }
 
   /* Phones: the collapsed import header is two icons, paste and clear. */
