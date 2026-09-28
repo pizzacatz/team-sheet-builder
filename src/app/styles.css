@@ -375,15 +375,17 @@ h3 {
   gap: 12px;
 }
 
+/* Field rows are 8px apart everywhere, including where the two Player Info
+   columns stack into one; side by side, the columns stay 16px apart. */
 .player-info-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+  gap: 8px 16px;
 }
 
 .player-info-column {
   display: grid;
-  gap: 12px;
+  gap: 8px;
 }
 
 .division-field {
@@ -495,8 +497,8 @@ h3 {
 
 .slot-top-grid {
   display: grid;
-  gap: 12px;
-  margin-bottom: 12px;
+  gap: 8px;
+  margin-bottom: 8px;
 }
 
 .slot-pdf-grid {
