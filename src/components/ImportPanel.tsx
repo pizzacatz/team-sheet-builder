@@ -221,7 +221,9 @@ export function ImportPanel({ onImport, teamHasData }: ImportPanelProps) {
               value={paste}
               onChange={(event) => setPaste(event.target.value)}
               rows={9}
-              placeholder={"Incineroar @ Safety Goggles\nAbility: Intimidate\nCareful Nature\n- Fake Out"}
+              placeholder={
+                "Sneasler @ Psychic Seed\nAbility: Unburden\nLevel: 50\nEVs: 32 Atk / 4 SpD / 30 Spe\nAdamant Nature\n- Close Combat\n- Dire Claw\n- Throat Chop\n- Fake Out"
+              }
             />
           </div>
           <div className="action-row">
