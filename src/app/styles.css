@@ -370,11 +370,13 @@ h3 {
 }
 
 /* Field rows are 8px apart everywhere, including where the two Player Info
-   columns stack into one; side by side, the columns stay 16px apart. */
+   columns stack into one. Side by side, the column gap equals the gap between
+   the Pokémon cards plus both cards' padding and border, so the two Player
+   Info columns sit exactly over the Pokémon 1 and Pokémon 2 fields. */
 .player-info-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px 16px;
+  gap: 8px calc(16px + 2 * (16px + 1px));
 }
 
 .player-info-column {
@@ -599,8 +601,10 @@ select.is-warning {
   color: var(--muted);
 }
 
+/* Same label area as the Pokémon cards, so every label on the page ends on
+   the same line; long labels wrap onto a second line instead. */
 .player-info-panel {
-  --in-field-label-width: 190px;
+  --in-field-label-width: 140px;
 }
 
 .pokemon-slot {
@@ -1014,12 +1018,6 @@ button:focus-visible {
 
   .team-form {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  /* The main column is narrower here; the phone-width label area leaves the
-     Age Division options room to stay near full size. */
-  .player-info-panel {
-    --in-field-label-width: 140px;
   }
 }
 
