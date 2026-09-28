@@ -431,11 +431,11 @@ h3 {
   }
 
   .division-options {
-    gap: 5px;
+    gap: 4px;
   }
 
   .radio-option {
-    gap: 3px;
+    gap: 2px;
     font-size: 0.7rem;
   }
 
@@ -1101,6 +1101,28 @@ button:focus-visible {
     font-size: 0.86rem;
   }
 
+  /* Phones: Age Division's label joins the shared right-aligned label column
+     so all Player Info labels line up. */
+  .player-info-panel .division-field {
+    padding-right: 4px;
+    padding-left: calc(var(--in-field-label-width) + 12px);
+  }
+
+  .player-info-panel .division-field legend {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    /* 1px less than the other labels: this box's border offsets its origin. */
+    left: 3px;
+    float: none;
+    width: var(--in-field-label-width);
+    height: auto;
+    justify-content: flex-end;
+    padding: 0;
+    text-align: right;
+    white-space: normal;
+  }
+
   .side-column {
     position: fixed;
     z-index: 1200;
@@ -1256,5 +1278,12 @@ button:focus-visible {
   .stat-field input {
     padding-right: 4px;
     padding-left: 4px;
+  }
+}
+
+/* The narrowest phones: pull the radios in so "Master" clears the border. */
+@media (max-width: 340px) {
+  .player-info-panel .division-field {
+    padding-left: calc(var(--in-field-label-width) + 6px);
   }
 }
