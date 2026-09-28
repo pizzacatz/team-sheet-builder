@@ -2,12 +2,13 @@ import { useRef } from "react";
 import { Trash2 } from "lucide-react";
 import { ageDivisionHint, divisionForBirthYear } from "../domain/ageDivision";
 import type { PlayerInfo } from "../domain/teamTypes";
+import type { FieldFlags } from "./validationFields";
 
 type PlayerInfoFormProps = {
   player: PlayerInfo;
   onChange: (patch: Partial<PlayerInfo>) => void;
   onClear: () => void;
-  errorFieldIds?: Set<string>;
+  fieldFlags?: FieldFlags;
 };
 
 const ageDivisions: Array<Exclude<PlayerInfo["division"], "" | undefined>> = ["Junior", "Senior", "Master"];
@@ -22,11 +23,11 @@ const dobPart = (value: string | undefined, index: number, max: number): string 
 const composeDob = (month: string, day: string, year: string): string =>
   month || day || year ? `${month}-${day}-${year}` : "";
 
-export function PlayerInfoForm({ player, onChange, onClear, errorFieldIds }: PlayerInfoFormProps) {
+export function PlayerInfoForm({ player, onChange, onClear, fieldFlags }: PlayerInfoFormProps) {
   const dobDayRef = useRef<HTMLInputElement | null>(null);
   const dobYearRef = useRef<HTMLInputElement | null>(null);
-  const invalidClass = (fieldId: string) => (errorFieldIds?.has(fieldId) ? "is-invalid" : undefined);
-  const invalidFlag = (fieldId: string) => (errorFieldIds?.has(fieldId) ? true : undefined);
+  const invalidClass = (fieldId: string) => (fieldFlags?.errors.has(fieldId) ? "is-invalid" : undefined);
+  const invalidFlag = (fieldId: string) => (fieldFlags?.errors.has(fieldId) ? true : undefined);
 
   const dobMonth = dobPart(player.dateOfBirth, 0, 2);
   const dobDay = dobPart(player.dateOfBirth, 1, 2);
@@ -51,7 +52,7 @@ export function PlayerInfoForm({ player, onChange, onClear, errorFieldIds }: Pla
   };
 
   return (
-    <section className="section-panel player-info-panel in-field-form" aria-labelledby="player-info-heading">
+    <section className="section-panel player-info-panel in-field-form" data-section="player" aria-labelledby="player-info-heading">
       <div className="section-heading">
         <h2 id="player-info-heading">Player Info</h2>
         <button type="button" className="icon-button player-clear-button" title="Clear Player Info" aria-label="Clear Player Info" onClick={onClear}>
@@ -88,7 +89,11 @@ export function PlayerInfoForm({ player, onChange, onClear, errorFieldIds }: Pla
             <label htmlFor="team-name">Battle Team Number / Name:</label>
             <input
               id="team-name"
+              className={invalidClass("team-name")}
               value={player.teamName ?? ""}
+              aria-required="true"
+              aria-invalid={invalidFlag("team-name")}
+              required
               onChange={(event) => onChange({ teamName: event.target.value })}
             />
           </div>
@@ -96,7 +101,11 @@ export function PlayerInfoForm({ player, onChange, onClear, errorFieldIds }: Pla
             <label htmlFor="switch-profile">Switch Profile Name:</label>
             <input
               id="switch-profile"
+              className={invalidClass("switch-profile")}
               value={player.switchProfileName ?? ""}
+              aria-required="true"
+              aria-invalid={invalidFlag("switch-profile")}
+              required
               onChange={(event) => onChange({ switchProfileName: event.target.value })}
             />
           </div>
@@ -199,7 +208,11 @@ export function PlayerInfoForm({ player, onChange, onClear, errorFieldIds }: Pla
             <label htmlFor="support-id">Support ID:</label>
             <input
               id="support-id"
+              className={invalidClass("support-id")}
               value={player.supportId ?? ""}
+              aria-required="true"
+              aria-invalid={invalidFlag("support-id")}
+              required
               onChange={(event) => onChange({ supportId: event.target.value })}
             />
           </div>

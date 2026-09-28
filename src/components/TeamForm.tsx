@@ -1,16 +1,16 @@
 import { itemsById, speciesById } from "../domain/regulationData";
 import type { PokemonEntry } from "../domain/teamTypes";
 import { PokemonSlot } from "./PokemonSlot";
+import type { FieldFlags } from "./validationFields";
 
 type TeamFormProps = {
   pokemon: PokemonEntry[];
   onChange: (index: number, patch: Partial<PokemonEntry>) => void;
   onClear: (index: number) => void;
-  errorFieldIds?: Set<string>;
-  warningFieldIds?: Set<string>;
+  fieldFlags?: FieldFlags;
 };
 
-export function TeamForm({ pokemon, onChange, onClear, errorFieldIds, warningFieldIds }: TeamFormProps) {
+export function TeamForm({ pokemon, onChange, onClear, fieldFlags }: TeamFormProps) {
   return (
     <div className="team-form" aria-label="Pokémon team slots">
       {pokemon.map((entry, index) => {
@@ -33,8 +33,7 @@ export function TeamForm({ pokemon, onChange, onClear, errorFieldIds, warningFie
             entry={entry}
             usedSpeciesDex={usedSpeciesDex}
             usedItemIds={usedItemIds}
-            errorFieldIds={errorFieldIds}
-            warningFieldIds={warningFieldIds}
+            fieldFlags={fieldFlags}
             onChange={(patch) => onChange(index, patch)}
             onClear={() => onClear(index)}
           />

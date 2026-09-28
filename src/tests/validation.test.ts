@@ -161,17 +161,17 @@ describe("validateTeamSheet", () => {
     expect(result.issues.some((issue) => issue.code === "STAT_ALIGNMENT_MISMATCH")).toBe(false);
   });
 
-  it("errors when a non-neutral alignment has zero Stat Points, flagging the affected stats", () => {
+  it("warns when a non-neutral alignment has zero Stat Points, flagging the affected stats", () => {
     const team = makeValidTeamSheet();
     const first = species.find((record) => record.id === team.pokemon[0].speciesId)!;
     // 0-SP line under the fixture's Jolly alignment (raises Spe / lowers SpA).
     team.pokemon[0].stats = statsFromSpeciesWithPoints(first, {}, statAlignmentsById.get("Jolly"));
     const result = validateTeamSheet(team);
     const noPoints = result.issues.find((issue) => issue.code === "STAT_ALIGNMENT_NO_POINTS");
-    expect(noPoints?.severity).toBe("error");
+    expect(noPoints?.severity).toBe("warning");
     expect(noPoints?.relatedFields).toEqual(["pokemon.0.stats.spe", "pokemon.0.stats.spa"]);
     expect(result.issues.some((issue) => issue.code === "STATS_LOOK_UNTOUCHED")).toBe(false);
-    expect(result.isValid).toBe(false);
+    expect(result.isValid).toBe(true);
   });
 
   it("catches unavailable abilities and warns on Mega Stone mismatch", () => {

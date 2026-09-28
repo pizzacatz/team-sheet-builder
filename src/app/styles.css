@@ -355,41 +355,61 @@ h3 {
 }
 
 .division-field {
-  display: grid;
-  gap: 8px;
+  position: relative;
+  display: block;
   min-width: 0;
+  height: var(--control-height);
   margin: 0;
-  border: 0;
-  padding: 0;
+  border: 1px solid var(--field-border);
+  border-radius: 6px;
+  background: var(--field-bg);
+  /* Room for the label ("Age Division:" is about 6.5rem at 1rem). */
+  padding: 0 8px 0 calc(6.5rem + 24px);
+  container-type: inline-size;
 }
 
+/* Styled like the in-field labels of the other Player Info boxes. On desktop
+   it's sized to its text, since the shared label column leaves no room for
+   three radios; phones put it in the shared column (see the 760px block). */
 .division-field legend {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 11px;
+  display: flex;
+  align-items: center;
   padding: 0;
-  color: var(--label-muted);
+  color: var(--label);
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: 800;
+  line-height: 1;
+  white-space: nowrap;
 }
 
+/* The radios fill whatever width the box has left: text, circles and gaps
+   scale together (all in em), up to the 1rem used everywhere else. 15.2em is
+   the row's width in its own font size, with a little spare. */
 .division-options {
   display: flex;
-  min-height: var(--control-height);
+  height: 100%;
+  min-width: 0;
   align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
+  gap: 0.7em;
+  font-size: clamp(10px, calc(100cqi / 15.2), 1rem);
 }
 
 .radio-option {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.35em;
   color: var(--text);
-  font-size: 1rem;
   font-weight: 650;
+  white-space: nowrap;
 }
 
 .radio-option input {
-  width: 16px;
-  height: 16px;
+  width: 0.95em;
+  height: 0.95em;
   margin: 0;
   accent-color: var(--accent);
 }
@@ -534,9 +554,8 @@ select.is-invalid {
 }
 
 .division-field.is-invalid {
-  outline: 2px solid var(--error-border);
-  outline-offset: 2px;
-  border-radius: 6px;
+  border-color: var(--error-border);
+  background: var(--error-bg);
 }
 
 .field.is-warning input,
@@ -632,6 +651,17 @@ select.is-warning {
   padding: 8px 8px;
   line-height: 1.2;
   text-align: center;
+}
+
+/* Same specificity as .stat-field input, so these must come after it. */
+.stat-field input.is-invalid {
+  border-color: var(--error-border);
+  background: var(--error-bg);
+}
+
+.stat-field input.is-warning {
+  border-color: var(--warning-border);
+  background: var(--warning-bg);
 }
 
 .stat-field input:focus {
@@ -815,9 +845,13 @@ button:focus-visible {
   text-align: left;
 }
 
-.validation-summary-button:hover {
-  outline: 2px solid var(--focus-ring-strong);
-  outline-offset: -4px;
+/* Touch screens keep :hover stuck after a tap, which left an orange ring on
+   the summary and rows; only real pointers get the hover outline. */
+@media (hover: hover) {
+  .validation-summary-button:hover {
+    outline: 2px solid var(--focus-ring-strong);
+    outline-offset: -4px;
+  }
 }
 
 .validation-summary-button:focus-visible {
@@ -880,8 +914,18 @@ button:focus-visible {
   text-align: left;
 }
 
-.issue strong {
+.issue-group {
+  display: grid;
+  gap: 6px;
+}
+
+.issue-group-heading {
+  margin: 4px 0 0;
+  color: var(--label-muted);
   font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .issue span {
@@ -902,9 +946,11 @@ button:focus-visible {
   cursor: pointer;
 }
 
-.issue-action:hover {
-  outline: 2px solid var(--focus-ring-strong);
-  outline-offset: 2px;
+@media (hover: hover) {
+  .issue-action:hover {
+    outline: 2px solid var(--focus-ring-strong);
+    outline-offset: 2px;
+  }
 }
 
 .empty-state {
@@ -1024,10 +1070,9 @@ button:focus-visible {
     font-size: 0.86rem;
   }
 
+  /* Phones: Age Division's label joins the shared right-aligned label column
+     so all Player Info labels line up. */
   .player-info-panel .division-field {
-    position: relative;
-    display: block;
-    min-height: 39px;
     padding-left: calc(var(--in-field-label-width) + 12px);
   }
 
@@ -1035,19 +1080,12 @@ button:focus-visible {
     position: absolute;
     top: 0;
     bottom: 0;
-    left: 4px;
-    display: flex;
+    /* 1px less than the other labels: this box's border offsets its origin. */
+    left: 3px;
     width: var(--in-field-label-width);
-    align-items: center;
     justify-content: flex-end;
-    color: var(--label);
-    font-weight: 800;
-    line-height: 1;
     text-align: right;
-  }
-
-  .player-info-panel .division-options {
-    min-width: 0;
+    white-space: normal;
   }
 
   .side-column {

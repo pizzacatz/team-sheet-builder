@@ -72,7 +72,7 @@ returns the team as a Showdown paste from `GET /api/team/<ID>?format=paste`.
   - lowered stat: `0.9x`
 - Old neutral natures import as `Serious`; the visible neutral list only includes `Serious`.
 - Pokémon only require Move 1 for legality in this app; Moves 2-4 may be blank.
-- Validation reverse-engineers the Stat Points implied by each Pokémon's final stats and chosen Stat Alignment. Stats that can't come from any legal 0-32 allocation, or that exceed the 66 Stat Point total, are errors; a zero-point spread (e.g. a paste imported without EVs) is a warning asking you to confirm your Stat Points and Alignment.
+- Validation reverse-engineers the Stat Points implied by each Pokémon's final stats and chosen Stat Alignment. Stats that can't come from any legal 0-32 allocation, or that exceed the 66 Stat Point total, are errors; a zero-point spread (e.g. a paste imported without EVs) is a warning asking you to confirm your Stat Points and Alignment, whether the alignment is neutral or not. Duplicate species or held items flag both slots.
 - Mega Stones:
   - the relevant Mega Stone for a selected species is always available in item suggestions.
   - non-relevant Mega Stones are hidden by default but can be found when typing at least five matching characters.
@@ -80,13 +80,18 @@ returns the team as a Showdown paste from `GET /api/team/<ID>?format=paste`.
 
 ## Player Info Rules
 
-Required fields:
+All eight fields are required:
 
 - Player Name
 - Trainer Name in Game
+- Battle Team Number / Name
+- Switch Profile Name
 - Age Division
 - Player ID
 - Date of Birth
+- Support ID
+
+Every Player Info field is one row of the same height, so the desktop columns line up. Age Division is a bordered row like the others; its Junior / Senior / Master options scale to fill the space left in the row (up to the form's normal text size).
 
 Player ID accepts digits only and preserves leading zeros.
 
@@ -97,8 +102,15 @@ Date of Birth:
 
 ### Error visibility
 
-- An untouched form shows a neutral `Not started` pill with no error list and no `Download anyway` button; errors appear once the user edits a field, taps an action, or loads a shared team. The validation summary auto-expands the full list on desktop when there are errors; on mobile the tray stays collapsed to the summary bar and buttons until tapped, and a blocked download expands it.
-- Fields with a wrong value (illegal, duplicate, out-of-range, malformed date) are outlined in the error color immediately. Empty required fields are outlined only after the first download/share attempt, so a fresh form stays clean.
+- One rule decides when a problem shows, and the validation panel and the fields always agree: a problem appears once the user has had a fair chance to fill the field in.
+  - Nothing shows in an empty section (Player Info or a Pokémon slot) until a download/share attempt.
+  - Typed fields (names, IDs, date of birth, stats) are checked when the user leaves them, never mid-keystroke.
+  - Dropdown and radio picks are checked as soon as they're made.
+  - Moving into a field of another section flags every gap in the section just left. Imported, shared and previously saved teams count as finished, so their problems show straight away.
+  - A blocked download/share reveals everything until the sheet is valid. Clearing a section (trash button) puts it back to not started; an empty form returns to `Not started`.
+- Fields signal problems by colour only (red error, amber warning), with no inline text. The validation panel explains each one, grouped by Player Info and Pokémon slot; tapping a row jumps to the field.
+- The summary pill shows `Not started`, the visible error count, `In progress` (nothing wrong yet, but incomplete) or `Ready`, plus the warning count. It auto-expands on desktop when errors appear; on mobile the tray stays collapsed until tapped, and a blocked download expands it.
+- On touch screens, focusing a dropdown field (directly or from an error row) scrolls so at least three suggestion rows sit above the keyboard.
 - Download/share buttons stay tappable while errors remain: tapping one reveals the error list and jumps to the first problem instead of generating a PDF.
 - While errors remain, a `Download anyway` button sits below the action row as an alternative option (not a confirmation). It downloads the combined PDF as-is, validation errors and all — for players who need the sheet anyway (its tooltip warns the sheet may be rejected at check-in).
 

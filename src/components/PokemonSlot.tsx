@@ -7,14 +7,14 @@ import { abilities, abilitiesById, items, itemsById, moves, movesById, species, 
 import { normalizePokemonStats, statRows } from "../domain/stats";
 import { emptyPokemonEntry, type PokemonEntry, type StatKey } from "../domain/teamTypes";
 import { AutocompleteField } from "./AutocompleteField";
+import type { FieldFlags } from "./validationFields";
 
 type PokemonSlotProps = {
   index: number;
   entry: PokemonEntry;
   usedSpeciesDex?: Set<number>;
   usedItemIds?: Set<string>;
-  errorFieldIds?: Set<string>;
-  warningFieldIds?: Set<string>;
+  fieldFlags?: FieldFlags;
   onChange: (patch: Partial<PokemonEntry>) => void;
   onClear: () => void;
 };
@@ -61,9 +61,9 @@ const statFieldLabels: Record<StatKey, string> = {
   spe: "Spe"
 };
 
-export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, errorFieldIds, warningFieldIds, onChange, onClear }: PokemonSlotProps) {
-  const hasError = (fieldId: string) => Boolean(errorFieldIds?.has(fieldId));
-  const hasWarning = (fieldId: string) => Boolean(warningFieldIds?.has(fieldId));
+export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, fieldFlags, onChange, onClear }: PokemonSlotProps) {
+  const hasError = (fieldId: string) => Boolean(fieldFlags?.errors.has(fieldId));
+  const hasWarning = (fieldId: string) => Boolean(fieldFlags?.warnings.has(fieldId));
   const lastSelectedSpeciesId = useRef(entry.speciesId);
   const allSpeciesOptions = useMemo(() => makeOptions(species, (record) => record.types.join(" / ")), []);
   const allAbilityOptions = useMemo(() => makeOptions(abilities), []);
@@ -181,7 +181,7 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, errorFi
   const statDescription = entry.statAlignment.requiresReview ? "Review the imported neutral alignment." : undefined;
 
   return (
-    <section className="pokemon-slot in-field-form" aria-labelledby={`pokemon-${index}-heading`}>
+    <section className="pokemon-slot in-field-form" data-section={`pokemon-${index}`} aria-labelledby={`pokemon-${index}-heading`}>
       <div className="slot-heading">
         <h3 id={`pokemon-${index}-heading`}>Pokémon {index + 1}</h3>
         <button type="button" className="icon-button slot-clear-button" title={`Clear Pokémon ${index + 1}`} aria-label={`Clear Pokémon ${index + 1}`} onClick={onClear}>

@@ -5,12 +5,13 @@ import { PdfActions } from "../components/PdfActions";
 import { PlayerInfoForm } from "../components/PlayerInfoForm";
 import { TeamForm } from "../components/TeamForm";
 import { ValidationPanel } from "../components/ValidationPanel";
-import { collectErrorFieldIds, collectWarningFieldIds, fieldIdForPath, scrollToIssueField } from "../components/validationFields";
+import { collectFieldFlags, isIssueVisible, scrollToIssueField } from "../components/validationFields";
 import { entryHasAnyData } from "../domain/legality";
 import { decodeTeamShare } from "../domain/teamShare";
 import { rules } from "../domain/regulationData";
-import { emptyPokemonEntry } from "../domain/teamTypes";
+import { emptyPokemonEntry, type PokemonEntry } from "../domain/teamTypes";
 import { useTeamSheetState } from "../state/useTeamSheetState";
+import { useValidationReveal } from "../state/useValidationReveal";
 import { mobileFloatingTrayClearancePx } from "./mobileTray";
 import "./styles.css";
 
@@ -32,33 +33,38 @@ export function App() {
   const sideColumnRef = useRef<HTMLElement | null>(null);
   const [theme, setTheme] = useState<ThemeMode>(getInitialTheme);
   const [isMobileFieldEditing, setIsMobileFieldEditing] = useState(false);
-  const [attemptedDownload, setAttemptedDownload] = useState(false);
   const [expandSignal, setExpandSignal] = useState(0);
   const isDarkMode = theme === "dark";
   const teamHasData = teamSheet.pokemon.some(entryHasAnyData);
   const playerHasData = Object.values(teamSheet.player).some(
     (value) => typeof value === "string" && value.trim().length > 0
   );
+  const sectionHasData = (section: string) =>
+    section === "player" ? playerHasData : entryHasAnyData(teamSheet.pokemon[Number(section.slice("pokemon-".length))]);
+  const { reveal, revealAll, markFinished } = useValidationReveal(sectionHasData, validation.isValid);
   // An untouched form is "not started", not "invalid": the error list and the
   // override button stay hidden until the user edits something or taps an action.
-  const isPristine = !attemptedDownload && !teamHasData && !playerHasData;
+  const isPristine = !reveal.attemptedSections.size && !teamHasData && !playerHasData;
 
-  const errorFieldIds = useMemo(
-    () => collectErrorFieldIds(validation.issues, attemptedDownload),
-    [validation.issues, attemptedDownload]
-  );
-  const warningFieldIds = useMemo(
-    () => collectWarningFieldIds(validation.issues, errorFieldIds),
-    [validation.issues, errorFieldIds]
-  );
+  // One visibility rule feeds both the panel and the field highlights.
+  const visibleIssues = validation.issues.filter((issue) => isIssueVisible(issue, reveal, sectionHasData));
+  const fieldFlags = collectFieldFlags(visibleIssues);
 
   // Tapping a download/share button while invalid: reveal every error (highlight
   // missing fields too), open the list, and jump to the first problem.
   const handleBlockedAttempt = () => {
-    setAttemptedDownload(true);
+    revealAll();
     setExpandSignal((current) => current + 1);
-    const firstError = validation.issues.find((issue) => issue.severity === "error" && fieldIdForPath(issue.path));
+    const firstError = validation.issues.find((issue) => issue.severity === "error");
     if (firstError) scrollToIssueField(firstError.path);
+  };
+
+  const pokemonSections = (entries: PokemonEntry[]) =>
+    entries.map((entry, index) => (entryHasAnyData(entry) ? `pokemon-${index}` : "")).filter(Boolean);
+
+  const handleImport = (entries: PokemonEntry[]) => {
+    replacePokemon(entries);
+    markFinished(pokemonSections(entries));
   };
 
   // A `#t=` shared-team link loads the encoded team (confirming before it would
@@ -74,6 +80,7 @@ export function App() {
       if (hasExisting && !window.confirm("Load the shared team? This replaces your current team.")) return;
       replacePokemon(shared.pokemon);
       if (shared.player) updatePlayer(shared.player);
+      markFinished([...pokemonSections(shared.pokemon), ...(shared.player ? ["player"] : [])]);
       // Clear the hash only after loading so a refresh doesn't re-load — and so
       // StrictMode's double-mount doesn't drop the hash before the load runs.
       window.history.replaceState(null, "", window.location.pathname + window.location.search);
@@ -171,23 +178,27 @@ export function App() {
 
       <div className="layout">
         <div className="main-column">
-          <ImportPanel onImport={replacePokemon} teamHasData={teamHasData} />
+          <ImportPanel onImport={handleImport} teamHasData={teamHasData} />
           <PlayerInfoForm
             player={teamSheet.player}
             onChange={updatePlayer}
             onClear={clearPlayer}
-            errorFieldIds={errorFieldIds}
+            fieldFlags={fieldFlags}
           />
           <TeamForm
             pokemon={teamSheet.pokemon}
             onChange={updatePokemon}
             onClear={(index) => updatePokemon(index, emptyPokemonEntry())}
-            errorFieldIds={errorFieldIds}
-            warningFieldIds={warningFieldIds}
+            fieldFlags={fieldFlags}
           />
         </div>
         <aside className="side-column" ref={sideColumnRef}>
-          <ValidationPanel validation={validation} expandSignal={expandSignal} pristine={isPristine} />
+          <ValidationPanel
+            validation={validation}
+            visibleIssues={visibleIssues}
+            expandSignal={expandSignal}
+            pristine={isPristine}
+          />
           <PdfActions
             teamSheet={teamSheet}
             validation={validation}

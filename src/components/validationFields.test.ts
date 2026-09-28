@@ -1,11 +1,21 @@
 import { describe, expect, it } from "vitest";
-import { collectErrorFieldIds, collectWarningFieldIds, fieldIdForPath } from "./validationFields";
+import {
+  collectFieldFlags,
+  emptyRevealState,
+  fieldIdForPath,
+  inlineMessage,
+  isIssueVisible,
+  type RevealState
+} from "./validationFields";
 
-const issues = [
-  { severity: "error", code: "MISSING_SPECIES", path: "pokemon.0.speciesId" },
-  { severity: "error", code: "ILLEGAL_MOVE", path: "pokemon.1.moves.2" },
-  { severity: "warning", code: "MEGA_ITEM_MISMATCH", path: "pokemon.0.itemId" }
-];
+const missingSpecies = { severity: "error", code: "MISSING_SPECIES", path: "pokemon.0.speciesId", message: "Pokémon 1 needs a species." };
+const illegalMove = { severity: "error", code: "ILLEGAL_MOVE", path: "pokemon.1.moves.2", message: "Pokémon 2's move 3 is not legal." };
+const statOutOfRange = { severity: "error", code: "STAT_OUT_OF_RANGE", path: "pokemon.1.stats.hp", message: "Pokémon 2's HP of 1 is outside the expected range." };
+const missingName = { severity: "error", code: "MISSING_PLAYER_NAME", path: "player.name", message: "Player Name is required." };
+
+const reveal = (patch: Partial<RevealState> = {}): RevealState => ({ ...emptyRevealState(), ...patch });
+const allHaveData = () => true;
+const noneHaveData = () => false;
 
 describe("validationFields", () => {
   it("maps issue paths to field ids", () => {
@@ -15,36 +25,49 @@ describe("validationFields", () => {
     expect(fieldIdForPath("regulation")).toBeNull();
   });
 
-  it("shows wrong-value errors immediately but gates missing ones until attempted", () => {
-    const before = collectErrorFieldIds(issues, false);
-    expect(before.has("pokemon-1-move-2")).toBe(true); // illegal value: immediate
-    expect(before.has("pokemon-0-species")).toBe(false); // missing: gated
-
-    const after = collectErrorFieldIds(issues, true);
-    expect(after.has("pokemon-0-species")).toBe(true); // now shown after an attempt
+  it("shows nothing in an empty section until a download attempt", () => {
+    expect(isIssueVisible(missingSpecies, reveal(), noneHaveData)).toBe(false);
+    expect(isIssueVisible(missingSpecies, reveal({ attemptedSections: new Set(["pokemon-0"]) }), noneHaveData)).toBe(true);
   });
 
-  it("never puts warnings in the error set", () => {
-    expect(collectErrorFieldIds(issues, true).has("pokemon-0-item")).toBe(false);
+  it("shows wrong dropdown picks at once but waits for blur on typed values", () => {
+    expect(isIssueVisible(illegalMove, reveal(), allHaveData)).toBe(true);
+    expect(isIssueVisible(statOutOfRange, reveal(), allHaveData)).toBe(false);
+    expect(isIssueVisible(statOutOfRange, reveal({ touchedFields: new Set(["pokemon-1-hp"]) }), allHaveData)).toBe(true);
   });
 
-  it("collects warning fields (incl. related) and never overlaps errors", () => {
-    const withRelated = [
-      ...issues,
+  it("hides a typed field's own issues while it has focus", () => {
+    const typing = reveal({ touchedFields: new Set(["pokemon-1-hp"]), focusedField: "pokemon-1-hp" });
+    expect(isIssueVisible(statOutOfRange, typing, allHaveData)).toBe(false);
+  });
+
+  it("waits on missing fields until they're left or the section is finished", () => {
+    expect(isIssueVisible(missingName, reveal(), allHaveData)).toBe(false);
+    expect(isIssueVisible(missingName, reveal({ touchedFields: new Set(["player-name"]) }), allHaveData)).toBe(true);
+    expect(isIssueVisible(missingName, reveal({ finishedSections: new Set(["player"]) }), allHaveData)).toBe(true);
+  });
+
+  it("collects errors and warnings, with related fields and no overlap", () => {
+    const flags = collectFieldFlags([
       {
         severity: "error",
-        code: "STAT_ALIGNMENT_NO_POINTS",
-        path: "pokemon.2.statAlignment",
-        relatedFields: ["pokemon.2.stats.spe", "pokemon.2.stats.spa"]
-      }
-    ];
-    const errors = collectErrorFieldIds(withRelated, true);
-    expect(errors.has("pokemon-2-stat-alignment")).toBe(true); // path
-    expect(errors.has("pokemon-2-spe")).toBe(true); // related field
-    expect(errors.has("pokemon-2-spa")).toBe(true);
-
-    const warnings = collectWarningFieldIds(withRelated, errors);
-    expect(warnings.has("pokemon-0-item")).toBe(true); // mega mismatch warning
-    expect(warnings.has("pokemon-2-stat-alignment")).toBe(false); // taken by an error
+        code: "DUPLICATE_ITEM",
+        path: "pokemon.2.itemId",
+        message: "Pokémon 3 has a duplicate held item.",
+        relatedFields: ["pokemon.0.itemId"]
+      },
+      { severity: "warning", code: "MEGA_ITEM_MISMATCH", path: "pokemon.2.itemId", message: "Pokémon 3 is holding a Mega Stone." }
+    ]);
+    expect(flags.errors.has("pokemon-2-item")).toBe(true);
+    expect(flags.errors.has("pokemon-0-item")).toBe(true); // both halves of a duplicate
+    expect(flags.warnings.has("pokemon-2-item")).toBe(false); // error wins
   });
+
+
+  it("drops the slot prefix for panel rows", () => {
+    expect(inlineMessage("Pokémon 2's HP of 1 is too low.")).toBe("HP of 1 is too low.");
+    expect(inlineMessage("Pokémon 6 needs move 1.")).toBe("Needs move 1.");
+    expect(inlineMessage("Player Name is required.")).toBe("Player Name is required.");
+  });
+
 });
