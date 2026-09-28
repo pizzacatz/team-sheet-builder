@@ -1055,19 +1055,14 @@ button:focus-visible {
     line-height: 1.05;
   }
 
+  /* One line on phones: the text scales with the screen width (the line is
+     about 35.6em long) up to its usual size, and runs under the theme toggle
+     by cancelling the header's right padding. */
   .header-subtitle {
-    width: 100%;
-    font-size: 0.88rem;
-  }
-
-  .header-subtitle a {
-    display: block;
-    width: fit-content;
-    max-width: 100%;
-  }
-
-  .subtitle-join {
-    display: none;
+    width: auto;
+    margin-right: calc(-1 * (var(--control-height) + 8px));
+    font-size: min(0.88rem, calc((100vw - 24px) / 35.6));
+    white-space: nowrap;
   }
 
   .header-actions {
