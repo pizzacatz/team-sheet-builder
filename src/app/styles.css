@@ -355,43 +355,94 @@ h3 {
 }
 
 .division-field {
-  display: grid;
-  gap: 8px;
+  position: relative;
+  display: block;
   min-width: 0;
+  height: var(--control-height);
   margin: 0;
-  border: 0;
-  padding: 0;
+  border: 1px solid var(--field-border);
+  border-radius: 6px;
+  background: var(--field-bg);
+  padding: 0 8px 0 12px;
+  container-type: inline-size;
 }
 
+/* Styled like the in-field labels of the other Player Info boxes, but sized to
+   its text: the shared label column leaves no room for three radios. Floating
+   the legend takes it out of fieldset legend layout so it sits in the row. */
 .division-field legend {
-  padding: 0;
-  color: var(--label-muted);
+  float: left;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  padding: 0 12px 0 0;
+  color: var(--label);
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: 800;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 .division-options {
   display: flex;
-  min-height: var(--control-height);
+  height: 100%;
+  min-width: 0;
   align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .radio-option {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 5px;
   color: var(--text);
   font-size: 1rem;
   font-weight: 650;
+  white-space: nowrap;
 }
 
+/* Narrow boxes (smaller desktop widths, phones): shrink to stay on one row. */
+@container (max-width: 360px) {
+  .division-field legend {
+    font-size: 0.86rem;
+  }
+
+  .division-options {
+    gap: 8px;
+  }
+
+  .radio-option {
+    font-size: 0.86rem;
+  }
+}
+
+
+
 .radio-option input {
-  width: 16px;
-  height: 16px;
+  width: 15px;
+  height: 15px;
   margin: 0;
   accent-color: var(--accent);
+}
+
+@container (max-width: 300px) {
+  .division-field legend {
+    padding-right: 6px;
+  }
+
+  .division-options {
+    gap: 5px;
+  }
+
+  .radio-option {
+    gap: 3px;
+    font-size: 0.7rem;
+  }
+
+  .radio-option input {
+    width: 13px;
+    height: 13px;
+  }
 }
 
 /* The control looks like one field; the three segments are borderless inside it. */
@@ -534,9 +585,8 @@ select.is-invalid {
 }
 
 .division-field.is-invalid {
-  outline: 2px solid var(--error-border);
-  outline-offset: 2px;
-  border-radius: 6px;
+  border-color: var(--error-border);
+  background: var(--error-bg);
 }
 
 .field.is-warning input,
@@ -1049,32 +1099,6 @@ button:focus-visible {
 
   .player-info-panel .field > label[for="switch-profile"] {
     font-size: 0.86rem;
-  }
-
-  .player-info-panel .division-field {
-    position: relative;
-    display: block;
-    min-height: 39px;
-    padding-left: calc(var(--in-field-label-width) + 12px);
-  }
-
-  .player-info-panel .division-field legend {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 4px;
-    display: flex;
-    width: var(--in-field-label-width);
-    align-items: center;
-    justify-content: flex-end;
-    color: var(--label);
-    font-weight: 800;
-    line-height: 1;
-    text-align: right;
-  }
-
-  .player-info-panel .division-options {
-    min-width: 0;
   }
 
   .side-column {
