@@ -198,28 +198,28 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, fieldFl
           invalid={hasError(`pokemon-${index}-species`)}
           warning={hasWarning(`pokemon-${index}-species`)}
         />
+        <AutocompleteField
+          id={`pokemon-${index}-stat-alignment`}
+          label="Stat Alignment"
+          value={entry.statAlignment.value}
+          options={statAlignmentOptions}
+          onChange={(value) =>
+            onChange({
+              statAlignment: {
+                value,
+                source: value ? "manual" : "unknown",
+                confidence: value ? "high" : "none",
+                requiresReview: false
+              }
+            })
+          }
+          required
+          invalid={hasError(`pokemon-${index}-stat-alignment`)}
+          warning={hasWarning(`pokemon-${index}-stat-alignment`)}
+        />
       </div>
       <div className="slot-pdf-grid">
         <div className="slot-main-column">
-          <AutocompleteField
-            id={`pokemon-${index}-stat-alignment`}
-            label="Stat Alignment"
-            value={entry.statAlignment.value}
-            options={statAlignmentOptions}
-            onChange={(value) =>
-              onChange({
-                statAlignment: {
-                  value,
-                  source: value ? "manual" : "unknown",
-                  confidence: value ? "high" : "none",
-                  requiresReview: false
-                }
-              })
-            }
-            required
-            invalid={hasError(`pokemon-${index}-stat-alignment`)}
-            warning={hasWarning(`pokemon-${index}-stat-alignment`)}
-          />
           <AutocompleteField
             id={`pokemon-${index}-ability`}
             label="Ability"
@@ -269,8 +269,6 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, fieldFl
           })}
         </div>
         <div className="slot-stats-column" aria-label={`Pokémon ${index + 1} stats`}>
-          {/* Sits beside Stat Alignment: says which number the boxes want. */}
-          <p className="stats-caption">Lv. 50 stats</p>
           {statRows.map((stat) => (
             <div className="stat-field" key={stat.key}>
               <label htmlFor={`pokemon-${index}-${stat.key}`}>{statFieldLabels[stat.key]}</label>

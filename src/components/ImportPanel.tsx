@@ -1,4 +1,4 @@
-import { ChevronDown, ClipboardPaste, Eraser, Search, X } from "lucide-react";
+import { ChevronDown, ClipboardPaste, Search, Trash2, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { ImportIssue } from "../importers/showdown/showdownTypes";
 import { parseShowdownPaste } from "../importers/showdown/parseShowdownPaste";
@@ -139,9 +139,15 @@ export function ImportPanel({ onImport, teamHasData }: ImportPanelProps) {
         </button>
         <div className="heading-actions">
           {!isOpen ? (
-            <button type="button" className="primary-action" onClick={handlePasteAndImport}>
+            <button
+              type="button"
+              className="primary-action import-paste-button"
+              aria-label="Paste and import"
+              title="Paste and import"
+              onClick={handlePasteAndImport}
+            >
               <ClipboardPaste size={18} aria-hidden="true" />
-              <span>Paste and import</span>
+              <span className="import-paste-label">Paste and import</span>
             </button>
           ) : null}
           {issues.length ? (
@@ -156,8 +162,7 @@ export function ImportPanel({ onImport, teamHasData }: ImportPanelProps) {
             aria-label="Clear paste"
             onClick={handleClear}
           >
-            {/* Eraser, not trash: this clears the paste box, never team data. */}
-            <Eraser size={18} />
+            <Trash2 size={18} />
           </button>
         </div>
       </div>

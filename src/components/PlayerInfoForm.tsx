@@ -74,7 +74,7 @@ export function PlayerInfoForm({ player, onChange, onClear, fieldFlags }: Player
               onChange={(event) => onChange({ name: event.target.value })}
             />
           </div>
-          <div className="field">
+          <div className="field compact-label">
             <label htmlFor="trainer-name">Trainer Name in Game:</label>
             <input
               id="trainer-name"
@@ -86,7 +86,7 @@ export function PlayerInfoForm({ player, onChange, onClear, fieldFlags }: Player
               onChange={(event) => onChange({ trainerName: event.target.value })}
             />
           </div>
-          <div className="field">
+          <div className="field compact-label">
             <label htmlFor="team-name">Battle Team Number / Name:</label>
             <input
               id="team-name"

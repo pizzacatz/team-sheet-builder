@@ -573,3 +573,16 @@ at 320 to 1440px, light and dark.
 | F10 | Done | "Lv. 50 stats" caption beside Stat Alignment. The placeholder variant was not used, to stay clear of stat pre-filling. |
 | Smaller 1 to 13 | Done | Regulation eyebrow (data date in its tooltip), purpose line, import collapsed on return, one "Paste and import" style, theme toggle weight, darker field borders, full-strength focus outline, reduced motion, all eight fields in the email draft, first-step empty state, rows in form order, date box click targets, underline hover on rows. |
 | Follow-up | Open | Real devices, screen readers, zoom, Replica lookup and PDF handoff (section 8) remain unverified. |
+
+### Owner revisions after review (2026-09-28)
+
+- Renamed the site "Pokémon Champions Team Sheet Builder" and added the GeorgiaPlayEvents
+  logo, linking to georgiaplayevents.com.
+- **F4 reverted.** The owner prefers the bespoke per-label sizes, so the original label sizes
+  and phone label area (88px) are back. F4 stays open as a known trade-off.
+- **F10 dropped.** The "Lv. 50 stats" caption was removed; Stat Alignment is full width again.
+- **Smaller suggestion 2 dropped** (purpose line removed).
+- **F5 icon:** the import clear uses the trash icon again (label "Clear paste").
+- **Focus color:** deep brand orange (`#b45a2a` light, `#ffb072` dark) instead of blue, to stay
+  on brand. It still differs from the amber warning and the red error.
+- On phones the collapsed import header's Paste and import button is icon-only.

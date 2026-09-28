@@ -23,10 +23,11 @@
   --button-bg: #b45a2a;
   --button-bg-hover: #9c4a20;
   --button-text: #ffffff;
-  /* Status roles each get their own hue, and focus gets one no status uses. */
+  /* Status roles each get their own hue; focus uses the deep brand orange,
+     which no status color shares. */
   --success-bg: #e6f4ea;
   --success-text: #1f6b3f;
-  --focus: #1d5fd1;
+  --focus: #b45a2a;
   --surface-hover: #f7e4d2;
   --suggestion-hover: #ffe8d5;
   --suggestion-border: #ecd6c4;
@@ -68,7 +69,7 @@
   --button-text: #241711;
   --success-bg: #173325;
   --success-text: #9fdcb4;
-  --focus: #7fb2ff;
+  --focus: #ffb072;
   --surface-hover: #3b3a3d;
   --suggestion-hover: #413126;
   --suggestion-border: #403c3c;
@@ -127,12 +128,31 @@ button:disabled {
 }
 
 .app-brand {
+  display: flex;
   min-width: 0;
+  align-items: center;
+  gap: 16px;
+}
+
+.brand-text {
+  min-width: 0;
+}
+
+/* GeorgiaPlayEvents logo, linking home. */
+.brand-logo {
+  flex: 0 0 auto;
+  display: block;
+  line-height: 0;
+}
+
+.brand-logo img {
+  width: auto;
+  height: 88px;
 }
 
 .eyebrow {
   margin: 0 0 4px;
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0;
   color: var(--accent-text);
@@ -152,14 +172,6 @@ p {
   font-size: clamp(2rem, 4vw, 3rem);
   line-height: 1;
   overflow-wrap: anywhere;
-}
-
-.header-lede {
-  max-width: 720px;
-  margin: 8px 0 0;
-  color: var(--text);
-  font-size: 1rem;
-  line-height: 1.35;
 }
 
 /* Short-lived "cleared" notice with Undo. Top of the screen, clear of the
@@ -188,7 +200,7 @@ p {
   max-width: 720px;
   margin: 8px 0 0;
   color: var(--muted);
-  font-size: 0.875rem;
+  font-size: 0.95rem;
   font-weight: 650;
   line-height: 1.35;
 }
@@ -400,9 +412,9 @@ h3 {
   justify-content: flex-end;
   padding: 0;
   color: var(--label);
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 800;
-  line-height: 1.1;
+  line-height: 1;
   text-align: right;
 }
 
@@ -524,7 +536,7 @@ h3 {
 .replica-lookup .replica-error {
   grid-column: 1 / -1;
   margin: 0;
-  font-size: 0.875rem;
+  font-size: 0.85rem;
   color: var(--danger-text);
 }
 
@@ -534,7 +546,7 @@ h3 {
 }
 
 .field label {
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   font-weight: 700;
   color: var(--label-muted);
 }
@@ -614,13 +626,15 @@ select.is-warning {
   align-items: center;
   justify-content: flex-end;
   color: var(--label);
-  /* One label size per breakpoint. Long labels wrap to a second (or third)
-     line in the label column; they never get a smaller font of their own. */
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 800;
-  line-height: 1.1;
+  line-height: 1.05;
   pointer-events: none;
   text-align: right;
+}
+
+.in-field-form .field.compact-label > label {
+  font-size: 0.76rem;
 }
 
 .in-field-form .field > input,
@@ -639,20 +653,6 @@ select.is-warning {
   min-height: var(--control-height);
 }
 
-/* Row-height caption above the stat boxes, level with Stat Alignment. */
-.stats-caption {
-  display: flex;
-  min-height: var(--control-height);
-  align-items: center;
-  justify-content: center;
-  margin: 0;
-  color: var(--label-muted);
-  font-size: 0.75rem;
-  font-weight: 700;
-  line-height: 1.1;
-  text-align: center;
-}
-
 .stat-field {
   position: relative;
   display: grid;
@@ -666,7 +666,7 @@ select.is-warning {
   top: 5px;
   left: 8px;
   color: var(--label);
-  font-size: 0.75rem;
+  font-size: 0.66rem;
   font-weight: 800;
   line-height: 1;
   pointer-events: none;
@@ -760,7 +760,6 @@ select.is-warning {
 
 .suggestion small {
   color: var(--muted);
-  font-size: 0.75rem;
 }
 
 .tag,
@@ -777,7 +776,7 @@ select.is-warning {
   gap: 8px;
   border-radius: 999px;
   padding: 4px 8px;
-  font-size: 0.75rem;
+  font-size: 0.76rem;
   font-weight: 700;
   white-space: nowrap;
 }
@@ -929,8 +928,7 @@ button:focus-visible {
   background: transparent;
   color: var(--danger-text);
   padding: 8px 12px;
-  font-size: 0.875rem;
-  font-weight: 600;
+  font-weight: 700;
   text-decoration: underline;
   text-underline-offset: 0.2em;
   cursor: pointer;
@@ -962,14 +960,14 @@ button:focus-visible {
 .issue-group-heading {
   margin: 4px 0 0;
   color: var(--label-muted);
-  font-size: 0.75rem;
+  font-size: 0.74rem;
   font-weight: 800;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
 .issue span {
-  font-size: 0.875rem;
+  font-size: 0.84rem;
 }
 
 .issue.error {
@@ -1057,7 +1055,7 @@ button:focus-visible {
 
   .header-subtitle {
     width: 100%;
-    font-size: 0.875rem;
+    font-size: 0.88rem;
   }
 
   .header-subtitle a {
@@ -1088,6 +1086,26 @@ button:focus-visible {
     display: none;
   }
 
+  .brand-logo img {
+    height: 64px;
+  }
+
+  /* The theme toggle sits in the top-right corner; keep the title clear of it. */
+  .app-brand {
+    gap: 12px;
+    padding-right: calc(var(--control-height) + 8px);
+  }
+
+  /* Phones: the collapsed import header is two icons, paste and clear. */
+  .import-paste-button {
+    width: var(--control-height);
+    padding: 0;
+  }
+
+  .import-paste-label {
+    display: none;
+  }
+
   .layout,
   .form-grid,
   .player-info-grid,
@@ -1114,9 +1132,18 @@ button:focus-visible {
     --in-field-label-width: 140px;
   }
 
-  .in-field-form .field > label,
-  .division-field legend {
-    font-size: 0.75rem;
+  .player-info-panel .field > label {
+    line-height: 1;
+    white-space: normal;
+  }
+
+  .player-info-panel .field > label[for="trainer-name"],
+  .player-info-panel .field > label[for="team-name"] {
+    font-size: 0.76rem;
+  }
+
+  .player-info-panel .field > label[for="switch-profile"] {
+    font-size: 0.86rem;
   }
 
   .side-column {
@@ -1214,7 +1241,7 @@ button:focus-visible {
     min-width: 0;
     min-height: var(--control-height);
     padding: 8px 8px;
-    font-size: 0.875rem;
+    font-size: 0.88rem;
     line-height: 1.1;
     text-align: center;
     white-space: nowrap;
@@ -1236,10 +1263,34 @@ button:focus-visible {
 }
 
 @media (max-width: 420px) {
-  /* Wide enough for "Battle Team Number / Name:" in three 12px lines. */
   .player-info-panel,
   .pokemon-slot {
-    --in-field-label-width: 104px;
+    --in-field-label-width: 88px;
+  }
+
+  .player-info-panel .field > label {
+    font-size: 0.84rem;
+  }
+
+  .player-info-panel .field > label[for="trainer-name"] {
+    font-size: 0.68rem;
+  }
+
+  .player-info-panel .field > label[for="team-name"] {
+    font-size: 0.62rem;
+  }
+
+  .player-info-panel .field > label[for="switch-profile"],
+  .player-info-panel .field > label[for="dob-month"] {
+    font-size: 0.72rem;
+  }
+
+  .player-info-panel .division-field legend {
+    font-size: 0.72rem;
+  }
+
+  .pokemon-slot label[for$="-stat-alignment"] {
+    font-size: 0.7rem;
   }
 
   .slot-pdf-grid {

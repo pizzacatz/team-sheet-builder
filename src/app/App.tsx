@@ -188,18 +188,20 @@ export function App() {
     <main className={`app-shell${isMobileFieldEditing ? " is-mobile-field-editing" : ""}`}>
       <header className="app-header">
         <div className="app-brand">
-          <p className="eyebrow" title={`Game data ${rules.dataVersion}`}>
-            Regulation {rules.regulation}
-          </p>
-          <h1 className="app-title">Video Game Team List</h1>
-          <p className="header-lede">
-            Build and download the official team list PDF. Your team is saved on this device only.
-          </p>
-          <p className="header-subtitle">
-            Part of the <a href="https://georgiaplayevents.com/">Georgia Play Events Calendar</a>
-            <span className="subtitle-join"> and </span>
-            <a href="https://map.georgiaplayevents.com/">Georgia Play Events Map</a>
-          </p>
+          <a className="brand-logo" href="https://georgiaplayevents.com/" aria-label="GeorgiaPlayEvents.com">
+            <img src={`${import.meta.env.BASE_URL}logo.png`} alt="" width={115} height={144} />
+          </a>
+          <div className="brand-text">
+            <p className="eyebrow" title={`Game data ${rules.dataVersion}`}>
+              Regulation {rules.regulation}
+            </p>
+            <h1 className="app-title">Pokémon Champions Team Sheet Builder</h1>
+            <p className="header-subtitle">
+              Part of the <a href="https://georgiaplayevents.com/">Georgia Play Events Calendar</a>
+              <span className="subtitle-join"> and </span>
+              <a href="https://map.georgiaplayevents.com/">Georgia Play Events Map</a>
+            </p>
+          </div>
         </div>
         <div className="header-actions">
           <button

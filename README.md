@@ -26,10 +26,10 @@ Live app: <https://teamsheet.georgiaplayevents.com/>
 - The action bar is a single row: `Download` (combined team sheets), `Email to TO`, and — on devices that support file sharing (mobile) — `Share`. The buttons keep full strength while errors remain (a tap reveals them). Once the form has been touched and errors remain, a quiet `Download anyway` text action appears below the row. On phones 360px wide or less, `Email to TO` shows its icon only. There is no expander, PDF preview, or whole-team clear button.
 - The Showdown Import panel starts expanded on a first visit and collapsed when a saved team exists. Its `Paste and import` button imports the box when it has text, otherwise reads the clipboard and imports in one tap. Import notes name the Pokémon they concern and what to do next.
 - When a Replica Team Viewer URL is configured, the import panel also shows a `Replica Team ID` field with a `Fetch and import` button. One tap does everything: if the field has an ID it uses that, otherwise it reads a code from the clipboard and fills the field, then fetches the team and imports the resulting paste through the normal path. Lookup errors show inline and leave the paste box as the fallback.
-- Each Pokémon card and Player Info has a trash button for clearing it in one tap. A clear shows an `Undo` notice at the top of the screen for 8 seconds. The import panel's eraser button clears only the paste box.
-- Persistent, right-aligned in-field labels keep completed fields identifiable without relying on placeholders. Labels use one size per breakpoint (14px desktop, 12px phones) and wrap onto extra lines when long, instead of shrinking.
-- Each slot shows a `Lv. 50 stats` caption above the stat boxes, beside Stat Alignment.
-- Colors have fixed roles: brand orange for actions and links, red for errors, amber for warnings, green for ready, and blue for keyboard focus. Error fields also get a thicker solid edge and warning fields a dashed one, so states don't rest on hue alone.
+- Each Pokémon card and Player Info has a trash button for clearing it in one tap. A clear shows an `Undo` notice at the top of the screen for 8 seconds. The import panel's trash button clears only the paste box.
+- Persistent, right-aligned in-field labels keep completed fields identifiable without relying on placeholders. Long labels get their own tuned sizes so each fits its label area.
+- The header shows the GeorgiaPlayEvents logo, linking to georgiaplayevents.com. On phones the collapsed Showdown Import header is two icons: paste-and-import and clear.
+- Colors have fixed roles: brand orange for actions, links and keyboard focus (a deeper shade), red for errors, amber for warnings, and green for ready. Error fields also get a thicker solid edge and warning fields a dashed one, so states don't rest on hue alone.
 - Dropdown fields follow the combobox keyboard pattern: arrow keys move through suggestions, Enter picks one, and Tab moves to the next field.
 - Light and dark themes are available from the header toggle.
 - `Email to TO` opens the player's mail app with a pre-filled body (readable player info plus the team link) with a blank recipient for the player to fill in. No backend, no send; just a draft.
@@ -118,7 +118,7 @@ Date of Birth:
 - Download/share buttons stay tappable while errors remain: tapping one reveals the error list and jumps to the first problem instead of generating a PDF.
 - While errors remain, a `Download anyway` button sits below the action row as an alternative option (not a confirmation). It downloads the combined PDF as-is, validation errors and all — for players who need the sheet anyway (its tooltip warns the sheet may be rejected at check-in).
 
-The complete team form, including Player Info, is saved automatically in browser localStorage (the header says so: "Your team is saved on this device only").
+The complete team form, including Player Info, is saved automatically in browser localStorage.
 
 ## PDF Output
 
