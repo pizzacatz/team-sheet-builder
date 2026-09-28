@@ -185,6 +185,22 @@ export const isIssueVisible = (
   return !MISSING_ERROR_CODES.has(issue.code) && Boolean(primary) && !TEXT_FIELD_ID.test(primary!);
 };
 
+// Position of a field in the form, so panel rows follow the order the user
+// sees (Player Info left column then right; each slot top to bottom).
+const PLAYER_FIELD_ORDER = ["name", "trainerName", "teamName", "switchProfileName", "division", "playerId", "dateOfBirth", "supportId"];
+const SLOT_FIELD_ORDER = ["speciesId", "statAlignment", "abilityId", "itemId", "moves", "stats"];
+const STAT_ORDER = ["hp", "atk", "def", "spa", "spd", "spe"];
+
+export const fieldOrder = (path: string): number => {
+  const [root, second, third, fourth] = path.split(".");
+  if (root === "player") return PLAYER_FIELD_ORDER.indexOf(second);
+  if (root !== "pokemon") return 999;
+  const field = SLOT_FIELD_ORDER.indexOf(third);
+  if (field < 0) return 998;
+  const child = third === "moves" ? Number(fourth) : third === "stats" ? STAT_ORDER.indexOf(fourth) : 0;
+  return field * 10 + Math.max(child, 0);
+};
+
 // "Pokémon 2's HP of 400 is..." reads as "HP of 400 is..." in the panel, where
 // the section is already named.
 export const inlineMessage = (message: string): string =>

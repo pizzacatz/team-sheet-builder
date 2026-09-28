@@ -24,6 +24,7 @@ const composeDob = (month: string, day: string, year: string): string =>
   month || day || year ? `${month}-${day}-${year}` : "";
 
 export function PlayerInfoForm({ player, onChange, onClear, fieldFlags }: PlayerInfoFormProps) {
+  const dobMonthRef = useRef<HTMLInputElement | null>(null);
   const dobDayRef = useRef<HTMLInputElement | null>(null);
   const dobYearRef = useRef<HTMLInputElement | null>(null);
   const invalidClass = (fieldId: string) => (fieldFlags?.errors.has(fieldId) ? "is-invalid" : undefined);
@@ -73,7 +74,7 @@ export function PlayerInfoForm({ player, onChange, onClear, fieldFlags }: Player
               onChange={(event) => onChange({ name: event.target.value })}
             />
           </div>
-          <div className="field compact-label">
+          <div className="field">
             <label htmlFor="trainer-name">Trainer Name in Game:</label>
             <input
               id="trainer-name"
@@ -85,7 +86,7 @@ export function PlayerInfoForm({ player, onChange, onClear, fieldFlags }: Player
               onChange={(event) => onChange({ trainerName: event.target.value })}
             />
           </div>
-          <div className="field compact-label">
+          <div className="field">
             <label htmlFor="team-name">Battle Team Number / Name:</label>
             <input
               id="team-name"
@@ -164,8 +165,17 @@ export function PlayerInfoForm({ player, onChange, onClear, fieldFlags }: Player
               id="date-of-birth"
               tabIndex={-1}
               aria-invalid={invalidFlag("date-of-birth")}
+              // The three parts are small targets: a click anywhere else in the
+              // box goes to the first empty part (or the year when all are set).
+              onMouseDown={(event) => {
+                if (event.target instanceof HTMLInputElement) return;
+                event.preventDefault();
+                const parts = [dobMonthRef.current, dobDayRef.current, dobYearRef.current];
+                (parts.find((part) => part && !part.value) ?? dobYearRef.current)?.focus();
+              }}
             >
               <input
+                ref={dobMonthRef}
                 id="dob-month"
                 className="dob-part"
                 value={dobMonth}

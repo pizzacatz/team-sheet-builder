@@ -553,3 +553,23 @@ A short rulebook so future changes stay coherent. Most of it already exists impl
    Safari and a phone. Confirm the file name, the contents and what the user sees after.
 6. **Color-vision check (A08):** after F2, run the field states through a protanopia and
    deuteranopia simulator.
+
+## 9. Implementation status
+
+Implemented on branch `audit-implementation` (2026-09-28) and checked in headless Chromium
+at 320 to 1440px, light and dark.
+
+| Finding | Status | Result |
+| --- | --- | --- |
+| F1 | Done | Options and the scrollable list are out of the Tab order. 15 Tabs walk Pokémon 1's fields with no option or `<body>` focus; arrow keys plus Enter still pick. |
+| F2 | Done | Role tokens: error red, warning amber, success green, focus blue, brand orange for actions. Errors add a 2px solid edge, warnings a dashed edge. Red and amber are close in luminance, so grayscale separation comes from the edge style rather than the 3:1 luminance target first proposed. |
+| F3 | Done | Sidebar stays sticky (320px) from 761 to 1080px; slots stack; Player Info is one column below 1320px with a 140px label area below 1080px. Radios are 14px or more from 768px up (13.5px at 761px). "YYYY" fits. |
+| F4 | Done | One label size per breakpoint (14px desktop, 12px phones), wrapping instead of shrinking; every `label[for=…]` override is gone. Phones render 12 to 18px text plus the title. Exception: Age Division options at 320px render about 9.6px, since aligned labels leave them 136px. |
+| F5 | Done | Clearing Player Info or a slot shows "… cleared. Undo" for 8 seconds; Undo restores the section. The import clear is now "Clear paste" with an eraser icon. |
+| F6 | Done | Download stays full strength (button fill `#b45a2a`, 4.73:1 with white). "Download anyway" is an underlined text action. |
+| F7 | Done | Tray list about three rows; tapping a row closes it on phones; pills and action labels never wrap. The tray covers 23 to 30% of the screen after a blocked download (was 45 to 55%). |
+| F8 | Done | No codes shown; import notes name the Pokémon and the next step. |
+| F9 | Done | Date parts sized in em for "MM"; long values end in an ellipsis with the full name on hover. |
+| F10 | Done | "Lv. 50 stats" caption beside Stat Alignment. The placeholder variant was not used, to stay clear of stat pre-filling. |
+| Smaller 1 to 13 | Done | Regulation eyebrow (data date in its tooltip), purpose line, import collapsed on return, one "Paste and import" style, theme toggle weight, darker field borders, full-strength focus outline, reduced motion, all eight fields in the email draft, first-step empty state, rows in form order, date box click targets, underline hover on rows. |
+| Follow-up | Open | Real devices, screen readers, zoom, Replica lookup and PDF handoff (section 8) remain unverified. |

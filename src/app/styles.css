@@ -9,32 +9,36 @@
   --panel-bg: #fff9f1;
   --panel-border: #e1c3a8;
   --field-bg: #fffdf8;
-  --field-border: #c6aa90;
+  --field-border: #9e8268;
   --field-text: #2c211b;
   --label: #332720;
   --label-muted: #6a5648;
   --header-border: #744d36;
   --accent: #d67642;
   --accent-hover: #bb5d2d;
-  --accent-contrast: #ffffff;
   --accent-soft: #ffe2ca;
   --accent-text: #984d27;
-  --valid-text: #984d27;
-  --focus: #f0a069;
-  --focus-ring: rgb(240 160 105 / 0.24);
-  --focus-ring-strong: rgb(240 160 105 / 0.38);
+  /* Filled buttons use a darker orange than the brand accent so white text
+     passes 4.5:1. */
+  --button-bg: #b45a2a;
+  --button-bg-hover: #9c4a20;
+  --button-text: #ffffff;
+  /* Status roles each get their own hue, and focus gets one no status uses. */
+  --success-bg: #e6f4ea;
+  --success-text: #1f6b3f;
+  --focus: #1d5fd1;
   --surface-hover: #f7e4d2;
   --suggestion-hover: #ffe8d5;
   --suggestion-border: #ecd6c4;
   --shadow: rgb(75 48 32 / 0.1);
   --menu-shadow: rgb(75 48 32 / 0.22);
   --secondary-border: #ad9078;
-  --danger-text: #a23a32;
-  --error-border: #d25345;
-  --error-bg: #fff0ec;
-  --warning-border: #d67642;
-  --warning-bg: #ffecd8;
-  --warning-text: #9a4d22;
+  --danger-text: #b42318;
+  --error-border: #c62828;
+  --error-bg: #fdecea;
+  --warning-border: #b7791f;
+  --warning-bg: #fef7dc;
+  --warning-text: #854d0e;
   color: var(--text);
   background: var(--page-bg);
   font-synthesis: none;
@@ -50,32 +54,33 @@
   --panel-bg: #2f2f33;
   --panel-border: #4a4647;
   --field-bg: #151516;
-  --field-border: #665b55;
+  --field-border: #8a7d76;
   --field-text: #f8efe5;
   --label: #f6eee5;
   --label-muted: #ddd0c4;
   --header-border: #6e615b;
   --accent: #ffb072;
   --accent-hover: #ffc08d;
-  --accent-contrast: #241711;
   --accent-soft: #3f2c22;
   --accent-text: #ffc08d;
-  --valid-text: #ffc08d;
-  --focus: #ffb072;
-  --focus-ring: rgb(255 176 114 / 0.26);
-  --focus-ring-strong: rgb(255 176 114 / 0.42);
+  --button-bg: #ffb072;
+  --button-bg-hover: #ffc08d;
+  --button-text: #241711;
+  --success-bg: #173325;
+  --success-text: #9fdcb4;
+  --focus: #7fb2ff;
   --surface-hover: #3b3a3d;
   --suggestion-hover: #413126;
   --suggestion-border: #403c3c;
   --shadow: rgb(0 0 0 / 0.36);
   --menu-shadow: rgb(0 0 0 / 0.6);
   --secondary-border: #766c66;
-  --danger-text: #ffaea5;
-  --error-border: #ff6e62;
+  --danger-text: #ffb4ab;
+  --error-border: #ff6b6b;
   --error-bg: #3b1d1b;
-  --warning-border: #ffb072;
-  --warning-bg: #3d2a1d;
-  --warning-text: #ffd0a4;
+  --warning-border: #e5b53a;
+  --warning-bg: #3a3014;
+  --warning-text: #f5d58a;
 }
 
 * {
@@ -127,7 +132,7 @@ button:disabled {
 
 .eyebrow {
   margin: 0 0 4px;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0;
   color: var(--accent-text);
@@ -149,11 +154,41 @@ p {
   overflow-wrap: anywhere;
 }
 
+.header-lede {
+  max-width: 720px;
+  margin: 8px 0 0;
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+/* Short-lived "cleared" notice with Undo. Top of the screen, clear of the
+   phone tray at the bottom. */
+.undo-toast {
+  position: fixed;
+  z-index: 1300;
+  top: calc(12px + env(safe-area-inset-top));
+  left: 50%;
+  display: flex;
+  max-width: calc(100vw - 24px);
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  background: var(--panel-bg);
+  box-shadow: 0 14px 32px var(--menu-shadow);
+  padding: 8px 8px 8px 16px;
+  color: var(--text);
+  font-weight: 600;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
 .header-subtitle {
   max-width: 720px;
   margin: 8px 0 0;
   color: var(--muted);
-  font-size: 0.95rem;
+  font-size: 0.875rem;
   font-weight: 650;
   line-height: 1.35;
 }
@@ -199,7 +234,7 @@ h3 {
   background: var(--panel-bg);
   color: var(--text);
   padding: 8px 12px;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .theme-toggle:hover {
@@ -251,6 +286,10 @@ h3 {
   padding: 16px;
 }
 
+.actions-row > button {
+  white-space: nowrap;
+}
+
 .actions-row {
   display: grid;
   grid-auto-flow: column;
@@ -286,25 +325,6 @@ h3 {
   flex-wrap: wrap;
   justify-content: flex-end;
   gap: 8px;
-}
-
-.import-paste-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: var(--control-height);
-  border: 1px solid var(--secondary-border);
-  border-radius: 999px;
-  background: var(--accent-soft);
-  color: var(--accent-text);
-  padding: 8px 12px;
-  font-size: 0.82rem;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.import-paste-button:hover {
-  background: var(--suggestion-hover);
 }
 
 .collapse-button {
@@ -380,9 +400,9 @@ h3 {
   justify-content: flex-end;
   padding: 0;
   color: var(--label);
-  font-size: 1rem;
+  font-size: 0.875rem;
   font-weight: 800;
-  line-height: 1;
+  line-height: 1.1;
   text-align: right;
 }
 
@@ -430,16 +450,13 @@ h3 {
 
 .date-field-control:focus-within {
   border-color: var(--focus);
-  outline: 3px solid var(--focus-ring);
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
 }
 
-.date-field-control.is-invalid {
-  border-color: var(--error-border);
-  background: var(--error-bg);
-}
-
+/* Sized in em for the widest placeholder letters ("MM"), not ch (a "0"). */
 .date-field-control .dob-part {
-  width: 26px;
+  width: 1.9em;
   min-width: 0;
   min-height: 0;
   flex-shrink: 0;
@@ -456,7 +473,7 @@ h3 {
 }
 
 .date-field-control .dob-part.dob-year {
-  width: 42px;
+  width: 3.1em;
 }
 
 .date-sep {
@@ -507,7 +524,7 @@ h3 {
 .replica-lookup .replica-error {
   grid-column: 1 / -1;
   margin: 0;
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   color: var(--danger-text);
 }
 
@@ -517,7 +534,7 @@ h3 {
 }
 
 .field label {
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 700;
   color: var(--label-muted);
 }
@@ -544,24 +561,26 @@ h3 {
 .field select:focus,
 .field textarea:focus {
   border-color: var(--focus);
-  outline: 3px solid var(--focus-ring);
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
 }
 
+/* States never rest on hue alone: errors get a 2px solid edge (border plus an
+   inset ring, so nothing shifts) and warnings a dashed one. */
 .field.is-invalid input,
 input.is-invalid,
-select.is-invalid {
+select.is-invalid,
+.division-field.is-invalid,
+.date-field-control.is-invalid {
   border-color: var(--error-border);
   background: var(--error-bg);
-}
-
-.division-field.is-invalid {
-  border-color: var(--error-border);
-  background: var(--error-bg);
+  box-shadow: inset 0 0 0 1px var(--error-border);
 }
 
 .field.is-warning input,
 input.is-warning,
 select.is-warning {
+  border-style: dashed;
   border-color: var(--warning-border);
   background: var(--warning-bg);
 }
@@ -595,15 +614,13 @@ select.is-warning {
   align-items: center;
   justify-content: flex-end;
   color: var(--label);
-  font-size: 1rem;
+  /* One label size per breakpoint. Long labels wrap to a second (or third)
+     line in the label column; they never get a smaller font of their own. */
+  font-size: 0.875rem;
   font-weight: 800;
-  line-height: 1.05;
+  line-height: 1.1;
   pointer-events: none;
   text-align: right;
-}
-
-.in-field-form .field.compact-label > label {
-  font-size: 0.76rem;
 }
 
 .in-field-form .field > input,
@@ -622,6 +639,20 @@ select.is-warning {
   min-height: var(--control-height);
 }
 
+/* Row-height caption above the stat boxes, level with Stat Alignment. */
+.stats-caption {
+  display: flex;
+  min-height: var(--control-height);
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  color: var(--label-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.1;
+  text-align: center;
+}
+
 .stat-field {
   position: relative;
   display: grid;
@@ -635,7 +666,7 @@ select.is-warning {
   top: 5px;
   left: 8px;
   color: var(--label);
-  font-size: 0.66rem;
+  font-size: 0.75rem;
   font-weight: 800;
   line-height: 1;
   pointer-events: none;
@@ -658,20 +689,27 @@ select.is-warning {
 .stat-field input.is-invalid {
   border-color: var(--error-border);
   background: var(--error-bg);
+  box-shadow: inset 0 0 0 1px var(--error-border);
 }
 
 .stat-field input.is-warning {
+  border-style: dashed;
   border-color: var(--warning-border);
   background: var(--warning-bg);
 }
 
 .stat-field input:focus {
   border-color: var(--focus);
-  outline: 3px solid var(--focus-ring);
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
 }
 
 .autocomplete-field {
   z-index: 0;
+}
+
+.autocomplete-field input {
+  text-overflow: ellipsis;
 }
 
 .autocomplete-field.is-open {
@@ -722,6 +760,7 @@ select.is-warning {
 
 .suggestion small {
   color: var(--muted);
+  font-size: 0.75rem;
 }
 
 .tag,
@@ -738,8 +777,9 @@ select.is-warning {
   gap: 8px;
   border-radius: 999px;
   padding: 4px 8px;
-  font-size: 0.76rem;
+  font-size: 0.75rem;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .tag {
@@ -748,13 +788,13 @@ select.is-warning {
 }
 
 .status-pill.valid {
-  background: var(--accent-soft);
-  color: var(--valid-text);
+  background: var(--success-bg);
+  color: var(--success-text);
 }
 
 .status-pill.invalid {
-  background: var(--warning-bg);
-  color: var(--warning-text);
+  background: var(--error-bg);
+  color: var(--danger-text);
 }
 
 .status-pill.warning {
@@ -781,14 +821,15 @@ select.is-warning {
 }
 
 .primary-action {
-  border: 1px solid var(--accent);
-  background: var(--accent);
-  color: var(--accent-contrast);
+  border: 1px solid var(--button-bg);
+  background: var(--button-bg);
+  color: var(--button-text);
   padding: 8px 12px;
 }
 
 .primary-action:hover:not(:disabled) {
-  background: var(--accent-hover);
+  border-color: var(--button-bg-hover);
+  background: var(--button-bg-hover);
 }
 
 .secondary-action {
@@ -850,8 +891,7 @@ button:focus-visible {
    the summary and rows; only real pointers get the hover outline. */
 @media (hover: hover) {
   .validation-summary-button:hover {
-    outline: 2px solid var(--focus-ring-strong);
-    outline-offset: -4px;
+    background: var(--surface-hover);
   }
 }
 
@@ -876,29 +916,28 @@ button:focus-visible {
   margin-top: 12px;
 }
 
-/* Blocked download/share buttons stay tappable but read as not-ready. */
-.actions-panel .is-muted {
-  opacity: 0.5;
-}
-
-/* Escape hatch shown after a blocked attempt: downloads despite errors. */
+/* Escape hatch while errors remain: downloads despite them. A quiet text
+   action, so Download stays the dominant control. */
 .override-action {
   display: inline-flex;
   min-height: var(--control-height);
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  border: 1px dashed var(--error-border);
-  border-radius: 6px;
-  background: var(--error-bg);
+  justify-self: center;
+  gap: 6px;
+  border: 0;
+  background: transparent;
   color: var(--danger-text);
   padding: 8px 12px;
-  font-weight: 700;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
   cursor: pointer;
 }
 
 .override-action:hover:not(:disabled) {
-  border-style: solid;
+  text-decoration-thickness: 2px;
 }
 
 .issue {
@@ -923,14 +962,14 @@ button:focus-visible {
 .issue-group-heading {
   margin: 4px 0 0;
   color: var(--label-muted);
-  font-size: 0.74rem;
+  font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
 .issue span {
-  font-size: 0.84rem;
+  font-size: 0.875rem;
 }
 
 .issue.error {
@@ -948,9 +987,9 @@ button:focus-visible {
 }
 
 @media (hover: hover) {
-  .issue-action:hover {
-    outline: 2px solid var(--focus-ring-strong);
-    outline-offset: 2px;
+  .issue-action:hover span {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
   }
 }
 
@@ -964,13 +1003,29 @@ button:focus-visible {
   color: var(--danger-text);
 }
 
+/* Player Info goes to one column until both columns have room for the
+   190px label area plus full-size Age Division options. */
+@media (max-width: 1320px) {
+  .player-info-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Tablets and small laptops keep a narrower sticky sidebar, so validation
+   and Download stay in view; the slots stack to make room. */
 @media (max-width: 1080px) {
   .layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr) 320px;
   }
 
-  .side-column {
-    position: static;
+  .team-form {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* The main column is narrower here; the phone-width label area leaves the
+     Age Division options room to stay near full size. */
+  .player-info-panel {
+    --in-field-label-width: 140px;
   }
 }
 
@@ -1002,7 +1057,7 @@ button:focus-visible {
 
   .header-subtitle {
     width: 100%;
-    font-size: 0.88rem;
+    font-size: 0.875rem;
   }
 
   .header-subtitle a {
@@ -1033,6 +1088,7 @@ button:focus-visible {
     display: none;
   }
 
+  .layout,
   .form-grid,
   .player-info-grid,
   .team-form {
@@ -1058,18 +1114,9 @@ button:focus-visible {
     --in-field-label-width: 140px;
   }
 
-  .player-info-panel .field > label {
-    line-height: 1;
-    white-space: normal;
-  }
-
-  .player-info-panel .field > label[for="trainer-name"],
-  .player-info-panel .field > label[for="team-name"] {
-    font-size: 0.76rem;
-  }
-
-  .player-info-panel .field > label[for="switch-profile"] {
-    font-size: 0.86rem;
+  .in-field-form .field > label,
+  .division-field legend {
+    font-size: 0.75rem;
   }
 
   .side-column {
@@ -1134,12 +1181,12 @@ button:focus-visible {
   }
 
   .validation-panel .issue-list {
-    /* Scrollable area fits up to 4 error rows (3 when only 3 remain, 4 when
-       there are 4+), then scrolls — but shrinks first if the tray is short, so
-       only this list scrolls, never the tray. */
+    /* About three rows, then it scrolls, so most of the form stays visible.
+       It shrinks further on short screens: only this list scrolls, never
+       the tray. */
     flex: 1 1 auto;
     min-height: 0;
-    max-height: 264px;
+    max-height: 156px;
     margin: 0 16px 16px;
   }
 
@@ -1167,10 +1214,10 @@ button:focus-visible {
     min-width: 0;
     min-height: var(--control-height);
     padding: 8px 8px;
-    font-size: 0.88rem;
+    font-size: 0.875rem;
     line-height: 1.1;
     text-align: center;
-    white-space: normal;
+    white-space: nowrap;
   }
 
   .actions-panel .primary-action svg,
@@ -1189,34 +1236,10 @@ button:focus-visible {
 }
 
 @media (max-width: 420px) {
+  /* Wide enough for "Battle Team Number / Name:" in three 12px lines. */
   .player-info-panel,
   .pokemon-slot {
-    --in-field-label-width: 88px;
-  }
-
-  .player-info-panel .field > label {
-    font-size: 0.84rem;
-  }
-
-  .player-info-panel .field > label[for="trainer-name"] {
-    font-size: 0.68rem;
-  }
-
-  .player-info-panel .field > label[for="team-name"] {
-    font-size: 0.62rem;
-  }
-
-  .player-info-panel .field > label[for="switch-profile"],
-  .player-info-panel .field > label[for="dob-month"] {
-    font-size: 0.72rem;
-  }
-
-  .player-info-panel .division-field legend {
-    font-size: 0.72rem;
-  }
-
-  .pokemon-slot label[for$="-stat-alignment"] {
-    font-size: 0.7rem;
+    --in-field-label-width: 104px;
   }
 
   .slot-pdf-grid {
@@ -1227,5 +1250,22 @@ button:focus-visible {
   .stat-field input {
     padding-right: 4px;
     padding-left: 4px;
+  }
+}
+
+/* The narrowest phones: "Email to TO" keeps its icon and accessible name. */
+@media (max-width: 360px) {
+  .actions-panel .collapsible-label {
+    display: none;
+  }
+}
+
+/* Motion only confirms a change of state; skip it when asked to. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
   }
 }

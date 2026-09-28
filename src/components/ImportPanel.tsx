@@ -1,4 +1,4 @@
-import { ChevronDown, ClipboardPaste, Search, Trash2, X } from "lucide-react";
+import { ChevronDown, ClipboardPaste, Eraser, Search, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { ImportIssue } from "../importers/showdown/showdownTypes";
 import { parseShowdownPaste } from "../importers/showdown/parseShowdownPaste";
@@ -18,7 +18,9 @@ type ImportPanelProps = {
 export function ImportPanel({ onImport, teamHasData }: ImportPanelProps) {
   const [paste, setPaste] = useState("");
   const [issues, setIssues] = useState<ImportIssue[]>([]);
-  const [isOpen, setIsOpen] = useState(true);
+  // Returning with a saved team, the form matters more than the paste box, so
+  // start collapsed (the header keeps Paste and import).
+  const [isOpen, setIsOpen] = useState(() => !teamHasData);
   const [replicaId, setReplicaId] = useState("");
   const [replicaError, setReplicaError] = useState("");
   const [replicaBusy, setReplicaBusy] = useState(false);
@@ -137,7 +139,7 @@ export function ImportPanel({ onImport, teamHasData }: ImportPanelProps) {
         </button>
         <div className="heading-actions">
           {!isOpen ? (
-            <button type="button" className="import-paste-button" onClick={handlePasteAndImport}>
+            <button type="button" className="primary-action" onClick={handlePasteAndImport}>
               <ClipboardPaste size={18} aria-hidden="true" />
               <span>Paste and import</span>
             </button>
@@ -150,11 +152,12 @@ export function ImportPanel({ onImport, teamHasData }: ImportPanelProps) {
           <button
             type="button"
             className="icon-button import-clear-button"
-            title="Clear import"
-            aria-label="Clear import"
+            title="Clear paste"
+            aria-label="Clear paste"
             onClick={handleClear}
           >
-            <Trash2 size={18} />
+            {/* Eraser, not trash: this clears the paste box, never team data. */}
+            <Eraser size={18} />
           </button>
         </div>
       </div>
@@ -228,8 +231,10 @@ export function ImportPanel({ onImport, teamHasData }: ImportPanelProps) {
         <div className="issue-list compact">
           {issues.map((issue, index) => (
             <div key={`${issue.code}-${index}`} className={`issue ${issue.severity}`}>
-              <strong>{issue.code}</strong>
-              <span>{issue.message}</span>
+              <span>
+                {issue.pokemonIndex !== undefined ? `Pokémon ${issue.pokemonIndex + 1}: ` : ""}
+                {issue.message}
+              </span>
             </div>
           ))}
         </div>
