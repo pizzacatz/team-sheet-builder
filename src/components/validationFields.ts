@@ -172,15 +172,17 @@ export const collectFieldFlags = (issues: IssueLike[]): FieldFlags => {
     const severity = issue.severity === "error" ? "error" : "warning";
     const target = severity === "error" ? errors : warnings;
     const primary = fieldIdForPath(issue.path);
+    // An empty red box already says "fill me in"; only wrong values get a note.
+    const needsNote = !MISSING_ERROR_CODES.has(issue.code);
     if (primary) {
       target.add(primary);
-      push(primary, { severity, text: inlineMessage(issue.message ?? "") });
+      if (needsNote) push(primary, { severity, text: inlineMessage(issue.message ?? "") });
     }
     for (const path of issue.relatedFields ?? []) {
       const id = fieldIdForPath(path);
       if (!id) continue;
       target.add(id);
-      push(id, { severity, text: issue.message ?? "" });
+      if (needsNote) push(id, { severity, text: issue.message ?? "" });
     }
   }
   for (const id of errors) warnings.delete(id);

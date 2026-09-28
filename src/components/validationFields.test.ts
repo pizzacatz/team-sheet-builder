@@ -66,6 +66,13 @@ describe("validationFields", () => {
     expect(flags.messages.get("pokemon-0-item")?.[0].text).toBe("Pokémon 3 has a duplicate held item.");
   });
 
+  it("highlights empty required fields without a note", () => {
+    const flags = collectFieldFlags([missingSpecies, missingName]);
+    expect(flags.errors.has("pokemon-0-species")).toBe(true);
+    expect(flags.errors.has("player-name")).toBe(true);
+    expect(flags.messages.size).toBe(0);
+  });
+
   it("drops the slot prefix for inline messages", () => {
     expect(inlineMessage("Pokémon 2's HP of 1 is too low.")).toBe("HP of 1 is too low.");
     expect(inlineMessage("Pokémon 6 needs move 1.")).toBe("Needs move 1.");
