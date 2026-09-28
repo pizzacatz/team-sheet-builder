@@ -8,7 +8,6 @@ import { ValidationPanel } from "../components/ValidationPanel";
 import { collectFieldFlags, isIssueVisible, scrollToIssueField } from "../components/validationFields";
 import { entryHasAnyData } from "../domain/legality";
 import { decodeTeamShare } from "../domain/teamShare";
-import { rules } from "../domain/regulationData";
 import { emptyPokemonEntry, type PokemonEntry } from "../domain/teamTypes";
 import { useTeamSheetState } from "../state/useTeamSheetState";
 import { useValidationReveal } from "../state/useValidationReveal";
@@ -192,9 +191,6 @@ export function App() {
             <img src={`${import.meta.env.BASE_URL}logo.png`} alt="" width={115} height={144} />
           </a>
           <div className="brand-text">
-            <p className="eyebrow" title={`Game data ${rules.dataVersion}`}>
-              Regulation {rules.regulation}
-            </p>
             <h1 className="app-title">Pokémon Champions Team Sheet Builder</h1>
             <p className="header-subtitle">
               Part of the <a href="https://georgiaplayevents.com/">Georgia Play Events Calendar</a>

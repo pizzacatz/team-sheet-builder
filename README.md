@@ -24,11 +24,11 @@ Live app: <https://teamsheet.georgiaplayevents.com/>
 - Validation details are collapsed by default on desktop and mobile. Selecting the summary expands the list; selecting an issue scrolls to and focuses the associated field.
 - The mobile floating tray hides while a field is being edited so it does not compete with the keyboard.
 - The action bar is a single row: `Download` (combined team sheets), `Email to TO`, and — on devices that support file sharing (mobile) — `Share`. The buttons keep full strength while errors remain (a tap reveals them). Once the form has been touched and errors remain, a quiet `Download anyway` text action appears below the row. On phones 360px wide or less, `Email to TO` shows its icon only. There is no expander, PDF preview, or whole-team clear button.
-- The Showdown Import panel starts expanded on a first visit and collapsed when a saved team exists. Its `Paste and import` button imports the box when it has text, otherwise reads the clipboard and imports in one tap. Import notes name the Pokémon they concern and what to do next.
+- The Team Import panel starts expanded on a first visit and collapsed when a saved team exists. Its `Paste and import` button imports the box when it has text, otherwise reads the clipboard and imports in one tap. Import notes name the Pokémon they concern and what to do next.
 - When a Replica Team Viewer URL is configured, the import panel also shows a `Replica Team ID` field with a `Fetch and import` button. One tap does everything: if the field has an ID it uses that, otherwise it reads a code from the clipboard and fills the field, then fetches the team and imports the resulting paste through the normal path. Lookup errors show inline and leave the paste box as the fallback.
 - Each Pokémon card and Player Info has a trash button for clearing it in one tap. A clear shows an `Undo` notice at the top of the screen for 8 seconds. The import panel's trash button clears only the paste box.
 - Persistent, right-aligned in-field labels keep completed fields identifiable without relying on placeholders. Long labels get their own tuned sizes so each fits its label area.
-- The header shows the GeorgiaPlayEvents logo, linking to georgiaplayevents.com. On phones the collapsed Showdown Import header is two icons: paste-and-import and clear.
+- The header shows the GeorgiaPlayEvents logo, linking to georgiaplayevents.com. On phones the collapsed Team Import header is two icons: paste-and-import and clear.
 - Colors have fixed roles: brand orange for actions, links and keyboard focus (a deeper shade), red for errors, amber for warnings, and green for ready. Error fields also get a thicker solid edge and warning fields a dashed one, so states don't rest on hue alone.
 - Dropdown fields follow the combobox keyboard pattern: arrow keys move through suggestions, Enter picks one, and Tab moves to the next field.
 - Light and dark themes are available from the header toggle.
@@ -67,7 +67,7 @@ returns the team as a Showdown paste from `GET /api/team/<ID>?format=paste`.
 
 ## Showdown Import Notes
 
-- The Showdown Import panel starts expanded and has a `Paste and import` button. If the paste box already has text, it imports that; otherwise one tap reads the system clipboard, fills the box, and imports. If the browser blocks or lacks clipboard reading, it opens/focuses the box for a manual paste. Importing replaces the whole team, so it asks for confirmation first when the team already has data. (When the panel is collapsed, the header shows the same `Paste and import` button.)
+- The Team Import panel (Showdown paste and, when configured, Replica Team ID) starts expanded on a first visit and has a `Paste and import` button. If the paste box already has text, it imports that; otherwise one tap reads the system clipboard, fills the box, and imports. If the browser blocks or lacks clipboard reading, it opens/focuses the box for a manual paste. Importing replaces the whole team, so it asks for confirmation first when the team already has data. (When the panel is collapsed, the header shows the same `Paste and import` button.)
 
 - `Level 50` lines are ignored silently.
 - `EVs:` are treated as Champions Stat Points, not standard Showdown EVs.

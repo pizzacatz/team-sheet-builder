@@ -135,7 +135,7 @@ export function ImportPanel({ onImport, teamHasData }: ImportPanelProps) {
           onClick={() => setIsOpen((current) => !current)}
         >
           <ChevronDown size={18} aria-hidden="true" />
-          <span id="import-heading">Showdown Import</span>
+          <span id="import-heading">Team Import</span>
         </button>
         <div className="heading-actions">
           {!isOpen ? (

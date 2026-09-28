@@ -150,15 +150,6 @@ button:disabled {
   height: 88px;
 }
 
-.eyebrow {
-  margin: 0 0 4px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0;
-  color: var(--accent-text);
-  text-transform: uppercase;
-}
-
 h1,
 h2,
 h3,
@@ -1087,28 +1078,23 @@ button:focus-visible {
     height: 64px;
   }
 
-  /* The logo shares a row with the title, centred on its lines; the eyebrow
-     sits above and the links below. The theme toggle sits in the top-right
+  /* The logo shares a row with the title, centred on its lines; the links
+     sit below. The theme toggle sits in the top-right
      corner, so the title keeps clear of it. */
   .app-brand {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
     grid-template-areas:
-      "eyebrow eyebrow"
       "logo title"
       "subtitle subtitle";
     align-items: center;
-    /* No row gap: the eyebrow and subtitle margins already space the rows. */
+    /* No row gap: the subtitle's margin already spaces the rows. */
     gap: 0 12px;
     padding-right: calc(var(--control-height) + 8px);
   }
 
   .brand-text {
     display: contents;
-  }
-
-  .app-brand .eyebrow {
-    grid-area: eyebrow;
   }
 
   .brand-logo {
