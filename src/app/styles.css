@@ -363,19 +363,22 @@ h3 {
   border: 1px solid var(--field-border);
   border-radius: 6px;
   background: var(--field-bg);
-  padding: 0 8px 0 12px;
+  /* Room for the label ("Age Division:" is about 6.5rem at 1rem). */
+  padding: 0 8px 0 calc(6.5rem + 24px);
   container-type: inline-size;
 }
 
-/* Styled like the in-field labels of the other Player Info boxes, but sized to
-   its text: the shared label column leaves no room for three radios. Floating
-   the legend takes it out of fieldset legend layout so it sits in the row. */
+/* Styled like the in-field labels of the other Player Info boxes. On desktop
+   it's sized to its text, since the shared label column leaves no room for
+   three radios; phones put it in the shared column (see the 760px block). */
 .division-field legend {
-  float: left;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 11px;
   display: flex;
-  height: 100%;
   align-items: center;
-  padding: 0 12px 0 0;
+  padding: 0;
   color: var(--label);
   font-size: 1rem;
   font-weight: 800;
@@ -383,66 +386,32 @@ h3 {
   white-space: nowrap;
 }
 
+/* The radios fill whatever width the box has left: text, circles and gaps
+   scale together (all in em), up to the 1rem used everywhere else. 15.2em is
+   the row's width in its own font size, with a little spare. */
 .division-options {
   display: flex;
   height: 100%;
   min-width: 0;
   align-items: center;
-  gap: 10px;
+  gap: 0.7em;
+  font-size: clamp(10px, calc(100cqi / 15.2), 1rem);
 }
 
 .radio-option {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 0.35em;
   color: var(--text);
-  font-size: 1rem;
   font-weight: 650;
   white-space: nowrap;
 }
 
-/* Narrow boxes (smaller desktop widths, phones): shrink to stay on one row. */
-@container (max-width: 360px) {
-  .division-field legend {
-    font-size: 0.86rem;
-  }
-
-  .division-options {
-    gap: 8px;
-  }
-
-  .radio-option {
-    font-size: 0.86rem;
-  }
-}
-
-
-
 .radio-option input {
-  width: 15px;
-  height: 15px;
+  width: 0.95em;
+  height: 0.95em;
   margin: 0;
   accent-color: var(--accent);
-}
-
-@container (max-width: 300px) {
-  .division-field legend {
-    padding-right: 6px;
-  }
-
-  .division-options {
-    gap: 4px;
-  }
-
-  .radio-option {
-    gap: 2px;
-    font-size: 0.7rem;
-  }
-
-  .radio-option input {
-    width: 13px;
-    height: 13px;
-  }
 }
 
 /* The control looks like one field; the three segments are borderless inside it. */
@@ -1104,7 +1073,6 @@ button:focus-visible {
   /* Phones: Age Division's label joins the shared right-aligned label column
      so all Player Info labels line up. */
   .player-info-panel .division-field {
-    padding-right: 4px;
     padding-left: calc(var(--in-field-label-width) + 12px);
   }
 
@@ -1114,11 +1082,8 @@ button:focus-visible {
     bottom: 0;
     /* 1px less than the other labels: this box's border offsets its origin. */
     left: 3px;
-    float: none;
     width: var(--in-field-label-width);
-    height: auto;
     justify-content: flex-end;
-    padding: 0;
     text-align: right;
     white-space: normal;
   }
@@ -1278,12 +1243,5 @@ button:focus-visible {
   .stat-field input {
     padding-right: 4px;
     padding-left: 4px;
-  }
-}
-
-/* The narrowest phones: pull the radios in so "Master" clears the border. */
-@media (max-width: 340px) {
-  .player-info-panel .division-field {
-    padding-left: calc(var(--in-field-label-width) + 6px);
   }
 }
