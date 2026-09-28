@@ -387,16 +387,16 @@ h3 {
 }
 
 /* The options read like typed values (same size, weight and colour) and stay
-   at 1rem wherever they fit; only a narrow box shrinks them, with text,
-   circles and gaps scaling together (all in em). The divisor is the row's
-   width in its own font size, with a little spare. */
+   at 1rem wherever they fit. A narrower box shrinks them as far as needed to
+   stay on one row, with text, circles and gaps scaling together (all in em).
+   The divisor is the row's width in its own font size, with a little spare. */
 .division-options {
   display: flex;
   height: 100%;
   min-width: 0;
   align-items: center;
   gap: 0.7em;
-  font-size: clamp(10px, calc(100cqi / 14.6), 1rem);
+  font-size: min(calc(100cqi / 14.6), 1rem);
 }
 
 .radio-option {
@@ -574,14 +574,6 @@ select.is-warning {
 
 .player-info-panel {
   --in-field-label-width: 190px;
-}
-
-/* Desktop: the right column's labels are short ("Date of Birth:" is the
-   longest), so a narrower label column leaves Age Division's radios room. */
-@media (min-width: 761px) {
-  .player-info-column:last-child {
-    --in-field-label-width: 120px;
-  }
 }
 
 .pokemon-slot {

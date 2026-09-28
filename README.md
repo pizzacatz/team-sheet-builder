@@ -91,7 +91,7 @@ All eight fields are required:
 - Date of Birth
 - Support ID
 
-Every Player Info field is one row of the same height, so the desktop columns line up, and every label sits in its column's shared right-aligned label area (narrower in the right column on desktop). Age Division is a bordered row like the others; its Junior / Senior / Master options look like typed values and stay at full size wherever they fit, shrinking only in narrow boxes.
+Every Player Info field is one row of the same height, so the desktop columns line up, and every label sits in the same right-aligned label area in both columns. Age Division is a bordered row like the others; its Junior / Senior / Master options look like typed values and stay at full size wherever they fit, shrinking as far as needed to stay on one row in narrower boxes.
 
 Player ID accepts digits only and preserves leading zeros.
 
