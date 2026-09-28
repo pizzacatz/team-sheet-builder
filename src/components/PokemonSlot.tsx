@@ -64,12 +64,6 @@ const statFieldLabels: Record<StatKey, string> = {
 export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, fieldFlags, onChange, onClear }: PokemonSlotProps) {
   const hasError = (fieldId: string) => Boolean(fieldFlags?.errors.has(fieldId));
   const hasWarning = (fieldId: string) => Boolean(fieldFlags?.warnings.has(fieldId));
-  const messagesFor = (fieldId: string) => fieldFlags?.messages.get(fieldId);
-  // The stat boxes are too narrow for a message each: collect theirs under the grid.
-  const statMessages = statRows
-    .flatMap((stat) => messagesFor(`pokemon-${index}-${stat.key}`) ?? [])
-    .filter((message, position, all) => all.findIndex((other) => other.text === message.text) === position)
-    .sort((a, b) => (a.severity === b.severity ? 0 : a.severity === "error" ? -1 : 1));
   const lastSelectedSpeciesId = useRef(entry.speciesId);
   const allSpeciesOptions = useMemo(() => makeOptions(species, (record) => record.types.join(" / ")), []);
   const allAbilityOptions = useMemo(() => makeOptions(abilities), []);
@@ -205,7 +199,6 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, fieldFl
           required
           invalid={hasError(`pokemon-${index}-species`)}
           warning={hasWarning(`pokemon-${index}-species`)}
-          messages={messagesFor(`pokemon-${index}-species`)}
         />
         <AutocompleteField
           id={`pokemon-${index}-stat-alignment`}
@@ -226,7 +219,6 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, fieldFl
           helperText={statDescription}
           invalid={hasError(`pokemon-${index}-stat-alignment`)}
           warning={hasWarning(`pokemon-${index}-stat-alignment`)}
-          messages={messagesFor(`pokemon-${index}-stat-alignment`)}
         />
       </div>
       <div className="slot-pdf-grid">
@@ -241,7 +233,6 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, fieldFl
             required
             invalid={hasError(`pokemon-${index}-ability`)}
             warning={hasWarning(`pokemon-${index}-ability`)}
-            messages={messagesFor(`pokemon-${index}-ability`)}
           />
           <AutocompleteField
             id={`pokemon-${index}-item`}
@@ -253,7 +244,6 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, fieldFl
             required
             invalid={hasError(`pokemon-${index}-item`)}
             warning={hasWarning(`pokemon-${index}-item`)}
-            messages={messagesFor(`pokemon-${index}-item`)}
           />
           {entry.moves.map((moveId, moveIndex) => {
             // A Pokémon can't have the same move twice: hide moves already picked
@@ -277,7 +267,6 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, fieldFl
                 required={moveIndex === 0}
                 invalid={hasError(`pokemon-${index}-move-${moveIndex}`)}
                 warning={hasWarning(`pokemon-${index}-move-${moveIndex}`)}
-                messages={messagesFor(`pokemon-${index}-move-${moveIndex}`)}
               />
             );
           })}
@@ -305,15 +294,6 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, fieldFl
           ))}
         </div>
       </div>
-      {statMessages.length ? (
-        <ul className="slot-stat-messages" aria-live="polite">
-          {statMessages.map((message) => (
-            <li key={message.text} className={`field-message ${message.severity}`}>
-              {message.text}
-            </li>
-          ))}
-        </ul>
-      ) : null}
     </section>
   );
 }

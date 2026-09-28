@@ -144,51 +144,29 @@ export const isIssueVisible = (
   return !MISSING_ERROR_CODES.has(issue.code) && Boolean(primary) && !TEXT_FIELD_ID.test(primary!);
 };
 
-// "Pokémon 2's HP of 400 is..." reads as "HP of 400 is..." under the field or
-// in the panel, where the section is already named.
+// "Pokémon 2's HP of 400 is..." reads as "HP of 400 is..." in the panel, where
+// the section is already named.
 export const inlineMessage = (message: string): string =>
   message.replace(/^Pokémon \d+(?:'s)? (\S)/, (_, first: string) => first.toUpperCase());
 
-export type FieldMessage = { severity: "error" | "warning"; text: string };
-
+// Fields only change colour; the validation panel carries the explanations.
 export type FieldFlags = {
   errors: Set<string>;
   warnings: Set<string>;
-  // Primary field shows the short message; related fields (the other half of a
-  // duplicate, the other stats in a budget error) show the full one.
-  messages: Map<string, FieldMessage[]>;
 };
 
 export const collectFieldFlags = (issues: IssueLike[]): FieldFlags => {
   const errors = new Set<string>();
   const warnings = new Set<string>();
-  const messages = new Map<string, FieldMessage[]>();
-  const push = (id: string, message: FieldMessage) => {
-    const list = messages.get(id) ?? [];
-    if (!list.some((existing) => existing.text === message.text)) list.push(message);
-    messages.set(id, list);
-  };
   for (const issue of issues) {
-    const severity = issue.severity === "error" ? "error" : "warning";
-    const target = severity === "error" ? errors : warnings;
-    const primary = fieldIdForPath(issue.path);
-    // A red box already says "fill me in" or "this number is off"; notes are
-    // for problems the box alone can't explain.
-    const needsNote = !MISSING_ERROR_CODES.has(issue.code) && issue.code !== "STAT_OUT_OF_RANGE";
-    if (primary) {
-      target.add(primary);
-      if (needsNote) push(primary, { severity, text: inlineMessage(issue.message ?? "") });
-    }
-    for (const path of issue.relatedFields ?? []) {
+    const target = issue.severity === "error" ? errors : warnings;
+    for (const path of [issue.path, ...(issue.relatedFields ?? [])]) {
       const id = fieldIdForPath(path);
-      if (!id) continue;
-      target.add(id);
-      if (needsNote) push(id, { severity, text: issue.message ?? "" });
+      if (id) target.add(id);
     }
   }
   for (const id of errors) warnings.delete(id);
-  for (const list of messages.values()) list.sort((a, b) => (a.severity === b.severity ? 0 : a.severity === "error" ? -1 : 1));
-  return { errors, warnings, messages };
+  return { errors, warnings };
 };
 
 const PLAYER_REQUIRED_PATHS = ["player.name", "player.trainerName", "player.division", "player.playerId", "player.dateOfBirth"];

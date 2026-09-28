@@ -48,7 +48,7 @@ describe("validationFields", () => {
     expect(isIssueVisible(missingName, reveal({ finishedSections: new Set(["player"]) }), allHaveData)).toBe(true);
   });
 
-  it("collects errors, warnings and messages, with related fields and no overlap", () => {
+  it("collects errors and warnings, with related fields and no overlap", () => {
     const flags = collectFieldFlags([
       {
         severity: "error",
@@ -62,19 +62,10 @@ describe("validationFields", () => {
     expect(flags.errors.has("pokemon-2-item")).toBe(true);
     expect(flags.errors.has("pokemon-0-item")).toBe(true); // both halves of a duplicate
     expect(flags.warnings.has("pokemon-2-item")).toBe(false); // error wins
-    expect(flags.messages.get("pokemon-2-item")?.[0]).toEqual({ severity: "error", text: "Has a duplicate held item." });
-    expect(flags.messages.get("pokemon-0-item")?.[0].text).toBe("Pokémon 3 has a duplicate held item.");
   });
 
-  it("highlights empty and out-of-range fields without a note", () => {
-    const flags = collectFieldFlags([missingSpecies, missingName, statOutOfRange]);
-    expect(flags.errors.has("pokemon-0-species")).toBe(true);
-    expect(flags.errors.has("pokemon-1-hp")).toBe(true);
-    expect(flags.errors.has("player-name")).toBe(true);
-    expect(flags.messages.size).toBe(0);
-  });
 
-  it("drops the slot prefix for inline messages", () => {
+  it("drops the slot prefix for panel rows", () => {
     expect(inlineMessage("Pokémon 2's HP of 1 is too low.")).toBe("HP of 1 is too low.");
     expect(inlineMessage("Pokémon 6 needs move 1.")).toBe("Needs move 1.");
     expect(inlineMessage("Player Name is required.")).toBe("Player Name is required.");
