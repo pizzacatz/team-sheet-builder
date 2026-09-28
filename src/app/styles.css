@@ -363,47 +363,48 @@ h3 {
   border: 1px solid var(--field-border);
   border-radius: 6px;
   background: var(--field-bg);
-  /* Room for the label ("Age Division:" is about 6.5rem at 1rem). */
-  padding: 0 8px 0 calc(6.5rem + 24px);
+  padding: 0 8px 0 calc(var(--in-field-label-width) + 12px);
   container-type: inline-size;
 }
 
-/* Styled like the in-field labels of the other Player Info boxes. On desktop
-   it's sized to its text, since the shared label column leaves no room for
-   three radios; phones put it in the shared column (see the 760px block). */
+/* In the shared label column, right-aligned like the other in-field labels. */
 .division-field legend {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 11px;
+  /* 1px less than the other labels: this box's border offsets its origin. */
+  left: 3px;
   display: flex;
+  width: var(--in-field-label-width);
   align-items: center;
+  justify-content: flex-end;
   padding: 0;
   color: var(--label);
   font-size: 1rem;
   font-weight: 800;
   line-height: 1;
-  white-space: nowrap;
+  text-align: right;
 }
 
-/* The radios fill whatever width the box has left: text, circles and gaps
-   scale together (all in em), up to the 1rem used everywhere else. 15.2em is
-   the row's width in its own font size, with a little spare. */
+/* The options read like typed values (same size, weight and colour) and stay
+   at 1rem wherever they fit. A narrower box shrinks them as far as needed to
+   stay on one row, with text, circles and gaps scaling together (all in em).
+   The divisor is the row's width in its own font size, with a little spare. */
 .division-options {
   display: flex;
   height: 100%;
   min-width: 0;
   align-items: center;
   gap: 0.7em;
-  font-size: clamp(10px, calc(100cqi / 15.2), 1rem);
+  font-size: min(calc(100cqi / 14.6), 1rem);
 }
 
 .radio-option {
   display: inline-flex;
   align-items: center;
   gap: 0.35em;
-  color: var(--text);
-  font-weight: 650;
+  color: var(--field-text);
+  font-weight: 400;
   white-space: nowrap;
 }
 
@@ -1038,8 +1039,9 @@ button:focus-visible {
     grid-template-columns: 1fr;
   }
 
-  .section-heading,
-  .slot-heading,
+  /* Card titles stay centred on their trash button (the base rule); only rows
+     whose buttons can wrap onto a second line pin to the top. */
+  .import-heading,
   .action-row {
     align-items: start;
   }
@@ -1068,24 +1070,6 @@ button:focus-visible {
 
   .player-info-panel .field > label[for="switch-profile"] {
     font-size: 0.86rem;
-  }
-
-  /* Phones: Age Division's label joins the shared right-aligned label column
-     so all Player Info labels line up. */
-  .player-info-panel .division-field {
-    padding-left: calc(var(--in-field-label-width) + 12px);
-  }
-
-  .player-info-panel .division-field legend {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    /* 1px less than the other labels: this box's border offsets its origin. */
-    left: 3px;
-    width: var(--in-field-label-width);
-    justify-content: flex-end;
-    text-align: right;
-    white-space: normal;
   }
 
   .side-column {
