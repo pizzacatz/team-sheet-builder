@@ -1039,8 +1039,9 @@ button:focus-visible {
     grid-template-columns: 1fr;
   }
 
-  .section-heading,
-  .slot-heading,
+  /* Card titles stay centred on their trash button (the base rule); only rows
+     whose buttons can wrap onto a second line pin to the top. */
+  .import-heading,
   .action-row {
     align-items: start;
   }
