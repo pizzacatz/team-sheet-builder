@@ -172,8 +172,9 @@ export const collectFieldFlags = (issues: IssueLike[]): FieldFlags => {
     const severity = issue.severity === "error" ? "error" : "warning";
     const target = severity === "error" ? errors : warnings;
     const primary = fieldIdForPath(issue.path);
-    // An empty red box already says "fill me in"; only wrong values get a note.
-    const needsNote = !MISSING_ERROR_CODES.has(issue.code);
+    // A red box already says "fill me in" or "this number is off"; notes are
+    // for problems the box alone can't explain.
+    const needsNote = !MISSING_ERROR_CODES.has(issue.code) && issue.code !== "STAT_OUT_OF_RANGE";
     if (primary) {
       target.add(primary);
       if (needsNote) push(primary, { severity, text: inlineMessage(issue.message ?? "") });

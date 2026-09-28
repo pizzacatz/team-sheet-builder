@@ -66,9 +66,10 @@ describe("validationFields", () => {
     expect(flags.messages.get("pokemon-0-item")?.[0].text).toBe("Pokémon 3 has a duplicate held item.");
   });
 
-  it("highlights empty required fields without a note", () => {
-    const flags = collectFieldFlags([missingSpecies, missingName]);
+  it("highlights empty and out-of-range fields without a note", () => {
+    const flags = collectFieldFlags([missingSpecies, missingName, statOutOfRange]);
     expect(flags.errors.has("pokemon-0-species")).toBe(true);
+    expect(flags.errors.has("pokemon-1-hp")).toBe(true);
     expect(flags.errors.has("player-name")).toBe(true);
     expect(flags.messages.size).toBe(0);
   });
