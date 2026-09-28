@@ -1098,7 +1098,8 @@ button:focus-visible {
       "logo title"
       "subtitle subtitle";
     align-items: center;
-    column-gap: 12px;
+    /* No row gap: the eyebrow and subtitle margins already space the rows. */
+    gap: 0 12px;
     padding-right: calc(var(--control-height) + 8px);
   }
 
