@@ -2,13 +2,12 @@ import { AlertTriangle, CheckCircle2, CircleDashed } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { ValidationIssue } from "../domain/validationTypes";
 import type { ValidationResult } from "../domain/validationTypes";
-import { SECTIONS, computeProgress, fieldIdForPath, inlineMessage, scrollToIssueField, sectionForPath, sectionLabel } from "./validationFields";
+import { SECTIONS, fieldIdForPath, inlineMessage, scrollToIssueField, sectionForPath, sectionLabel } from "./validationFields";
 
 type ValidationPanelProps = {
   validation: ValidationResult;
   // The issues the form is currently showing; the panel lists exactly these.
   visibleIssues: ValidationIssue[];
-  progress: ReturnType<typeof computeProgress>;
   // Bumps whenever a blocked download/share attempt should force the list open.
   expandSignal?: number;
   // Untouched form: show a neutral "Not started" summary instead of errors.
@@ -37,7 +36,7 @@ const IssueRow = ({ issue }: { issue: ValidationIssue }) => {
 
 const plural = (count: number, word: string) => `${count} ${word}${count === 1 ? "" : "s"}`;
 
-export function ValidationPanel({ validation, visibleIssues, progress, expandSignal, pristine = false }: ValidationPanelProps) {
+export function ValidationPanel({ validation, visibleIssues, expandSignal, pristine = false }: ValidationPanelProps) {
   const errors = visibleIssues.filter((issue) => issue.severity === "error");
   const warnings = visibleIssues.filter((issue) => issue.severity === "warning");
   const hasIssues = !pristine && visibleIssues.length > 0;
@@ -123,11 +122,6 @@ export function ValidationPanel({ validation, visibleIssues, progress, expandSig
       ) : (
         <div className={summaryClassName}>{summaryContent}</div>
       )}
-      {inProgress ? (
-        <p className="validation-progress">
-          Player Info {progress.playerDone}/{progress.playerTotal} · Team {progress.teamDone}/{progress.teamTotal}
-        </p>
-      ) : null}
       {!hasIssues ? (
         <p className="empty-state">{emptyText}</p>
       ) : (

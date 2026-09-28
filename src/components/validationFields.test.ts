@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
   collectFieldFlags,
-  computeProgress,
   emptyRevealState,
   fieldIdForPath,
   inlineMessage,
@@ -71,12 +70,4 @@ describe("validationFields", () => {
     expect(inlineMessage("Player Name is required.")).toBe("Player Name is required.");
   });
 
-  it("counts progress from every issue, visible or not", () => {
-    expect(computeProgress([missingName, missingSpecies, illegalMove])).toEqual({
-      playerDone: 4,
-      playerTotal: 5,
-      teamDone: 4,
-      teamTotal: 6
-    });
-  });
 });

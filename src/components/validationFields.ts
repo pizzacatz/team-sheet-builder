@@ -8,6 +8,9 @@ export const fieldIdForPath = (path: string): string | null => {
   if (path === "player.division") return "age-division-field";
   if (path === "player.playerId") return "player-id";
   if (path === "player.dateOfBirth") return "date-of-birth";
+  if (path === "player.teamName") return "team-name";
+  if (path === "player.switchProfileName") return "switch-profile";
+  if (path === "player.supportId") return "support-id";
 
   const pokemonMatch = path.match(/^pokemon\.(\d+)\.([^.]+)(?:\.([^.]+))?/);
   if (!pokemonMatch) return null;
@@ -23,6 +26,40 @@ export const fieldIdForPath = (path: string): string | null => {
   return null;
 };
 
+// Rows of dropdown to keep visible between a field and the on-screen keyboard.
+const KEYBOARD_ROOM_ROWS = 3;
+
+/**
+ * On touch screens, once the keyboard has opened, scroll so the field sits at
+ * least three dropdown rows above it. The keyboard animates in after focus, so
+ * this re-checks each time the visible area shrinks, for about a second.
+ */
+export const keepRoomAboveKeyboard = (element: HTMLElement) => {
+  const viewport = window.visualViewport;
+  if (!viewport || !window.matchMedia?.("(pointer: coarse)").matches) return;
+
+  const adjust = () => {
+    if (document.activeElement !== element && !element.contains(document.activeElement)) return;
+    const rowHeight = document.querySelector<HTMLElement>(".suggestion")?.offsetHeight || 40;
+    const rect = element.getBoundingClientRect();
+    const visibleTop = viewport.offsetTop + 8;
+    const visibleBottom = viewport.offsetTop + viewport.height;
+    const overlap = rect.bottom + KEYBOARD_ROOM_ROWS * rowHeight + 8 - visibleBottom;
+    // Never push the field itself off the top of the visible area.
+    const shift = Math.min(overlap, rect.top - visibleTop);
+    if (shift > 0) window.scrollBy({ top: shift });
+  };
+
+  let debounce = 0;
+  const onResize = () => {
+    window.clearTimeout(debounce);
+    debounce = window.setTimeout(adjust, 80);
+  };
+  viewport.addEventListener("resize", onResize);
+  window.setTimeout(adjust, 350);
+  window.setTimeout(() => viewport.removeEventListener("resize", onResize), 1200);
+};
+
 export const scrollToIssueField = (path: string) => {
   const fieldId = fieldIdForPath(path);
   if (!fieldId) return;
@@ -34,6 +71,7 @@ export const scrollToIssueField = (path: string) => {
   window.setTimeout(() => {
     if (element instanceof HTMLElement) {
       element.focus({ preventScroll: true });
+      keepRoomAboveKeyboard(element);
     }
   }, 250);
 };
@@ -46,6 +84,9 @@ export const MISSING_ERROR_CODES = new Set<string>([
   "MISSING_AGE_DIVISION",
   "MISSING_PLAYER_ID",
   "MISSING_DATE_OF_BIRTH",
+  "MISSING_TEAM_NAME",
+  "MISSING_SWITCH_PROFILE_NAME",
+  "MISSING_SUPPORT_ID",
   "MISSING_SPECIES",
   "MISSING_ABILITY",
   "MISSING_ITEM",
@@ -69,7 +110,7 @@ export const sectionForPath = (path: string): string | null => {
 };
 
 export const sectionForFieldId = (fieldId: string): string | null => {
-  if (/^(player-name|trainer-name|age-division-field|player-id|date-of-birth)$/.test(fieldId)) return "player";
+  if (/^(player-name|trainer-name|team-name|switch-profile|age-division-field|player-id|date-of-birth|support-id)$/.test(fieldId)) return "player";
   const match = fieldId.match(/^pokemon-(\d+)-/);
   return match ? `pokemon-${match[1]}` : null;
 };
@@ -77,10 +118,10 @@ export const sectionForFieldId = (fieldId: string): string | null => {
 // Free-typed fields. Their wrong-value errors wait for blur, so a half-typed
 // "1" on the way to "150" is never flagged. Dropdown and radio picks are
 // complete the moment they're made, so those check straight away.
-const TEXT_FIELD_ID = /^(player-name|trainer-name|player-id|date-of-birth|pokemon-\d+-(hp|atk|def|spa|spd|spe))$/;
+const TEXT_FIELD_ID = /^(player-name|trainer-name|team-name|switch-profile|player-id|date-of-birth|support-id|pokemon-\d+-(hp|atk|def|spa|spd|spe))$/;
 
 const FIELD_ID =
-  /^(player-name|trainer-name|age-division-field|player-id|date-of-birth|pokemon-\d+-(species|ability|item|stat-alignment|move-\d|hp|atk|def|spa|spd|spe))$/;
+  /^(player-name|trainer-name|team-name|switch-profile|age-division-field|player-id|date-of-birth|support-id|pokemon-\d+-(species|ability|item|stat-alignment|move-\d|hp|atk|def|spa|spd|spe))$/;
 
 /** The validation field an element belongs to (DOB parts map to the whole date). */
 export const fieldIdForElement = (element: EventTarget | null): string | null => {
@@ -167,25 +208,4 @@ export const collectFieldFlags = (issues: IssueLike[]): FieldFlags => {
   }
   for (const id of errors) warnings.delete(id);
   return { errors, warnings };
-};
-
-const PLAYER_REQUIRED_PATHS = ["player.name", "player.trainerName", "player.division", "player.playerId", "player.dateOfBirth"];
-
-/** "Player Info 3/5 · Team 2/6" counts, from all issues (visible or not). */
-export const computeProgress = (issues: IssueLike[]) => {
-  const errorPaths = new Set(issues.filter((issue) => issue.severity === "error").map((issue) => issue.path));
-  const playerDone = PLAYER_REQUIRED_PATHS.filter((path) => !errorPaths.has(path)).length;
-  const slotsWithErrors = new Set(
-    issues
-      .filter((issue) => issue.severity === "error")
-      .flatMap((issue) => [issue.path, ...(issue.relatedFields ?? [])])
-      .map(sectionForPath)
-      .filter((section): section is string => Boolean(section?.startsWith("pokemon-")))
-  );
-  return {
-    playerDone,
-    playerTotal: PLAYER_REQUIRED_PATHS.length,
-    teamDone: 6 - slotsWithErrors.size,
-    teamTotal: 6
-  };
 };

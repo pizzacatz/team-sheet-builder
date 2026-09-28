@@ -5,7 +5,7 @@ import { PdfActions } from "../components/PdfActions";
 import { PlayerInfoForm } from "../components/PlayerInfoForm";
 import { TeamForm } from "../components/TeamForm";
 import { ValidationPanel } from "../components/ValidationPanel";
-import { collectFieldFlags, computeProgress, isIssueVisible, scrollToIssueField } from "../components/validationFields";
+import { collectFieldFlags, isIssueVisible, scrollToIssueField } from "../components/validationFields";
 import { entryHasAnyData } from "../domain/legality";
 import { decodeTeamShare } from "../domain/teamShare";
 import { rules } from "../domain/regulationData";
@@ -49,7 +49,6 @@ export function App() {
   // One visibility rule feeds both the panel and the field highlights.
   const visibleIssues = validation.issues.filter((issue) => isIssueVisible(issue, reveal, sectionHasData));
   const fieldFlags = collectFieldFlags(visibleIssues);
-  const progress = computeProgress(validation.issues);
 
   // Tapping a download/share button while invalid: reveal every error (highlight
   // missing fields too), open the list, and jump to the first problem.
@@ -197,7 +196,6 @@ export function App() {
           <ValidationPanel
             validation={validation}
             visibleIssues={visibleIssues}
-            progress={progress}
             expandSignal={expandSignal}
             pristine={isPristine}
           />

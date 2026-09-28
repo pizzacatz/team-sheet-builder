@@ -826,9 +826,13 @@ button:focus-visible {
   text-align: left;
 }
 
-.validation-summary-button:hover {
-  outline: 2px solid var(--focus-ring-strong);
-  outline-offset: -4px;
+/* Touch screens keep :hover stuck after a tap, which left an orange ring on
+   the summary and rows; only real pointers get the hover outline. */
+@media (hover: hover) {
+  .validation-summary-button:hover {
+    outline: 2px solid var(--focus-ring-strong);
+    outline-offset: -4px;
+  }
 }
 
 .validation-summary-button:focus-visible {
@@ -905,13 +909,6 @@ button:focus-visible {
   text-transform: uppercase;
 }
 
-.validation-progress {
-  margin: 0 0 12px;
-  color: var(--muted);
-  font-size: 0.84rem;
-  font-weight: 600;
-}
-
 .issue span {
   font-size: 0.84rem;
 }
@@ -930,9 +927,11 @@ button:focus-visible {
   cursor: pointer;
 }
 
-.issue-action:hover {
-  outline: 2px solid var(--focus-ring-strong);
-  outline-offset: 2px;
+@media (hover: hover) {
+  .issue-action:hover {
+    outline: 2px solid var(--focus-ring-strong);
+    outline-offset: 2px;
+  }
 }
 
 .empty-state {
@@ -1155,10 +1154,6 @@ button:focus-visible {
 
   .validation-panel .empty-state {
     display: none;
-  }
-
-  .validation-panel .validation-progress {
-    margin: -6px 16px 10px;
   }
 
   .actions-panel {

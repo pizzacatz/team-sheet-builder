@@ -1,6 +1,7 @@
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { normalizeName } from "../domain/normalization";
 import { searchOptions, type AutocompleteOption } from "../domain/autocomplete";
+import { keepRoomAboveKeyboard } from "./validationFields";
 
 type AutocompleteFieldProps = {
   id?: string;
@@ -164,7 +165,10 @@ export function AutocompleteField({
         aria-activedescendant={activeIndex >= 0 ? `${inputId}-option-${activeIndex}` : undefined}
         aria-expanded={isOpen}
         aria-required={required || undefined}
-        onFocus={openSuggestions}
+        onFocus={(event) => {
+          openSuggestions();
+          keepRoomAboveKeyboard(event.currentTarget);
+        }}
         onClick={() => {
           if (!isOpen) openSuggestions();
         }}

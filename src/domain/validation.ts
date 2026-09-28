@@ -55,6 +55,12 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
       "Trainer Name in Game is required."
     );
   }
+  if (!teamSheet.player.teamName?.trim()) {
+    issue(issues, "error", "player.teamName", "MISSING_TEAM_NAME", "Battle Team Number / Name is required.");
+  }
+  if (!teamSheet.player.switchProfileName?.trim()) {
+    issue(issues, "error", "player.switchProfileName", "MISSING_SWITCH_PROFILE_NAME", "Switch Profile Name is required.");
+  }
   if (!teamSheet.player.division) {
     issue(issues, "error", "player.division", "MISSING_AGE_DIVISION", "Age Division is required.");
   }
@@ -73,6 +79,10 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
       "INVALID_DATE_OF_BIRTH",
       "Date of Birth must be a complete MM-DD-YYYY date."
     );
+  }
+
+  if (!teamSheet.player.supportId?.trim()) {
+    issue(issues, "error", "player.supportId", "MISSING_SUPPORT_ID", "Support ID is required.");
   }
 
   const speciesDexBySlot = new Map<number, number>();

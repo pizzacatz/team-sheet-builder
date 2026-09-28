@@ -89,7 +89,11 @@ export function PlayerInfoForm({ player, onChange, onClear, fieldFlags }: Player
             <label htmlFor="team-name">Battle Team Number / Name:</label>
             <input
               id="team-name"
+              className={invalidClass("team-name")}
               value={player.teamName ?? ""}
+              aria-required="true"
+              aria-invalid={invalidFlag("team-name")}
+              required
               onChange={(event) => onChange({ teamName: event.target.value })}
             />
           </div>
@@ -97,7 +101,11 @@ export function PlayerInfoForm({ player, onChange, onClear, fieldFlags }: Player
             <label htmlFor="switch-profile">Switch Profile Name:</label>
             <input
               id="switch-profile"
+              className={invalidClass("switch-profile")}
               value={player.switchProfileName ?? ""}
+              aria-required="true"
+              aria-invalid={invalidFlag("switch-profile")}
+              required
               onChange={(event) => onChange({ switchProfileName: event.target.value })}
             />
           </div>
@@ -200,7 +208,11 @@ export function PlayerInfoForm({ player, onChange, onClear, fieldFlags }: Player
             <label htmlFor="support-id">Support ID:</label>
             <input
               id="support-id"
+              className={invalidClass("support-id")}
               value={player.supportId ?? ""}
+              aria-required="true"
+              aria-invalid={invalidFlag("support-id")}
+              required
               onChange={(event) => onChange({ supportId: event.target.value })}
             />
           </div>
