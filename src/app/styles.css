@@ -789,7 +789,8 @@ button:focus-visible {
   outline-offset: 2px;
 }
 
-.slot-clear-button {
+.slot-clear-button,
+.player-clear-button {
   flex: 0 0 auto;
 }
 

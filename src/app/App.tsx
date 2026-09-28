@@ -28,7 +28,7 @@ const getInitialTheme = (): ThemeMode => {
 };
 
 export function App() {
-  const { teamSheet, validation, updatePlayer, updatePokemon, replacePokemon } = useTeamSheetState();
+  const { teamSheet, validation, updatePlayer, clearPlayer, updatePokemon, replacePokemon } = useTeamSheetState();
   const sideColumnRef = useRef<HTMLElement | null>(null);
   const [theme, setTheme] = useState<ThemeMode>(getInitialTheme);
   const [isMobileFieldEditing, setIsMobileFieldEditing] = useState(false);
@@ -172,7 +172,12 @@ export function App() {
       <div className="layout">
         <div className="main-column">
           <ImportPanel onImport={replacePokemon} teamHasData={teamHasData} />
-          <PlayerInfoForm player={teamSheet.player} onChange={updatePlayer} errorFieldIds={errorFieldIds} />
+          <PlayerInfoForm
+            player={teamSheet.player}
+            onChange={updatePlayer}
+            onClear={clearPlayer}
+            errorFieldIds={errorFieldIds}
+          />
           <TeamForm
             pokemon={teamSheet.pokemon}
             onChange={updatePokemon}

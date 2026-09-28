@@ -1,10 +1,12 @@
 import { useRef } from "react";
+import { Trash2 } from "lucide-react";
 import { ageDivisionHint, divisionForBirthYear } from "../domain/ageDivision";
 import type { PlayerInfo } from "../domain/teamTypes";
 
 type PlayerInfoFormProps = {
   player: PlayerInfo;
   onChange: (patch: Partial<PlayerInfo>) => void;
+  onClear: () => void;
   errorFieldIds?: Set<string>;
 };
 
@@ -20,7 +22,7 @@ const dobPart = (value: string | undefined, index: number, max: number): string 
 const composeDob = (month: string, day: string, year: string): string =>
   month || day || year ? `${month}-${day}-${year}` : "";
 
-export function PlayerInfoForm({ player, onChange, errorFieldIds }: PlayerInfoFormProps) {
+export function PlayerInfoForm({ player, onChange, onClear, errorFieldIds }: PlayerInfoFormProps) {
   const dobDayRef = useRef<HTMLInputElement | null>(null);
   const dobYearRef = useRef<HTMLInputElement | null>(null);
   const invalidClass = (fieldId: string) => (errorFieldIds?.has(fieldId) ? "is-invalid" : undefined);
@@ -52,6 +54,9 @@ export function PlayerInfoForm({ player, onChange, errorFieldIds }: PlayerInfoFo
     <section className="section-panel player-info-panel in-field-form" aria-labelledby="player-info-heading">
       <div className="section-heading">
         <h2 id="player-info-heading">Player Info</h2>
+        <button type="button" className="icon-button player-clear-button" title="Clear Player Info" aria-label="Clear Player Info" onClick={onClear}>
+          <Trash2 size={18} />
+        </button>
       </div>
       <div className="player-info-grid">
         <div className="player-info-column">

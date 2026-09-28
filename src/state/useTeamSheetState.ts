@@ -21,6 +21,13 @@ export const useTeamSheetState = () => {
     }));
   };
 
+  const clearPlayer = () => {
+    setTeamSheet((current) => ({
+      ...current,
+      player: createEmptyTeamSheet().player
+    }));
+  };
+
   const updatePokemon = (index: number, patch: Partial<PokemonEntry>) => {
     setTeamSheet((current) => ({
       ...current,
@@ -44,6 +51,7 @@ export const useTeamSheetState = () => {
     teamSheet,
     validation,
     updatePlayer,
+    clearPlayer,
     updatePokemon,
     replacePokemon,
     reset,
