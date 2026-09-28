@@ -156,6 +156,8 @@ export function AutocompleteField({
         type="text"
         role="combobox"
         value={inputValue}
+        // A long name can be cut off by the field width; show it in full on hover.
+        title={selected?.label}
         placeholder={placeholder}
         disabled={disabled}
         aria-invalid={invalid || undefined}
@@ -182,7 +184,14 @@ export function AutocompleteField({
       />
       {helperText ? <p className="field-help">{helperText}</p> : null}
       {isOpen && suggestions.length > 0 ? (
-        <div id={listboxId} className="suggestions" role="listbox">
+        <div
+          id={listboxId}
+          className="suggestions"
+          role="listbox"
+          // Browsers make scrollable boxes Tab stops; keep this one out so Tab
+          // moves to the next field instead of into a list that is closing.
+          tabIndex={-1}
+        >
           {suggestions.map((option, optionIndex) => (
             <button
               type="button"
@@ -191,6 +200,10 @@ export function AutocompleteField({
               ref={optionIndex === activeIndex ? activeOptionRef : undefined}
               className="suggestion"
               role="option"
+              // Combobox pattern: arrow keys move through options (via
+              // aria-activedescendant); Tab leaves the field instead of
+              // walking into the list, which closes under it.
+              tabIndex={-1}
               aria-selected={optionIndex === activeIndex}
               onMouseEnter={() => setActiveIndex(optionIndex)}
               onMouseDown={(event) => {

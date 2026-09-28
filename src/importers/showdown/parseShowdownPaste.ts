@@ -122,7 +122,7 @@ const parseBlock = (block: string, pokemonIndex: number, issues: ImportIssue[]):
     }
   } else {
     entry.displayName = speciesText;
-    addIssue(issues, "warning", "UNKNOWN_SPECIES", `Could not match species "${speciesText}".`, pokemonIndex, "species");
+    addIssue(issues, "warning", "UNKNOWN_SPECIES", `Couldn't match the species "${speciesText}". Pick it in the form.`, pokemonIndex, "species");
   }
 
   if (itemText) {
@@ -130,7 +130,7 @@ const parseBlock = (block: string, pokemonIndex: number, issues: ImportIssue[]):
     if (itemResolution) {
       entry.itemId = itemResolution.record.id;
     } else {
-      addIssue(issues, "warning", "UNKNOWN_ITEM", `Could not match item "${itemText}".`, pokemonIndex, "item");
+      addIssue(issues, "warning", "UNKNOWN_ITEM", `Couldn't match the item "${itemText}". Pick it in the form.`, pokemonIndex, "item");
     }
   }
 
@@ -153,7 +153,7 @@ const parseBlock = (block: string, pokemonIndex: number, issues: ImportIssue[]):
           issues,
           "warning",
           "UNKNOWN_ABILITY",
-          `Could not match ability "${abilityText}".`,
+          `Couldn't match the ability "${abilityText}". Pick it in the form.`,
           pokemonIndex,
           "ability"
         );
@@ -196,7 +196,7 @@ const parseBlock = (block: string, pokemonIndex: number, issues: ImportIssue[]):
           issues,
           "warning",
           "UNKNOWN_STAT_ALIGNMENT",
-          `Could not match Stat Alignment "${alignmentText}".`,
+          `Couldn't match the Stat Alignment "${alignmentText}". Pick it in the form.`,
           pokemonIndex,
           "statAlignment"
         );
@@ -211,7 +211,7 @@ const parseBlock = (block: string, pokemonIndex: number, issues: ImportIssue[]):
       if (moveResolution) {
         entry.moves[moveCursor] = moveResolution.record.id;
       } else {
-        addIssue(issues, "warning", "UNKNOWN_MOVE", `Could not match move "${moveText}".`, pokemonIndex, "moves");
+        addIssue(issues, "warning", "UNKNOWN_MOVE", `Couldn't match the move "${moveText}". Pick it in the form.`, pokemonIndex, "moves");
       }
       moveCursor += 1;
       continue;
@@ -240,7 +240,7 @@ const parseBlock = (block: string, pokemonIndex: number, issues: ImportIssue[]):
       issues,
       "warning",
       "LOW_CONFIDENCE_STAT_ALIGNMENT_SUGGESTION",
-      "EVs/SP were present, but no Nature line was found; choose Stat Alignment manually.",
+      "EVs were present, but no Nature line was found. Pick the Stat Alignment in the form.",
       pokemonIndex,
       "statAlignment"
     );
@@ -263,7 +263,7 @@ export const parseShowdownPaste = (paste: string): ImportResult => {
   }
 
   if (blocks.length < 6) {
-    addIssue(issues, "warning", "LESS_THAN_SIX_POKEMON", `Imported ${blocks.length} Pokémon; team sheets have six slots.`);
+    addIssue(issues, "warning", "LESS_THAN_SIX_POKEMON", `Imported ${blocks.length} of 6 Pokémon. Fill in the rest below.`);
   }
 
   if (blocks.length > 6) {

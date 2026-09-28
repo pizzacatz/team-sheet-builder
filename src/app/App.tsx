@@ -8,7 +8,6 @@ import { ValidationPanel } from "../components/ValidationPanel";
 import { collectFieldFlags, isIssueVisible, scrollToIssueField } from "../components/validationFields";
 import { entryHasAnyData } from "../domain/legality";
 import { decodeTeamShare } from "../domain/teamShare";
-import { rules } from "../domain/regulationData";
 import { emptyPokemonEntry, type PokemonEntry } from "../domain/teamTypes";
 import { useTeamSheetState } from "../state/useTeamSheetState";
 import { useValidationReveal } from "../state/useValidationReveal";
@@ -61,6 +60,41 @@ export function App() {
 
   const pokemonSections = (entries: PokemonEntry[]) =>
     entries.map((entry, index) => (entryHasAnyData(entry) ? `pokemon-${index}` : "")).filter(Boolean);
+
+  // Clears are one tap (no confirmation), so each offers a short Undo instead.
+  const [undo, setUndo] = useState<{ label: string; restore: () => void } | null>(null);
+  const undoTimer = useRef<number | undefined>(undefined);
+  const offerUndo = (label: string, restore: () => void) => {
+    window.clearTimeout(undoTimer.current);
+    setUndo({ label, restore });
+    undoTimer.current = window.setTimeout(() => setUndo(null), 8000);
+  };
+  const runUndo = () => {
+    window.clearTimeout(undoTimer.current);
+    undo?.restore();
+    setUndo(null);
+  };
+  useEffect(() => () => window.clearTimeout(undoTimer.current), []);
+
+  const handleClearPlayer = () => {
+    const previous = teamSheet.player;
+    clearPlayer();
+    if (!playerHasData) return;
+    offerUndo("Player Info cleared.", () => {
+      updatePlayer(previous);
+      markFinished(["player"]);
+    });
+  };
+
+  const handleClearSlot = (index: number) => {
+    const previous = teamSheet.pokemon[index];
+    updatePokemon(index, emptyPokemonEntry());
+    if (!entryHasAnyData(previous)) return;
+    offerUndo(`Pokémon ${index + 1} cleared.`, () => {
+      updatePokemon(index, previous);
+      markFinished([`pokemon-${index}`]);
+    });
+  };
 
   const handleImport = (entries: PokemonEntry[]) => {
     replacePokemon(entries);
@@ -153,13 +187,17 @@ export function App() {
     <main className={`app-shell${isMobileFieldEditing ? " is-mobile-field-editing" : ""}`}>
       <header className="app-header">
         <div className="app-brand">
-          <p className="eyebrow">{rules.regulation} · {rules.dataVersion}</p>
-          <h1 className="app-title">Video Game Team List</h1>
-          <p className="header-subtitle">
-            Part of the <a href="https://georgiaplayevents.com/">Georgia Play Events Calendar</a>
-            <span className="subtitle-join"> and </span>
-            <a href="https://map.georgiaplayevents.com/">Georgia Play Events Map</a>
-          </p>
+          <a className="brand-logo" href="https://georgiaplayevents.com/" aria-label="GeorgiaPlayEvents.com">
+            <img src={`${import.meta.env.BASE_URL}logo.png`} alt="" width={115} height={144} />
+          </a>
+          <div className="brand-text">
+            <h1 className="app-title">Pokémon Champions Team Sheet Builder</h1>
+            <p className="header-subtitle">
+              Part of the <a href="https://georgiaplayevents.com/">Georgia Play Events Calendar</a>
+              <span className="subtitle-join"> and </span>
+              <a href="https://map.georgiaplayevents.com/">Georgia Play Events Map</a>
+            </p>
+          </div>
         </div>
         <div className="header-actions">
           <button
@@ -182,13 +220,13 @@ export function App() {
           <PlayerInfoForm
             player={teamSheet.player}
             onChange={updatePlayer}
-            onClear={clearPlayer}
+            onClear={handleClearPlayer}
             fieldFlags={fieldFlags}
           />
           <TeamForm
             pokemon={teamSheet.pokemon}
             onChange={updatePokemon}
-            onClear={(index) => updatePokemon(index, emptyPokemonEntry())}
+            onClear={handleClearSlot}
             fieldFlags={fieldFlags}
           />
         </div>
@@ -207,6 +245,14 @@ export function App() {
           />
         </aside>
       </div>
+      {undo ? (
+        <div className="undo-toast" role="status">
+          <span>{undo.label}</span>
+          <button type="button" className="secondary-action" onClick={runUndo}>
+            Undo
+          </button>
+        </div>
+      ) : null}
     </main>
   );
 }

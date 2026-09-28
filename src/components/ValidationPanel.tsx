@@ -2,7 +2,7 @@ import { AlertTriangle, CheckCircle2, CircleDashed } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { ValidationIssue } from "../domain/validationTypes";
 import type { ValidationResult } from "../domain/validationTypes";
-import { SECTIONS, fieldIdForPath, inlineMessage, scrollToIssueField, sectionForPath, sectionLabel } from "./validationFields";
+import { SECTIONS, fieldIdForPath, fieldOrder, inlineMessage, scrollToIssueField, sectionForPath, sectionLabel } from "./validationFields";
 
 type ValidationPanelProps = {
   validation: ValidationResult;
@@ -14,7 +14,7 @@ type ValidationPanelProps = {
   pristine?: boolean;
 };
 
-const IssueRow = ({ issue }: { issue: ValidationIssue }) => {
+const IssueRow = ({ issue, onGo }: { issue: ValidationIssue; onGo: () => void }) => {
   const targetId = fieldIdForPath(issue.path);
   const className = `issue ${issue.severity}${targetId ? " issue-action" : ""}`;
   const text = inlineMessage(issue.message);
@@ -28,7 +28,10 @@ const IssueRow = ({ issue }: { issue: ValidationIssue }) => {
   }
 
   return (
-    <button type="button" className={className} onClick={() => scrollToIssueField(issue.path)} aria-label={`${issue.message} Go to field.`}>
+    <button type="button" className={className} onClick={() => {
+        onGo();
+        scrollToIssueField(issue.path);
+      }} aria-label={`${issue.message} Go to field.`}>
       <span>{text}</span>
     </button>
   );
@@ -61,17 +64,25 @@ export function ValidationPanel({ validation, visibleIssues, expandSignal, prist
     if (window.matchMedia("(min-width: 761px)").matches) setIsExpanded(true);
   }, [hasErrors]);
 
-  // Grouped by section in form order, errors before warnings within each.
+  // Grouped by section, rows in the order the fields appear in the form.
   const groups = SECTIONS.map((section) => ({
     section,
-    issues: [...errors, ...warnings].filter((issue) => sectionForPath(issue.path) === section)
+    issues: [...errors, ...warnings]
+      .filter((issue) => sectionForPath(issue.path) === section)
+      .sort((a, b) => fieldOrder(a.path) - fieldOrder(b.path))
   })).filter((group) => group.issues.length > 0);
+
+  // On phones the list sits in the tray over the form: close it once the user
+  // heads to a field, so the field isn't hidden behind it.
+  const collapseOnPhones = () => {
+    if (window.matchMedia("(max-width: 760px)").matches) setIsExpanded(false);
+  };
 
   const summaryClassName = `section-heading validation-summary${hasIssues ? " validation-summary-button" : ""}`;
   const summaryContent = (
     <>
       <h2 id="validation-heading">Validation</h2>
-      <span className="status-pill-group">
+      <span className="status-pill-group" aria-live="polite">
         {pristine ? (
           <span className="status-pill pending">
             <CircleDashed size={16} />
@@ -99,7 +110,7 @@ export function ValidationPanel({ validation, visibleIssues, expandSignal, prist
   );
 
   const emptyText = pristine
-    ? "Complete team data will be checked here."
+    ? "Paste a Showdown export, or start with Player Info. Problems will show here."
     : validation.isValid
       ? "Ready to download."
       : "No problems so far. Empty fields are flagged when you move on, or when you download.";
@@ -130,7 +141,7 @@ export function ValidationPanel({ validation, visibleIssues, expandSignal, prist
             <div className="issue-group" key={group.section}>
               <h3 className="issue-group-heading">{sectionLabel(group.section)}</h3>
               {group.issues.map((issue, index) => (
-                <IssueRow key={`${issue.path}-${issue.code}-${index}`} issue={issue} />
+                <IssueRow key={`${issue.path}-${issue.code}-${index}`} issue={issue} onGo={collapseOnPhones} />
               ))}
             </div>
           ))}

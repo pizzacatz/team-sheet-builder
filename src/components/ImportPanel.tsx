@@ -18,7 +18,9 @@ type ImportPanelProps = {
 export function ImportPanel({ onImport, teamHasData }: ImportPanelProps) {
   const [paste, setPaste] = useState("");
   const [issues, setIssues] = useState<ImportIssue[]>([]);
-  const [isOpen, setIsOpen] = useState(true);
+  // Returning with a saved team, the form matters more than the paste box, so
+  // start collapsed (the header keeps Paste and import).
+  const [isOpen, setIsOpen] = useState(() => !teamHasData);
   const [replicaId, setReplicaId] = useState("");
   const [replicaError, setReplicaError] = useState("");
   const [replicaBusy, setReplicaBusy] = useState(false);
@@ -133,13 +135,19 @@ export function ImportPanel({ onImport, teamHasData }: ImportPanelProps) {
           onClick={() => setIsOpen((current) => !current)}
         >
           <ChevronDown size={18} aria-hidden="true" />
-          <span id="import-heading">Showdown Import</span>
+          <span id="import-heading">Team Import</span>
         </button>
         <div className="heading-actions">
           {!isOpen ? (
-            <button type="button" className="import-paste-button" onClick={handlePasteAndImport}>
+            <button
+              type="button"
+              className="primary-action import-paste-button"
+              aria-label="Paste and import"
+              title="Paste and import"
+              onClick={handlePasteAndImport}
+            >
               <ClipboardPaste size={18} aria-hidden="true" />
-              <span>Paste and import</span>
+              <span className="import-paste-label">Paste and import</span>
             </button>
           ) : null}
           {issues.length ? (
@@ -150,8 +158,8 @@ export function ImportPanel({ onImport, teamHasData }: ImportPanelProps) {
           <button
             type="button"
             className="icon-button import-clear-button"
-            title="Clear import"
-            aria-label="Clear import"
+            title="Clear paste"
+            aria-label="Clear paste"
             onClick={handleClear}
           >
             <Trash2 size={18} />
@@ -213,7 +221,9 @@ export function ImportPanel({ onImport, teamHasData }: ImportPanelProps) {
               value={paste}
               onChange={(event) => setPaste(event.target.value)}
               rows={9}
-              placeholder={"Incineroar @ Safety Goggles\nAbility: Intimidate\nCareful Nature\n- Fake Out"}
+              placeholder={
+                "Sneasler @ Psychic Seed\nAbility: Unburden\nLevel: 50\nEVs: 32 Atk / 4 SpD / 30 Spe\nAdamant Nature\n- Close Combat\n- Dire Claw\n- Throat Chop\n- Fake Out"
+              }
             />
           </div>
           <div className="action-row">
@@ -228,8 +238,10 @@ export function ImportPanel({ onImport, teamHasData }: ImportPanelProps) {
         <div className="issue-list compact">
           {issues.map((issue, index) => (
             <div key={`${issue.code}-${index}`} className={`issue ${issue.severity}`}>
-              <strong>{issue.code}</strong>
-              <span>{issue.message}</span>
+              <span>
+                {issue.pokemonIndex !== undefined ? `Pokémon ${issue.pokemonIndex + 1}: ` : ""}
+                {issue.message}
+              </span>
             </div>
           ))}
         </div>

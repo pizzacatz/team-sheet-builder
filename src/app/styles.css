@@ -1,6 +1,9 @@
 :root {
   color-scheme: light;
   --control-height: 40px;
+  /* One corner radius for every surface, matching vgcdex.com and the
+     GeorgiaPlayEvents family. Radios and the logo keep their own shapes. */
+  --radius: 2px;
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --page-bg: #fff1df;
@@ -9,32 +12,37 @@
   --panel-bg: #fff9f1;
   --panel-border: #e1c3a8;
   --field-bg: #fffdf8;
-  --field-border: #c6aa90;
+  --field-border: #9e8268;
   --field-text: #2c211b;
   --label: #332720;
   --label-muted: #6a5648;
   --header-border: #744d36;
   --accent: #d67642;
   --accent-hover: #bb5d2d;
-  --accent-contrast: #ffffff;
   --accent-soft: #ffe2ca;
   --accent-text: #984d27;
-  --valid-text: #984d27;
-  --focus: #f0a069;
-  --focus-ring: rgb(240 160 105 / 0.24);
-  --focus-ring-strong: rgb(240 160 105 / 0.38);
+  /* Filled buttons use a darker orange than the brand accent so white text
+     passes 4.5:1. */
+  --button-bg: #b45a2a;
+  --button-bg-hover: #9c4a20;
+  --button-text: #ffffff;
+  /* Status roles each get their own hue; focus uses the deep brand orange,
+     which no status color shares. */
+  --success-bg: #e6f4ea;
+  --success-text: #1f6b3f;
+  --focus: #b45a2a;
   --surface-hover: #f7e4d2;
   --suggestion-hover: #ffe8d5;
   --suggestion-border: #ecd6c4;
   --shadow: rgb(75 48 32 / 0.1);
   --menu-shadow: rgb(75 48 32 / 0.22);
   --secondary-border: #ad9078;
-  --danger-text: #a23a32;
-  --error-border: #d25345;
-  --error-bg: #fff0ec;
-  --warning-border: #d67642;
-  --warning-bg: #ffecd8;
-  --warning-text: #9a4d22;
+  --danger-text: #b42318;
+  --error-border: #c62828;
+  --error-bg: #fdecea;
+  --warning-border: #b7791f;
+  --warning-bg: #fef7dc;
+  --warning-text: #854d0e;
   color: var(--text);
   background: var(--page-bg);
   font-synthesis: none;
@@ -50,32 +58,33 @@
   --panel-bg: #2f2f33;
   --panel-border: #4a4647;
   --field-bg: #151516;
-  --field-border: #665b55;
+  --field-border: #8a7d76;
   --field-text: #f8efe5;
   --label: #f6eee5;
   --label-muted: #ddd0c4;
   --header-border: #6e615b;
   --accent: #ffb072;
   --accent-hover: #ffc08d;
-  --accent-contrast: #241711;
   --accent-soft: #3f2c22;
   --accent-text: #ffc08d;
-  --valid-text: #ffc08d;
+  --button-bg: #ffb072;
+  --button-bg-hover: #ffc08d;
+  --button-text: #241711;
+  --success-bg: #173325;
+  --success-text: #9fdcb4;
   --focus: #ffb072;
-  --focus-ring: rgb(255 176 114 / 0.26);
-  --focus-ring-strong: rgb(255 176 114 / 0.42);
   --surface-hover: #3b3a3d;
   --suggestion-hover: #413126;
   --suggestion-border: #403c3c;
   --shadow: rgb(0 0 0 / 0.36);
   --menu-shadow: rgb(0 0 0 / 0.6);
   --secondary-border: #766c66;
-  --danger-text: #ffaea5;
-  --error-border: #ff6e62;
+  --danger-text: #ffb4ab;
+  --error-border: #ff6b6b;
   --error-bg: #3b1d1b;
-  --warning-border: #ffb072;
-  --warning-bg: #3d2a1d;
-  --warning-text: #ffd0a4;
+  --warning-border: #e5b53a;
+  --warning-bg: #3a3014;
+  --warning-text: #f5d58a;
 }
 
 * {
@@ -122,16 +131,26 @@ button:disabled {
 }
 
 .app-brand {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 16px;
+}
+
+.brand-text {
   min-width: 0;
 }
 
-.eyebrow {
-  margin: 0 0 4px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0;
-  color: var(--accent-text);
-  text-transform: uppercase;
+/* GeorgiaPlayEvents logo, linking home. */
+.brand-logo {
+  flex: 0 0 auto;
+  display: block;
+  line-height: 0;
+}
+
+.brand-logo img {
+  width: auto;
+  height: 88px;
 }
 
 h1,
@@ -147,6 +166,28 @@ p {
   font-size: clamp(2rem, 4vw, 3rem);
   line-height: 1;
   overflow-wrap: anywhere;
+}
+
+/* Short-lived "cleared" notice with Undo. Top of the screen, clear of the
+   phone tray at the bottom. */
+.undo-toast {
+  position: fixed;
+  z-index: 1300;
+  top: calc(12px + env(safe-area-inset-top));
+  left: 50%;
+  display: flex;
+  max-width: calc(100vw - 24px);
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  background: var(--panel-bg);
+  box-shadow: 0 14px 32px var(--menu-shadow);
+  padding: 8px 8px 8px 16px;
+  color: var(--text);
+  font-weight: 600;
+  transform: translateX(-50%);
+  white-space: nowrap;
 }
 
 .header-subtitle {
@@ -195,11 +236,11 @@ h3 {
   justify-content: center;
   gap: 8px;
   border: 1px solid var(--secondary-border);
-  border-radius: 6px;
+  border-radius: var(--radius);
   background: var(--panel-bg);
   color: var(--text);
   padding: 8px 12px;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .theme-toggle:hover {
@@ -235,7 +276,7 @@ h3 {
 .pokemon-slot,
 .actions-panel {
   border: 1px solid var(--panel-border);
-  border-radius: 8px;
+  border-radius: var(--radius);
   background: var(--panel-bg);
   box-shadow: 0 1px 2px var(--shadow);
 }
@@ -249,6 +290,10 @@ h3 {
   display: grid;
   gap: 12px;
   padding: 16px;
+}
+
+.actions-row > button {
+  white-space: nowrap;
 }
 
 .actions-row {
@@ -288,25 +333,6 @@ h3 {
   gap: 8px;
 }
 
-.import-paste-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: var(--control-height);
-  border: 1px solid var(--secondary-border);
-  border-radius: 999px;
-  background: var(--accent-soft);
-  color: var(--accent-text);
-  padding: 8px 12px;
-  font-size: 0.82rem;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.import-paste-button:hover {
-  background: var(--suggestion-hover);
-}
-
 .collapse-button {
   display: inline-flex;
   min-height: var(--control-height);
@@ -343,15 +369,17 @@ h3 {
   gap: 12px;
 }
 
+/* Field rows are 8px apart everywhere, including where the two Player Info
+   columns stack into one; side by side, the columns stay 16px apart. */
 .player-info-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+  gap: 8px 16px;
 }
 
 .player-info-column {
   display: grid;
-  gap: 12px;
+  gap: 8px;
 }
 
 .division-field {
@@ -361,7 +389,7 @@ h3 {
   height: var(--control-height);
   margin: 0;
   border: 1px solid var(--field-border);
-  border-radius: 6px;
+  border-radius: var(--radius);
   background: var(--field-bg);
   padding: 0 8px 0 calc(var(--in-field-label-width) + 12px);
   container-type: inline-size;
@@ -423,23 +451,20 @@ h3 {
   gap: 4px;
   min-height: var(--control-height);
   border: 1px solid var(--field-border);
-  border-radius: 6px;
+  border-radius: var(--radius);
   background: var(--field-bg);
   padding-right: 8px;
 }
 
 .date-field-control:focus-within {
   border-color: var(--focus);
-  outline: 3px solid var(--focus-ring);
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
 }
 
-.date-field-control.is-invalid {
-  border-color: var(--error-border);
-  background: var(--error-bg);
-}
-
+/* Sized in em for the widest placeholder letters ("MM"), not ch (a "0"). */
 .date-field-control .dob-part {
-  width: 26px;
+  width: 1.9em;
   min-width: 0;
   min-height: 0;
   flex-shrink: 0;
@@ -456,7 +481,7 @@ h3 {
 }
 
 .date-field-control .dob-part.dob-year {
-  width: 42px;
+  width: 3.1em;
 }
 
 .date-sep {
@@ -466,8 +491,8 @@ h3 {
 
 .slot-top-grid {
   display: grid;
-  gap: 12px;
-  margin-bottom: 12px;
+  gap: 8px;
+  margin-bottom: 8px;
 }
 
 .slot-pdf-grid {
@@ -528,7 +553,7 @@ h3 {
   width: 100%;
   min-width: 0;
   border: 1px solid var(--field-border);
-  border-radius: 6px;
+  border-radius: var(--radius);
   background: var(--field-bg);
   color: var(--field-text);
   padding: 8px 8px;
@@ -544,24 +569,26 @@ h3 {
 .field select:focus,
 .field textarea:focus {
   border-color: var(--focus);
-  outline: 3px solid var(--focus-ring);
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
 }
 
+/* States never rest on hue alone: errors get a 2px solid edge (border plus an
+   inset ring, so nothing shifts) and warnings a dashed one. */
 .field.is-invalid input,
 input.is-invalid,
-select.is-invalid {
+select.is-invalid,
+.division-field.is-invalid,
+.date-field-control.is-invalid {
   border-color: var(--error-border);
   background: var(--error-bg);
-}
-
-.division-field.is-invalid {
-  border-color: var(--error-border);
-  background: var(--error-bg);
+  box-shadow: inset 0 0 0 1px var(--error-border);
 }
 
 .field.is-warning input,
 input.is-warning,
 select.is-warning {
+  border-style: dashed;
   border-color: var(--warning-border);
   background: var(--warning-bg);
 }
@@ -646,7 +673,7 @@ select.is-warning {
   min-width: 0;
   min-height: var(--control-height);
   border: 1px solid var(--field-border);
-  border-radius: 6px;
+  border-radius: var(--radius);
   background: var(--field-bg);
   color: var(--field-text);
   padding: 8px 8px;
@@ -658,20 +685,27 @@ select.is-warning {
 .stat-field input.is-invalid {
   border-color: var(--error-border);
   background: var(--error-bg);
+  box-shadow: inset 0 0 0 1px var(--error-border);
 }
 
 .stat-field input.is-warning {
+  border-style: dashed;
   border-color: var(--warning-border);
   background: var(--warning-bg);
 }
 
 .stat-field input:focus {
   border-color: var(--focus);
-  outline: 3px solid var(--focus-ring);
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
 }
 
 .autocomplete-field {
   z-index: 0;
+}
+
+.autocomplete-field input {
+  text-overflow: ellipsis;
 }
 
 .autocomplete-field.is-open {
@@ -695,7 +729,7 @@ select.is-warning {
   overflow: auto;
   max-height: 240px;
   border: 1px solid var(--field-border);
-  border-radius: 8px;
+  border-radius: var(--radius);
   background: var(--panel-bg);
   box-shadow: 0 14px 32px var(--menu-shadow);
 }
@@ -736,10 +770,11 @@ select.is-warning {
   min-height: 28px;
   align-items: center;
   gap: 8px;
-  border-radius: 999px;
+  border-radius: var(--radius);
   padding: 4px 8px;
   font-size: 0.76rem;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .tag {
@@ -748,13 +783,13 @@ select.is-warning {
 }
 
 .status-pill.valid {
-  background: var(--accent-soft);
-  color: var(--valid-text);
+  background: var(--success-bg);
+  color: var(--success-text);
 }
 
 .status-pill.invalid {
-  background: var(--warning-bg);
-  color: var(--warning-text);
+  background: var(--error-bg);
+  color: var(--danger-text);
 }
 
 .status-pill.warning {
@@ -775,20 +810,21 @@ select.is-warning {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  border-radius: 6px;
+  border-radius: var(--radius);
   font-weight: 700;
   text-decoration: none;
 }
 
 .primary-action {
-  border: 1px solid var(--accent);
-  background: var(--accent);
-  color: var(--accent-contrast);
+  border: 1px solid var(--button-bg);
+  background: var(--button-bg);
+  color: var(--button-text);
   padding: 8px 12px;
 }
 
 .primary-action:hover:not(:disabled) {
-  background: var(--accent-hover);
+  border-color: var(--button-bg-hover);
+  background: var(--button-bg-hover);
 }
 
 .secondary-action {
@@ -850,8 +886,7 @@ button:focus-visible {
    the summary and rows; only real pointers get the hover outline. */
 @media (hover: hover) {
   .validation-summary-button:hover {
-    outline: 2px solid var(--focus-ring-strong);
-    outline-offset: -4px;
+    background: var(--surface-hover);
   }
 }
 
@@ -876,29 +911,27 @@ button:focus-visible {
   margin-top: 12px;
 }
 
-/* Blocked download/share buttons stay tappable but read as not-ready. */
-.actions-panel .is-muted {
-  opacity: 0.5;
-}
-
-/* Escape hatch shown after a blocked attempt: downloads despite errors. */
+/* Escape hatch while errors remain: downloads despite them. A quiet text
+   action, so Download stays the dominant control. */
 .override-action {
   display: inline-flex;
   min-height: var(--control-height);
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  border: 1px dashed var(--error-border);
-  border-radius: 6px;
-  background: var(--error-bg);
+  justify-self: center;
+  gap: 6px;
+  border: 0;
+  background: transparent;
   color: var(--danger-text);
   padding: 8px 12px;
   font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
   cursor: pointer;
 }
 
 .override-action:hover:not(:disabled) {
-  border-style: solid;
+  text-decoration-thickness: 2px;
 }
 
 .issue {
@@ -906,7 +939,7 @@ button:focus-visible {
   gap: 4px;
   width: 100%;
   border-left: 4px solid;
-  border-radius: 6px;
+  border-radius: var(--radius);
   border-top: 0;
   border-right: 0;
   border-bottom: 0;
@@ -948,9 +981,9 @@ button:focus-visible {
 }
 
 @media (hover: hover) {
-  .issue-action:hover {
-    outline: 2px solid var(--focus-ring-strong);
-    outline-offset: 2px;
+  .issue-action:hover span {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
   }
 }
 
@@ -964,13 +997,29 @@ button:focus-visible {
   color: var(--danger-text);
 }
 
+/* Player Info goes to one column until both columns have room for the
+   190px label area plus full-size Age Division options. */
+@media (max-width: 1320px) {
+  .player-info-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Tablets and small laptops keep a narrower sticky sidebar, so validation
+   and Download stay in view; the slots stack to make room. */
 @media (max-width: 1080px) {
   .layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr) 320px;
   }
 
-  .side-column {
-    position: static;
+  .team-form {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* The main column is narrower here; the phone-width label area leaves the
+     Age Division options room to stay near full size. */
+  .player-info-panel {
+    --in-field-label-width: 140px;
   }
 }
 
@@ -1000,19 +1049,14 @@ button:focus-visible {
     line-height: 1.05;
   }
 
+  /* One line on phones: the text scales with the screen width (the line is
+     about 35.6em long) up to its usual size, and runs under the theme toggle
+     by cancelling the header's right padding. */
   .header-subtitle {
-    width: 100%;
-    font-size: 0.88rem;
-  }
-
-  .header-subtitle a {
-    display: block;
-    width: fit-content;
-    max-width: 100%;
-  }
-
-  .subtitle-join {
-    display: none;
+    width: auto;
+    margin-right: calc(-1 * (var(--control-height) + 8px));
+    font-size: min(0.88rem, calc((100vw - 24px) / 35.6));
+    white-space: nowrap;
   }
 
   .header-actions {
@@ -1033,6 +1077,52 @@ button:focus-visible {
     display: none;
   }
 
+  .brand-logo img {
+    height: 64px;
+  }
+
+  /* The logo shares a row with the title, centred on its lines; the links
+     sit below. The theme toggle sits in the top-right
+     corner, so the title keeps clear of it. */
+  .app-brand {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas:
+      "logo title"
+      "subtitle subtitle";
+    align-items: center;
+    /* No row gap: the subtitle's margin already spaces the rows. */
+    gap: 0 12px;
+    padding-right: calc(var(--control-height) + 8px);
+  }
+
+  .brand-text {
+    display: contents;
+  }
+
+  .brand-logo {
+    grid-area: logo;
+  }
+
+  .app-brand .app-title {
+    grid-area: title;
+  }
+
+  .app-brand .header-subtitle {
+    grid-area: subtitle;
+  }
+
+  /* Phones: the collapsed import header is two icons, paste and clear. */
+  .import-paste-button {
+    width: var(--control-height);
+    padding: 0;
+  }
+
+  .import-paste-label {
+    display: none;
+  }
+
+  .layout,
   .form-grid,
   .player-info-grid,
   .team-form {
@@ -1134,12 +1224,12 @@ button:focus-visible {
   }
 
   .validation-panel .issue-list {
-    /* Scrollable area fits up to 4 error rows (3 when only 3 remain, 4 when
-       there are 4+), then scrolls — but shrinks first if the tray is short, so
-       only this list scrolls, never the tray. */
+    /* About three rows, then it scrolls, so most of the form stays visible.
+       It shrinks further on short screens: only this list scrolls, never
+       the tray. */
     flex: 1 1 auto;
     min-height: 0;
-    max-height: 264px;
+    max-height: 156px;
     margin: 0 16px 16px;
   }
 
@@ -1170,7 +1260,7 @@ button:focus-visible {
     font-size: 0.88rem;
     line-height: 1.1;
     text-align: center;
-    white-space: normal;
+    white-space: nowrap;
   }
 
   .actions-panel .primary-action svg,
@@ -1227,5 +1317,22 @@ button:focus-visible {
   .stat-field input {
     padding-right: 4px;
     padding-left: 4px;
+  }
+}
+
+/* The narrowest phones: "Email to TO" keeps its icon and accessible name. */
+@media (max-width: 360px) {
+  .actions-panel .collapsible-label {
+    display: none;
+  }
+}
+
+/* Motion only confirms a change of state; skip it when asked to. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
   }
 }

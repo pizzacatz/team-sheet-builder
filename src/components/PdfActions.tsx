@@ -43,10 +43,12 @@ const emailBodyFor = (player: PlayerInfo, teamLink: string) => {
   const lines = [
     `Player Name: ${player.name ?? ""}`,
     `Trainer Name in Game: ${player.trainerName ?? ""}`,
-    `Team Name: ${player.teamName ?? ""}`,
-    `Player ID: ${player.playerId ?? ""}`,
+    `Battle Team Number / Name: ${player.teamName ?? ""}`,
+    `Switch Profile Name: ${player.switchProfileName ?? ""}`,
     `Age Division: ${player.division ?? ""}`,
+    `Player ID: ${player.playerId ?? ""}`,
     `Date of Birth: ${dob}`,
+    `Support ID: ${player.supportId ?? ""}`,
     "",
     "Team sheet (open the link to view and download the official PDF):",
     teamLink
@@ -154,20 +156,17 @@ export function PdfActions({ teamSheet, validation, pristine, onBlockedAttempt }
     }
   };
 
-  // Buttons stay tappable while invalid (a tap reveals the errors); they are only
-  // truly disabled while a PDF is generating. `is-muted` styles the blocked state.
+  // Buttons keep full strength while invalid: a tap reveals the errors, and the
+  // Validation status says why. They are only disabled while a PDF generates.
   const generating = Boolean(generatingType);
-  const mutedClass = validation.isValid ? "" : " is-muted";
-  const blockedAria = validation.isValid ? undefined : true;
 
   return (
     <section className="actions-panel" aria-label="Team sheet actions">
       <div className="actions-row">
         <button
           type="button"
-          className={`primary-action${mutedClass}`}
+          className="primary-action"
           disabled={generating}
-          aria-disabled={blockedAria}
           onClick={() => handleDownload("both")}
         >
           <Download size={18} />
@@ -175,22 +174,21 @@ export function PdfActions({ teamSheet, validation, pristine, onBlockedAttempt }
         </button>
         <button
           type="button"
-          className={`secondary-action${mutedClass}`}
+          className="secondary-action"
           disabled={generating}
-          aria-disabled={blockedAria}
           title="Email your team sheet to your Tournament Organizer"
+          aria-label="Email to TO"
           onClick={handleEmail}
         >
           <Mail size={18} />
-          <span className="action-label">{generatingType === "email" ? "Preparing..." : "Email to TO"}</span>
+          <span className="action-label collapsible-label">{generatingType === "email" ? "Preparing..." : "Email to TO"}</span>
         </button>
         {canShareFiles ? (
           <button
             type="button"
-            className={`secondary-action${mutedClass}`}
+            className="secondary-action"
             disabled={generating}
-            aria-disabled={blockedAria}
-            aria-label="Share team sheets"
+              aria-label="Share team sheets"
             title="Share team sheets"
             onClick={handleShare}
           >
@@ -207,7 +205,7 @@ export function PdfActions({ teamSheet, validation, pristine, onBlockedAttempt }
           title="Download the combined PDF without fixing the validation errors. The sheet may be rejected at check-in."
           onClick={() => handleDownload("both", true)}
         >
-          <AlertTriangle size={18} />
+          <AlertTriangle size={16} aria-hidden="true" />
           <span className="action-label">{generatingType === "force" ? "Generating..." : "Download anyway"}</span>
         </button>
       ) : null}

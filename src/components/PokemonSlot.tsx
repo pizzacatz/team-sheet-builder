@@ -178,8 +178,6 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, fieldFl
     });
   };
 
-  const statDescription = entry.statAlignment.requiresReview ? "Review the imported neutral alignment." : undefined;
-
   return (
     <section className="pokemon-slot in-field-form" data-section={`pokemon-${index}`} aria-labelledby={`pokemon-${index}-heading`}>
       <div className="slot-heading">
@@ -216,7 +214,6 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, fieldFl
             })
           }
           required
-          helperText={statDescription}
           invalid={hasError(`pokemon-${index}-stat-alignment`)}
           warning={hasWarning(`pokemon-${index}-stat-alignment`)}
         />
