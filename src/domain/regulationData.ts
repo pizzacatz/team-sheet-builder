@@ -40,7 +40,11 @@ const displayOverrides: Record<string, string> = {
   basculegion: "Basculegion-M",
   indeedee: "Indeedee-M",
   // Lycanroc's three forms are equally common, so bare "Lycanroc" is ambiguous.
-  lycanroc: "Lycanroc-Midday"
+  lycanroc: "Lycanroc-Midday",
+  // Toxtricity's two forms are both common; bare "Toxtricity" is Amped.
+  toxtricity: "Toxtricity-Amped",
+  // Four plumage colours; bare "Squawkabilly" is Green.
+  squawkabilly: "Squawkabilly-Green"
 
   // Regional / size / other base-form labels — disabled as unnecessary.
   // Re-enable if you want default forms disambiguated from their variants.
