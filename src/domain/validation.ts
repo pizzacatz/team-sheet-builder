@@ -92,8 +92,25 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
     const path = `pokemon.${index}`;
     const slot = `Pokémon ${index + 1}`;
 
+    // Free text that matched nothing is kept (and printed as typed) but flagged.
+    const notRecognized = (fieldPath: string, what: string, text: string | undefined) => {
+      if (!text?.trim()) return false;
+      issue(issues, "error", fieldPath, "NOT_RECOGNIZED", `${slot}'s ${what} "${text.trim()}" is not recognized.`);
+      return true;
+    };
+
     if (!entry.speciesId) {
-      issue(issues, "error", `${path}.speciesId`, "MISSING_SPECIES", `${slot} needs a species.`);
+      if (!notRecognized(`${path}.speciesId`, "Pokémon", entry.displayName)) {
+        issue(issues, "error", `${path}.speciesId`, "MISSING_SPECIES", `${slot} needs a species.`);
+      }
+      // Without a species nothing else can be checked, but other unmatched
+      // entries are still worth flagging.
+      notRecognized(`${path}.abilityId`, "ability", entry.abilityText);
+      notRecognized(`${path}.itemId`, "item", entry.itemText);
+      entry.moveTexts?.forEach((text, moveIndex) => {
+        if (!entry.moves[moveIndex]) notRecognized(`${path}.moves.${moveIndex}`, `move ${moveIndex + 1}`, text);
+      });
+      notRecognized(`${path}.statAlignment`, "Stat Alignment", entry.statAlignment.text);
       return;
     }
 
@@ -118,7 +135,7 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
     }
 
     if (!entry.abilityId) {
-      issue(issues, "error", `${path}.abilityId`, "MISSING_ABILITY", `${slot} needs an ability.`);
+      if (!notRecognized(`${path}.abilityId`, "ability", entry.abilityText)) issue(issues, "error", `${path}.abilityId`, "MISSING_ABILITY", `${slot} needs an ability.`);
     } else if (!getAbilityRecord(entry.abilityId)) {
       issue(issues, "error", `${path}.abilityId`, "ILLEGAL_ABILITY", `${slot}'s ability is not legal in ${rules.regulation}.`);
     } else if (!isAbilityAvailable(entry)) {
@@ -132,7 +149,7 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
     }
 
     if (!entry.itemId) {
-      issue(issues, "error", `${path}.itemId`, "MISSING_ITEM", `${slot} needs a held item.`);
+      if (!notRecognized(`${path}.itemId`, "item", entry.itemText)) issue(issues, "error", `${path}.itemId`, "MISSING_ITEM", `${slot} needs a held item.`);
     } else {
       const item = getItemRecord(entry.itemId);
       if (!item) {
@@ -168,6 +185,7 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
     entry.moves.forEach((moveId, moveIndex) => {
       const movePath = `${path}.moves.${moveIndex}`;
       if (!moveId) {
+        if (notRecognized(movePath, `move ${moveIndex + 1}`, entry.moveTexts?.[moveIndex])) return;
         if (moveIndex === 0) {
           issue(issues, "error", movePath, "MISSING_MOVE", `${slot} needs move 1.`);
         }
@@ -310,7 +328,7 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
     }
 
     if (!entry.statAlignment.value) {
-      issue(
+      if (!notRecognized(`${path}.statAlignment`, "Stat Alignment", entry.statAlignment.text)) issue(
         issues,
         "error",
         `${path}.statAlignment`,

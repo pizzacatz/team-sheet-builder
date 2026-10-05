@@ -37,8 +37,12 @@ export const entryHasAnyData = (entry: PokemonEntry): boolean =>
     entry.speciesId ||
       entry.displayName.trim() ||
       entry.abilityId ||
+      entry.abilityText?.trim() ||
       entry.itemId ||
+      entry.itemText?.trim() ||
       entry.statAlignment.value ||
+      entry.statAlignment.text?.trim() ||
       entry.moves.some(Boolean) ||
+      entry.moveTexts?.some((text) => text.trim()) ||
       Object.values(normalizePokemonStats(entry.stats)).some(Boolean)
   );

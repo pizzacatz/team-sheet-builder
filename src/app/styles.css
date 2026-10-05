@@ -754,7 +754,8 @@ select.is-warning {
 }
 
 .suggestion:hover,
-.suggestion:focus {
+.suggestion:focus,
+.suggestion[aria-selected="true"] {
   background: var(--suggestion-hover);
 }
 
@@ -1239,14 +1240,15 @@ button:focus-visible {
     display: none;
   }
 
+  /* Buttons sit 8px apart, the same as the form's fields on phones. */
   .actions-panel {
     grid-template-columns: minmax(0, 1fr);
-    gap: 16px;
+    gap: 8px;
     padding: 16px;
   }
 
   .actions-row {
-    gap: 16px;
+    gap: 8px;
   }
 
   .actions-panel .primary-action,

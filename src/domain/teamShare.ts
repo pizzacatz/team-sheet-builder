@@ -54,18 +54,22 @@ const fromBase64Url = (value: string): Uint8Array => {
 };
 
 const entryFromDecoded = (decoded: DecodedPokemon | undefined): PokemonEntry => {
-  if (!decoded || !decoded.speciesId) return emptyPokemonEntry();
+  if (!decoded || (!decoded.speciesId && !decoded.speciesText)) return emptyPokemonEntry();
   const species = speciesById.get(decoded.speciesId);
   return {
     speciesId: decoded.speciesId || null,
     formId: decoded.formId || null,
-    displayName: species?.displayName ?? "",
+    displayName: species?.displayName ?? decoded.speciesText,
     abilityId: decoded.abilityId || null,
+    abilityText: decoded.abilityText,
     itemId: decoded.itemId || null,
+    itemText: decoded.itemText,
     moves: [decoded.moves[0] || null, decoded.moves[1] || null, decoded.moves[2] || null, decoded.moves[3] || null],
+    moveTexts: decoded.moveTexts,
     stats: decoded.stats,
     statAlignment: {
       value: decoded.statAlignmentId || null,
+      text: decoded.statAlignmentText,
       source: "manual",
       confidence: decoded.statAlignmentId ? "high" : "none",
       requiresReview: false

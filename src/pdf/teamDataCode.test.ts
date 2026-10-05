@@ -29,9 +29,40 @@ describe("teamDataCode", () => {
         itemId: entry.itemId,
         moves: entry.moves,
         statAlignmentId: entry.statAlignment.value,
-        stats
+        stats,
+        speciesText: "",
+        abilityText: "",
+        itemText: "",
+        moveTexts: ["", "", "", ""],
+        statAlignmentText: ""
       });
     });
+  });
+
+  it("round-trips unrecognised entries as free text, separators and spaces included", () => {
+    const teamSheet = makeValidTeamSheet();
+    const entry = teamSheet.pokemon[0];
+    teamSheet.pokemon[0] = {
+      ...entry,
+      speciesId: null,
+      displayName: "Lycanroc-Dusk, maybe|~50%",
+      itemId: null,
+      itemText: "Choice Spoon",
+      moves: [entry.moves[0], null, entry.moves[2], entry.moves[3]],
+      moveTexts: ["", "Thunderbolt Punch", "", ""],
+      statAlignment: { ...entry.statAlignment, value: null, text: "Grumpy" }
+    };
+    const extracted = encodeTeamDataLines(teamSheet).join("\n");
+    const [decoded] = decodeTeamDataFromText(extracted);
+
+    expect(decoded.speciesId).toBe("");
+    expect(decoded.speciesText).toBe("Lycanroc-Dusk, maybe|~50%");
+    expect(decoded.itemText).toBe("Choice Spoon");
+    expect(decoded.moves[1]).toBe("");
+    expect(decoded.moveTexts[1]).toBe("Thunderbolt Punch");
+    expect(decoded.moves[0]).toBe(entry.moves[0]);
+    expect(decoded.statAlignmentText).toBe("Grumpy");
+    expect(decoded.abilityId).toBe(entry.abilityId);
   });
 
   it("omits Player Info from the payload", () => {

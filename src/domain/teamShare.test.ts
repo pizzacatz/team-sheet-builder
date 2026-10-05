@@ -21,6 +21,18 @@ describe("teamShare", () => {
     });
   });
 
+  it("brings back unrecognised entries exactly as typed", async () => {
+    const team = makeValidTeamSheet();
+    team.pokemon[1] = { ...team.pokemon[1], speciesId: null, displayName: "Koraidon", abilityId: null, abilityText: "Orichalcum Pulse" };
+    const decoded = await decodeTeamShare(await encodeTeamShare(team, false));
+    const restored = decoded!.pokemon[1];
+    expect(restored.speciesId).toBeNull();
+    expect(restored.displayName).toBe("Koraidon");
+    expect(restored.abilityId).toBeNull();
+    expect(restored.abilityText).toBe("Orichalcum Pulse");
+    expect(restored.itemId).toBe(team.pokemon[1].itemId);
+  });
+
   it("includes player info only when opted in", async () => {
     const team = makeValidTeamSheet();
     const decoded = await decodeTeamShare(await encodeTeamShare(team, true));

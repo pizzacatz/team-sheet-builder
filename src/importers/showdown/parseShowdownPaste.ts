@@ -126,7 +126,7 @@ const parseBlock = (block: string, pokemonIndex: number, issues: ImportIssue[]):
     }
   } else {
     entry.displayName = speciesText;
-    addIssue(issues, "warning", "UNKNOWN_SPECIES", `Couldn't match the species "${speciesText}". Pick it in the form.`, pokemonIndex, "species");
+    addIssue(issues, "warning", "UNKNOWN_SPECIES", `The Pokémon "${speciesText}" is not recognized. Kept as written.`, pokemonIndex, "species");
   }
 
   if (itemText) {
@@ -134,7 +134,8 @@ const parseBlock = (block: string, pokemonIndex: number, issues: ImportIssue[]):
     if (itemResolution) {
       entry.itemId = itemResolution.record.id;
     } else {
-      addIssue(issues, "warning", "UNKNOWN_ITEM", `Couldn't match the item "${itemText}". Pick it in the form.`, pokemonIndex, "item");
+      entry.itemText = itemText;
+      addIssue(issues, "warning", "UNKNOWN_ITEM", `The item "${itemText}" is not recognized. Kept as written.`, pokemonIndex, "item");
     }
   }
 
@@ -153,11 +154,12 @@ const parseBlock = (block: string, pokemonIndex: number, issues: ImportIssue[]):
       if (abilityResolution) {
         entry.abilityId = abilityResolution.record.id;
       } else {
+        entry.abilityText = abilityText;
         addIssue(
           issues,
           "warning",
           "UNKNOWN_ABILITY",
-          `Couldn't match the ability "${abilityText}". Pick it in the form.`,
+          `The ability "${abilityText}" is not recognized. Kept as written.`,
           pokemonIndex,
           "ability"
         );
@@ -196,11 +198,12 @@ const parseBlock = (block: string, pokemonIndex: number, issues: ImportIssue[]):
           );
         }
       } else {
+        entry.statAlignment = { ...entry.statAlignment, text: alignmentText };
         addIssue(
           issues,
           "warning",
           "UNKNOWN_STAT_ALIGNMENT",
-          `Couldn't match the Stat Alignment "${alignmentText}". Pick it in the form.`,
+          `The Stat Alignment "${alignmentText}" is not recognized. Kept as written.`,
           pokemonIndex,
           "statAlignment"
         );
@@ -215,7 +218,9 @@ const parseBlock = (block: string, pokemonIndex: number, issues: ImportIssue[]):
       if (moveResolution) {
         entry.moves[moveCursor] = moveResolution.record.id;
       } else {
-        addIssue(issues, "warning", "UNKNOWN_MOVE", `Couldn't match the move "${moveText}". Pick it in the form.`, pokemonIndex, "moves");
+        entry.moveTexts = [...(entry.moveTexts ?? ["", "", "", ""])] as [string, string, string, string];
+        entry.moveTexts[moveCursor] = moveText;
+        addIssue(issues, "warning", "UNKNOWN_MOVE", `The move "${moveText}" is not recognized. Kept as written.`, pokemonIndex, "moves");
       }
       moveCursor += 1;
       continue;

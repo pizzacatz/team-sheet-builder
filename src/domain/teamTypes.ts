@@ -30,6 +30,11 @@ export type PokemonEntry = {
   abilityId: string | null;
   itemId: string | null;
   moves: [string | null, string | null, string | null, string | null];
+  // Free text typed or imported when the name matched nothing (the matching id
+  // is null). The species equivalent is displayName.
+  abilityText?: string;
+  itemText?: string;
+  moveTexts?: [string, string, string, string];
   stats: PokemonStats;
   statAlignment: StatAlignmentField;
   canMegaEvolve?: boolean;
@@ -38,6 +43,8 @@ export type PokemonEntry = {
 
 export type StatAlignmentField = {
   value: string | null;
+  // Free text when the name matched no Stat Alignment (value is null).
+  text?: string;
   source:
     | "parsed_from_showdown_nature"
     | "inferred_from_evs"

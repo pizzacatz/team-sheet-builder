@@ -133,13 +133,13 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, fieldFl
     [selectedSpecies?.id, usedItemIds]
   );
 
-  const handleSpeciesChange = (speciesId: string | null) => {
+  const handleSpeciesChange = (speciesId: string | null, text: string) => {
     const record = speciesById.get(speciesId ?? "");
 
     if (!record) {
       onChange({
         speciesId: null,
-        displayName: "",
+        displayName: text,
         canMegaEvolve: false
       });
       return;
@@ -163,10 +163,12 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, fieldFl
     });
   };
 
-  const updateMove = (moveIndex: number, moveId: string | null) => {
+  const updateMove = (moveIndex: number, moveId: string | null, text: string) => {
     const nextMoves = [...entry.moves] as PokemonEntry["moves"];
     nextMoves[moveIndex] = moveId;
-    onChange({ moves: nextMoves });
+    const nextMoveTexts = [...(entry.moveTexts ?? ["", "", "", ""])] as NonNullable<PokemonEntry["moveTexts"]>;
+    nextMoveTexts[moveIndex] = text;
+    onChange({ moves: nextMoves, moveTexts: nextMoveTexts });
   };
 
   const updateStat = (statKey: StatKey, value: string) => {
@@ -191,6 +193,7 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, fieldFl
           id={`pokemon-${index}-species`}
           label="Pokémon"
           value={entry.speciesId}
+          text={entry.speciesId ? "" : entry.displayName}
           options={allSpeciesOptions}
           filterOptions={filterSpeciesOptions}
           onChange={handleSpeciesChange}
@@ -202,11 +205,13 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, fieldFl
           id={`pokemon-${index}-stat-alignment`}
           label="Stat Alignment"
           value={entry.statAlignment.value}
+          text={entry.statAlignment.text ?? ""}
           options={statAlignmentOptions}
-          onChange={(value) =>
+          onChange={(value, text) =>
             onChange({
               statAlignment: {
                 value,
+                text,
                 source: value ? "manual" : "unknown",
                 confidence: value ? "high" : "none",
                 requiresReview: false
@@ -224,8 +229,9 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, fieldFl
             id={`pokemon-${index}-ability`}
             label="Ability"
             value={entry.abilityId}
+            text={entry.abilityText ?? ""}
             options={abilityOptions}
-            onChange={(abilityId) => onChange({ abilityId })}
+            onChange={(abilityId, abilityText) => onChange({ abilityId, abilityText })}
             openOnEmptyFocus={Boolean(selectedSpecies)}
             required
             invalid={hasError(`pokemon-${index}-ability`)}
@@ -235,9 +241,10 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, fieldFl
             id={`pokemon-${index}-item`}
             label="Held Item"
             value={entry.itemId}
+            text={entry.itemText ?? ""}
             options={allItemOptions}
             filterOptions={filterItemOptions}
-            onChange={(itemId) => onChange({ itemId })}
+            onChange={(itemId, itemText) => onChange({ itemId, itemText })}
             required
             invalid={hasError(`pokemon-${index}-item`)}
             warning={hasWarning(`pokemon-${index}-item`)}
@@ -257,9 +264,10 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, fieldFl
                 id={`pokemon-${index}-move-${moveIndex}`}
                 label={`Move ${moveIndex + 1}`}
                 value={moveId}
+                text={entry.moveTexts?.[moveIndex] ?? ""}
                 options={includeSelected(moveOptions, allMoveOptions, moveId)}
                 filterOptions={filterMoveOptions}
-                onChange={(nextMoveId) => updateMove(moveIndex, nextMoveId)}
+                onChange={(nextMoveId, text) => updateMove(moveIndex, nextMoveId, text)}
                 openOnEmptyFocus={Boolean(selectedSpecies)}
                 required={moveIndex === 0}
                 invalid={hasError(`pokemon-${index}-move-${moveIndex}`)}

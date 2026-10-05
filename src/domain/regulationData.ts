@@ -38,7 +38,9 @@ const displayOverrides: Record<string, string> = {
   // the -F record (see parseShowdownPaste), so the base carries the -M label.
   meowstic: "Meowstic-M",
   basculegion: "Basculegion-M",
-  indeedee: "Indeedee-M"
+  indeedee: "Indeedee-M",
+  // Lycanroc's three forms are equally common, so bare "Lycanroc" is ambiguous.
+  lycanroc: "Lycanroc-Midday"
 
   // Regional / size / other base-form labels — disabled as unnecessary.
   // Re-enable if you want default forms disambiguated from their variants.
@@ -56,7 +58,6 @@ const displayOverrides: Record<string, string> = {
   // avalugg: "Avalugg-Kalos",
   // decidueye: "Decidueye-Alola",
   // gourgeist: "Gourgeist-Average",
-  // lycanroc: "Lycanroc-Midday",
   // rotom: "Rotom"
 };
 

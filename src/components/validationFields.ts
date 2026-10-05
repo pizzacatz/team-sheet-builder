@@ -118,6 +118,10 @@ export const sectionForFieldId = (fieldId: string): string | null => {
 // Free-typed fields. Their wrong-value errors wait for blur, so a half-typed
 // "1" on the way to "150" is never flagged. Dropdown and radio picks are
 // complete the moment they're made, so those check straight away.
+// Unmatched names in the autocomplete fields count as free typing too: "Thund"
+// on the way to "Thunderbolt" isn't flagged until the person leaves the field.
+const isFreeTyped = (fieldId: string, code: string): boolean => TEXT_FIELD_ID.test(fieldId) || code === "NOT_RECOGNIZED";
+
 const TEXT_FIELD_ID = /^(player-name|trainer-name|team-name|switch-profile|player-id|date-of-birth|support-id|pokemon-\d+-(hp|atk|def|spa|spd|spe))$/;
 
 const FIELD_ID =
@@ -179,10 +183,10 @@ export const isIssueVisible = (
   if (!sectionHasData(section)) return false;
 
   const primary = fieldIdForPath(issue.path);
-  if (primary && primary === reveal.focusedField && TEXT_FIELD_ID.test(primary)) return false;
+  if (primary && primary === reveal.focusedField && isFreeTyped(primary, issue.code)) return false;
   if (reveal.finishedSections.has(section)) return true;
   if (fieldIdsFor(issue).some((id) => reveal.touchedFields.has(id))) return true;
-  return !MISSING_ERROR_CODES.has(issue.code) && Boolean(primary) && !TEXT_FIELD_ID.test(primary!);
+  return !MISSING_ERROR_CODES.has(issue.code) && Boolean(primary) && !isFreeTyped(primary!, issue.code);
 };
 
 // Position of a field in the form, so panel rows follow the order the user

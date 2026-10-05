@@ -13,6 +13,21 @@ describe("validateTeamSheet", () => {
     expect(result.issues.filter((issue) => issue.severity === "error")).toHaveLength(0);
   });
 
+  it("flags unrecognised free text as Not recognized instead of missing", () => {
+    const team = makeValidTeamSheet();
+    team.pokemon[0].itemId = null;
+    team.pokemon[0].itemText = "Choice Spoon";
+    team.pokemon[0].moves[1] = null;
+    team.pokemon[0].moveTexts = ["", "Thunderbollt", "", ""];
+    team.pokemon[1].speciesId = null;
+    team.pokemon[1].displayName = "Koraidon";
+    const issues = validateTeamSheet(team).issues;
+    const notRecognized = issues.filter((issue) => issue.code === "NOT_RECOGNIZED").map((issue) => issue.path);
+    expect(notRecognized).toEqual(["pokemon.0.itemId", "pokemon.0.moves.1", "pokemon.1.speciesId"]);
+    expect(issues.map((issue) => issue.code)).not.toContain("MISSING_ITEM");
+    expect(issues.map((issue) => issue.code)).not.toContain("MISSING_SPECIES");
+  });
+
   it("requires player name and required slot fields", () => {
     const team = makeValidTeamSheet();
     team.player.name = "";

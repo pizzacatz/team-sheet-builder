@@ -19,7 +19,8 @@ import type { StatKey, TeamSheet } from "../domain/teamTypes";
 //
 // Empty fields are empty tokens. All values are stable internal IDs, except the
 // six stat cells which are the final displayed stat values (as drawn on the
-// sheet).
+// sheet), and unrecognised names, which travel as free text: `~` followed by the
+// percent-encoded text (so it never contains `,` `|` `~` or whitespace).
 
 export const TEAM_DATA_SENTINEL = "TSBv1";
 // Index carrier (used by the crammed corner QR): a fixed-width, separator-free
@@ -50,9 +51,43 @@ export type DecodedPokemon = {
   moves: [string, string, string, string];
   statAlignmentId: string;
   stats: Record<StatKey, string>;
+  // Free text for fields whose id is empty ("" when there is none).
+  speciesText: string;
+  abilityText: string;
+  itemText: string;
+  moveTexts: [string, string, string, string];
+  statAlignmentText: string;
 };
 
+const FREE_TEXT_MARK = "~";
+
+const emptyTexts = () => ({
+  speciesText: "",
+  abilityText: "",
+  itemText: "",
+  moveTexts: ["", "", "", ""] as [string, string, string, string],
+  statAlignmentText: ""
+});
+
 const cell = (value: string | null | undefined): string => (value ?? "").trim();
+
+// An id when there is one, otherwise the escaped free text.
+const idOrText = (id: string | null | undefined, text: string | undefined): string => {
+  const idCell = cell(id);
+  if (idCell) return idCell;
+  const freeText = (text ?? "").trim();
+  return freeText ? FREE_TEXT_MARK + encodeURIComponent(freeText).replace(/~/g, "%7E") : "";
+};
+
+// Split a decoded token into its id or its free text.
+const readToken = (token: string): { id: string; text: string } => {
+  if (!token.startsWith(FREE_TEXT_MARK)) return { id: token, text: "" };
+  try {
+    return { id: "", text: decodeURIComponent(token.slice(FREE_TEXT_MARK.length)) };
+  } catch {
+    return { id: "", text: token.slice(FREE_TEXT_MARK.length) };
+  }
+};
 
 const encodeMon = (fields: string[]): string => fields.join(FIELD_SEP);
 
@@ -62,15 +97,12 @@ export const encodeTeamDataPayload = (teamSheet: TeamSheet): string =>
     .map((entry) => {
       const stats = normalizePokemonStats(entry.stats);
       return encodeMon([
-        cell(entry.speciesId),
+        idOrText(entry.speciesId, entry.displayName),
         cell(entry.formId),
-        cell(entry.abilityId),
-        cell(entry.itemId),
-        cell(entry.moves[0]),
-        cell(entry.moves[1]),
-        cell(entry.moves[2]),
-        cell(entry.moves[3]),
-        cell(entry.statAlignment.value),
+        idOrText(entry.abilityId, entry.abilityText),
+        idOrText(entry.itemId, entry.itemText),
+        ...entry.moves.map((moveId, index) => idOrText(moveId, entry.moveTexts?.[index])),
+        idOrText(entry.statAlignment.value, entry.statAlignment.text),
         ...STAT_KEY_ORDER.map((key) => cell(stats[key]))
       ]);
     })
@@ -139,7 +171,7 @@ const decodeIndexRecord = (record: string): DecodedPokemon => {
     acc[key] = value ? String(value) : "";
     return acc;
   }, {} as Record<StatKey, string>);
-  return { speciesId, formId, abilityId, itemId, moves, statAlignmentId, stats };
+  return { speciesId, formId, abilityId, itemId, moves, statAlignmentId, stats, ...emptyTexts() };
 };
 
 /** Decode a raw `<mon>|<mon>|...` slug payload (as produced by encodeTeamDataPayload). */
@@ -157,13 +189,23 @@ const decodeIndexPayload = (payload: string): DecodedPokemon[] => {
 const decodeMon = (raw: string): DecodedPokemon => {
   const fields = raw.split(FIELD_SEP);
   const at = (index: number): string => fields[index] ?? "";
+  const species = readToken(at(0));
+  const ability = readToken(at(2));
+  const item = readToken(at(3));
+  const moves = [readToken(at(4)), readToken(at(5)), readToken(at(6)), readToken(at(7))];
+  const statAlignment = readToken(at(8));
   return {
-    speciesId: at(0),
+    speciesId: species.id,
     formId: at(1),
-    abilityId: at(2),
-    itemId: at(3),
-    moves: [at(4), at(5), at(6), at(7)],
-    statAlignmentId: at(8),
+    abilityId: ability.id,
+    itemId: item.id,
+    moves: [moves[0].id, moves[1].id, moves[2].id, moves[3].id],
+    statAlignmentId: statAlignment.id,
+    speciesText: species.text,
+    abilityText: ability.text,
+    itemText: item.text,
+    moveTexts: [moves[0].text, moves[1].text, moves[2].text, moves[3].text],
+    statAlignmentText: statAlignment.text,
     stats: STAT_KEY_ORDER.reduce((acc, key, index) => {
       acc[key] = at(9 + index);
       return acc;

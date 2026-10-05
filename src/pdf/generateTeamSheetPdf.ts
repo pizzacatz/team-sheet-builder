@@ -27,6 +27,15 @@ const loadTemplate = async (): Promise<PDFDocument> => {
 const cleanText = (value: string | null | undefined): string =>
   (value ?? "").replace(/\s+/g, " ").replace(/[^\S\r\n]+/g, " ").trim();
 
+// Helvetica only covers WinAnsi; drop anything else instead of failing the whole PDF.
+const encodableText = (font: PDFFont, text: string): string => {
+  const supported = new Set(font.getCharacterSet());
+  return Array.from(text)
+    .filter((char) => supported.has(char.codePointAt(0)!))
+    .join("")
+    .trim();
+};
+
 const dateParts = (value: string | null | undefined): [string, string, string] => {
   const digits = cleanText(value).replace(/\D/g, "");
   if (digits.length === 6) return [digits.slice(0, 2), digits.slice(2, 4), digits.slice(4, 6)];
@@ -43,7 +52,7 @@ const drawFittedText = (
   maxWidth: number,
   size = 10
 ) => {
-  const safeText = cleanText(text);
+  const safeText = encodableText(font, cleanText(text));
   if (!safeText) return;
 
   let fontSize = size + PDF_FONT_SIZE_BUMP;
@@ -70,7 +79,7 @@ const drawCenteredFittedText = (
   maxWidth: number,
   size = 10
 ) => {
-  const safeText = cleanText(text);
+  const safeText = encodableText(font, cleanText(text));
   if (!safeText) return;
 
   let fontSize = size + PDF_FONT_SIZE_BUMP;
@@ -94,11 +103,14 @@ const displaySpecies = (entry: PokemonEntry): string => {
   return species?.pdfName ?? entry.displayName;
 };
 
-const displayAbility = (entry: PokemonEntry): string => abilitiesById.get(entry.abilityId ?? "")?.displayName ?? "";
-const displayItem = (entry: PokemonEntry): string => itemsById.get(entry.itemId ?? "")?.displayName ?? "";
-const displayMove = (moveId: string | null): string => movesById.get(moveId ?? "")?.displayName ?? "";
+// Unrecognised entries print as typed (the free text) so the sheet can still be generated.
+const displayAbility = (entry: PokemonEntry): string =>
+  abilitiesById.get(entry.abilityId ?? "")?.displayName ?? entry.abilityText ?? "";
+const displayItem = (entry: PokemonEntry): string => itemsById.get(entry.itemId ?? "")?.displayName ?? entry.itemText ?? "";
+const displayMove = (entry: PokemonEntry, index: number): string =>
+  movesById.get(entry.moves[index] ?? "")?.displayName ?? entry.moveTexts?.[index] ?? "";
 const displayStatAlignment = (entry: PokemonEntry): string =>
-  statAlignmentsById.get(entry.statAlignment.value ?? "")?.displayName ?? "";
+  statAlignmentsById.get(entry.statAlignment.value ?? "")?.displayName ?? entry.statAlignment.text ?? "";
 
 const drawFooterWatermark = (page: PDFPage, font: PDFFont) => {
   const fontSize = 18;
@@ -227,8 +239,8 @@ const drawSlot = (page: PDFPage, font: PDFFont, entry: PokemonEntry, coordinates
   );
   drawFittedText(page, font, displayAbility(entry), coordinates.valueX, coordinates.y.ability, coordinates.maxMainWidth, 11);
   drawFittedText(page, font, displayItem(entry), coordinates.valueX, coordinates.y.item, coordinates.maxMainWidth, 11);
-  entry.moves.forEach((moveId, index) => {
-    drawFittedText(page, font, displayMove(moveId), coordinates.valueX, coordinates.y.moves[index], coordinates.maxMainWidth, 11);
+  entry.moves.forEach((_moveId, index) => {
+    drawFittedText(page, font, displayMove(entry, index), coordinates.valueX, coordinates.y.moves[index], coordinates.maxMainWidth, 11);
   });
   if (coordinates.statX !== undefined) {
     const statX = coordinates.statX;
