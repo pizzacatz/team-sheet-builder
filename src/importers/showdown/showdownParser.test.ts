@@ -86,6 +86,43 @@ Bold Nature
 - Reflect
 `);
     expect(meowstic.teamSheet.pokemon?.[0]?.speciesId).toBe("meowsticf");
+
+    const indeedee = parseShowdownPaste(`
+Indeedee (F) @ Psychic Seed
+Ability: Psychic Surge
+Sassy Nature
+- Follow Me
+`);
+    expect(indeedee.teamSheet.pokemon?.[0]?.speciesId).toBe("indeedeef");
+
+    const plain = parseShowdownPaste(`
+Indeedee @ Psychic Seed
+Ability: Psychic Surge
+Sassy Nature
+- Follow Me
+`);
+    expect(plain.teamSheet.pokemon?.[0]?.speciesId).toBe("indeedee");
+    expect(plain.teamSheet.pokemon?.[0]?.displayName).toBe("Indeedee-M");
+  });
+
+  it("routes a Gender: F line to the -F species record", () => {
+    const result = parseShowdownPaste(`
+Basculegion @ Choice Band
+Ability: Adaptability
+Gender: F
+Adamant Nature
+- Wave Crash
+`);
+    expect(result.teamSheet.pokemon?.[0]?.speciesId).toBe("basculegionf");
+    expect(result.issues.some((issue) => issue.message.includes("Gender"))).toBe(false);
+
+    const other = parseShowdownPaste(`
+Garchomp @ Life Orb
+Ability: Rough Skin
+Gender: F
+- Earthquake
+`);
+    expect(other.issues.some((issue) => issue.message.includes("Gender"))).toBe(true);
   });
 
   it("silently ignores Level lines", () => {

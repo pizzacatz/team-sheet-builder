@@ -37,7 +37,8 @@ const displayOverrides: Record<string, string> = {
   // Gender base forms (paired with an -F variant). A female import is routed to
   // the -F record (see parseShowdownPaste), so the base carries the -M label.
   meowstic: "Meowstic-M",
-  basculegion: "Basculegion-M"
+  basculegion: "Basculegion-M",
+  indeedee: "Indeedee-M"
 
   // Regional / size / other base-form labels — disabled as unnecessary.
   // Re-enable if you want default forms disambiguated from their variants.

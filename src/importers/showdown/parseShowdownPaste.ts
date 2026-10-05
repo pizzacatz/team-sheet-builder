@@ -7,12 +7,14 @@ import type { ImportIssue, ImportResult } from "./showdownTypes";
 import { speciesById } from "../../domain/regulationData";
 
 // Gender-difference species: the female form is a distinct species record.
-// A header gender marker like "Basculegion (F)" is stripped during
-// normalization, so map the base id to its female record when the marker is F.
+// A header gender marker like "Basculegion (F)" (or a "Gender: F" line) is
+// stripped during normalization, so map the base id to its female record when
+// either says F.
 // Male or absent keeps the base record (which the display override labels -M).
 const GENDER_FEMALE_FORM: Record<string, string> = {
   basculegion: "basculegionf",
-  meowstic: "meowsticf"
+  meowstic: "meowsticf",
+  indeedee: "indeedeef"
 };
 
 const IGNORED_FIELD_PREFIXES = [
@@ -83,9 +85,11 @@ const parseBlock = (block: string, pokemonIndex: number, issues: ImportIssue[]):
 
   if (!lines.length) return entry;
 
-  const { speciesText, itemText, gender } = extractSpeciesTextFromHeader(lines[0]);
+  const { speciesText, itemText, gender: headerGender } = extractSpeciesTextFromHeader(lines[0]);
+  const genderLine = lines.slice(1).find((line) => /^gender:/i.test(line));
+  const gender = headerGender ?? (genderLine ? genderLine.slice(7).trim().toUpperCase() : null);
   const speciesResolution = resolveSpecies(speciesText);
-  // For gender-difference species, a female marker selects the -F record.
+  // For gender-difference species, a female marker or Gender line selects the -F record.
   const femaleId =
     gender === "F" && speciesResolution ? GENDER_FEMALE_FORM[speciesResolution.record.id] : undefined;
   const selectedSpecies = (femaleId && speciesById.get(femaleId)) || speciesResolution?.record;
@@ -218,6 +222,11 @@ const parseBlock = (block: string, pokemonIndex: number, issues: ImportIssue[]):
     }
 
     if (isSilentlyIgnoredField(lower)) {
+      continue;
+    }
+
+    // The Gender line picks the form for gender-difference species, so it isn't ignored.
+    if (lower.startsWith("gender:") && speciesResolution && GENDER_FEMALE_FORM[speciesResolution.record.id]) {
       continue;
     }
 
