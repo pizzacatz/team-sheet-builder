@@ -208,7 +208,7 @@ The export script currently expects the Champions Logic database at:
 
 `data:export` also runs `data:index`, which refreshes the append-only `code-index.json` registry (assigning numbers to any new ids while preserving all existing ones). Commit the updated `code-index.json` alongside the regenerated data. Never hand-edit or reorder that file — doing so would break QR codes already printed. See [Embedded Team Data](#embedded-team-data) for the numbering contract.
 
-After regenerating data, run tests and a production build before committing.
+After regenerating data, follow the [Regulation Update Checklist](docs/REGULATION_UPDATE.md), including the variant form labels, then run tests and a production build before committing.
 
 ## Project Structure
 

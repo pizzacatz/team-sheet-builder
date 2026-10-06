@@ -26,43 +26,51 @@ const megaAliasesFor = (record: SpeciesRecord): string[] =>
     )
   ]);
 
-// Manual per-species display overrides, keyed by species id (slug). The
-// generated data uses bare names for default forms; these relabel the sheet
-// (pdfName) and the UI (displayName) to distinguish them from their regional or
-// gender counterparts, which are separate records. The original name stays an
-// alias (below) so pastes/imports still resolve here, and showdownAliases are
-// left untouched so import matching and any future Showdown export keep the
-// real names. Add more "slug": "Label" entries as needed.
-const displayOverrides: Record<string, string> = {
-  // Gender base forms (paired with an -F variant). A female import is routed to
-  // the -F record (see parseShowdownPaste), so the base carries the -M label.
+// Base-form labels, keyed by species id (slug). When a Pokédex number has
+// several form records, the generated data gives the base form the bare name
+// (e.g. "Lycanroc"). Every such base form must be decided in exactly one of the
+// two lists below; src/domain/variantForms.test.ts fails until it is, so a new
+// regulation can't add a form group without someone choosing.
+//
+// The rule:
+// - LABEL the base form when its sibling forms are equally valid alternatives
+//   and the bare name doesn't say which one is meant: gender (-M), time of day,
+//   plumage colour, Amped vs Low-Key, and the like.
+// - LEAVE IT BARE for regional variants, size variants, and bases whose bare
+//   name is already the form's own name (Rotom).
+//
+// A label replaces displayName and pdfName. The bare name stays an alias so
+// typing and imports still resolve, and showdownAliases are left untouched.
+export const displayOverrides: Record<string, string> = {
+  // Gender base forms (paired with an -F record). A female import is routed to
+  // the -F record (GENDER_FEMALE_FORM in parseShowdownPaste), so the base is -M.
   meowstic: "Meowstic-M",
   basculegion: "Basculegion-M",
   indeedee: "Indeedee-M",
-  // Lycanroc's three forms are equally common, so bare "Lycanroc" is ambiguous.
+  // Equally common alternative forms.
   lycanroc: "Lycanroc-Midday",
-  // Toxtricity's two forms are both common; bare "Toxtricity" is Amped.
   toxtricity: "Toxtricity-Amped",
-  // Four plumage colours; bare "Squawkabilly" is Green.
   squawkabilly: "Squawkabilly-Green"
+};
 
-  // Regional / size / other base-form labels — disabled as unnecessary.
-  // Re-enable if you want default forms disambiguated from their variants.
-  // raichu: "Raichu-Kanto",
-  // ninetales: "Ninetales-Kanto",
-  // arcanine: "Arcanine-Kanto",
-  // slowbro: "Slowbro-Kanto",
-  // tauros: "Tauros-Kanto",
-  // typhlosion: "Typhlosion-Johto",
-  // slowking: "Slowking-Johto",
-  // samurott: "Samurott-Unova",
-  // zoroark: "Zoroark-Unova",
-  // stunfisk: "Stunfisk-Unova",
-  // goodra: "Goodra-Kalos",
-  // avalugg: "Avalugg-Kalos",
-  // decidueye: "Decidueye-Alola",
-  // gourgeist: "Gourgeist-Average",
-  // rotom: "Rotom"
+// Base forms deliberately left with their bare name, with the reason.
+export const unlabelledBaseForms: Record<string, "regional" | "size" | "canonical name"> = {
+  raichu: "regional",
+  ninetales: "regional",
+  persian: "regional",
+  arcanine: "regional",
+  slowbro: "regional",
+  tauros: "regional",
+  typhlosion: "regional",
+  slowking: "regional",
+  samurott: "regional",
+  zoroark: "regional",
+  stunfisk: "regional",
+  goodra: "regional",
+  avalugg: "regional",
+  decidueye: "regional",
+  gourgeist: "size",
+  rotom: "canonical name"
 };
 
 export const species = (speciesJson as SpeciesRecord[]).map((record) => {

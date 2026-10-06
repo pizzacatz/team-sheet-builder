@@ -11,7 +11,7 @@ import { speciesById } from "../../domain/regulationData";
 // stripped during normalization, so map the base id to its female record when
 // either says F.
 // Male or absent keeps the base record (which the display override labels -M).
-const GENDER_FEMALE_FORM: Record<string, string> = {
+export const GENDER_FEMALE_FORM: Record<string, string> = {
   basculegion: "basculegionf",
   meowstic: "meowsticf",
   indeedee: "indeedeef"
