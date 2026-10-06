@@ -1,5 +1,6 @@
-import { AlertTriangle, Download, Mail, Share2 } from "lucide-react";
+import { AlertTriangle, Download, Mail, Printer, Share2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import type { AppMode } from "../app/appMode";
 import { encodeTeamShare } from "../domain/teamShare";
 import type { PlayerInfo, TeamSheet } from "../domain/teamTypes";
 import type { ValidationResult } from "../domain/validationTypes";
@@ -15,10 +16,12 @@ type PdfActionsProps = {
   // something to override.
   pristine?: boolean;
   onBlockedAttempt: () => void;
+  // On /ots every action uses the open team sheet only, and Print replaces Email.
+  mode?: AppMode;
 };
 
 type DownloadType = TeamSheetPdfType;
-type GeneratingType = DownloadType | "share" | "email" | "force";
+type GeneratingType = DownloadType | "share" | "email" | "print" | "force";
 
 const filenameFor = (teamSheet: TeamSheet, sheetType: DownloadType) => {
   const player = teamSheet.player.name.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
@@ -56,7 +59,8 @@ const emailBodyFor = (player: PlayerInfo, teamLink: string) => {
   return lines.join("\n");
 };
 
-export function PdfActions({ teamSheet, validation, pristine, onBlockedAttempt }: PdfActionsProps) {
+export function PdfActions({ teamSheet, validation, pristine, onBlockedAttempt, mode = "full" }: PdfActionsProps) {
+  const sheetType: DownloadType = mode === "ots" ? "open" : "both";
   const [generatingType, setGeneratingType] = useState<GeneratingType | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [canShareFiles, setCanShareFiles] = useState(false);
@@ -136,7 +140,7 @@ export function PdfActions({ teamSheet, validation, pristine, onBlockedAttempt }
     setError(null);
     setGeneratingType("share");
     try {
-      const blob = await generatePdfBlob("both");
+      const blob = await generatePdfBlob(sheetType);
       const { description, filename } = shareDetailsFor(teamSheet);
       const file = new File([blob], filename, { type: "application/pdf" });
       if (!navigator.canShare?.({ files: [file] })) {
@@ -156,6 +160,47 @@ export function PdfActions({ teamSheet, validation, pristine, onBlockedAttempt }
     }
   };
 
+  // Desktop browsers print a PDF from a hidden frame. Phones mostly can't, so
+  // there the PDF opens in a new tab for the system print/share sheet. The tab
+  // is opened before the PDF is generated so popup blockers allow it.
+  const handlePrint = async () => {
+    if (!validation.isValid) {
+      onBlockedAttempt();
+      return;
+    }
+    setError(null);
+    setGeneratingType("print");
+    const isTouch = window.matchMedia?.("(pointer: coarse)").matches ?? false;
+    const popup = isTouch ? window.open("", "_blank") : null;
+    try {
+      const blob = await generatePdfBlob(sheetType);
+      const url = URL.createObjectURL(blob);
+      if (isTouch) {
+        if (popup) popup.location.href = url;
+        else window.location.href = url;
+        return;
+      }
+      const frame = document.createElement("iframe");
+      frame.style.cssText = "position:fixed;right:0;bottom:0;width:0;height:0;border:0;";
+      frame.src = url;
+      frame.onload = () => {
+        frame.contentWindow?.focus();
+        frame.contentWindow?.print();
+        // The print dialog blocks in most browsers; clean up well after it.
+        window.setTimeout(() => {
+          frame.remove();
+          URL.revokeObjectURL(url);
+        }, 60_000);
+      };
+      document.body.appendChild(frame);
+    } catch (printError) {
+      popup?.close();
+      setError(printError instanceof Error ? printError.message : "Couldn't open the print dialog.");
+    } finally {
+      setGeneratingType(null);
+    }
+  };
+
   // Buttons keep full strength while invalid: a tap reveals the errors, and the
   // Validation status says why. They are only disabled while a PDF generates.
   const generating = Boolean(generatingType);
@@ -167,11 +212,23 @@ export function PdfActions({ teamSheet, validation, pristine, onBlockedAttempt }
           type="button"
           className="primary-action"
           disabled={generating}
-          onClick={() => handleDownload("both")}
+          onClick={() => handleDownload(sheetType)}
         >
           <Download size={18} />
-          <span className="action-label">{generatingType === "both" ? "Generating..." : "Download"}</span>
+          <span className="action-label">{generatingType === sheetType ? "Generating..." : "Download"}</span>
         </button>
+        {mode === "ots" ? (
+          <button
+            type="button"
+            className="secondary-action"
+            disabled={generating}
+            title="Print the open team sheet"
+            onClick={handlePrint}
+          >
+            <Printer size={18} />
+            <span className="action-label">{generatingType === "print" ? "Generating..." : "Print"}</span>
+          </button>
+        ) : (
         <button
           type="button"
           className="secondary-action"
@@ -183,13 +240,14 @@ export function PdfActions({ teamSheet, validation, pristine, onBlockedAttempt }
           <Mail size={18} />
           <span className="action-label collapsible-label">{generatingType === "email" ? "Preparing..." : "Email to TO"}</span>
         </button>
+        )}
         {canShareFiles ? (
           <button
             type="button"
             className="secondary-action"
             disabled={generating}
-              aria-label="Share team sheets"
-            title="Share team sheets"
+            aria-label={mode === "ots" ? "Share open team sheet" : "Share team sheets"}
+            title={mode === "ots" ? "Share open team sheet" : "Share team sheets"}
             onClick={handleShare}
           >
             <Share2 size={18} />
@@ -202,8 +260,8 @@ export function PdfActions({ teamSheet, validation, pristine, onBlockedAttempt }
           type="button"
           className="override-action"
           disabled={generating}
-          title="Download the combined PDF without fixing the validation errors. The sheet may be rejected at check-in."
-          onClick={() => handleDownload("both", true)}
+          title="Download the PDF without fixing the validation errors. The sheet may be rejected at check-in."
+          onClick={() => handleDownload(sheetType, true)}
         >
           <AlertTriangle size={16} aria-hidden="true" />
           <span className="action-label">{generatingType === "force" ? "Generating..." : "Download anyway"}</span>

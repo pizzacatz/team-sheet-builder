@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { createEmptyTeamSheet, emptyPokemonEntry, type PlayerInfo, type PokemonEntry, type TeamSheet } from "../domain/teamTypes";
-import { validateTeamSheet } from "../domain/validation";
+import type { AppMode } from "../app/appMode";
+import { validateForMode } from "../domain/validation";
 import { clearStoredTeamSheet, loadTeamSheet, saveTeamSheet } from "./localStorage";
 
-export const useTeamSheetState = () => {
+export const useTeamSheetState = (mode: AppMode = "full") => {
   const [teamSheet, setTeamSheet] = useState<TeamSheet>(() =>
     typeof window === "undefined" ? createEmptyTeamSheet() : loadTeamSheet()
   );
@@ -12,7 +13,7 @@ export const useTeamSheetState = () => {
     saveTeamSheet(teamSheet);
   }, [teamSheet]);
 
-  const validation = useMemo(() => validateTeamSheet(teamSheet), [teamSheet]);
+  const validation = useMemo(() => validateForMode(teamSheet, mode), [mode, teamSheet]);
 
   const updatePlayer = (patch: Partial<PlayerInfo>) => {
     setTeamSheet((current) => ({

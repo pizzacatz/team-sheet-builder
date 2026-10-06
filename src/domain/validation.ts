@@ -17,6 +17,7 @@ import {
   statRows,
   STAT_POINT_TOTAL_MAX
 } from "./stats";
+import type { AppMode } from "../app/appMode";
 import type { TeamSheet } from "./teamTypes";
 import type { ValidationIssue, ValidationResult } from "./validationTypes";
 
@@ -350,4 +351,16 @@ export const validateTeamSheet = (teamSheet: TeamSheet): ValidationResult => {
     isValid: !issues.some((validationIssue) => validationIssue.severity === "error"),
     issues
   };
+};
+
+// The open team sheet (/ots) prints neither stats nor the private Player Info
+// fields, so nothing about them is required or checked there.
+const OTS_SKIPPED_PATH = /^(player\.(playerId|dateOfBirth|supportId)|pokemon\.\d+\.stats\.)/;
+const OTS_SKIPPED_CODES = new Set(["STAT_ALIGNMENT_NO_POINTS", "STATS_LOOK_UNTOUCHED"]);
+
+export const validateForMode = (teamSheet: TeamSheet, mode: AppMode): ValidationResult => {
+  const result = validateTeamSheet(teamSheet);
+  if (mode === "full") return result;
+  const issues = result.issues.filter((item) => !OTS_SKIPPED_PATH.test(item.path) && !OTS_SKIPPED_CODES.has(item.code));
+  return { isValid: !issues.some((item) => item.severity === "error"), issues };
 };

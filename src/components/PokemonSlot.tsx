@@ -15,6 +15,8 @@ type PokemonSlotProps = {
   usedSpeciesDex?: Set<number>;
   usedItemIds?: Set<string>;
   fieldFlags?: FieldFlags;
+  // The open team sheet (/ots) has no stat column.
+  showStats?: boolean;
   onChange: (patch: Partial<PokemonEntry>) => void;
   onClear: () => void;
 };
@@ -61,7 +63,7 @@ const statFieldLabels: Record<StatKey, string> = {
   spe: "Spe"
 };
 
-export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, fieldFlags, onChange, onClear }: PokemonSlotProps) {
+export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, fieldFlags, showStats = true, onChange, onClear }: PokemonSlotProps) {
   const hasError = (fieldId: string) => Boolean(fieldFlags?.errors.has(fieldId));
   const hasWarning = (fieldId: string) => Boolean(fieldFlags?.warnings.has(fieldId));
   const lastSelectedSpeciesId = useRef(entry.speciesId);
@@ -223,7 +225,7 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, fieldFl
           warning={hasWarning(`pokemon-${index}-stat-alignment`)}
         />
       </div>
-      <div className="slot-pdf-grid">
+      <div className={`slot-pdf-grid${showStats ? "" : " no-stats"}`}>
         <div className="slot-main-column">
           <AutocompleteField
             id={`pokemon-${index}-ability`}
@@ -276,6 +278,7 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, fieldFl
             );
           })}
         </div>
+        {showStats ? (
         <div className="slot-stats-column" aria-label={`Pokémon ${index + 1} stats`}>
           {statRows.map((stat) => (
             <div className="stat-field" key={stat.key}>
@@ -298,6 +301,7 @@ export function PokemonSlot({ index, entry, usedSpeciesDex, usedItemIds, fieldFl
             </div>
           ))}
         </div>
+        ) : null}
       </div>
     </section>
   );

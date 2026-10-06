@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { items, moves, species, statAlignmentsById } from "../domain/regulationData";
 import { presentedStat, statBounds, statsFromSpecies, statsFromSpeciesWithPoints } from "../domain/stats";
-import { validateTeamSheet } from "../domain/validation";
+import { validateForMode, validateTeamSheet } from "../domain/validation";
 import { makeValidTeamSheet } from "./fixtures";
 
 const codes = (team = makeValidTeamSheet()) => validateTeamSheet(team).issues.map((issue) => issue.code);
@@ -11,6 +11,29 @@ describe("validateTeamSheet", () => {
     const result = validateTeamSheet(makeValidTeamSheet());
     expect(result.isValid).toBe(true);
     expect(result.issues.filter((issue) => issue.severity === "error")).toHaveLength(0);
+  });
+
+  it("doesn't require stats or private Player Info on the open team sheet", () => {
+    const team = makeValidTeamSheet();
+    team.player.playerId = "";
+    team.player.dateOfBirth = "";
+    team.player.supportId = "";
+    team.pokemon.forEach((entry) => {
+      entry.stats = { hp: "", atk: "", def: "", spa: "", spd: "", spe: "" };
+    });
+    expect(validateTeamSheet(team).isValid).toBe(false);
+    const ots = validateForMode(team, "ots");
+    expect(ots.issues).toEqual([]);
+    expect(ots.isValid).toBe(true);
+  });
+
+  it("still requires everything printed on the open team sheet", () => {
+    const team = makeValidTeamSheet();
+    team.player.division = "";
+    team.pokemon[0].statAlignment.value = null;
+    expect(validateForMode(team, "ots").issues.map((issue) => issue.code)).toEqual(
+      expect.arrayContaining(["MISSING_AGE_DIVISION", "MISSING_STAT_ALIGNMENT"])
+    );
   });
 
   it("flags unrecognised free text as Not recognized instead of missing", () => {

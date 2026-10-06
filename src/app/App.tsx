@@ -11,6 +11,7 @@ import { decodeTeamShare } from "../domain/teamShare";
 import { emptyPokemonEntry, type PokemonEntry } from "../domain/teamTypes";
 import { useTeamSheetState } from "../state/useTeamSheetState";
 import { useValidationReveal } from "../state/useValidationReveal";
+import type { AppMode } from "./appMode";
 import { mobileFloatingTrayClearancePx } from "./mobileTray";
 import "./styles.css";
 
@@ -27,8 +28,11 @@ const getInitialTheme = (): ThemeMode => {
   return window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 };
 
-export function App() {
-  const { teamSheet, validation, updatePlayer, clearPlayer, updatePokemon, replacePokemon } = useTeamSheetState();
+// Both pages share the saved team (same browser storage), so a team entered on
+// one shows up on the other.
+export function App({ mode = "full" }: { mode?: AppMode }) {
+  const isOts = mode === "ots";
+  const { teamSheet, validation, updatePlayer, clearPlayer, updatePokemon, replacePokemon } = useTeamSheetState(mode);
   const sideColumnRef = useRef<HTMLElement | null>(null);
   const [theme, setTheme] = useState<ThemeMode>(getInitialTheme);
   const [isMobileFieldEditing, setIsMobileFieldEditing] = useState(false);
@@ -191,7 +195,7 @@ export function App() {
             <img src={`${import.meta.env.BASE_URL}logo.png`} alt="" width={115} height={144} />
           </a>
           <div className="brand-text">
-            <h1 className="app-title">Pokémon Champions Team Sheet Builder</h1>
+            <h1 className="app-title">{isOts ? "Open Team Sheet Builder" : "Pokémon Champions Team Sheet Builder"}</h1>
             <p className="header-subtitle">
               Part of the <a href="https://georgiaplayevents.com/">Georgia Play Events Calendar</a>
               <span className="subtitle-join"> and </span>
@@ -222,12 +226,14 @@ export function App() {
             onChange={updatePlayer}
             onClear={handleClearPlayer}
             fieldFlags={fieldFlags}
+            showPrivateFields={!isOts}
           />
           <TeamForm
             pokemon={teamSheet.pokemon}
             onChange={updatePokemon}
             onClear={handleClearSlot}
             fieldFlags={fieldFlags}
+            showStats={!isOts}
           />
         </div>
         <aside className="side-column" ref={sideColumnRef}>
@@ -242,6 +248,7 @@ export function App() {
             validation={validation}
             pristine={isPristine}
             onBlockedAttempt={handleBlockedAttempt}
+            mode={mode}
           />
         </aside>
       </div>

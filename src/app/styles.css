@@ -505,6 +505,11 @@ h3 {
 }
 
 .slot-main-column,
+/* The open team sheet (/ots) has no stat column. */
+.slot-pdf-grid.no-stats {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .slot-stats-column {
   display: grid;
   gap: 8px;

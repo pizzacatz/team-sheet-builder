@@ -13,6 +13,7 @@ Live app: <https://teamsheet.georgiaplayevents.com/>
 - Uses local Regulation M-C dictionaries exported from Champions Logic data.
 - Generates Play! Pokémon team-list PDFs entirely in the browser.
 - Downloads the combined Open + Staff team sheets as a single PDF.
+- Offers an open-team-sheet-only page at [`/ots/`](https://teamsheet.georgiaplayevents.com/ots/) for local events: page 2 only, no stats or private Player Info, with Download, Print and Share. It shares the saved team with the main page (`ots/index.html`, `App mode="ots"`).
 - Saves the active form in localStorage to reduce accidental data loss.
 - Runs as a static GitHub Pages app with no backend, accounts, database, or external runtime API.
 

@@ -9,6 +9,8 @@ type PlayerInfoFormProps = {
   onChange: (patch: Partial<PlayerInfo>) => void;
   onClear: () => void;
   fieldFlags?: FieldFlags;
+  // Player ID, Date of Birth and Support ID only print on the staff sheet.
+  showPrivateFields?: boolean;
 };
 
 const ageDivisions: Array<Exclude<PlayerInfo["division"], "" | undefined>> = ["Junior", "Senior", "Master"];
@@ -23,7 +25,7 @@ const dobPart = (value: string | undefined, index: number, max: number): string 
 const composeDob = (month: string, day: string, year: string): string =>
   month || day || year ? `${month}-${day}-${year}` : "";
 
-export function PlayerInfoForm({ player, onChange, onClear, fieldFlags }: PlayerInfoFormProps) {
+export function PlayerInfoForm({ player, onChange, onClear, fieldFlags, showPrivateFields = true }: PlayerInfoFormProps) {
   const dobMonthRef = useRef<HTMLInputElement | null>(null);
   const dobDayRef = useRef<HTMLInputElement | null>(null);
   const dobYearRef = useRef<HTMLInputElement | null>(null);
@@ -144,6 +146,8 @@ export function PlayerInfoForm({ player, onChange, onClear, fieldFlags }: Player
               ))}
             </div>
           </fieldset>
+          {showPrivateFields ? (
+          <>
           <div className="field">
             <label htmlFor="player-id">Player ID:</label>
             <input
@@ -226,6 +230,8 @@ export function PlayerInfoForm({ player, onChange, onClear, fieldFlags }: Player
               onChange={(event) => onChange({ supportId: event.target.value })}
             />
           </div>
+          </>
+          ) : null}
         </div>
       </div>
     </section>
