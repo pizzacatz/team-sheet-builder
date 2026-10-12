@@ -168,6 +168,7 @@ export function ImportPanel({ onImport, teamHasData }: ImportPanelProps) {
       </div>
       {isOpen ? (
         <div id="showdown-import-body" className="collapsible-body">
+          {/* Replica lookup is off while the viewer server is down. Uncomment to restore.
           {replicaEnabled ? (
             <div className="replica-lookup">
               <div className="field replica-field">
@@ -213,6 +214,7 @@ export function ImportPanel({ onImport, teamHasData }: ImportPanelProps) {
               ) : null}
             </div>
           ) : null}
+          */}
           <div className="field">
             <label htmlFor="showdown-paste">Paste Export</label>
             <textarea
