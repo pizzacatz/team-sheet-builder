@@ -15,6 +15,7 @@ type PlayerInfoFormProps = {
 
 const ageDivisions: Array<Exclude<PlayerInfo["division"], "" | undefined>> = ["Junior", "Senior", "Master"];
 const digitsOnly = (value: string): string => value.replace(/\D/g, "");
+const supportIdChars = (value: string): string => value.replace(/[^a-z0-9]/gi, "").toUpperCase();
 
 // Date of Birth is stored as an "MM-DD-YYYY" string (parts may be blank while
 // typing). Splitting on "-" keeps each part in its slot even when an earlier one
@@ -223,11 +224,14 @@ export function PlayerInfoForm({ player, onChange, onClear, fieldFlags, showPriv
             <input
               id="support-id"
               className={invalidClass("support-id")}
-              value={player.supportId ?? ""}
+              value={supportIdChars(player.supportId ?? "")}
+              autoCapitalize="characters"
+              autoComplete="off"
+              spellCheck={false}
               aria-required="true"
               aria-invalid={invalidFlag("support-id")}
               required
-              onChange={(event) => onChange({ supportId: event.target.value })}
+              onChange={(event) => onChange({ supportId: supportIdChars(event.target.value) })}
             />
           </div>
           </>
