@@ -253,7 +253,7 @@ const drawSlot = (page: PDFPage, font: PDFFont, entry: PokemonEntry, coordinates
       coordinates.y.moves[3]
     ];
     statRows.forEach((stat, index) => {
-      drawCenteredFittedText(page, font, stats[stat.key], statX + 26, statY[index], 28, 10);
+      drawCenteredFittedText(page, font, stats[stat.key], statX + 26, statY[index], 28, 11);
     });
   }
 };
